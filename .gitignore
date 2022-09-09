@@ -1,3 +1,6 @@
+# Archive files (required for handins/bottlnose)
+*.zip
+
 # Compiled class file
 *.class
 
