@@ -10,11 +10,10 @@ import org.junit.Test;
 public class PersonTest {
 
   private Person john;
-  private EmailAddress johnEmail;
 
   @Before
   public void setUp() {
-    johnEmail = new EmailAddress("jdoe", "test.com");
+    EmailAddress johnEmail = new EmailAddress("jdoe", "test.com");
     john = new Person("john", "doe", 1989, "6175551234", johnEmail);
   }
 

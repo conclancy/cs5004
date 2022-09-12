@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * a JUnit test class for the EmailAddress class
+ * a JUnit test class for the EmailAddress class.
  */
 public class EmailAddressTest {
 

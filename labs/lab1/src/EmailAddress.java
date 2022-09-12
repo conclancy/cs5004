@@ -1,5 +1,5 @@
 /**
- * This class represents an email address, which has a username and a domain
+ * This class represents an email address, which has a username and a domain.
  */
 public class EmailAddress {
   private String username;
