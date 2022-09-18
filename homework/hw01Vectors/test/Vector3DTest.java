@@ -8,6 +8,7 @@ import org.junit.Test;
  * JUnit test class for the Vector3D class.
  */
 public class Vector3DTest {
+
   private Vector3D vectorOne;
   private Vector3D vectorTwo;
   private Vector3D vectorThree;
@@ -16,13 +17,13 @@ public class Vector3DTest {
   public void setUp() {
 
     // Test simple integers
-    vectorOne = new Vector3D(1,2,3);
+    vectorOne = new Vector3D(1, 2, 3);
 
     // Test simple decimals
-    vectorTwo = new Vector3D(1.1,2.2, 3.3);
+    vectorTwo = new Vector3D(1.1, 2.2, 3.3);
 
     // Test negatives
-    vectorThree = new Vector3D(-1,-2,-3);
+    vectorThree = new Vector3D(-1, -2, -3);
 
     // Test negatives
     // Test mix of positives and negatives
@@ -72,14 +73,14 @@ public class Vector3DTest {
 
     // vectorOne
     Vector3D normalOne = vectorOne.normalize();
-    assertEquals(0.2673, normalOne.getX(),.001);
-    assertEquals(0.5345, normalOne.getY(),.001);
-    assertEquals(0.8018, normalOne.getZ(),.001);
+    assertEquals(0.2673, normalOne.getX(), .001);
+    assertEquals(0.5345, normalOne.getY(), .001);
+    assertEquals(0.8018, normalOne.getZ(), .001);
 
     // vectorTwo
     Vector3D normalTwo = vectorOne.normalize();
-    assertEquals(0.2672, normalTwo.getX(),.001);
-    assertEquals(0.5345, normalTwo.getY(),.001);
-    assertEquals(0.8018, normalTwo.getZ(),.001);
+    assertEquals(0.2672, normalTwo.getX(), .001);
+    assertEquals(0.5345, normalTwo.getY(), .001);
+    assertEquals(0.8018, normalTwo.getZ(), .001);
   }
 }

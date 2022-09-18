@@ -4,12 +4,14 @@ import java.lang.Math;
  * This class represents a 3D vector with an x, y, and z coordinate.
  */
 public class Vector3D {
+
   private double x;
   private double y;
   private double z;
 
   /**
    * Constructs a Vector3D object and initializes the x, y, and z coordinates.
+   *
    * @param x the x coordinate of the vector.
    * @param y the y coordinate of the vector.
    * @param z the z coordinate of the vector,
@@ -22,6 +24,7 @@ public class Vector3D {
 
   /**
    * Getter method for the x coordinate.
+   *
    * @return the value of the x coordinate.
    */
   public double getX() {
@@ -30,6 +33,7 @@ public class Vector3D {
 
   /**
    * Getter method for the y coordinate.
+   *
    * @return the value of the y coordinate.
    */
   public double getY() {
@@ -38,6 +42,7 @@ public class Vector3D {
 
   /**
    * Getter method for the z coordinate.
+   *
    * @return the value of the z coordinate.
    */
   public double getZ() {
@@ -46,7 +51,8 @@ public class Vector3D {
 
   /**
    * Returns the coordinates of the vector as a string.
-   * @return (x,y,z) coordinates of the vector.
+   *
+   * @return (x, y, z) coordinates of the vector.
    */
   public String toString() {
     String xString = String.format("%.2f", this.x);
@@ -58,6 +64,7 @@ public class Vector3D {
 
   /**
    * Returns the magnitude of the vector.
+   *
    * @return magnitude of the vector.
    */
   public double getMagnitude() {
