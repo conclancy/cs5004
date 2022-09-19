@@ -78,6 +78,12 @@ public class Vector3D {
     return magnitude;
   }
 
+  /**
+   * Normalizes the vector so that all dimensions equal one when summed.
+   *
+   * @return normalized vector.
+   * @throws IllegalStateException when the vector has a magnitude of 0.
+   */
   public Vector3D normalize() throws IllegalStateException {
 
     double magnitude = this.getMagnitude();
@@ -93,4 +99,61 @@ public class Vector3D {
     return new Vector3D(normalX, normalY, normalZ);
   }
 
+  /**
+   * Add two vectors together.
+   *
+   * @param other vector to be added.
+   * @return the summation of the two vectors.
+   */
+  public Vector3D add(Vector3D other) {
+    return new Vector3D(
+        this.getX() + other.getX(),
+        this.getY() + other.getY(),
+        this.getZ() + other.getZ()
+    );
+  }
+
+  /**
+   * Multiply two vectors.
+   *
+   * @param other vector to be multiplied.
+   * @return the product of the two vectors.
+   */
+  public Vector3D multiply(Vector3D other) {
+    return new Vector3D(
+        this.getX() * other.getX(),
+        this.getY() * other.getY(),
+        this.getZ() * other.getZ()
+    );
+  }
+
+  /**
+   * Calculate the dot products of the two vectors.
+   *
+   * @param other vector for calculation
+   * @return dot product of the two vectors
+   */
+  public double dotProduct(Vector3D other) {
+    double dotX = this.getX() * other.getX();
+    double dotY = this.getY() * other.getY();
+    double dotZ = this.getZ() * other.getZ();
+
+    return dotX + dotY + dotZ;
+  }
+
+  /**
+   * Calculate the angle between two vectors.
+   *
+   * @param other vector for calculation.
+   * @return the angle in degrees
+   * @throws IllegalStateException when either magnitude is 0.
+   */
+  public double angleBetween(Vector3D other) throws IllegalStateException {
+    try {
+      double theta = this.dotProduct(other) / (this.getMagnitude() * other.getMagnitude());
+      return Math.toDegrees(Math.acos(theta));
+    } catch (IllegalStateException ex) {
+      throw new IllegalStateException("Vectors with a magnitude of 0 do not have an angle.");
+    }
+  }
 }

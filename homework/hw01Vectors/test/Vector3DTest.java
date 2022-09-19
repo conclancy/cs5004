@@ -83,4 +83,14 @@ public class Vector3DTest {
     assertEquals(0.5345, normalTwo.getY(), .001);
     assertEquals(0.8018, normalTwo.getZ(), .001);
   }
+
+  @Test
+  public void testAdd() {
+
+    // add vectors one and two
+    Vector3D addOne = vectorOne.add(vectorTwo);
+    assertEquals(2.1, addOne.getX(), .01);
+    assertEquals(4.2, addOne.getY(), .01);
+    assertEquals(6.3, addOne.getZ(), .01);
+  }
 }
