@@ -93,4 +93,19 @@ public class Vector3DTest {
     assertEquals(4.2, addOne.getY(), .01);
     assertEquals(6.3, addOne.getZ(), .01);
   }
+
+  @Test
+  public void testMultiply() {
+    // todo
+  }
+
+  @Test
+  public void testDotProduct() {
+    // todo
+  }
+
+  @Test
+  public void testAngleBetween() {
+    // todo
+  }
 }

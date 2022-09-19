@@ -1,5 +1,3 @@
-import java.lang.Math;
-
 /**
  * This class represents a 3D vector with an x, y, and z coordinate.
  */
