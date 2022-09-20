@@ -24,10 +24,6 @@ public class Vector3DTest {
 
     // Test negatives
     vectorThree = new Vector3D(-1, -2, -3);
-
-    // Test negatives
-    // Test mix of positives and negatives
-    // Test mix of ints and doubles
   }
 
   @Test
@@ -84,6 +80,11 @@ public class Vector3DTest {
     assertEquals(0.8018, normalTwo.getZ(), .001);
   }
 
+  @Test(expected = IllegalStateException.class)
+  public void testIllegalStateExceptionNormalize() {
+    Vector3D testVector = new Vector3D(0,0,0).normalize();
+  }
+
   @Test
   public void testAdd() {
 
@@ -92,20 +93,64 @@ public class Vector3DTest {
     assertEquals(2.1, addOne.getX(), .01);
     assertEquals(4.2, addOne.getY(), .01);
     assertEquals(6.3, addOne.getZ(), .01);
+
+    // add vectors two and three
+    Vector3D addTwo = vectorTwo.add(vectorThree);
+    assertEquals(.1, addTwo.getX(), .01);
+    assertEquals(.2, addTwo.getY(), .01);
+    assertEquals(.3, addTwo.getZ(), .01);
+
+    // add vectors one and three
+    Vector3D addThree = vectorOne.add(vectorThree);
+    assertEquals(0, addThree.getX(), .01);
+    assertEquals(0, addThree.getY(), .01);
+    assertEquals(0, addThree.getZ(), .01);
   }
 
   @Test
   public void testMultiply() {
-    // todo
+
+    // multiply vectors one and two
+    Vector3D multiOne = vectorOne.multiply(vectorTwo);
+    assertEquals(1.1, multiOne.getX(), .01);
+    assertEquals(4.4, multiOne.getY(), .01);
+    assertEquals(9.9, multiOne.getZ(), .01);
+
+    // multiply vectors two and three
+    Vector3D multiTwo = vectorTwo.multiply(vectorThree);
+    assertEquals(-1.1, multiTwo.getX(), .01);
+    assertEquals(-4.4, multiTwo.getY(), .01);
+    assertEquals(-9.9, multiTwo.getZ(), .01);
+
+    // multiply vectors one and three
+    Vector3D multiThree = vectorOne.multiply(vectorThree);
+    assertEquals(-1.0, multiThree.getX(), .01);
+    assertEquals(-4.0, multiThree.getY(), .01);
+    assertEquals(-9.0, multiThree.getZ(), .01);
   }
 
   @Test
   public void testDotProduct() {
-    // todo
+    assertEquals(15.4, vectorOne.dotProduct(vectorTwo), .01);
+    assertEquals(-15.4, vectorTwo.dotProduct(vectorThree), .01);
+    assertEquals(-14, vectorOne.dotProduct(vectorThree), .01);
   }
 
   @Test
   public void testAngleBetween() {
-    // todo
+    // todo test exception
+    assertEquals(0, vectorOne.angleBetween(vectorTwo), .01);
+    assertEquals(180, vectorTwo.angleBetween(vectorThree), .01);
+    assertEquals(180, vectorOne.angleBetween(vectorThree), .01);
+  }
+
+
+  @Test(expected = IllegalStateException.class)
+  public void testIllegalStateExceptionAngleBetween() {
+    Vector3D vectorA = new Vector3D(0,0,0);
+    Vector3D vectorB = new Vector3D(0,0,0);
+
+    double vectorFinal;
+    vectorFinal = vectorA.angleBetween(vectorB);
   }
 }
