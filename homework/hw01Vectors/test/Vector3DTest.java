@@ -111,21 +111,21 @@ public class Vector3DTest {
   public void testMultiply() {
 
     // multiply vectors one and two
-    Vector3D multiOne = vectorOne.multiply(vectorTwo);
-    assertEquals(1.1, multiOne.getX(), .01);
-    assertEquals(4.4, multiOne.getY(), .01);
-    assertEquals(9.9, multiOne.getZ(), .01);
+    Vector3D multiOne = vectorOne.multiply(1.0);
+    assertEquals(1, multiOne.getX(), .01);
+    assertEquals(2, multiOne.getY(), .01);
+    assertEquals(3, multiOne.getZ(), .01);
 
     // multiply vectors two and three
-    Vector3D multiTwo = vectorTwo.multiply(vectorThree);
-    assertEquals(-1.1, multiTwo.getX(), .01);
-    assertEquals(-4.4, multiTwo.getY(), .01);
-    assertEquals(-9.9, multiTwo.getZ(), .01);
+    Vector3D multiTwo = vectorTwo.multiply(2.0);
+    assertEquals(2.2, multiTwo.getX(), .01);
+    assertEquals(4.4, multiTwo.getY(), .01);
+    assertEquals(6.6, multiTwo.getZ(), .01);
 
     // multiply vectors one and three
-    Vector3D multiThree = vectorOne.multiply(vectorThree);
-    assertEquals(-1.0, multiThree.getX(), .01);
-    assertEquals(-4.0, multiThree.getY(), .01);
+    Vector3D multiThree = vectorThree.multiply(3.0);
+    assertEquals(-3.0, multiThree.getX(), .01);
+    assertEquals(-6.0, multiThree.getY(), .01);
     assertEquals(-9.0, multiThree.getZ(), .01);
   }
 

@@ -114,14 +114,14 @@ public class Vector3D {
   /**
    * Multiply two vectors.
    *
-   * @param other vector to be multiplied.
+   * @param factor to be multiplied.
    * @return the product of the two vectors.
    */
-  public Vector3D multiply(Vector3D other) {
+  public Vector3D multiply(double factor) {
     return new Vector3D(
-        this.getX() * other.getX(),
-        this.getY() * other.getY(),
-        this.getZ() * other.getZ()
+        this.getX() * factor,
+        this.getY() * factor,
+        this.getZ() * factor
     );
   }
 
