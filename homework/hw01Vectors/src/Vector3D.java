@@ -147,11 +147,12 @@ public class Vector3D {
    * @throws IllegalStateException when either magnitude is 0.
    */
   public double angleBetween(Vector3D other) throws IllegalStateException {
-    try {
-      double theta = this.dotProduct(other) / (this.getMagnitude() * other.getMagnitude());
-      return Math.toDegrees(Math.acos(theta));
-    } catch (IllegalStateException ex) {
+
+    if (this.getMagnitude() == 0.0 || other.getMagnitude() == 0.0) {
       throw new IllegalStateException("Vectors with a magnitude of 0 do not have an angle.");
     }
+
+    double theta = this.dotProduct(other) / (this.getMagnitude() * other.getMagnitude());
+    return Math.toDegrees(Math.acos(theta));
   }
 }
