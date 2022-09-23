@@ -15,6 +15,9 @@ public class FibonacciCounterTest {
   private FibonacciCounter fib22;
   private FibonacciCounter fibNeg1;
 
+  /**
+   * Set up of test objects
+   */
   @Before
   public void setUp() {
     fib0 = new FibonacciCounter(0);
@@ -25,6 +28,9 @@ public class FibonacciCounterTest {
     fibNeg1 = new FibonacciCounter(-1);
   }
 
+  /**
+   * Test to check the count getCount method
+   */
   @Test
   public void testGetCount() {
     assertEquals(0, fib0.getCount());
@@ -34,6 +40,9 @@ public class FibonacciCounterTest {
     assertEquals(-1, fibNeg1.getCount());
   }
 
+  /**
+   * Test the getFibonacciNumber method
+   */
   @Test
   public void testGetFibonacciNumber() {
     // https://www.goldennumber.net/fibonacci-series/
@@ -46,6 +55,9 @@ public class FibonacciCounterTest {
     assertEquals(0, fibNeg1.getFibonacciNumber());
   }
 
+  /**
+   * Test increment method to ensure we see one Fibonacci higher in the sequence
+   */
   @Test
   public void testIncrement() {
     assertEquals(1, fib0.increment().getFibonacciNumber());
@@ -56,6 +68,9 @@ public class FibonacciCounterTest {
     assertEquals(0, fibNeg1.increment().getFibonacciNumber());
   }
 
+  /**
+   * Test decrement method to ensure we see one Fibonacci lower in the sequence
+   */
   @Test
   public void testDecrement() {
     assertEquals(0, fib0.decrement().getFibonacciNumber());
