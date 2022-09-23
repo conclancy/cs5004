@@ -48,11 +48,21 @@ public class FibonacciCounterTest {
 
   @Test
   public void testIncrement() {
-    // todo
+    assertEquals(1, fib0.increment().getFibonacciNumber());
+    assertEquals(1, fib1.increment().getFibonacciNumber());
+    assertEquals(2, fib2.increment().getFibonacciNumber());
+    assertEquals(3, fib3.increment().getFibonacciNumber());
+    assertEquals(28657, fib22.increment().getFibonacciNumber());
+    assertEquals(0, fibNeg1.increment().getFibonacciNumber());
   }
 
   @Test
   public void testDecrement() {
-    // todo
+    assertEquals(0, fib0.decrement().getFibonacciNumber());
+    assertEquals(0, fib1.decrement().getFibonacciNumber());
+    assertEquals(1, fib2.decrement().getFibonacciNumber());
+    assertEquals(1, fib3.decrement().getFibonacciNumber());
+    assertEquals(10946, fib22.decrement().getFibonacciNumber());
+    assertEquals(0, fibNeg1.decrement().getFibonacciNumber());
   }
 }
