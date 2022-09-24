@@ -3,6 +3,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * This class represents and employee.
+ */
 public class EmployeeTest {
 
   private Employee connor;

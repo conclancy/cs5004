@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test for the FibonacciCounter class
+ * Test for the FibonacciCounter class.
  */
 public class FibonacciCounterTest {
 
@@ -16,7 +16,7 @@ public class FibonacciCounterTest {
   private FibonacciCounter fibNeg1;
 
   /**
-   * Set up of test objects
+   * Set up of test objects.
    */
   @Before
   public void setUp() {
@@ -29,7 +29,7 @@ public class FibonacciCounterTest {
   }
 
   /**
-   * Test to check the count getCount method
+   * Test to check the count getCount method.
    */
   @Test
   public void testGetCount() {
@@ -41,7 +41,7 @@ public class FibonacciCounterTest {
   }
 
   /**
-   * Test the getFibonacciNumber method
+   * Test the getFibonacciNumber method.
    */
   @Test
   public void testGetFibonacciNumber() {
@@ -56,7 +56,7 @@ public class FibonacciCounterTest {
   }
 
   /**
-   * Test increment method to ensure we see one Fibonacci higher in the sequence
+   * Test increment method to ensure we see one Fibonacci higher in the sequence.
    */
   @Test
   public void testIncrement() {
@@ -69,7 +69,7 @@ public class FibonacciCounterTest {
   }
 
   /**
-   * Test decrement method to ensure we see one Fibonacci lower in the sequence
+   * Test decrement method to ensure we see one Fibonacci lower in the sequence.
    */
   @Test
   public void testDecrement() {

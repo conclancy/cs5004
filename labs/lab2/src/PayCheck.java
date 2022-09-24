@@ -48,4 +48,31 @@ public class PayCheck {
   public String toString() {
     return String.format("$%.2f", this.totalPay);
   }
+
+  /**
+   * Returns the name of the associated employee.
+   *
+   * @return employee's name.
+   */
+  public String getName() {
+    return this.name;
+  }
+
+  /**
+   * Return the rate of pay.
+   *
+   * @return the employee's hourly rate.
+   */
+  public double getRate() {
+    return this.rate;
+  }
+
+  /**
+   * Return the number of hours for this paycheck.
+   *
+   * @return the number of hours for this paycheck.
+   */
+  public double getHoursWorked() {
+    return this.hoursWorked;
+  }
 }

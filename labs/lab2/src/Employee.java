@@ -1,3 +1,6 @@
+/**
+ * This class represents and employee.
+ */
 public class Employee {
 
   private String name;
