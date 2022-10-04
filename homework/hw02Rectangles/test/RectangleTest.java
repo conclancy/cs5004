@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.css.Rect;
@@ -34,6 +35,15 @@ public class RectangleTest {
   }
 
   /**
+   * Test toString method.
+   */
+  @Test
+  public void testToString() {
+    assertEquals("x:0, y:0, w:1, h:2", rectangleSmall.toString());
+    assertEquals("x:0, y:0, w:100, h:100", rectangleLarge.toString());
+  }
+
+  /**
    * Test overlap method.
    */
   @Test
@@ -42,6 +52,34 @@ public class RectangleTest {
     assertEquals(true, rectangleLarge.overlap(rectangleSmall));
     assertEquals(false, rectangleSmall.overlap(rectangleSmallFalse));
     assertEquals(true, rectangleSmallFalse.overlap(rectangleLarge));
+  }
+
+  /**
+   * Test when rectangles do not overlap one another.
+   */
+  @Test(expected = NoSuchElementException.class)
+  public void testNoIntersect() {
+    rectangleSmall.intersect(rectangleSmallFalse);
+  }
+
+  /**
+   * Test the intersection method.
+   */
+  @Test
+  public void testIntersect() {
+    Rectangle testRectangle;
+    testRectangle = rectangleSmall.intersect(rectangleLarge);
+    assertEquals("x:0, y:0, w:1, h:2", testRectangle.toString());
+  }
+
+  /**
+   * Test the union method.
+   */
+  @Test
+  public void testUnion() {
+    Rectangle testRectangle;
+    testRectangle = rectangleSmall.union(rectangleSmallFalse);
+    assertEquals("x:0, y:0, w:3, h:3", testRectangle.toString());
   }
 
 }
