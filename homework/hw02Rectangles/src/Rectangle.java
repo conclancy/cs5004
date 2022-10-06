@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
  * This class implments a rectangle with x, y coordinates and a width and height.
  */
 public class Rectangle {
+
   private double x;
   private double y;
   private double w;
@@ -16,10 +17,10 @@ public class Rectangle {
    * @param y lower-left y coordinate of the rectangle
    * @param w width of the rectangle
    * @param h height of the rectangle
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if the rectangle has negative dimensions
    */
   public Rectangle(double x, double y, double w, double h) throws IllegalArgumentException {
-    if (w<0 || h<0) {
+    if (w < 0 || h < 0) {
       throw new IllegalArgumentException("Rectangles must have positive width and height.");
     }
     this.x = x;
@@ -43,7 +44,7 @@ public class Rectangle {
    *
    * @param other the other rectangle for intersect
    * @return A new rectangle
-   * @throws NoSuchElementException
+   * @throws NoSuchElementException if there is no intersect between shapes
    */
   public Rectangle intersect(Rectangle other) throws NoSuchElementException {
     if (!this.overlap(other)) {
@@ -58,11 +59,11 @@ public class Rectangle {
         newLowerLeftX,
         newLowerLeftY,
         newUpperRightX - newLowerLeftX,
-        newUpperRightY -  newLowerLeftY);
+        newUpperRightY - newLowerLeftY);
   }
 
   /**
-   * A new rectangle representing the union region between two rectangles
+   * A new rectangle representing the union region between two rectangles.
    *
    * @param other the other rectangle in the union
    * @return rectangle representing the union region between two rectangles
@@ -90,27 +91,6 @@ public class Rectangle {
     String hString = ", h:" + Math.round(this.h);
     return xString + yString + wString + hString;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
