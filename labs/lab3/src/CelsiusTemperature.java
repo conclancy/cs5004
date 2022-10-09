@@ -24,7 +24,6 @@ public class CelsiusTemperature extends AbstractTemperature {
       FahrenheitTemperature temp = new FahrenheitTemperature(temperature);
       this.temperature = temp.inCelsius();
     }
-    this.temperature = temperature;
     this.isValidTemperature();
   }
 
@@ -56,16 +55,6 @@ public class CelsiusTemperature extends AbstractTemperature {
   @Override
   public double inFahrenheit() {
     return (this.temperature * (9.0 / 5.0)) + 32;
-  }
-
-  /**
-   * The temperature in degrees Kelvin.
-   *
-   * @return the temperature in degrees Kelvin
-   */
-  @Override
-  public double inKelvin() {
-    return this.temperature - ABS_ZERO_C;
   }
 
   /**

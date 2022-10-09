@@ -33,6 +33,7 @@ public interface Temperature extends Comparable<Temperature> {
    * Add two temperatures together and return the resulting temperature.
    *
    * @return the new temperature
+   * @throws IllegalArgumentException if the temps added together are less than absolute zero
    */
   Temperature add(Temperature t);
 }

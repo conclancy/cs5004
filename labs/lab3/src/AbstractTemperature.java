@@ -17,6 +17,15 @@ public abstract class AbstractTemperature implements Temperature {
   }
 
   /**
+   * Returns the temperature in degrees Kelvin.
+   *
+   * @return temperature in degrees Kelvin
+   */
+  public double inKelvin() {
+    return this.inCelsius() - ABS_ZERO_C;
+  }
+
+  /**
    * Compare two temperature objects.
    *
    * @param other temperature to compare to.

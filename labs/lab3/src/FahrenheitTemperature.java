@@ -59,17 +59,6 @@ public class FahrenheitTemperature extends AbstractTemperature {
   }
 
   /**
-   * The temperature in degrees Kelvin.
-   *
-   * @return the temperature in degrees Kelvin
-   */
-  @Override
-  public double inKelvin() {
-    CelsiusTemperature celsius = new CelsiusTemperature(this.inCelsius());
-    return celsius.inKelvin();
-  }
-
-  /**
    * Add two temperatures together and return the resulting temperature.
    *
    * @param t other temperature to be added.

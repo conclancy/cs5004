@@ -10,6 +10,8 @@ public class TemperatureTest {
 
   private Temperature cTemp;
   private Temperature fTemp;
+  private Temperature fTempNative;
+  private Temperature cTempTwo;
 
   /**
    * Set up test instances.
@@ -18,6 +20,8 @@ public class TemperatureTest {
   public void init() {
     cTemp = new CelsiusTemperature(100);
     fTemp = new FahrenheitTemperature(100, true);
+    fTempNative = new FahrenheitTemperature(212);
+    cTempTwo = new CelsiusTemperature(212, true);
   }
 
   /**
@@ -32,8 +36,24 @@ public class TemperatureTest {
    * Test to make sure an illegal argument is thrown if the temperature is below absolute zero.
    */
   @Test(expected = IllegalArgumentException.class)
+  public void testForInvalidFTempTwo() {
+    new FahrenheitTemperature(-1000, true);
+  }
+
+  /**
+   * Test to make sure an illegal argument is thrown if the temperature is below absolute zero.
+   */
+  @Test(expected = IllegalArgumentException.class)
   public void testForInvalidCTemp() {
     new CelsiusTemperature(-1000);
+  }
+
+  /**
+   * Test to make sure an illegal argument is thrown if the temperature is below absolute zero.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testForInvalidCTempTwo() {
+    new CelsiusTemperature(-1000, true);
   }
 
   /**
@@ -44,6 +64,10 @@ public class TemperatureTest {
     assertEquals(100, cTemp.inCelsius(), 0.001);
     assertEquals(212, cTemp.inFahrenheit(), 0.001);
     assertEquals(373.15, cTemp.inKelvin(), 0.001);
+    assertEquals(100, fTempNative.inCelsius(), .01);
+    assertEquals(373.15, fTempNative.inKelvin(), .01);
+    assertEquals(100, cTempTwo.inCelsius(), .01);
+    assertEquals(373.15, cTempTwo.inKelvin(), .01);
   }
 
   /**
@@ -52,6 +76,15 @@ public class TemperatureTest {
   @Test
   public void testInF() {
     assertEquals(212, fTemp.inFahrenheit(), 0.001);
+  }
+
+  /**
+   * Test a non-reference point for temperature conversion.
+   */
+  @Test
+  public void testNonReferenceConversion() {
+    Temperature t = new CelsiusTemperature(-40);
+    assertEquals(-40, t.inFahrenheit(),.01);
   }
 
   /**
@@ -83,7 +116,7 @@ public class TemperatureTest {
     assertEquals(0, fTemp.compareTo(cTemp));
 
     // Test non-equal temps
-    Temperature smallTemp =  new CelsiusTemperature(-273);
+    Temperature smallTemp = new CelsiusTemperature(-273);
     assertEquals(1, cTemp.compareTo(smallTemp));
     assertEquals(-1, smallTemp.compareTo(cTemp));
   }
