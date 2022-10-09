@@ -1,12 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 
-/*
-import cs5004.temperature.CelsiusTemperature;
-import cs5004.temperature.FahrenheitTemperature;
-import cs5004.temperature.Temperature;
-*/
-
 import static org.junit.Assert.assertEquals;
 
 /**

@@ -1,6 +1,4 @@
-public class CelsiusTemperature implements Temperature {
-
-  private double temperature;
+public class CelsiusTemperature extends AbstractTemperature {
 
   /**
    * Constructor for the CelsiusTemperature class.
@@ -9,13 +7,13 @@ public class CelsiusTemperature implements Temperature {
    */
   public CelsiusTemperature(double temperature) {
     this.temperature = temperature;
-    Temperature.isValidTemperature(this);
+    this.isValidTemperature();
   }
 
   /**
    * Constructor for the CelsiusTemperature class that takes in a Fahrenheit value.
    *
-   * @param temperature in degrees Fahrenheit
+   * @param temperature  in degrees Fahrenheit
    * @param isFahrenheit must always be 'true' or the temperature will be treated as celsius
    */
   public CelsiusTemperature(double temperature, boolean isFahrenheit) {
@@ -24,7 +22,7 @@ public class CelsiusTemperature implements Temperature {
       this.temperature = temp.inCelsius();
     }
     this.temperature = temperature;
-    Temperature.isValidTemperature(this);
+    this.isValidTemperature();
   }
 
   /**
@@ -54,7 +52,7 @@ public class CelsiusTemperature implements Temperature {
    */
   @Override
   public double inFahrenheit() {
-    return (this.temperature * (9.0/5.0)) + 32;
+    return (this.temperature * (9.0 / 5.0)) + 32;
   }
 
   /**
@@ -76,14 +74,5 @@ public class CelsiusTemperature implements Temperature {
   @Override
   public Temperature add(Temperature t) {
     return new CelsiusTemperature(this.temperature + t.inCelsius());
-  }
-
-  /**
-   * @param temperature 
-   * @return
-   */
-  @Override
-  public int compareTo(Temperature temperature) {
-    return 0;
   }
 }

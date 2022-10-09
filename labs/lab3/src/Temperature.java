@@ -2,24 +2,11 @@
  * Represents a temperature.
  */
 public interface Temperature extends Comparable<Temperature> {
-  /**
-   * Absolute zero, in degrees Celsius. For our purposes, no temperature can be below
-   * this value.
-   */
-  double ABS_ZERO_C = -273.15f;
 
   /**
-   * Ensures the temperature is not below absolute zero degrees celsius.
-   *
-   * @param t temperature in degrees celsius
-   * @return boolean of true
-   * @throws IllegalArgumentException if the temp is below absolute zero
+   * Absolute zero, in degrees Celsius. For our purposes, no temperature can be below this value.
    */
-  static void isValidTemperature(Temperature t) {
-    if(t.inKelvin() < 0) {
-      throw new IllegalArgumentException("Invalid temperature");
-    }
-  }
+  double ABS_ZERO_C = -273.15f;
 
   /**
    * The temperature in degrees Celsius.

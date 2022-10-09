@@ -1,17 +1,15 @@
-public class FahrenheitTemperature implements Temperature{
-  private double temperature;
+public class FahrenheitTemperature extends AbstractTemperature {
 
   public FahrenheitTemperature(double temperature) {
     this.temperature = temperature;
-    Temperature.isValidTemperature(this);
+    this.isValidTemperature();
   }
 
   public FahrenheitTemperature(double temperature, boolean isCelsius) {
-    if(isCelsius) {
+    if (isCelsius) {
       CelsiusTemperature temp = new CelsiusTemperature(temperature);
       this.temperature = temp.inFahrenheit();
-    }
-    else{
+    } else {
       this.temperature = temperature;
     }
   }
@@ -33,7 +31,7 @@ public class FahrenheitTemperature implements Temperature{
    */
   @Override
   public double inCelsius() {
-    return ((this.temperature - 32) * (5.0/9.0));
+    return ((this.temperature - 32) * (5.0 / 9.0));
   }
 
   /**
