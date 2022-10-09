@@ -47,7 +47,7 @@ public class TemperatureTest {
   }
 
   /**
-   * Test the inFahrenheit is working
+   * Test the inFahrenheit is working.
    */
   @Test
   public void testInF() {

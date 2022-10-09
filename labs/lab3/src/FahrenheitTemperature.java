@@ -72,7 +72,7 @@ public class FahrenheitTemperature extends AbstractTemperature {
   /**
    * Add two temperatures together and return the resulting temperature.
    *
-   * @param t
+   * @param t other temperature to be added.
    * @return the new temperature
    */
   @Override
