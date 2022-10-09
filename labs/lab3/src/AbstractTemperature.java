@@ -1,3 +1,6 @@
+/**
+ * Abstract class representing the temperature implementation.
+ */
 public abstract class AbstractTemperature implements Temperature {
 
   protected double temperature;

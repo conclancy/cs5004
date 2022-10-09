@@ -1,3 +1,6 @@
+/**
+ * A class representing a celsius temperature.
+ */
 public class CelsiusTemperature extends AbstractTemperature {
 
   /**

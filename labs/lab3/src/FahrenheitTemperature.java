@@ -1,10 +1,24 @@
+/**
+ * A class representing a fahrenheit temperature.
+ */
 public class FahrenheitTemperature extends AbstractTemperature {
 
+  /**
+   * Constructor for the FahrenheitTemperature class.
+   *
+   * @param temperature in degrees Fahrenheit
+   */
   public FahrenheitTemperature(double temperature) {
     this.temperature = temperature;
     this.isValidTemperature();
   }
 
+  /**
+   * Constructor for the FahrenheitTemperature class.
+   *
+   * @param temperature in degrees Fahrenheit
+   * @param isCelsius must always be 'true' or the temperature will be treated as Fahrenheit
+   */
   public FahrenheitTemperature(double temperature, boolean isCelsius) {
     if (isCelsius) {
       CelsiusTemperature temp = new CelsiusTemperature(temperature);
@@ -64,14 +78,5 @@ public class FahrenheitTemperature extends AbstractTemperature {
   @Override
   public Temperature add(Temperature t) {
     return new FahrenheitTemperature(this.temperature + t.inFahrenheit());
-  }
-
-  /**
-   * @param temperature
-   * @return
-   */
-  @Override
-  public int compareTo(Temperature temperature) {
-    return 0;
   }
 }
