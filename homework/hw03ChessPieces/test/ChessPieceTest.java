@@ -81,4 +81,6 @@ public class ChessPieceTest {
     ChessPiece blackRookInvalid = new Rook(7, 7, Color.BLACK);
     assertEquals(false, blackRook.canKill(blackRookInvalid));
   }
+
+  // TODO add Pawn tests
 }
