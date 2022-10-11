@@ -1,16 +1,20 @@
 public class Rook extends AbstractChessPiece {
 
-  public Rook(int row, int column, Color color){
+  /**
+   * Constructor for a Rook Piece.
+   *
+   * @param row    the row number of the row
+   * @param column the column number of the cell
+   * @param color  of the piece.  Either BLACK or WHITE.
+   */
+  public Rook(int row, int column, Color color) {
     super(row, column, color);
   }
 
   @Override
-  public boolean canMove(Cell cell) {
-    return false;
-  }
-
-  @Override
-  public boolean canKill(ChessPiece piece) {
-    return false;
+  public boolean canMove(Cell other) {
+    Boolean validRow = other.getRow() == this.getRow();
+    Boolean validColumn = other.getColumn() == this.getColumn();
+    return validColumn || validRow;
   }
 }

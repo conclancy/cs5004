@@ -18,6 +18,13 @@ public interface ChessPiece {
   int getColumn();
 
   /**
+   * Return the cell of the chess piece.
+   *
+   * @return the cell of the chess piece
+   */
+  Cell getCell();
+
+  /**
    * Return the color of the chess piece.
    *
    * @return the Color of the chess peice

@@ -47,4 +47,31 @@ public abstract class AbstractChessPiece implements ChessPiece {
   public Color getColor() {
     return this.color;
   }
+
+  /**
+   * Return the pieces cell object.
+   *
+   * @return pieces cell object.
+   */
+  @Override
+  public Cell getCell() {
+    return this.cell;
+  }
+
+  /**
+   * If a piece of another color is a valid move for this piece, it can kill the other piece.
+   *
+   * @param other the chess piece for which to test a kill move
+   * @return boolean for a valid kill
+   */
+  @Override
+  public boolean canKill(ChessPiece other) {
+    boolean validMove = this.canMove(other.getCell());
+
+    if (!validMove) {
+      return false;
+    }
+    else
+      return !(this.color == other.getColor());
+  }
 }
