@@ -2,6 +2,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ChessPieceTest {
 
@@ -69,12 +71,12 @@ public class ChessPieceTest {
    */
   @Test
   public void testRookMoves() {
-    assertEquals(true, whiteRook.canMove(new Cell(0,1)));
-    assertEquals(true, whiteRook.canMove(new Cell(0,7)));
-    assertEquals(true, whiteRook.canMove(new Cell(0,6)));
-    assertEquals(true, whiteRook.canMove(new Cell(5,0)));
-    assertEquals(false, whiteRook.canMove(new Cell(1,1)));
-    assertEquals(false, whiteRook.canMove(new Cell(2,3)));
+    assertTrue(whiteRook.canMove(new Cell(0, 1)));
+    assertTrue(whiteRook.canMove(new Cell(0, 7)));
+    assertTrue(whiteRook.canMove(new Cell(0, 6)));
+    assertTrue(whiteRook.canMove(new Cell(5, 0)));
+    assertFalse(whiteRook.canMove(new Cell(1, 1)));
+    assertFalse(whiteRook.canMove(new Cell(2, 3)));
   }
 
   /**
@@ -84,19 +86,19 @@ public class ChessPieceTest {
   public void testRookKill() {
 
     // Valid attack
-    assertEquals(true, whiteRook.canKill(blackRook));
+    assertTrue(whiteRook.canKill(blackRook));
 
     // Invalid for color
     ChessPiece testBlack = new Rook(0, 7, Color.BLACK);
-    assertEquals(false, blackRook.canKill(testBlack));
+    assertFalse(blackRook.canKill(testBlack));
 
     // Invalid for location
     ChessPiece whiteRookInvalid = new Rook(7, 7, Color.WHITE);
-    assertEquals(false, blackRook.canKill(whiteRookInvalid));
+    assertFalse(blackRook.canKill(whiteRookInvalid));
 
     // Neither color nor location
     ChessPiece blackRookInvalid = new Rook(7, 7, Color.BLACK);
-    assertEquals(false, blackRook.canKill(blackRookInvalid));
+    assertFalse(blackRook.canKill(blackRookInvalid));
   }
 
   /**
@@ -106,14 +108,14 @@ public class ChessPieceTest {
   public void testPawnMove() {
 
     // white pawn movements
-    assertEquals(true, whitePawn.canMove(new Cell(2,1)));
-    assertEquals(false, whitePawn.canMove(new Cell(3,2)));
-    assertEquals(false, whitePawn.canMove(new Cell(1,1)));
+    assertTrue(whitePawn.canMove(new Cell(2, 1)));
+    assertFalse(whitePawn.canMove(new Cell(3, 2)));
+    assertFalse(whitePawn.canMove(new Cell(1, 1)));
 
     // black pawn movements
-    assertEquals(true, blackPawn.canMove(new Cell(5, 1)));
-    assertEquals(false, blackPawn.canMove(new Cell(4, 1)));
-    assertEquals(false, blackPawn.canMove(new Cell(5, 2)));
+    assertTrue(blackPawn.canMove(new Cell(5, 1)));
+    assertFalse(blackPawn.canMove(new Cell(4, 1)));
+    assertFalse(blackPawn.canMove(new Cell(5, 2)));
   }
 
   /**
@@ -124,26 +126,26 @@ public class ChessPieceTest {
 
     // white can kill
     ChessPiece killablePawn1 = new Pawn(2,2, Color.BLACK);
-    assertEquals(true, whitePawn.canKill(killablePawn1));
+    assertTrue(whitePawn.canKill(killablePawn1));
 
     // black can kill
     ChessPiece killablePawn2 = new Rook(5,0, Color.WHITE);
-    assertEquals(true, blackPawn.canKill(killablePawn2));
+    assertTrue(blackPawn.canKill(killablePawn2));
 
     // white cannot kill location directly ahead
     ChessPiece nonKillablePawn1 = new Pawn(2,1, Color.BLACK);
-    assertEquals(false, whitePawn.canKill(nonKillablePawn1));
+    assertFalse(whitePawn.canKill(nonKillablePawn1));
 
     // black cannot kill location far location
     ChessPiece nonKillablePawn2 = new Rook(3,2, Color.WHITE);
-    assertEquals(false, blackPawn.canKill(nonKillablePawn2));
+    assertFalse(blackPawn.canKill(nonKillablePawn2));
 
     // white cannot kill color
     ChessPiece nonKillablePawn3 = new Pawn(2,2, Color.WHITE);
-    assertEquals(false, whitePawn.canKill(nonKillablePawn3));
+    assertFalse(whitePawn.canKill(nonKillablePawn3));
 
     // black cannot kill color
     ChessPiece killablePawn4 = new Rook(5,0, Color.BLACK);
-    assertEquals(false, blackPawn.canKill(killablePawn4));
+    assertFalse(blackPawn.canKill(killablePawn4));
   }
 }
