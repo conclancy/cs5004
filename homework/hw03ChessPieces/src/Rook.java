@@ -13,8 +13,8 @@ public class Rook extends AbstractChessPiece {
 
   @Override
   public boolean canMove(Cell other) {
-    Boolean validRow = other.getRow() == this.getRow();
-    Boolean validColumn = other.getColumn() == this.getColumn();
+    Boolean validRow = other.getRow() == super.getRow();
+    Boolean validColumn = other.getColumn() == super.getColumn();
     return validColumn || validRow;
   }
 }
