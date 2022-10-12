@@ -11,6 +11,8 @@ public class ChessPieceTest {
   private Rook blackRook;
   private Pawn whitePawn;
   private Pawn blackPawn;
+  private Knight whiteKnight;
+  private Knight batman;
 
   @Before
   public void init() {
@@ -19,7 +21,8 @@ public class ChessPieceTest {
     blackRook = new Rook(0, 0, Color.BLACK);
     whitePawn = new Pawn(1, 1, Color.WHITE);
     blackPawn = new Pawn(6, 1, Color.BLACK);
-
+    whiteKnight = new Knight(0, 1, Color.WHITE);
+    batman = new Knight(7, 1, Color.BLACK);
   }
 
   @Test
@@ -147,5 +150,32 @@ public class ChessPieceTest {
     // black cannot kill color
     ChessPiece killablePawn4 = new Rook(5,0, Color.BLACK);
     assertFalse(blackPawn.canKill(killablePawn4));
+  }
+
+  @Test
+  public void testKnightMove() {
+    // up 2 left 1
+    assertTrue(whiteKnight.canMove(new Cell(2, 0)));
+
+    // up 2 right 1
+    assertTrue(whiteKnight.canMove(new Cell(2, 2)));
+
+    // up 1 right 2
+    assertTrue(whiteKnight.canMove(new Cell(1, 3)));
+
+    // down 2 left 1
+    assertTrue(batman.canMove(new Cell(5,0)));
+
+    // down 2 right 1
+    assertTrue(batman.canMove(new Cell(5,2)));
+
+    // down 1 left 2
+    assertTrue(batman.canMove(new Cell(6,3)));
+
+    // cannot move strait
+    assertFalse(whiteKnight.canMove(new Cell(2, 1)));
+
+    // cannot move diagonal
+    assertFalse(batman.canMove(new Cell(5,3)));
   }
 }
