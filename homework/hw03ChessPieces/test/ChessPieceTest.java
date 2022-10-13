@@ -13,6 +13,8 @@ public class ChessPieceTest {
   private Pawn blackPawn;
   private Knight whiteKnight;
   private Knight batman;
+  private Bishop whiteBishop;
+  private Bishop blackBishop;
 
   @Before
   public void init() {
@@ -23,6 +25,9 @@ public class ChessPieceTest {
     blackPawn = new Pawn(6, 1, Color.BLACK);
     whiteKnight = new Knight(0, 1, Color.WHITE);
     batman = new Knight(7, 1, Color.BLACK);
+    whiteBishop = new Bishop(0,2, Color.WHITE);
+    blackBishop = new Bishop(7, 5, Color.BLACK);
+
   }
 
   @Test
@@ -179,5 +184,24 @@ public class ChessPieceTest {
     assertFalse(batman.canMove(new Cell(5,3)));
   }
 
-  // TODO add bishop canMove tests
+  @Test
+  public void testBishopMove() {
+    // white left
+    assertTrue(whiteBishop.canMove(new Cell(0,2)));
+
+    // white right
+    assertTrue(whiteBishop.canMove(new Cell(5,7)));
+
+    // black left
+    assertTrue(blackBishop.canMove(new Cell(5, 7)));
+
+    // black right
+    assertTrue(blackBishop.canMove(new Cell(4, 2)));
+
+    // straight ahead
+    assertFalse(whiteBishop.canMove(new Cell(6,2)));
+
+    // lateral
+    assertFalse(blackBishop.canMove(new Cell(7,1)));
+  }
 }
