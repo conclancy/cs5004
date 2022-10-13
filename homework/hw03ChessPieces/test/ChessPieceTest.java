@@ -178,4 +178,6 @@ public class ChessPieceTest {
     // cannot move diagonal
     assertFalse(batman.canMove(new Cell(5,3)));
   }
+
+  // TODO add bishop canMove tests
 }
