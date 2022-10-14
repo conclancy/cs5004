@@ -18,14 +18,14 @@ public class ChessPieceTest {
 
   @Before
   public void init() {
-    
+
     whiteRook = new Rook(0, 0, Color.WHITE);
     blackRook = new Rook(0, 0, Color.BLACK);
     whitePawn = new Pawn(1, 1, Color.WHITE);
     blackPawn = new Pawn(6, 1, Color.BLACK);
     whiteKnight = new Knight(0, 1, Color.WHITE);
     batman = new Knight(7, 1, Color.BLACK);
-    whiteBishop = new Bishop(0,2, Color.WHITE);
+    whiteBishop = new Bishop(0, 2, Color.WHITE);
     blackBishop = new Bishop(7, 5, Color.BLACK);
 
   }
@@ -133,27 +133,27 @@ public class ChessPieceTest {
   public void testPawnKill() {
 
     // white can kill
-    ChessPiece killablePawn1 = new Pawn(2,2, Color.BLACK);
+    ChessPiece killablePawn1 = new Pawn(2, 2, Color.BLACK);
     assertTrue(whitePawn.canKill(killablePawn1));
 
     // black can kill
-    ChessPiece killablePawn2 = new Rook(5,0, Color.WHITE);
+    ChessPiece killablePawn2 = new Rook(5, 0, Color.WHITE);
     assertTrue(blackPawn.canKill(killablePawn2));
 
     // white cannot kill location directly ahead
-    ChessPiece nonKillablePawn1 = new Pawn(2,1, Color.BLACK);
+    ChessPiece nonKillablePawn1 = new Pawn(2, 1, Color.BLACK);
     assertFalse(whitePawn.canKill(nonKillablePawn1));
 
     // black cannot kill location far location
-    ChessPiece nonKillablePawn2 = new Rook(3,2, Color.WHITE);
+    ChessPiece nonKillablePawn2 = new Rook(3, 2, Color.WHITE);
     assertFalse(blackPawn.canKill(nonKillablePawn2));
 
     // white cannot kill color
-    ChessPiece nonKillablePawn3 = new Pawn(2,2, Color.WHITE);
+    ChessPiece nonKillablePawn3 = new Pawn(2, 2, Color.WHITE);
     assertFalse(whitePawn.canKill(nonKillablePawn3));
 
     // black cannot kill color
-    ChessPiece killablePawn4 = new Rook(5,0, Color.BLACK);
+    ChessPiece killablePawn4 = new Rook(5, 0, Color.BLACK);
     assertFalse(blackPawn.canKill(killablePawn4));
   }
 
@@ -169,28 +169,28 @@ public class ChessPieceTest {
     assertTrue(whiteKnight.canMove(new Cell(1, 3)));
 
     // down 2 left 1
-    assertTrue(batman.canMove(new Cell(5,0)));
+    assertTrue(batman.canMove(new Cell(5, 0)));
 
     // down 2 right 1
-    assertTrue(batman.canMove(new Cell(5,2)));
+    assertTrue(batman.canMove(new Cell(5, 2)));
 
     // down 1 left 2
-    assertTrue(batman.canMove(new Cell(6,3)));
+    assertTrue(batman.canMove(new Cell(6, 3)));
 
     // cannot move strait
     assertFalse(whiteKnight.canMove(new Cell(2, 1)));
 
     // cannot move diagonal
-    assertFalse(batman.canMove(new Cell(5,3)));
+    assertFalse(batman.canMove(new Cell(5, 3)));
   }
 
   @Test
   public void testBishopMove() {
     // white left
-    assertTrue(whiteBishop.canMove(new Cell(0,2)));
+    assertTrue(whiteBishop.canMove(new Cell(0, 2)));
 
     // white right
-    assertTrue(whiteBishop.canMove(new Cell(5,7)));
+    assertTrue(whiteBishop.canMove(new Cell(5, 7)));
 
     // black left
     assertTrue(blackBishop.canMove(new Cell(5, 7)));
@@ -199,9 +199,14 @@ public class ChessPieceTest {
     assertTrue(blackBishop.canMove(new Cell(4, 2)));
 
     // straight ahead
-    assertFalse(whiteBishop.canMove(new Cell(6,2)));
+    assertFalse(whiteBishop.canMove(new Cell(6, 2)));
 
     // lateral
-    assertFalse(blackBishop.canMove(new Cell(7,1)));
+    assertFalse(blackBishop.canMove(new Cell(7, 1)));
+  }
+
+  // TODO
+  public void testQueenMove() {
+
   }
 }
