@@ -19,8 +19,6 @@ public class Bishop extends AbstractChessPiece {
    */
   @Override
   public boolean canMove(Cell cell) {
-    int rowChange = Math.abs(super.getRow() - cell.getRow());
-    int columnChange = Math.abs(super.getColumn() - cell.getColumn());
-    return rowChange == columnChange;
+    return super.helpCanMoveDiagonal(cell);
   }
 }

@@ -58,6 +58,7 @@ public abstract class AbstractChessPiece implements ChessPiece {
     return this.cell;
   }
 
+
   /**
    * If a piece of another color is a valid move for this piece, it can kill the other piece.
    *
@@ -70,8 +71,27 @@ public abstract class AbstractChessPiece implements ChessPiece {
 
     if (!validMove) {
       return false;
-    }
-    else
+    } else {
       return !(this.color == other.getColor());
+    }
+  }
+
+  /**
+   * Determines if the cell is a valid horizontally or vertically. Valid move types for Rook or
+   * Queen.
+   *
+   * @param other cell to validate movement
+   * @return boolean for valid moves
+   */
+  protected boolean helpCanMoveStraight(Cell other) {
+    boolean validRow = other.getRow() == this.getRow();
+    boolean validColumn = other.getColumn() == this.getColumn();
+    return validColumn || validRow;
+  }
+
+  protected boolean helpCanMoveDiagonal(Cell other) {
+    int rowChange = Math.abs(this.getRow() - other.getRow());
+    int columnChange = Math.abs(this.getColumn() - other.getColumn());
+    return rowChange == columnChange;
   }
 }

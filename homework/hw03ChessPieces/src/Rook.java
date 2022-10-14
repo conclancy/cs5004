@@ -11,10 +11,14 @@ public class Rook extends AbstractChessPiece {
     super(row, column, color);
   }
 
+  /**
+   * Determines if a Rook can move to a given square.
+   *
+   * @param other the cell for which to test a move
+   * @return boolean for valid moves
+   */
   @Override
   public boolean canMove(Cell other) {
-    Boolean validRow = other.getRow() == super.getRow();
-    Boolean validColumn = other.getColumn() == super.getColumn();
-    return validColumn || validRow;
+    return super.helpCanMoveStraight(other);
   }
 }
