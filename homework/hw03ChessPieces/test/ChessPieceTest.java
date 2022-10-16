@@ -15,7 +15,12 @@ public class ChessPieceTest {
   private Knight batman;
   private Bishop whiteBishop;
   private Bishop blackBishop;
+  private Queen whiteQueen;
+  private Queen blackQueen;
 
+  /**
+   * Initialize chess pieces for use in tests.
+   */
   @Before
   public void init() {
 
@@ -27,9 +32,14 @@ public class ChessPieceTest {
     batman = new Knight(7, 1, Color.BLACK);
     whiteBishop = new Bishop(0, 2, Color.WHITE);
     blackBishop = new Bishop(7, 5, Color.BLACK);
+    whiteQueen = new Queen(0,4, Color.WHITE);
+    blackQueen = new Queen(7,4, Color.BLACK);
 
   }
 
+  /**
+   * Ensure that the color functionality works correctly.
+   */
   @Test
   public void testGetColor() {
     assertEquals(Color.WHITE, whiteRook.getColor());
@@ -38,6 +48,9 @@ public class ChessPieceTest {
     assertEquals(Color.BLACK, blackPawn.getColor());
   }
 
+  /**
+   * Test the row getter method.
+   */
   @Test
   public void testGetRow() {
     assertEquals(0, whiteRook.getRow());
@@ -46,6 +59,9 @@ public class ChessPieceTest {
     assertEquals(6, blackPawn.getRow());
   }
 
+  /**
+   * Test the column getter method.
+   */
   @Test
   public void testGetColumn() {
     assertEquals(0, whiteRook.getColumn());
@@ -54,21 +70,33 @@ public class ChessPieceTest {
     assertEquals(1, blackPawn.getColumn());
   }
 
+  /**
+   * Test to make sure proper errors are thrown when an invalid cell is entered.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void testIllegalRowMin() {
     ChessPiece faultyRook = new Rook(-1, 0, Color.BLACK);
   }
 
+  /**
+   * Test to make sure proper errors are thrown when an invalid cell is entered.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void testIllegalRowMax() {
     ChessPiece faultyRook = new Rook(8, 0, Color.BLACK);
   }
 
+  /**
+   * Test to make sure proper errors are thrown when an invalid cell is entered.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void testIllegalColumnMin() {
     ChessPiece faultyRook = new Rook(0, -1, Color.BLACK);
   }
 
+  /**
+   * Test to make sure proper errors are thrown when an invalid cell is entered.
+   */
   @Test(expected = IllegalArgumentException.class)
   public void testIllegalColumnMax() {
     ChessPiece faultyRook = new Rook(0, 8, Color.BLACK);
@@ -127,7 +155,7 @@ public class ChessPieceTest {
   }
 
   /**
-   *
+   * Test validity of Pawn kill movements.
    */
   @Test
   public void testPawnKill() {
@@ -157,6 +185,9 @@ public class ChessPieceTest {
     assertFalse(blackPawn.canKill(killablePawn4));
   }
 
+  /**
+   * Test knight movements.
+   */
   @Test
   public void testKnightMove() {
     // up 2 left 1
@@ -184,6 +215,9 @@ public class ChessPieceTest {
     assertFalse(batman.canMove(new Cell(5, 3)));
   }
 
+  /**
+   * Test Bishop movements.
+   */
   @Test
   public void testBishopMove() {
     // white left
@@ -205,8 +239,33 @@ public class ChessPieceTest {
     assertFalse(blackBishop.canMove(new Cell(7, 1)));
   }
 
-  // TODO
+  /**
+   * Test Queen movements.
+   */
+  @Test
   public void testQueenMove() {
+    // diagonal white left
+    assertTrue(whiteQueen.canMove(new Cell(1, 3)));
 
+    // diagonal white right
+    assertTrue(whiteQueen.canMove(new Cell(3, 7)));
+
+    // diagonal black left
+    assertTrue(blackQueen.canMove(new Cell(5, 2)));
+
+    // diagonal black right
+    assertTrue(blackQueen.canMove(new Cell(4, 7)));
+
+    // lateral movement
+    assertTrue(blackQueen.canMove(new Cell(7, 7)));
+
+    // horizontal movement
+    assertTrue(whiteQueen.canMove(new Cell(7, 4)));
+
+    // invalid close movement
+    assertFalse(whiteQueen.canMove(new Cell(2, 5)));
+
+    // invalid far movement
+    assertFalse(blackQueen.canMove(new Cell(1, 1)));
   }
 }
