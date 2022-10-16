@@ -72,7 +72,7 @@ public abstract class AbstractChessPiece implements ChessPiece {
     if (!validMove) {
       return false;
     } else {
-      return !(this.color == other.getColor());
+      return this.color != other.getColor();
     }
   }
 

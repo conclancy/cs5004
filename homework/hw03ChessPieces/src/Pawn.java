@@ -66,7 +66,7 @@ public class Pawn extends AbstractChessPiece {
     if (!this.validKillMove(other.getCell())) {
       return false;
     } else {
-      return !(super.getColor() == other.getColor());
+      return super.getColor() != other.getColor();
     }
   }
 }
