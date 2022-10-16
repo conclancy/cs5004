@@ -1,3 +1,6 @@
+/**
+ * Represents a Pawn chess piece.  Moves only forward, but kills diagonally.
+ */
 public class Pawn extends AbstractChessPiece {
 
   /**
@@ -62,8 +65,8 @@ public class Pawn extends AbstractChessPiece {
   public boolean canKill(ChessPiece other) {
     if (!this.validKillMove(other.getCell())) {
       return false;
-    }
-    else
+    } else {
       return !(super.getColor() == other.getColor());
+    }
   }
 }

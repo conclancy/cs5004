@@ -1,3 +1,6 @@
+/**
+ * Class representing a Queen chess piece.  Moves diagonally, vertically, and horizontally.
+ */
 public class Queen extends AbstractChessPiece {
 
   /**

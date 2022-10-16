@@ -1,3 +1,6 @@
+/**
+ * Class for the Knight chess piece.  Moves in an "L" shape.
+ */
 public class Knight extends AbstractChessPiece {
 
   /**

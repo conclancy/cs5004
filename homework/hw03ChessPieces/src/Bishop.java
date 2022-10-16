@@ -1,3 +1,6 @@
+/**
+ * Class representing a Bishop chess piece that can move diagonally.
+ */
 public class Bishop extends AbstractChessPiece {
 
   /**
@@ -15,7 +18,7 @@ public class Bishop extends AbstractChessPiece {
    * Validates moves of a bishop piece.
    *
    * @param cell the cell for which to test a move
-   * @return true for valid movements
+   * @return boolean for valid movements
    */
   @Override
   public boolean canMove(Cell cell) {

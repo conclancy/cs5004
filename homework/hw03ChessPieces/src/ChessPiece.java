@@ -1,5 +1,5 @@
 /**
- * Represents a chess piece
+ * Represents a chess piece.
  */
 public interface ChessPiece {
 
@@ -27,7 +27,7 @@ public interface ChessPiece {
   /**
    * Return the color of the chess piece.
    *
-   * @return the Color of the chess peice
+   * @return the Color of the chess piece
    */
   Color getColor();
 

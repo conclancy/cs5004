@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Unit tests for the ChessPieces interface.
+ */
 public class ChessPieceTest {
 
   private Rook whiteRook;
@@ -32,8 +35,8 @@ public class ChessPieceTest {
     batman = new Knight(7, 1, Color.BLACK);
     whiteBishop = new Bishop(0, 2, Color.WHITE);
     blackBishop = new Bishop(7, 5, Color.BLACK);
-    whiteQueen = new Queen(0,4, Color.WHITE);
-    blackQueen = new Queen(7,4, Color.BLACK);
+    whiteQueen = new Queen(0, 4, Color.WHITE);
+    blackQueen = new Queen(7, 4, Color.BLACK);
 
   }
 

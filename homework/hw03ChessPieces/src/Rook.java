@@ -1,3 +1,6 @@
+/**
+ * Represents a Rook (castle) chess piece.  Moves vertically and horizontally.
+ */
 public class Rook extends AbstractChessPiece {
 
   /**
