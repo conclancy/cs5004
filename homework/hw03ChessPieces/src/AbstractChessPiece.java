@@ -67,7 +67,7 @@ public abstract class AbstractChessPiece implements ChessPiece {
    */
   @Override
   public boolean canKill(ChessPiece other) {
-    boolean validMove = this.canMove(other.getCell());
+    boolean validMove = this.canMove(other.getRow(), other.getColumn());
 
     if (!validMove) {
       return false;

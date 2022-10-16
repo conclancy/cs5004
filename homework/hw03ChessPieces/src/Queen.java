@@ -21,7 +21,10 @@ public class Queen extends AbstractChessPiece {
    * @return boolean for valid queen movement
    */
   @Override
-  public boolean canMove(Cell cell) {
+  public boolean canMove(int row, int column) {
+
+    Cell cell = new Cell(row, column);
+
     return super.helpCanMoveDiagonal(cell) || super.helpCanMoveStraight(cell);
   }
 }

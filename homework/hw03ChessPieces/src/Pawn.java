@@ -15,13 +15,17 @@ public class Pawn extends AbstractChessPiece {
   }
 
   /**
-   * Validation for pawn movements.
+   * Validation for pawn movement.
    *
-   * @param cell the cell for which to test a move
-   * @return true for valid pawn movements, else returns false
+   * @param row    of the cell to move to
+   * @param column of the cell to move to
+   * @return boolean for a valid pawn movement
    */
   @Override
-  public boolean canMove(Cell cell) {
+  public boolean canMove(int row, int column) {
+
+    Cell cell = new Cell(row, column);
+
     if ((cell.getColumn() != super.getColumn())) {
       return false;
     } // TODO abstract this logic with canMove()

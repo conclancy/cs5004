@@ -17,11 +17,13 @@ public class Knight extends AbstractChessPiece {
   /**
    * Determines if the chess piece can move to a specified cell.
    *
-   * @param cell the cell for which to test a move
-   * @return true if the move is valid
+   * @param row    of the cell to move to
+   * @param column of the cell to move to
+   * @return boolean for valid movement
    */
   @Override
-  public boolean canMove(Cell cell) {
+  public boolean canMove(int row, int column) {
+    Cell cell = new Cell(row, column);
     return
         (Math.abs(super.getRow() - cell.getRow()) * Math.abs(super.getColumn() - cell.getColumn()))
             == 2;

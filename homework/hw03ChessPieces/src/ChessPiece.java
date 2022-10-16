@@ -34,10 +34,11 @@ public interface ChessPiece {
   /**
    * Determines if the chess piece can move to a specified cell.
    *
-   * @param cell the cell for which to test a move
-   * @return true if the move is valid
+   * @param row    of the cell to move to
+   * @param column of the cell to move to
+   * @return boolean for a valid movement
    */
-  boolean canMove(Cell cell);
+  boolean canMove(int row, int column);
 
   /**
    * Determines if the chess piece can kill another chess piece.

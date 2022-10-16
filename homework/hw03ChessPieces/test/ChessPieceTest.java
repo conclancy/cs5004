@@ -110,12 +110,12 @@ public class ChessPieceTest {
    */
   @Test
   public void testRookMoves() {
-    assertTrue(whiteRook.canMove(new Cell(0, 1)));
-    assertTrue(whiteRook.canMove(new Cell(0, 7)));
-    assertTrue(whiteRook.canMove(new Cell(0, 6)));
-    assertTrue(whiteRook.canMove(new Cell(5, 0)));
-    assertFalse(whiteRook.canMove(new Cell(1, 1)));
-    assertFalse(whiteRook.canMove(new Cell(2, 3)));
+    assertTrue(whiteRook.canMove(0, 1));
+    assertTrue(whiteRook.canMove(0, 7));
+    assertTrue(whiteRook.canMove(0, 6));
+    assertTrue(whiteRook.canMove(5, 0));
+    assertFalse(whiteRook.canMove(1, 1));
+    assertFalse(whiteRook.canMove(2, 3));
   }
 
   /**
@@ -147,14 +147,14 @@ public class ChessPieceTest {
   public void testPawnMove() {
 
     // white pawn movements
-    assertTrue(whitePawn.canMove(new Cell(2, 1)));
-    assertFalse(whitePawn.canMove(new Cell(3, 2)));
-    assertFalse(whitePawn.canMove(new Cell(1, 1)));
+    assertTrue(whitePawn.canMove(2, 1));
+    assertFalse(whitePawn.canMove(3, 2));
+    assertFalse(whitePawn.canMove(1, 1));
 
     // black pawn movements
-    assertTrue(blackPawn.canMove(new Cell(5, 1)));
-    assertFalse(blackPawn.canMove(new Cell(4, 1)));
-    assertFalse(blackPawn.canMove(new Cell(5, 2)));
+    assertTrue(blackPawn.canMove(5, 1));
+    assertFalse(blackPawn.canMove(4, 1));
+    assertFalse(blackPawn.canMove(5, 2));
   }
 
   /**
@@ -194,28 +194,28 @@ public class ChessPieceTest {
   @Test
   public void testKnightMove() {
     // up 2 left 1
-    assertTrue(whiteKnight.canMove(new Cell(2, 0)));
+    assertTrue(whiteKnight.canMove(2, 0));
 
     // up 2 right 1
-    assertTrue(whiteKnight.canMove(new Cell(2, 2)));
+    assertTrue(whiteKnight.canMove(2, 2));
 
     // up 1 right 2
-    assertTrue(whiteKnight.canMove(new Cell(1, 3)));
+    assertTrue(whiteKnight.canMove(1, 3));
 
     // down 2 left 1
-    assertTrue(batman.canMove(new Cell(5, 0)));
+    assertTrue(batman.canMove(5, 0));
 
     // down 2 right 1
-    assertTrue(batman.canMove(new Cell(5, 2)));
+    assertTrue(batman.canMove(5, 2));
 
     // down 1 left 2
-    assertTrue(batman.canMove(new Cell(6, 3)));
+    assertTrue(batman.canMove(6, 3));
 
     // cannot move strait
-    assertFalse(whiteKnight.canMove(new Cell(2, 1)));
+    assertFalse(whiteKnight.canMove(2, 1));
 
     // cannot move diagonal
-    assertFalse(batman.canMove(new Cell(5, 3)));
+    assertFalse(batman.canMove(5, 3));
   }
 
   /**
@@ -224,22 +224,22 @@ public class ChessPieceTest {
   @Test
   public void testBishopMove() {
     // white left
-    assertTrue(whiteBishop.canMove(new Cell(0, 2)));
+    assertTrue(whiteBishop.canMove(1, 1));
 
     // white right
-    assertTrue(whiteBishop.canMove(new Cell(5, 7)));
+    assertTrue(whiteBishop.canMove(5, 7));
 
     // black left
-    assertTrue(blackBishop.canMove(new Cell(5, 7)));
+    assertTrue(blackBishop.canMove(5, 7));
 
     // black right
-    assertTrue(blackBishop.canMove(new Cell(4, 2)));
+    assertTrue(blackBishop.canMove(4, 2));
 
     // straight ahead
-    assertFalse(whiteBishop.canMove(new Cell(6, 2)));
+    assertFalse(whiteBishop.canMove(6, 2));
 
     // lateral
-    assertFalse(blackBishop.canMove(new Cell(7, 1)));
+    assertFalse(blackBishop.canMove(7, 1));
   }
 
   /**
@@ -248,27 +248,27 @@ public class ChessPieceTest {
   @Test
   public void testQueenMove() {
     // diagonal white left
-    assertTrue(whiteQueen.canMove(new Cell(1, 3)));
+    assertTrue(whiteQueen.canMove(1, 3));
 
     // diagonal white right
-    assertTrue(whiteQueen.canMove(new Cell(3, 7)));
+    assertTrue(whiteQueen.canMove(3, 7));
 
     // diagonal black left
-    assertTrue(blackQueen.canMove(new Cell(5, 2)));
+    assertTrue(blackQueen.canMove(5, 2));
 
     // diagonal black right
-    assertTrue(blackQueen.canMove(new Cell(4, 7)));
+    assertTrue(blackQueen.canMove(4, 7));
 
     // lateral movement
-    assertTrue(blackQueen.canMove(new Cell(7, 7)));
+    assertTrue(blackQueen.canMove(7, 7));
 
     // horizontal movement
-    assertTrue(whiteQueen.canMove(new Cell(7, 4)));
+    assertTrue(whiteQueen.canMove(7, 4));
 
     // invalid close movement
-    assertFalse(whiteQueen.canMove(new Cell(2, 5)));
+    assertFalse(whiteQueen.canMove(2, 5));
 
     // invalid far movement
-    assertFalse(blackQueen.canMove(new Cell(1, 1)));
+    assertFalse(blackQueen.canMove(1, 1));
   }
 }

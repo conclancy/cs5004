@@ -17,11 +17,12 @@ public class Bishop extends AbstractChessPiece {
   /**
    * Validates moves of a bishop piece.
    *
-   * @param cell the cell for which to test a move
-   * @return boolean for valid movements
+   * @param row    the row of the cell to move to
+   * @param column the column of the cell to move to
+   * @return boolean for valid move
    */
   @Override
-  public boolean canMove(Cell cell) {
-    return super.helpCanMoveDiagonal(cell);
+  public boolean canMove(int row, int column) {
+    return super.helpCanMoveDiagonal(new Cell(row, column));
   }
 }
