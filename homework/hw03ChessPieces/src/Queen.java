@@ -17,8 +17,9 @@ public class Queen extends AbstractChessPiece {
   /**
    * Determines valid moves for a Queen piece.
    *
-   * @param cell the cell for which to test a move
-   * @return boolean for valid queen movement
+   * @param row    of the cell to move to
+   * @param column of the cell to move to
+   * @return boolean for valid move
    */
   @Override
   public boolean canMove(int row, int column) {
