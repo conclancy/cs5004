@@ -30,6 +30,36 @@ public class SentenceTest {
 
   @Test
   public void testGetNumberOfWords () {
+    assertEquals(0, firstEmptyNode.getNumberOfWords());
+    assertEquals(0, firstEnd.getNumberOfWords());
+    assertEquals(1, firstSentFirstWord.getNumberOfWords());
     assertEquals(4, sentenceOne.getNumberOfWords());
+  }
+
+  @Test
+  public void testLongestWord() {
+    assertEquals("sentence", sentenceOne.longestWord());
+    assertEquals("", firstEmptyNode.longestWord());
+    assertEquals("", firstEnd.longestWord());
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals("", firstEmptyNode.toString());
+    assertEquals(".", firstEnd.toString());
+    assertEquals("sentence.", firstSentFirstWord.toString());
+    assertEquals("a sentence.", firstSentSecondWord.toString());
+    assertEquals("is a sentence.", firstSentThirdWord.toString());
+    assertEquals("This is a sentence.", sentenceOne.toString());
+  }
+
+  @Test
+  public void testToStringNoPunct() {
+    Sentence noPunct = new WordNode("No punctuation", new EmptyNode());
+    assertEquals("No punctuation.", noPunct.toString());
+  }
+
+  @Test
+  public void testCloneEmptyNode() {
   }
 }

@@ -1,7 +1,9 @@
+import java.util.regex.Pattern;
+
 /**
  * Represents a word in a sentence.
  */
-public class WordNode extends AbstractSentence {
+public class WordNode extends AbstractSentence implements Cloneable {
 
   /**
    * Abstract constructor for the sentence class.
@@ -20,7 +22,12 @@ public class WordNode extends AbstractSentence {
    */
   @Override
   public int getNumberOfWords() {
-    return 1 + super.rest.getNumberOfWords();
+    return this.getNumberOfWordsHelp(0);
+  }
+
+  @Override
+  public int getNumberOfWordsHelp(int acc) {
+    return this.rest.getNumberOfWordsHelp(1 + acc);
   }
 
   /**
@@ -30,7 +37,11 @@ public class WordNode extends AbstractSentence {
    */
   @Override
   public String longestWord() {
-    return null;
+    if(super.word.length() > rest.longestWord().length()) {
+      return super.word;
+    } else {
+      return rest.longestWord();
+    }
   }
 
   /**
@@ -39,18 +50,48 @@ public class WordNode extends AbstractSentence {
    * @return a duplicate of the sentence
    */
   @Override
-  public Sentence clone() {
-    return null;
+  public Sentence clone() throws CloneNotSupportedException {
+    try {
+      return new WordNode(super.word, super.rest.clone());
+    }
+    catch(Exception e) {
+      throw new CloneNotSupportedException();
+    }
+
   }
 
   /**
    * Combine two sentences into a singular new sentence.
    *
-   * @param other
+   * @param other the other sentence.
    * @return combination of two sentences
    */
   @Override
   public Sentence merge(Sentence other) {
     return null;
+  }
+
+  /**
+   * Return the entire sentence as a single string object.
+   *
+   * @return a string representation of the sentence
+   */
+  @Override
+  public String toString() {
+    return this.toStringHelp("");
+  }
+
+
+  /**
+   * Helper method for the toString() method.
+   *
+   * @param str string to be returned
+   * @return the accumulated string
+   */
+  public String toStringHelp(String str) {
+    if (this.getNumberOfWords() == 1) {
+      return this.rest.toStringHelp(str + this.word);
+    } else
+      return this.rest.toStringHelp(str + this.word + " ");
   }
 }

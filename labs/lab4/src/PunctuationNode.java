@@ -1,4 +1,4 @@
-public class PunctuationNode extends AbstractSentence {
+public class PunctuationNode extends AbstractSentence implements Cloneable {
 
   /**
    * Abstract constructor for the sentence class.
@@ -11,23 +11,13 @@ public class PunctuationNode extends AbstractSentence {
   }
 
   /**
-   * Return the number of words in the sentence (excluding punctuation).
-   *
-   * @return number of words in the sentence
-   */
-  @Override
-  public int getNumberOfWords() {
-    return rest.getNumberOfWords();
-  }
-
-  /**
    * The longest word in the sentence by number of characters.
    *
    * @return longest word in the sentence
    */
   @Override
   public String longestWord() {
-    return null;
+    return rest.longestWord();
   }
 
   /**
@@ -36,18 +26,44 @@ public class PunctuationNode extends AbstractSentence {
    * @return a duplicate of the sentence
    */
   @Override
-  public Sentence clone() {
-    return null;
+  public Sentence clone() throws CloneNotSupportedException {
+    try {
+      return new PunctuationNode(super.word, super.rest.clone());
+    }
+    catch (Exception e) {
+      throw new CloneNotSupportedException();
+    }
   }
 
   /**
    * Combine two sentences into a singular new sentence.
    *
-   * @param other
+   * @param other the other sentence
    * @return combination of two sentences
    */
   @Override
   public Sentence merge(Sentence other) {
     return null;
+  }
+
+  /**
+   * Return the entire sentence as a single string object.
+   *
+   * @return a string representation of the sentence
+   */
+  @Override
+  public String toString() {
+    return this.toStringHelp("");
+  }
+
+
+  /**
+   * Helper method for the toString() method.
+   *
+   * @param str string to be returned
+   * @return the accumulated string
+   */
+  public String toStringHelp(String str) {
+   return this.rest.toStringHelp(str + this.word);
   }
 }
