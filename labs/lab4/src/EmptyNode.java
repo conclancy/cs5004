@@ -1,7 +1,7 @@
 import java.util.regex.Pattern;
 
 /**
- * Class representing an empty string
+ * Class representing the end of a sentence.
  */
 public class EmptyNode extends AbstractSentence implements Cloneable {
 
@@ -33,19 +33,20 @@ public class EmptyNode extends AbstractSentence implements Cloneable {
       return new EmptyNode();
     }
     catch (Exception e) {
-      throw new CloneNotSupportedException();
+      throw new CloneNotSupportedException("This sentence node cannot be cloned.");
     }
   }
 
   /**
    * Combine two sentences into a singular new sentence.
    *
-   * @param other the other sentence.
+   * @param other the other sentence
    * @return combination of two sentences
    */
   @Override
   public Sentence merge(Sentence other) {
-    return null;
+    // replace the empty node with a space between sentences.
+    return new WordNode("", other);
   }
 
   /**
@@ -65,11 +66,13 @@ public class EmptyNode extends AbstractSentence implements Cloneable {
    * @param str string to be returned
    * @return the accumulated string
    */
+  @Override
   public String toStringHelp(String str) {
     String last = str.substring(str.length() - 1);
     if (Pattern.matches("\\p{Punct}", last)) {
       return str;
-    } else
+    } else {
       return str + ".";
+    }
   }
 }

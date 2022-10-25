@@ -1,5 +1,3 @@
-import java.util.regex.Pattern;
-
 /**
  * Represents a word in a sentence.
  */
@@ -25,6 +23,12 @@ public class WordNode extends AbstractSentence implements Cloneable {
     return this.getNumberOfWordsHelp(0);
   }
 
+  /**
+   * Helper method for the getNumberOfWords() method.
+   *
+   * @param acc accumulator value
+   * @return incremented value
+   */
   @Override
   public int getNumberOfWordsHelp(int acc) {
     return this.rest.getNumberOfWordsHelp(1 + acc);
@@ -37,7 +41,7 @@ public class WordNode extends AbstractSentence implements Cloneable {
    */
   @Override
   public String longestWord() {
-    if(super.word.length() > rest.longestWord().length()) {
+    if (super.word.length() > rest.longestWord().length()) {
       return super.word;
     } else {
       return rest.longestWord();
@@ -54,8 +58,8 @@ public class WordNode extends AbstractSentence implements Cloneable {
     try {
       return new WordNode(super.word, super.rest.clone());
     }
-    catch(Exception e) {
-      throw new CloneNotSupportedException();
+    catch (Exception e) {
+      throw new CloneNotSupportedException("Cloning this object not possible");
     }
 
   }
@@ -68,7 +72,7 @@ public class WordNode extends AbstractSentence implements Cloneable {
    */
   @Override
   public Sentence merge(Sentence other) {
-    return null;
+    return new WordNode(super.word, super.rest.merge(other));
   }
 
   /**
@@ -88,10 +92,12 @@ public class WordNode extends AbstractSentence implements Cloneable {
    * @param str string to be returned
    * @return the accumulated string
    */
+  @Override
   public String toStringHelp(String str) {
     if (this.getNumberOfWords() == 1) {
       return this.rest.toStringHelp(str + this.word);
-    } else
+    } else {
       return this.rest.toStringHelp(str + this.word + " ");
+    }
   }
 }

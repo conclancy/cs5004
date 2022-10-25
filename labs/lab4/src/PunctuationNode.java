@@ -1,3 +1,6 @@
+/**
+ * Represents a punctuation mark in a sentence.
+ */
 public class PunctuationNode extends AbstractSentence implements Cloneable {
 
   /**
@@ -29,9 +32,8 @@ public class PunctuationNode extends AbstractSentence implements Cloneable {
   public Sentence clone() throws CloneNotSupportedException {
     try {
       return new PunctuationNode(super.word, super.rest.clone());
-    }
-    catch (Exception e) {
-      throw new CloneNotSupportedException();
+    } catch (Exception e) {
+      throw new CloneNotSupportedException("This punctuation node cannot be cloned");
     }
   }
 
@@ -43,7 +45,7 @@ public class PunctuationNode extends AbstractSentence implements Cloneable {
    */
   @Override
   public Sentence merge(Sentence other) {
-    return null;
+    return new PunctuationNode(super.word, super.rest.merge(other));
   }
 
   /**
@@ -63,7 +65,8 @@ public class PunctuationNode extends AbstractSentence implements Cloneable {
    * @param str string to be returned
    * @return the accumulated string
    */
+  @Override
   public String toStringHelp(String str) {
-   return this.rest.toStringHelp(str + this.word);
+    return this.rest.toStringHelp(str + this.word);
   }
 }

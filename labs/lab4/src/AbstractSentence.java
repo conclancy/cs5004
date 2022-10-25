@@ -1,6 +1,9 @@
+/**
+ * Abstraction of the Sentence implementation.
+ */
 public abstract class AbstractSentence implements Sentence, Cloneable {
-    public String word;
-    public Sentence rest;
+  protected String word;
+  protected Sentence rest;
 
   /**
    * Abstract constructor for the sentence class.
@@ -9,8 +12,8 @@ public abstract class AbstractSentence implements Sentence, Cloneable {
    * @param rest the previous nodes in the sentence
    */
   public AbstractSentence(String word, Sentence rest) {
-      this.word = word;
-      this.rest = rest;
+    this.word = word;
+    this.rest = rest;
   }
 
   /**
@@ -23,6 +26,13 @@ public abstract class AbstractSentence implements Sentence, Cloneable {
     return 0;
   }
 
+  /**
+   * Helper for the getNumberOfWords() method.
+   *
+   * @param acc accumulator value
+   * @return number of words in the sentence
+   */
+  @Override
   public int getNumberOfWordsHelp(int acc) {
     return acc;
   }
