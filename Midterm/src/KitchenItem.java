@@ -1,38 +1,16 @@
+/**
+ * Kitchen item is a specific type of item.
+ */
+public class KitchenItem extends AbstractItem {
 
-public class KitchenItem {
-  
-  private double price;
-  private double weight;
-  private int nInStock;
-  
+  /**
+   * Construct a kitchen item.
+   *
+   * @param price        The cost of the item, as a double.
+   * @param initialStock The number of items starting in stock, as an integer.
+   * @param weight       The weight of a single unit of the item, as a double.
+   */
   public KitchenItem(double price, int initialStock, double weight) {
-    this.price = price;
-    this.nInStock = initialStock;
-    this.weight = weight;
+    super(price, initialStock, weight);
   }
-  
-  public double getPrice() {
-    return this.price;
-  }
-  
-  public double getWeight() {
-    return this.weight;
-  }
-  
-  public boolean inStock() {
-    return nInStock>0;
-  }
-  
-  public void sellItem(int nSold) throws IllegalArgumentException {
-    if (nSold > this.nInStock) {
-      throw new IllegalArgumentException("We cannot sell more than are in stock.");
-    }
-    this.nInStock = this.nInStock - nSold;
-  }
-  
-  public double valueOfStock() {
-    return price*nInStock;
-  }
-  
-
 }

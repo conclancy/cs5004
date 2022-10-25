@@ -43,8 +43,8 @@ public class AnimatedMovie implements Movie {
   /**
    * Constructs an animated movie object.
    *
-   * @param publicationYear year the movie was published
-   * @param title           title of the move
+   * @param publicationYear The year the movie was published as an integer.
+   * @param title           The title of the move as a string.
    */
   public AnimatedMovie(int publicationYear, String title) {
     this.publicationYear = publicationYear;

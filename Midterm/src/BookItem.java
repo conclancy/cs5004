@@ -1,54 +1,56 @@
+/**
+ * Book item is a specific type of item that has a title, author, and length.
+ */
+public class BookItem extends AbstractItem {
 
-public class BookItem {
-  
   private String title;
   private String author;
-  private double price;
-  private double weight;
   private int length;
-  private int nInStock;
-  
-  public BookItem(String author, String title, int length, double price, int initialStock, double weight) {
+
+  /**
+   * Construct a book item.
+   *
+   * @param author       The author of the book, as a String.
+   * @param title        The title of the book, as a String.
+   * @param length       The length of the book, as an integer.
+   * @param price        The price of the book, as a double.
+   * @param initialStock The initial amount of stock, as an integer.
+   * @param weight       The weight of a single unit of the book, as a double.
+   */
+  public BookItem(String author, String title, int length, double price, int initialStock,
+      double weight) {
+    super(price, initialStock, weight);
     this.title = title;
     this.author = author;
-    this.price = price;
-    this.nInStock = initialStock;
-    this.weight = weight;
+    this.length = length;
   }
-  
+
+  /**
+   * Get the title of the book.
+   *
+   * @return The title of the book,  as a String.
+   */
   public String getTitle() {
     return this.title;
   }
-  
+
+  /**
+   * Get the author of the book.
+   *
+   * @return The author of the book, as a String.
+   */
   public String getAuthor() {
     return this.author;
   }
-  
+
+  /**
+   * Get the length of the book.
+   *
+   * @return The length of the book, as an int.
+   */
   public int getLenght() {
     return this.length;
   }
-  
-  public double getPrice() {
-    return this.price;
-  }
-  
-  public double getWeight() {
-    return this.weight;
-  }
-  
-  public boolean inStock() {
-    return nInStock>0;
-  }
-  
-  public void sellItem(int nSold) throws IllegalArgumentException {
-    if (nSold > this.nInStock) {
-      throw new IllegalArgumentException("We cannot sell more than are in stock.");
-    }
-    this.nInStock = this.nInStock - nSold;
-  }
-  
-  public double valueOfStock() {
-    return price*nInStock;
-  }
-  
+
+
 }
