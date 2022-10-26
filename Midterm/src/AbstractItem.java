@@ -1,23 +1,15 @@
 /**
- * This represents an abstract item that will be in a web store.
- * You are a developer for the web store and noticed that 
- * the original developer did not use proper abstraction.
- * You need to correct this problem.
- * You need to look at the specific items:
- * KitchenItem
- * ClothingItem
- * Book Item
- * 
- * and determine should be moved into the abstract class.
- * Then properly add javadoc to all methods in the 
- * abstract class and subclasses. 
- * You will need to turn in this file, along with the properly
- * modified version of the other files so that they can make use
- * of all the fields and methods of this AbstractClass. 
- * 
+ * This represents an abstract item that will be in a web store. You are a developer for the web
+ * store and noticed that the original developer did not use proper abstraction. You need to correct
+ * this problem. You need to look at the specific items: KitchenItem ClothingItem Book Item
  *
+ * <p>and determine should be moved into the abstract class. Then properly add javadoc to all
+ * methods in the abstract class and subclasses. You will need to turn in this file, along with the
+ * properly modified version of the other files so that they can make use of all the fields and
+ * methods of this AbstractClass.
  */
 public abstract class AbstractItem {
+
   protected double price;
   protected int nInStock;
   protected double weight;
@@ -25,9 +17,9 @@ public abstract class AbstractItem {
   /**
    * Construct an item.
    *
-   * @param price The cost of the item, as a double.
+   * @param price        The cost of the item, as a double.
    * @param initialStock The number of items starting in stock, as an integer.
-   * @param weight The weight or size of a single unit of the item, as a double.
+   * @param weight       The weight or size of a single unit of the item, as a double.
    */
   public AbstractItem(double price, int initialStock, double weight) {
     this.price = price;
@@ -50,7 +42,7 @@ public abstract class AbstractItem {
    * @return True if the item is in stock.
    */
   public boolean inStock() {
-    return this.nInStock>0;
+    return this.nInStock > 0;
   }
 
   /**

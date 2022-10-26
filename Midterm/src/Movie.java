@@ -19,7 +19,7 @@ public interface Movie {
 
 
   /**
-   * Resets the progress of the movie to the beginning
+   * Resets the progress of the movie to the beginning.
    */
   public void resetProgress();
 

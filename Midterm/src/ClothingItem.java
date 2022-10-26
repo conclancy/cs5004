@@ -21,7 +21,7 @@ public class ClothingItem extends AbstractItem {
   /**
    * Get the size of the current item.
    *
-   * Functionally the same as the getWeight() method from the super class, but here to ensure the
+   * <p>Functionally the same as the getWeight() method from the super class, but here to ensure the
    * caller does not get caught up on the semantics of weight vs. size.
    *
    * @return The size of the item as a double.

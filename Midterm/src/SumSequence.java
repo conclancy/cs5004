@@ -3,13 +3,13 @@
  * to how Math.sqrt or Math.abs is used, in that they are static methods that do not require
  * instantiating an object.
  *
- * You are given an implementation that computes the sum of the number from 1 to n, where n is an
+ * <p>You are given an implementation that computes the sum of the number from 1 to n, where n is an
  * input to the function. The given implementation uses a closed form solution for the problem. You
  * are required to give a recursive implementation.
  *
- * sumSequenceTest.java gives you a unit test that you can use to test your code.
+ * <p>SumSequenceTest.java gives you a unit test that you can use to test your code.
  */
-public class sumSequence {
+public class SumSequence {
 
   /**
    * The static method, sumSequenceEquation uses the closed form solution for computing the sum of
