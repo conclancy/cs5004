@@ -1,34 +1,14 @@
-import java.util.function.Predicate;
-
-public interface Node {
-
-  /**
-   * Get the highest power being raised in the list of terms.
-   *
-   * @return The highest power as an int.
-   */
-  int getDegree();
+/**
+ * A special type of node which acts as a recursive base case.
+ */
+public class EmptyTermNode extends AbstractNode {
 
   /**
-   * Get the coefficient value for the node.
-   *
-   * @return The coefficient, as an int.
+   * Constructor for an empty node.
    */
-  int getCoefficient();
-
-  /**
-   * Get the rest of the nodes after this node.
-   *
-   * @return The remaining nodes.
-   */
-  Node getRest();
-
-  /**
-   * Return a string interpolation of the node.
-   *
-   * @return The node in string form.
-   */
-  String toString();
+  public EmptyTermNode() {
+    super();
+  }
 
   /**
    * Add a new node to the list.
@@ -36,7 +16,10 @@ public interface Node {
    * @param other The new node to be added to the existing node.
    * @return A new node containing the new element.
    */
-  Node addNode(Node other);
+  @Override
+  public Node addNode(Node other) {
+    return null;
+  }
 
   /**
    * Remove a node with the given power.
@@ -45,7 +28,10 @@ public interface Node {
    *              not be changed.
    * @return A new node without the passed node.
    */
-  Node removeNode(int power);
+  @Override
+  public Node removeNode(int power) {
+    return null;
+  }
 
   /**
    * Calculate the value of the node given an input term.
@@ -53,7 +39,11 @@ public interface Node {
    * @param x The term to be evaluated.
    * @return The value of the node, as a double.
    */
-  double evaluate(double x);
+  @Override
+  public double evaluate(double x) {
+    return 0;
+  }
+
 
   /**
    * Helps generate the toString() method return.
@@ -61,5 +51,8 @@ public interface Node {
    * @param str The string to be concatenated.
    * @return The concatenated string.
    */
-  String toStringHelper(String str);
+  @Override
+  public String toStringHelper(String str) {
+    return str.substring(0, str.length() - 1);
+  }
 }
