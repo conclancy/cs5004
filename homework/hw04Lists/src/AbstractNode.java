@@ -73,4 +73,6 @@ public abstract class AbstractNode implements Node {
   public int getDegree() {
     return Math.max(this.getPower(), rest.getDegree());
   }
+
+
 }

@@ -36,6 +36,12 @@ public class TermNodeTest {
   }
 
   @Test
+  public void testEquals() {
+    assertEquals(true, simpleTermNode.equals(new TermNode(2, 1, new EmptyTermNode())));
+    assertEquals(false, simpleTermNode.equals(new TermNode(2, 2, new EmptyTermNode())));
+  }
+
+  @Test
   public void testEvaluate() {
 
     // Test `zero` cases
@@ -62,6 +68,13 @@ public class TermNodeTest {
 
       assertEquals(expected, actual, .01);
     }
+
+    // Test 3 term evaluate
+    Node temp = simpleTermNode.addNode(complexTermNode);
+    Node threeTerm = temp.addNode(new TermNode(1,3, new EmptyTermNode()));
+    assertEquals("4x^3 1x^2 3x^1", threeTerm.toString());
+    assertEquals(42, threeTerm.evaluate(2), .01);
+
   }
 
   @Test
@@ -90,6 +103,26 @@ public class TermNodeTest {
 
     // Test adding the zeroNode
     assertEquals("4x^3 0x^2", complexTermNode.addNode(zeroTermNode).toString());
+  }
+
+  @Test
+  public void testRemoveNode() {
+    // Test smaller power adding larger power
+    Node temp = simpleTermNode.addNode(complexTermNode);
+    assertEquals("4x^3 1x^2", temp.toString());
+
+    assertEquals("4x^3", temp.removeNode(2).toString());
+    assertEquals("1x^2", temp.removeNode(3).toString());
+
+    // Test larger Polynomial
+    Node threeTerm = temp.addNode(new TermNode(1,3, new EmptyTermNode()));
+    assertEquals("4x^3 1x^2 3x^1", threeTerm.toString());
+
+    assertEquals("1x^2 3x^1", threeTerm.removeNode(3).toString());
+    assertEquals("4x^3 3x^1", threeTerm.removeNode(2).toString());
+
+
+
   }
 
 }

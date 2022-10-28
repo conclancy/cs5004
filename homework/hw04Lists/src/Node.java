@@ -1,5 +1,3 @@
-import java.util.function.Predicate;
-
 public interface Node {
 
   /**
@@ -56,6 +54,14 @@ public interface Node {
   double evaluate(double x);
 
   /**
+   * Help the evaluate() method to evaluate the value of a term given a value.
+   *
+   * @param x The term to be evaluated.
+   * @return The evaluated value of the node, as a double.
+   */
+  double evaluateHelper(double x);
+
+  /**
    * Helps generate the toString() method return.
    *
    * @param str The string to be concatenated.
@@ -70,4 +76,13 @@ public interface Node {
    * @return A new node containing the original and added node.
    */
   Node addNodeHelper(Node other);
+
+  /**
+   * Helps removeNode method to remove a term with a given power from the node.
+   *
+   * @param power The power to be removed, as an int.
+   * @return A node without the term containing the power. If no node with the given power is found
+   * the Node is returned unchanged.
+   */
+  Node removeNodeHelper(int power);
 }

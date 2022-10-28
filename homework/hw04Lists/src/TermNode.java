@@ -31,7 +31,19 @@ public class TermNode extends AbstractNode {
    */
   @Override
   public double evaluate(double x) {
-    return Math.pow(x, this.power) * coefficient;
+    return this.evaluateHelper(x);
+  }
+
+  /**
+   * Help the evaluate() method to evaluate the value of a term given a value.
+   *
+   * @param x The term to be evaluated.
+   * @return The evaluated value of the node, as a double.
+   */
+  @Override
+  public double evaluateHelper(double x) {
+    double eval = Math.pow(x, super.power) * super.coefficient;
+    return eval + this.rest.evaluateHelper(x);
   }
 
   /**
@@ -109,6 +121,38 @@ public class TermNode extends AbstractNode {
    */
   @Override
   public Node removeNode(int power) {
-    return null;
+    return this.removeNodeHelper(power);
+  }
+
+  /**
+   * Helps removeNode method to remove a term with a given power from the node.
+   *
+   * @param power The power to be removed, as an int.
+   * @return A node without the term containing the power. If no node with the given power is found
+   * the Node is returned unchanged.
+   */
+  @Override
+  public Node removeNodeHelper(int power) {
+    if (super.getPower() == power) {
+      return super.getRest();
+    }
+    else {
+      return new TermNode(super.power, super.coefficient, super.rest.removeNodeHelper(power));
+    }
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this==other) {
+      return true;
+    }
+    if (!(other instanceof TermNode)) {
+      return false; //other cannot be equal to this as it is not a Person object!
+    }
+    Node otherNode = (TermNode)other; //this will work
+
+    return  this.getDegree() == otherNode.getDegree()
+        && this.getCoefficient() == otherNode.getCoefficient()
+        && this.rest.equals(otherNode.getRest());
   }
 }
