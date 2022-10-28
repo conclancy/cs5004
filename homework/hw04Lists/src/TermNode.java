@@ -141,6 +141,12 @@ public class TermNode extends AbstractNode {
     }
   }
 
+  /**
+   * Determines if two objects are logically equivalent.
+   *
+   * @param other the other object to test for equality.
+   * @return true if the objects are logically equivalent.
+   */
   @Override
   public boolean equals(Object other) {
     if (this==other) {

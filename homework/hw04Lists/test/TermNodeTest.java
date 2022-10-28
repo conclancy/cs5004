@@ -71,7 +71,7 @@ public class TermNodeTest {
 
     // Test 3 term evaluate
     Node temp = simpleTermNode.addNode(complexTermNode);
-    Node threeTerm = temp.addNode(new TermNode(1,3, new EmptyTermNode()));
+    Node threeTerm = temp.addNode(new TermNode(1, 3, new EmptyTermNode()));
     assertEquals("4x^3 1x^2 3x^1", threeTerm.toString());
     assertEquals(42, threeTerm.evaluate(2), .01);
 
@@ -95,7 +95,7 @@ public class TermNodeTest {
     assertEquals("4x^3 1x^2", temp.toString());
 
     // Test multiple nodes
-    Node powerOne = new TermNode(1,3, new EmptyTermNode());
+    Node powerOne = new TermNode(1, 3, new EmptyTermNode());
     assertEquals("4x^3 1x^2 3x^1", temp.addNode(powerOne).toString());
 
     // Test adding two nodes with the same coefficient
@@ -115,12 +115,11 @@ public class TermNodeTest {
     assertEquals("1x^2", temp.removeNode(3).toString());
 
     // Test larger Polynomial
-    Node threeTerm = temp.addNode(new TermNode(1,3, new EmptyTermNode()));
+    Node threeTerm = temp.addNode(new TermNode(1, 3, new EmptyTermNode()));
     assertEquals("4x^3 1x^2 3x^1", threeTerm.toString());
 
     assertEquals("1x^2 3x^1", threeTerm.removeNode(3).toString());
     assertEquals("4x^3 3x^1", threeTerm.removeNode(2).toString());
-
 
 
   }
