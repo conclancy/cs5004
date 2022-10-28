@@ -62,4 +62,12 @@ public interface Node {
    * @return The concatenated string.
    */
   String toStringHelper(String str);
+
+  /**
+   * Helps add a new node to an existing node.
+   *
+   * @param other The node to be added.
+   * @return A new node containing the original and added node.
+   */
+  Node addNodeHelper(Node other);
 }

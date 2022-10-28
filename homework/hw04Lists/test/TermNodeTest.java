@@ -73,11 +73,22 @@ public class TermNodeTest {
 
   @Test
   public void testAddNode() {
-    assertEquals("4x^3 1x^2", complexTermNode.addNode(simpleTermNode).toString());
-    assertEquals("4x^3 1x^2", simpleTermNode.addNode(complexTermNode).toString());
 
+    // Test higher power adding smaller power
+    assertEquals("4x^3 1x^2", complexTermNode.addNode(simpleTermNode).toString());
+
+    // Test smaller power adding larger power
+    Node temp = simpleTermNode.addNode(complexTermNode);
+    assertEquals("4x^3 1x^2", temp.toString());
+
+    // Test multiple nodes
+    Node powerOne = new TermNode(1,3, new EmptyTermNode());
+    assertEquals("4x^3 1x^2 3x^1", temp.addNode(powerOne).toString());
+
+    // Test adding two nodes with the same coefficient
     assertEquals("1x^2", simpleTermNode.addNode(zeroTermNode).toString());
 
+    // Test adding the zeroNode
     assertEquals("4x^3 0x^2", complexTermNode.addNode(zeroTermNode).toString());
   }
 

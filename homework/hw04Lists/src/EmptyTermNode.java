@@ -21,6 +21,11 @@ public class EmptyTermNode extends AbstractNode {
     return null;
   }
 
+  @Override
+  public Node addNodeHelper(Node other) {
+    return new TermNode(other.getDegree(), other.getCoefficient(), this);
+  }
+
   /**
    * Remove a node with the given power.
    *

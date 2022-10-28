@@ -74,11 +74,27 @@ public class TermNode extends AbstractNode {
    */
   @Override
   public Node addNode(Node other) {
+    return this.addNodeHelper(other);
+  }
+
+  // todo add javadoc
+  public Node addNodeHelper(Node other) {
+
+    // Larger adding smaller
+    // todo
     if (this.getDegree() > other.getDegree()) {
-      return new TermNode(super.getPower(), super.getCoefficient(), other);
-    } else if (this.getDegree() < other.getDegree()) {
-      return other.addNode(this);
-    } else {
+      // return new TermNode(super.getPower(), super.getCoefficient(), other);
+      return new TermNode(this.power, this.coefficient, this.rest.addNodeHelper(other));
+    }
+
+    // Smaller adding larger
+    else if (this.getDegree() < other.getDegree()) {
+      //return other.addNode(this);
+      return new TermNode(other.getDegree(), other.getCoefficient(), this);
+    }
+
+    // Equal powers
+    else {
       return new TermNode(super.getPower(), super.getCoefficient() + other.getCoefficient(),
           other.getRest());
     }
