@@ -3,6 +3,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Test for the node class.
+ */
 public class TermNodeTest {
 
   private TermNode simpleTermNode;
@@ -120,8 +123,26 @@ public class TermNodeTest {
 
     assertEquals("1x^2 3x^1", threeTerm.removeNode(3).toString());
     assertEquals("4x^3 3x^1", threeTerm.removeNode(2).toString());
+  }
 
+  @Test
+  public void restFindCoefficient() {
 
+    // set up multi term polynomial
+    Node temp = simpleTermNode.addNode(complexTermNode);
+    assertEquals("4x^3 1x^2", temp.toString());
+
+    Node threeTerm = temp.addNode(new TermNode(1, 3, new EmptyTermNode()));
+    assertEquals("4x^3 1x^2 3x^1", threeTerm.toString());
+
+    // standard tests
+    assertEquals(4, threeTerm.findCoefficient(3));
+    assertEquals(1, threeTerm.findCoefficient(2));
+    assertEquals(3, threeTerm.findCoefficient(1));
+
+    // term not found; should return 0.
+    assertEquals(0, threeTerm.findCoefficient(5));
+    assertEquals(0, threeTerm.findCoefficient(0));
   }
 
 }

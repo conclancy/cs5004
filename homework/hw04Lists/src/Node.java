@@ -1,3 +1,6 @@
+/**
+ * A class representing a node in a linked-list.
+ */
 public interface Node {
 
   /**
@@ -82,7 +85,23 @@ public interface Node {
    *
    * @param power The power to be removed, as an int.
    * @return A node without the term containing the power. If no node with the given power is found
-   * the Node is returned unchanged.
+   *         the Node is returned unchanged.
    */
   Node removeNodeHelper(int power);
+
+  /**
+   * Find the coefficient for the term with to given power.
+   *
+   * @param power The power of the desired coefficient, as an int.
+   * @return The coefficient, as an int
+   */
+  int findCoefficient(int power);
+
+  /**
+   * Helps the findCoefficient method search for the term with to given power.
+   *
+   * @param power The power of the desired coefficient, as an int.
+   * @return The coefficient, as an int
+   */
+  int findCoefficientHelper(int power);
 }

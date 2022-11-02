@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * A special type of node which acts as a recursive base case.
  */
@@ -49,11 +51,33 @@ public class EmptyTermNode extends AbstractNode {
    *
    * @param power The power to be removed, as an int.
    * @return A node without the term containing the power. If no node with the given power is found
-   * the Node is returned unchanged.
+   *         the Node is returned unchanged.
    */
   @Override
   public Node removeNodeHelper(int power) {
     return this;
+  }
+
+  /**
+   * Find the coefficient for the term with to given power.
+   *
+   * @param power The power of the desired coefficient, as an int.
+   * @return The coefficient, as an int
+   */
+  @Override
+  public int findCoefficient(int power) {
+    return 0;
+  }
+
+  /**
+   * Helps the findCoefficient method search for the term with to given power.
+   *
+   * @param power The power of the desired coefficient, as an int.
+   * @return The coefficient, as an int
+   */
+  @Override
+  public int findCoefficientHelper(int power) {
+    return 0;
   }
 
   /**
@@ -107,13 +131,23 @@ public class EmptyTermNode extends AbstractNode {
    */
   @Override
   public boolean equals(Object other) {
-    if (this==other) {
+    if (this == other) {
       return true;
     }
     if (!(other instanceof EmptyTermNode)) {
       return false; //other cannot be equal to this as it is not a Person object!
     }
-    Node otherNode = (EmptyTermNode)other;
+    Node otherNode = (EmptyTermNode) other;
     return true;
+  }
+
+  /**
+   * Create a hash table of the object.
+   *
+   * @return the object as an integer hash value.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.coefficient, this.power);
   }
 }

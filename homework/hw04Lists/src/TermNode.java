@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * A special type of node that acts a term in a polynomial.
  */
@@ -14,6 +16,18 @@ public class TermNode extends AbstractNode {
    */
   public TermNode(int power, int coefficient, Node rest) throws IllegalArgumentException {
     super(power, coefficient, rest);
+  }
+
+  /**
+   * Constructor for the AbstractNode class that instantiates a node with a power and coefficient
+   * and additional terms in the list.
+   *
+   * @param power       The power being raised by this node.
+   * @param coefficient The coefficient of this node.
+   * @throws IllegalArgumentException Powers cannot be entered that are less than 0.
+   */
+  public TermNode(int power, int coefficient) throws IllegalArgumentException {
+    super(power, coefficient, new EmptyTermNode());
   }
 
   /**
@@ -89,11 +103,14 @@ public class TermNode extends AbstractNode {
     return this.addNodeHelper(other);
   }
 
-  // todo add javadoc
+  /**
+   * Helps add a new node to an existing node.
+   *
+   * @param other The node to be added.
+   * @return A new node containing the original and added node.
+   */
   public Node addNodeHelper(Node other) {
 
-    // Larger adding smaller
-    // todo
     if (this.getDegree() > other.getDegree()) {
       // return new TermNode(super.getPower(), super.getCoefficient(), other);
       return new TermNode(this.power, this.coefficient, this.rest.addNodeHelper(other));
@@ -129,15 +146,40 @@ public class TermNode extends AbstractNode {
    *
    * @param power The power to be removed, as an int.
    * @return A node without the term containing the power. If no node with the given power is found
-   * the Node is returned unchanged.
+   *         the Node is returned unchanged.
    */
   @Override
   public Node removeNodeHelper(int power) {
     if (super.getPower() == power) {
       return super.getRest();
-    }
-    else {
+    } else {
       return new TermNode(super.power, super.coefficient, super.rest.removeNodeHelper(power));
+    }
+  }
+
+  /**
+   * Find the coefficient for the term with to given power.
+   *
+   * @param power The power of the desired coefficient, as an int.
+   * @return The coefficient, as an int
+   */
+  @Override
+  public int findCoefficient(int power) {
+    return this.findCoefficientHelper(power);
+  }
+
+  /**
+   * Helps the findCoefficient method search for the term with to given power.
+   *
+   * @param power The power of the desired coefficient, as an int.
+   * @return The coefficient, as an int
+   */
+  @Override
+  public int findCoefficientHelper(int power) {
+    if(super.getPower() == power) {
+      return super.getCoefficient();
+    } else {
+      return super.rest.findCoefficientHelper(power);
     }
   }
 
@@ -149,16 +191,26 @@ public class TermNode extends AbstractNode {
    */
   @Override
   public boolean equals(Object other) {
-    if (this==other) {
+    if (this == other) {
       return true;
     }
     if (!(other instanceof TermNode)) {
       return false; //other cannot be equal to this as it is not a Person object!
     }
-    Node otherNode = (TermNode)other; //this will work
+    Node otherNode = (TermNode) other; //this will work
 
-    return  this.getDegree() == otherNode.getDegree()
+    return this.getDegree() == otherNode.getDegree()
         && this.getCoefficient() == otherNode.getCoefficient()
         && this.rest.equals(otherNode.getRest());
+  }
+
+  /**
+   * Create a hash table of the object.
+   *
+   * @return the object as an integer hash value.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.coefficient, this.power, this.rest);
   }
 }
