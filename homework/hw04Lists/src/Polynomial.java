@@ -7,7 +7,7 @@ public interface Polynomial {
    * Adds a new term to the polynomial.
    *
    * @param coefficient The coefficient of the new term, as an int.
-   * @param power The power of the new term, as an int.
+   * @param power       The power of the new term, as an int.
    * @return A new polynomial object.
    * @throws IllegalArgumentException Thrown if the power passed is less than 0.
    */
@@ -43,7 +43,14 @@ public interface Polynomial {
    * @return The value of the evaluated polynomial, as a double.
    */
   double evaluate(double x);
-  Polynomial add(Polynomial other) throws IllegalArgumentException;
 
+  /**
+   * Combine two polynomials into a single mathematical expression.
+   *
+   * @param other The other polynomial.
+   * @return A new polynomial which is a combination of the two inputs.
+   * @throws IllegalArgumentException if the object passed is not of type polynomial.
+   */
+  Polynomial add(Polynomial other) throws IllegalArgumentException;
 
 }
