@@ -88,8 +88,15 @@ public class TermNode extends AbstractNode {
    */
   @Override
   public String toStringHelper(String str) {
-    String thisString = String.format("%dx^%d", super.coefficient, super.power);
-    return this.rest.toStringHelper(str + thisString + " ");
+
+    if (super.coefficient == 0) {
+      return this.rest.toStringHelper(str);
+    } else {
+      String thisString = String.format("%dx^%d", super.coefficient, super.power);
+      return this.rest.toStringHelper(str + thisString + " ");
+    }
+
+
   }
 
   /**
