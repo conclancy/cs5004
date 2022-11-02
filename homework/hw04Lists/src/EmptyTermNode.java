@@ -35,6 +35,16 @@ public class EmptyTermNode extends AbstractNode {
   }
 
   /**
+   * Get the highest power being raised in the list of terms.
+   *
+   * @return The highest power as an int.
+   */
+  @Override
+  public int getDegree() {
+    return 0;
+  }
+
+  /**
    * Remove a node with the given power.
    *
    * @param power The power node to be removed.  If the node is not found, the returned node will

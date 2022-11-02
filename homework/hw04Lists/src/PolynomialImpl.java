@@ -1,5 +1,3 @@
-import java.util.Objects;
-
 /**
  * Implementation of the polynomial class.
  */
@@ -46,7 +44,6 @@ public class PolynomialImpl implements Polynomial {
     int tempCoefficient;
     int tempPower;
     int i;
-
 
     for (i = 0; i < termList.length; i++) {
       String[] currentTerm = termList[i].split("x\\^");
@@ -128,16 +125,31 @@ public class PolynomialImpl implements Polynomial {
    *
    * @param other The other polynomial.
    * @return A new polynomial which is a combination of the two inputs.
-   * @throws IllegalArgumentException if the object passed is not of type polynomial.
+   * @throws IllegalArgumentException   if the object passed is not of type polynomial.
+   * @throws CloneNotSupportedException if the polynomial cannot be cloned.
    */
   @Override
-  public Polynomial add(Polynomial other) throws IllegalArgumentException {
-    Polynomial combined = this;
+  public Polynomial add(Polynomial other)
+      throws IllegalArgumentException, CloneNotSupportedException {
+
+    if (!(other instanceof PolynomialImpl)) {
+      throw new IllegalArgumentException("'other' must be of type PolynomialImpl");
+    }
+
+    // Copy the current polynomial without mutating the original
+    Polynomial combined;
+    try {
+      combined = (PolynomialImpl) this.clone();
+    } catch (CloneNotSupportedException e) {
+      throw new CloneNotSupportedException("This polynomial cannot be copied");
+    }
+
+    // Create temporary variables for the loop
     int currentCoefficient;
     int currentPower;
 
     // if other isn't polynomial throw error
-    while(!Objects.isNull(other)) {
+    while (other.getDegree() > 0) {
       currentPower = other.getDegree();
       currentCoefficient = other.getCoefficient(currentPower);
 

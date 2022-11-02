@@ -176,7 +176,7 @@ public class TermNode extends AbstractNode {
    */
   @Override
   public int findCoefficientHelper(int power) {
-    if(super.getPower() == power) {
+    if (super.getPower() == power) {
       return super.getCoefficient();
     } else {
       return super.rest.findCoefficientHelper(power);
