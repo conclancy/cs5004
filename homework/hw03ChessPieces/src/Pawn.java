@@ -28,7 +28,7 @@ public class Pawn extends AbstractChessPiece {
 
     if ((cell.getColumn() != super.getColumn())) {
       return false;
-    } // TODO abstract this logic with canMove()
+    }
     else if (super.getColor() == Color.WHITE) {
       return cell.getRow() == super.getRow() + 1;
     } else if (super.getColor() == Color.BLACK) {
@@ -48,7 +48,7 @@ public class Pawn extends AbstractChessPiece {
     if (!(other.getColumn() == super.getColumn() + 1
         || other.getColumn() == super.getColumn() - 1)) {
       return false;
-    } // TODO abstract this logic with canMove()
+    }
     else if (super.getColor() == Color.WHITE) {
       return other.getRow() == super.getRow() + 1;
     } else if (super.getColor() == Color.BLACK) {

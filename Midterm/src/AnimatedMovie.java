@@ -92,13 +92,11 @@ public class AnimatedMovie implements Movie {
 
   @Override
   public String getTitle() {
-    // TODO Auto-generated method stub
     return this.title; // Add to appease the hand-in auto-grader.
   }
 
   @Override
   public void saveProgress() {
-    // TODO Auto-generated method stub
 
   }
 
