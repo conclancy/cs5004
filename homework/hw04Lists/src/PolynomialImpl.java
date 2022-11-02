@@ -132,6 +132,7 @@ public class PolynomialImpl implements Polynomial {
    */
   @Override
   public Polynomial add(Polynomial other) throws IllegalArgumentException {
+    Polynomial combined = this;
     int currentCoefficient;
     int currentPower;
 
@@ -140,12 +141,11 @@ public class PolynomialImpl implements Polynomial {
       currentPower = other.getDegree();
       currentCoefficient = other.getCoefficient(currentPower);
 
-      this.addTerm(currentCoefficient, currentPower);
-      this.removeTerm(currentPower);
+      combined.addTerm(currentCoefficient, currentPower);
+      other.removeTerm(currentPower);
     }
 
-    // TODO check to make sure we don't need the original unchanged.
-    return this;
+    return combined;
 
   }
 
