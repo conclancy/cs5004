@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /**
  * Implementation of the polynomial class.
  */
@@ -39,11 +41,17 @@ public class PolynomialImpl implements Polynomial {
    * @throws IllegalArgumentException if the format is not correct (e.g. 3x^2)
    */
   public PolynomialImpl(String stringPolynomial) throws IllegalArgumentException {
-    String[] termList = stringPolynomial.split(" ");
-    this.poly = new EmptyTermNode();
     int tempCoefficient;
     int tempPower;
     int i;
+
+    if (Objects.isNull(stringPolynomial) || stringPolynomial.equals("")) {
+      throw new IllegalArgumentException(
+          "Input string must not be null. To create an empty polynomial, call the PolynomialImpl() "
+              + "constructor without any arguments.");
+    }
+
+    String[] termList = stringPolynomial.split(" ");
 
     for (i = 0; i < termList.length; i++) {
       String[] currentTerm = termList[i].split("x\\^");
@@ -58,7 +66,13 @@ public class PolynomialImpl implements Polynomial {
         tempCoefficient = Integer.parseInt(currentTerm[0]);
       }
 
-      this.addTerm(tempCoefficient, tempPower);
+      if (Objects.isNull(this.poly)) {
+        this.poly = new EmptyTermNode();
+        this.addTerm(tempCoefficient, tempPower);
+      } else {
+        this.addTerm(tempCoefficient, tempPower);
+      }
+
     }
   }
 

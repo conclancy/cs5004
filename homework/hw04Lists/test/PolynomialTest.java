@@ -26,6 +26,42 @@ public class PolynomialTest {
   }
 
   @Test
+  public void testStringConstructor() {
+    Polynomial polyString = new PolynomialImpl("1x^22 8x^3 -2x^2");
+    assertEquals(complexPoly.toString(), polyString.toString());
+
+    Polynomial polyStringDuplicate = new PolynomialImpl("1x^22 2x^2 8x^3 -2x^2");
+    assertEquals("1x^22 8x^3", polyStringDuplicate.toString());
+
+    Polynomial polyStringHuge = new PolynomialImpl("1x^22 2x^22 8x^3 -2x^2");
+    assertEquals("3x^22 8x^3 -2x^2", polyStringHuge.toString());
+
+    Polynomial constant = new PolynomialImpl("2");
+    assertEquals("2x^0", constant.toString());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testBadString() {
+    Polynomial fail = new PolynomialImpl("Connor");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testBadStringX() {
+    Polynomial fail = new PolynomialImpl("2xx^2");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testBadStringEmpty() {
+    Polynomial fail = new PolynomialImpl("");
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testBadStringNull() {
+    Polynomial fail = new PolynomialImpl(null);
+  }
+
+
+  @Test
   public void testAddTerm() {
     String expected = "4x^4 3x^2";
     assertEquals(expected, singleTerm.addTerm(3, 2).toString());
@@ -40,11 +76,16 @@ public class PolynomialTest {
     assertEquals("2x^3", termToAdd.toString());
     assertEquals("4x^4", singleTerm.toString());
     assertEquals("0", emptyPoly.toString());
+    assertEquals("1x^0", new TermNode(0, 1).toString());
   }
 
   @Test
   public void testRemoveTerm() {
     Polynomial testRemove = complexPoly.removeTerm(3);
+    assertEquals("1x^22 -2x^2", testRemove.toString());
+
+    // Should return the same as above since 3 was already removed
+    testRemove = complexPoly.removeTerm(3);
     assertEquals("1x^22 -2x^2", testRemove.toString());
 
     testRemove = complexPoly.removeTerm(2);

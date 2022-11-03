@@ -20,7 +20,7 @@ public class EmptyTermNode extends AbstractNode {
    */
   @Override
   public Node addNode(Node other) {
-    return null;
+    return this.addNodeHelper(other);
   }
 
   /**
