@@ -1,9 +1,11 @@
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SentenceADTImpl<T> implements SentenceADT<T> {
   private List<T> sentence;
@@ -29,8 +31,21 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    *
    * @param sentence the String containing the words for the sentence.
    */
-  public SentenceADTImpl(String sentence) {
-    // TODO use higher order function to implement.
+  public SentenceADTImpl(String sentence) throws IllegalArgumentException {
+    this.sentence = new LinkedList<>();
+    String[] sentenceArray = sentence
+        .replaceAll("(?<=\\S)(?:(?<=\\p{Punct})|(?=\\p{Punct}))(?=\\S)"," ")
+        .split("\\s");
+
+    for (String word: sentenceArray) {
+      try{
+        this.addBack((T) word);
+      }
+      catch(Exception e) {
+        throw new IllegalArgumentException("Element '" + word + "' cannot be added to sentence" + e);
+      }
+
+    }
   }
 
   /**
@@ -40,7 +55,7 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    */
   @Override
   public void addFront(T s) {
-
+    this.sentence.add(0, s);
   }
 
   /**
@@ -50,7 +65,7 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    */
   @Override
   public void addBack(T s) {
-
+    this.sentence.add(s);
   }
 
   /**
@@ -60,7 +75,13 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    * @param s     the object to be added to the sentence.
    */
   @Override
-  public void add(int index, T s) {
+  public void add(int index, T s) throws IllegalArgumentException {
+    try {
+      this.sentence.add(index, s);
+    } catch(IndexOutOfBoundsException e) {
+      throw new IllegalArgumentException("Must add at valid index between 0 and "
+          + this.sentenceSize());
+    }
 
   }
 
@@ -71,7 +92,54 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    */
   @Override
   public int getNumberOfWords() {
-    return 0;
+    return this.sentence.stream()
+        .map(e -> {
+          if (!(Pattern.matches("\\p{Punct}", e.toString()))) {
+            return 1;
+          } else {
+            return 0;
+          }
+        }
+        )
+        .reduce(0, Integer::sum);
+  }
+
+  /**
+   * Get the number of punctuation marks in the current sentence, as an int.
+   *
+   * @return the count of the number of punctuation marks in the sentence, as an int.
+   */
+  @Override
+  public int getNumberOfPunctuation() {
+    return this.sentence.stream()
+        .map(e -> {
+              if ((Pattern.matches("\\p{Punct}", e.toString()))) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
+        )
+        .reduce(0, Integer::sum);
+  }
+
+  /**
+   * Count the number of words that contain the letter 'Z'.
+   *
+   * @return the number of words in the sentence that contain at least one 'z', as an int.
+   */
+  @Override
+  public int getNumberOfWordsWithZ() {
+    return this.sentence.stream()
+        .map(e -> {
+              if (e.toString().toLowerCase().contains("z")) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
+        )
+        .reduce(0, Integer::sum);
   }
 
   /**
@@ -81,7 +149,8 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    */
   @Override
   public void remove(T s) {
-
+    this.sentence = this.sentence.stream()
+        .filter(e -> !e.equals(s)).collect(Collectors.toList());
   }
 
   /**
@@ -93,29 +162,39 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    */
   @Override
   public T get(int index) throws IllegalArgumentException {
-    return null;
+    if (index - 1 > this.sentence.size()) {
+      throw new IllegalArgumentException("That index does not exit.  Sentence only contains " +
+          this.sentenceSize() + " elements");
+    } else if (index < 0) {
+      throw new IllegalArgumentException("Index must be 0 or higher");
+    }
+
+    return this.sentence.get(index);
   }
 
   /**
-   * A general purpose map function that can be used to return the sentence as a corresponding list
-   * of generic type R.
+   * Get all elements of the sentence as a list.
    *
-   * @param converter the function that converts objects of T to objects of R.
-   * @return the list converted to objects of type R.
+   * @return the elements of the sentence as a list.
    */
   @Override
-  public <R> SentenceADT<R> map(Function<T, R> converter) {
-    return null;
+  public List<T> getSentenceList() {
+    return this.sentence;
   }
 
   /**
-   * Return the longest word in the sentence.
+   * Return the longest word in the sentence.  In the case of a tie, the word appear first will be
+   * returned.
    *
    * @return the longest word in the sentence, as a String.
+   * @throws NoSuchElementException Exception thrown if there is not a longest element.
    */
   @Override
-  public String longestWord() {
-    return null;
+  public String longestWord() throws NoSuchElementException {
+    return this.sentence.stream()
+        .map(Object::toString)
+        .max(Comparator.comparing(String::length))
+        .orElseThrow(NoSuchElementException::new);
   }
 
   /**
@@ -125,7 +204,7 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    */
   @Override
   public SentenceADT<T> clone() {
-    return null;
+    return new SentenceADTImpl<>(this.sentence);
   }
 
   /**
@@ -136,6 +215,60 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    */
   @Override
   public SentenceADT<T> merge(SentenceADT<T> other) {
+    return new SentenceADTImpl<>(Stream
+        .concat(this.sentence.stream(), other.getSentenceList().stream())
+        .collect(Collectors.toList()));
+  }
+
+  /**
+   * Converts an English sentence into pig latin and back to english.
+   *
+   * @param state true to make the sentence pig latin, false to make it english.
+   */
+  @Override
+  public void pigLatin(boolean state) {
+
+  }
+
+  /**
+   * Toggles a sentence between english and pig latin.
+   */
+  private void pigLatinConverter() {
+
+  }
+
+  /**
+   * Returns a sentence in its pig latin form.
+   *
+   * @return a sentence in its pig latin form.
+   */
+  @Override
+  public String getPigLatinString() {
     return null;
+  }
+
+  /**
+   * Returns the Sentence in its current string form.  If the sentence is in English, the method
+   * will return an English sentence; if the sentence is in Pig Latin, the method will return the
+   * sentence in Pig Latin.
+   *
+   * @return
+   */
+  @Override
+  public String toString() {
+    String newString = this.sentence.stream()
+        .map(Object::toString)
+        .collect(Collectors.joining(" "));
+    return newString.trim().replaceAll("\\s+(?=\\p{Punct})", "");
+  }
+
+  /**
+   * Method for getting the sentence size as a String.
+   *
+   * @return the size of the sentence, as a String.
+   */
+  private String sentenceSize() {
+    Integer size = this.sentence.size();
+    return size.toString();
   }
 }

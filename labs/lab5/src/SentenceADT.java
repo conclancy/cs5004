@@ -27,7 +27,7 @@ public interface SentenceADT<T> {
    * @param index the position of the object to be added, as an int.
    * @param s the object to be added to the sentence.
    */
-  void add(int index, T s);
+  void add(int index, T s) throws IllegalArgumentException;
 
   /**
    * Get the number of words in the current sentence, as an int.
@@ -37,11 +37,24 @@ public interface SentenceADT<T> {
   int getNumberOfWords();
 
   /**
+   * Get the number of punctuation marks in the current sentence, as an int.
+   *
+   * @return the count of the number of punctuation marks in the sentence, as an int.
+   */
+  int getNumberOfPunctuation();
+
+  /**
+   * Count the number of words that contain the letter 'Z'.
+   *
+   * @return the number of words in the sentence that contain at least one 'z', as an int.
+   */
+  int getNumberOfWordsWithZ();
+
+  /**
    * Remove a specific object from the sentence.
    *
    * @param s the object to be removed.
    */
-  // TODO this might require a predicate intake?
   void remove(T s);
 
   /**
@@ -54,14 +67,12 @@ public interface SentenceADT<T> {
   T get(int index) throws IllegalArgumentException;
 
   /**
-   * A general purpose map function that can be used to return the sentence as a corresponding list
-   * of generic type R.
+   * Get all elements of the sentence as a list.
    *
-   * @param converter the function that converts objects of T to objects of R.
-   * @param <R> the type of data desired for the new list.
-   * @return the list converted to objects of type R.
+   * @return the elements of the sentence as a list.
    */
-  <R> SentenceADT<R> map(Function<T, R> converter);
+  List<T> getSentenceList();
+
 
   /**
    * Return the longest word in the sentence.
@@ -84,4 +95,16 @@ public interface SentenceADT<T> {
    * @return A new sentence object.
    */
   SentenceADT<T> merge(SentenceADT<T> other);
+
+  /**
+   * Converts an English sentence into pig latin and back to english.
+   */
+  void pigLatin(boolean state);
+
+  /**
+   * Returns a sentence in its pig latin form.
+   *
+   * @return a sentence in its pig latin form.
+   */
+  String getPigLatinString();
 }
