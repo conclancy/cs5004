@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +16,7 @@ public class SentenceADTTest {
   private SentenceADTImpl<String> listSentence;
   private SentenceADTImpl<Integer> numberSentence;
   private SentenceADTImpl<String> zSentence;
+  private SentenceADTImpl<String> chipotle;
 
   @Before
   public void init() {
@@ -28,6 +27,7 @@ public class SentenceADTTest {
         List.of("Am", "I", "a", "sentence", "made", "from", "a", "list", "?"));
     numberSentence = new SentenceADTImpl<>(List.of(1, 2, 3, 4));
     zSentence = new SentenceADTImpl<>("The zany zebra zombie was filled with zeal.");
+    chipotle = new SentenceADTImpl<>("making a pig deal about pig latin");
   }
 
   @Test
@@ -65,7 +65,7 @@ public class SentenceADTTest {
     emptySentence.addFront("This");
     assertEquals("This a test sentence.", emptySentence.toString());
 
-    emptySentence.add(1,"is");
+    emptySentence.add(1, "is");
     assertEquals("This is a test sentence.", emptySentence.toString());
 
     emptySentence.remove("sentence");
@@ -167,11 +167,25 @@ public class SentenceADTTest {
 
   @Test
   public void testMerge() {
-    //TODO
+    SentenceADT<String> mergedSentence = stringSentence.merge(listSentence);
+    assertEquals("This is a sentence from a string. Am I a sentence made from a list?",
+        mergedSentence.toString());
+
+    SentenceADT<Integer> mergedInt = numberSentence.merge(
+        new SentenceADTImpl<>(List.of(5, 6, 7, 8)));
+    assertEquals("1 2 3 4 5 6 7 8", mergedInt.toString());
   }
 
   @Test
   public void testPigLatin() {
-    //TODO
+    String pigLatin = "akingmay away igpay ealday aboutway igpay atinlay";
+    assertEquals(pigLatin, chipotle.pigLatin());
+
+    SentenceADT<String> pigPunc = chipotle.clone();
+    pigPunc.addBack("!");
+    pigLatin = "akingmay away igpay ealday aboutway igpay atinlay!";
+    assertEquals(pigLatin, pigPunc.pigLatin());
+
+    assertEquals("1 2 3 4", numberSentence.pigLatin());
   }
 }

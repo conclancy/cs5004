@@ -97,14 +97,10 @@ public interface SentenceADT<T> {
   SentenceADT<T> merge(SentenceADT<T> other);
 
   /**
-   * Converts an English sentence into pig latin and back to english.
-   */
-  void pigLatin(boolean state);
-
-  /**
    * Returns a sentence in its pig latin form.
    *
    * @return a sentence in its pig latin form.
    */
-  String getPigLatinString();
+  String pigLatin();
+
 }

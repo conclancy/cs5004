@@ -2,12 +2,17 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Implementation of the Sentence interface.
+ *
+ * @param <T> Object type for the components of the sentence.
+ */
 public class SentenceADTImpl<T> implements SentenceADT<T> {
+
   private List<T> sentence;
 
   /**
@@ -34,15 +39,15 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
   public SentenceADTImpl(String sentence) throws IllegalArgumentException {
     this.sentence = new LinkedList<>();
     String[] sentenceArray = sentence
-        .replaceAll("(?<=\\S)(?:(?<=\\p{Punct})|(?=\\p{Punct}))(?=\\S)"," ")
+        .replaceAll("(?<=\\S)(?:(?<=\\p{Punct})|(?=\\p{Punct}))(?=\\S)", " ")
         .split("\\s");
 
-    for (String word: sentenceArray) {
-      try{
+    for (String word : sentenceArray) {
+      try {
         this.addBack((T) word);
-      }
-      catch(Exception e) {
-        throw new IllegalArgumentException("Element '" + word + "' cannot be added to sentence" + e);
+      } catch (Exception e) {
+        throw new IllegalArgumentException(
+            "Element '" + word + "' cannot be added to sentence" + e);
       }
 
     }
@@ -78,7 +83,7 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
   public void add(int index, T s) throws IllegalArgumentException {
     try {
       this.sentence.add(index, s);
-    } catch(IndexOutOfBoundsException e) {
+    } catch (IndexOutOfBoundsException e) {
       throw new IllegalArgumentException("Must add at valid index between 0 and "
           + this.sentenceSize());
     }
@@ -94,12 +99,12 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
   public int getNumberOfWords() {
     return this.sentence.stream()
         .map(e -> {
-          if (!(Pattern.matches("\\p{Punct}", e.toString()))) {
-            return 1;
-          } else {
-            return 0;
-          }
-        }
+              if (!(Pattern.matches("\\p{Punct}", e.toString()))) {
+                return 1;
+              } else {
+                return 0;
+              }
+            }
         )
         .reduce(0, Integer::sum);
   }
@@ -157,7 +162,7 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    * Get the object at a specific point in the sentence.
    *
    * @param index the index of the desired object, as an int starting at 0.
-   * @return the object.
+   * @return the object at the given index.
    * @throws IllegalArgumentException if the given index is out of range for the sentence.
    */
   @Override
@@ -221,30 +226,44 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
   }
 
   /**
-   * Converts an English sentence into pig latin and back to english.
+   * Converts an English sentence of Strings into pig latin.  Sentences not of type String will
+   * return the sentence unchanged as a String.
    *
-   * @param state true to make the sentence pig latin, false to make it english.
+   * @return a String sentence in its pig latin form.
    */
   @Override
-  public void pigLatin(boolean state) {
+  public String pigLatin() {
+    List<String> pigList = this.sentence.stream()
+        .map(e -> {
+              if (e instanceof String) {
+                if (Pattern.matches("\\p{Punct}", e.toString())) {
+                  return e.toString();
+                } else if (this.isVowel(e.toString().charAt(0))) {
+                  return e.toString() + "way";
+                } else {
+                  return e.toString().substring(1) + e.toString().charAt(0) + "ay";
+                }
+              } else {
+                return e.toString();
+              }
+            }
+        )
+        .collect(Collectors.toList());
 
+    SentenceADT<String> pigSentence = new SentenceADTImpl<>(pigList);
+
+    return pigSentence.toString();
   }
 
   /**
-   * Toggles a sentence between english and pig latin.
-   */
-  private void pigLatinConverter() {
-
-  }
-
-  /**
-   * Returns a sentence in its pig latin form.
+   * Takes in a character to determine if it is a vowel.  Y is not considered a vowel when using
+   * this function.
    *
-   * @return a sentence in its pig latin form.
+   * @param c letter to test, as a char.
+   * @return true if the character passed is a vowel.
    */
-  @Override
-  public String getPigLatinString() {
-    return null;
+  private boolean isVowel(char c) {
+    return "AEIOUaeiou".indexOf(c) != -1;
   }
 
   /**
@@ -252,7 +271,7 @@ public class SentenceADTImpl<T> implements SentenceADT<T> {
    * will return an English sentence; if the sentence is in Pig Latin, the method will return the
    * sentence in Pig Latin.
    *
-   * @return
+   * @return the sentence as a String in English.
    */
   @Override
   public String toString() {
