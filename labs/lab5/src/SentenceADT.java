@@ -1,5 +1,4 @@
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * This interface represents a sentence.  Separating from previous Sentence interface to remove the
