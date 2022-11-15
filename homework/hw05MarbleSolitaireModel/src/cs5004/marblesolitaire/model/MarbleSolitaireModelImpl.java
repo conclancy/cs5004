@@ -1,6 +1,65 @@
 package cs5004.marblesolitaire.model;
 
-public class MarbleSolitaireModelImpl implements MarbleSolitaireModel{
+import java.util.ArrayList;
+
+public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
+
+  private ArrayList<ArrayList<CellState>> marbleBoard;
+
+  public MarbleSolitaireModelImpl() {
+
+  }
+
+  public MarbleSolitaireModelImpl(int sRow, int sColumn) throws IllegalArgumentException {
+
+  }
+
+  public MarbleSolitaireModelImpl (int armThickness) throws IllegalArgumentException {
+    //this(armThickness, getBoardSize(armThickness) / 2, center);
+  }
+
+  public MarbleSolitaireModelImpl (int armThickness, int sRow, int sColumn)
+      throws IllegalArgumentException {
+
+    if(armThickness % 2 == 0 || armThickness < 3) {
+      throw new IllegalArgumentException("The size of the board must be an odd number greater than "
+          + "or equal to 3.");
+    }
+
+    int voidSize = this.getVoidSize(armThickness);
+    int boardSize = this.getBoardSize(armThickness);
+    marbleBoard = new ArrayList<ArrayList<CellState>>(boardSize);
+
+    for (int r = 0; r < armThickness; r++) {
+      ArrayList<CellState> tempRow = new ArrayList<>(boardSize);
+
+      for (int c = 0; c < armThickness; c++) {
+        if(c < voidSize && r < voidSize) {
+          tempRow.add(CellState.INVALID);
+        } else if (c > (voidSize + armThickness) && r < voidSize) {
+          tempRow.add(CellState.INVALID);
+        } else if (c < voidSize && r > (voidSize + armThickness)) {
+          tempRow.add(CellState.INVALID);
+        } else if (c > (voidSize + armThickness) && r > (voidSize + armThickness)) {
+          tempRow.add(CellState.INVALID);
+        } else if (c == sColumn && r == sRow) {
+          tempRow.add(CellState.EMPTY);
+        } else {
+          tempRow.add(CellState.MARBLE);
+        }
+      }
+
+      this.marbleBoard.add(tempRow);
+    }
+  }
+
+  private int getBoardSize(int armThickness) {
+    return armThickness + (2 * this.getVoidSize(armThickness));
+  }
+
+  private int getVoidSize(int armThickness) {
+    return (armThickness + 1) / 2;
+  }
 
   /**
    * Move a single marble from a given position to another given position. A move is valid only if
@@ -15,7 +74,9 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel{
    */
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
-
+    // Test to ensure the spot is on the board
+    // Test to make sure `to` is 2 sports away and empty
+    // Test to make sure there is a marble in the middle
   }
 
   /**
