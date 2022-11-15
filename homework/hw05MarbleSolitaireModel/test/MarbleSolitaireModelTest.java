@@ -15,13 +15,24 @@ public class MarbleSolitaireModelTest {
   public void init() {
     three = new MarbleSolitaireModelImpl();
     threeOffCenter = new MarbleSolitaireModelImpl(2,2);
-    five = new MarbleSolitaireModelImpl(5);
     threeCustom = new MarbleSolitaireModelImpl(3,0,4);
+    five = new MarbleSolitaireModelImpl(5);
   }
 
   @Test
-  public void firstTest() {
+  public void testState() {
+    String threeString = "  OOO  \n  OOO  \nOOOOOOO\nOOO_OOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    assertEquals(threeString, three.getGameState());
 
+    String threeOffCenterString = "  OOO  \n  OOO  \nOO_OOOO\nOOOOOOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    assertEquals(threeOffCenterString, threeOffCenter.getGameState());
+
+    String threeCustomString = "  OO_  \n  OOO  \nOOOOOOO\nOOOOOOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    assertEquals(threeCustomString, threeCustom.getGameState());
+
+    String fiveString = "   OOOOO   \n   OOOOO   \n   OOOOO   \nOOOOOOOOOOO\nOOOOOOOOOOO"
+        + "\nOOOOO_OOOOO\nOOOOOOOOOOO\nOOOOOOOOOOO\n   OOOOO   \n   OOOOO   \n   OOOOO   ";
+    assertEquals(fiveString, five.getGameState());
   }
 
 }

@@ -9,17 +9,14 @@ public class TypeChecks {
    * They are only here to ensure that your code compiles properly.
    */
 
-  /* TODO
   public static void main(String[] args) {
     helper(new cs5004.marblesolitaire.model.MarbleSolitaireModelImpl());
-    helper(new cs5004.marblesolitaire.model.MarbleSolitaireModelImpl(2, 2));
-    helper(new cs5004.marblesolitaire.model.MarbleSolitaireModelImpl(5));
-    helper(new cs5004.marblesolitaire.model.MarbleSolitaireModelImpl(3, 0, 4));
+    //helper(new cs5004.marblesolitaire.model.MarbleSolitaireModelImpl(2, 2));
+    //helper(new cs5004.marblesolitaire.model.MarbleSolitaireModelImpl(5));
+    //helper(new cs5004.marblesolitaire.model.MarbleSolitaireModelImpl(3, 0, 4));
   }
 
   private static void helper(cs5004.marblesolitaire.model.MarbleSolitaireModel model) {
     model.move(1, 3, 3, 3);
   }
-  */
-
 }
