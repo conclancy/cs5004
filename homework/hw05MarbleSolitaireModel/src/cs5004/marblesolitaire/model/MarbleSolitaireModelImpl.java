@@ -7,15 +7,15 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   private ArrayList<ArrayList<CellState>> marbleBoard;
 
   public MarbleSolitaireModelImpl() {
-
+    this(3,3,3);
   }
 
   public MarbleSolitaireModelImpl(int sRow, int sColumn) throws IllegalArgumentException {
-
+    this(3, sRow, sColumn);
   }
 
   public MarbleSolitaireModelImpl (int armThickness) throws IllegalArgumentException {
-    //this(armThickness, getBoardSize(armThickness) / 2, center);
+    this(armThickness, armThickness, armThickness);
   }
 
   public MarbleSolitaireModelImpl (int armThickness, int sRow, int sColumn)
