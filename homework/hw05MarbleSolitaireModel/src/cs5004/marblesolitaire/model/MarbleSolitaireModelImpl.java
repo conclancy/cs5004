@@ -100,12 +100,11 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
       }
     }).reduce(0, Integer::sum);
 
-    /* TODO
     if (emptySpaces != 1) {
       throw new IllegalArgumentException("The board must have exactly 1 valid empty location.  "
           + "Current board has " + String.valueOf(emptySpaces) + " empty spaces.");
     }
-    */
+
   }
 
   /**
@@ -185,20 +184,20 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     if (fromRow == toRow) {
       if (fromCol == toCol + 2) {
         middleRow = fromRow;
-        middleCol = fromCol + 1;
+        middleCol = toCol + 1;
         middleCell = marbleBoard.get(middleRow).get(middleCol);
       } else if (fromCol == toCol - 2) {
         middleRow = fromRow;
-        middleCol = fromCol - 1;
+        middleCol = toCol - 1;
         middleCell = marbleBoard.get(middleRow).get(middleCol);
       }
     } else if (fromCol == toCol) {
       if (fromRow == toRow + 2) {
-        middleRow = fromRow + 1;
+        middleRow = toRow + 1;
         middleCol = fromCol;
         middleCell = marbleBoard.get(middleRow).get(middleCol);
       } else if (fromRow == toRow - 2) {
-        middleRow = fromRow - 1;
+        middleRow = toRow - 1;
         middleCol = fromCol;
         middleCell = marbleBoard.get(middleRow).get(middleCol);
       } else {
@@ -245,9 +244,9 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
                     && colStates.get(i + 2) == CellState.EMPTY
             ) || (
                 // Movement to the left available
-                colStates.get(i) == CellState.MARBLE
-                    && colStates.get(i - 1) == CellState.MARBLE
-                    && colStates.get(i - 2) == CellState.EMPTY
+                colStates.get(i) == CellState.EMPTY
+                    && colStates.get(i + 1) == CellState.MARBLE
+                    && colStates.get(i + 2) == CellState.MARBLE
             )
         ) {
           return true;
@@ -271,9 +270,9 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
                     && this.marbleBoard.get(row + 1).get(col) == CellState.MARBLE
                     && this.marbleBoard.get(row + 2).get(col) == CellState.EMPTY
             ) || (
-                this.marbleBoard.get(row).get(col) == CellState.MARBLE
-                    && this.marbleBoard.get(row - 1).get(col) == CellState.MARBLE
-                    && this.marbleBoard.get(row - 2).get(col) == CellState.EMPTY
+                this.marbleBoard.get(row).get(col) == CellState.EMPTY
+                    && this.marbleBoard.get(row + 1).get(col) == CellState.MARBLE
+                    && this.marbleBoard.get(row + 2).get(col) == CellState.MARBLE
             )
         ) {
           return true;
