@@ -134,7 +134,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    * @return the height/width of the void area, as an int.
    */
   private int getVoidSize(int armThickness) {
-    return (armThickness + 1) / 2;
+    return armThickness - 1;
   }
 
   /**
@@ -151,7 +151,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
   @Override
   public void move(int fromRow, int fromCol, int toRow, int toCol) throws IllegalArgumentException {
 
-    int size = this.getBoardSize();
+    int size = this.getBoardSize() - 1;
 
     CellState middleCell = CellState.EMPTY;
     int middleRow = -1;

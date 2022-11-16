@@ -58,19 +58,30 @@ public class MarbleSolitaireModelTest {
     new MarbleSolitaireModelImpl(-1,-1);
   }
 
+  // Test for game with negative empty space
+  @Test(expected = IllegalArgumentException.class)
+  public void negFiveVoid() {
+    new MarbleSolitaireModelImpl(5,0,3);
+  }
+
   @Test
   public void testState() {
-    String threeString = "  OOO  \n  OOO  \nOOOOOOO\nOOO_OOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    String threeString = "    O O O\n    O O O\nO O O O O O O\nO O O _ O O O\nO O O O O O O\n    "
+        + "O O O\n    O O O";
     assertEquals(threeString, three.getGameState());
 
-    String threeOffCenterString = "  OOO  \n  OOO  \nOO_OOOO\nOOOOOOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    String threeOffCenterString = "    O O O\n    O O O\nO O _ O O O O\nO O O O O O O\n"
+        + "O O O O O O O\n    O O O\n    O O O";
     assertEquals(threeOffCenterString, threeOffCenter.getGameState());
 
-    String threeCustomString = "  OO_  \n  OOO  \nOOOOOOO\nOOOOOOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    String threeCustomString = "    O O _\n    O O O\nO O O O O O O\nO O O O O O O\n"
+        + "O O O O O O O\n    O O O\n    O O O";
     assertEquals(threeCustomString, threeCustom.getGameState());
 
-    String fiveString = "   OOOOO   \n   OOOOO   \n   OOOOO   \nOOOOOOOOOOO\nOOOOOOOOOOO"
-        + "\nOOOOO_OOOOO\nOOOOOOOOOOO\nOOOOOOOOOOO\n   OOOOO   \n   OOOOO   \n   OOOOO   ";
+    String fiveString = "        O O O O O\n        O O O O O\n        O O O O O\n"
+        + "        O O O O O\nO O O O O O O O O O O O O\nO O O O O _ O O O O O O O"
+        + "\nO O O O O O O O O O O O O\nO O O O O O O O O O O O O\nO O O O O O O O O O O O O\n"
+        + "        O O O O O\n        O O O O O\n        O O O O O\n        O O O O O";
     assertEquals(fiveString, five.getGameState());
   }
 
@@ -79,12 +90,14 @@ public class MarbleSolitaireModelTest {
 
     // Vertical Move
     three.move(1,3,3,3);
-    String threeString = "  OOO  \n  O_O  \nOOO_OOO\nOOOOOOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    String threeString = "    O O O\n    O _ O\nO O O _ O O O\nO O O O O O O\nO O O O O O O\n    "
+        + "O O O\n    O O O";
     assertEquals(threeString, three.getGameState());
 
     // Horizontal Move
     three.move(2,1,2,3);
-    threeString = "  OOO  \n  O_O  \nO__OOOO\nOOOOOOO\nOOOOOOO\n  OOO  \n  OOO  ";
+    threeString = "    O O O\n    O _ O\nO _ _ O O O O\nO O O O O O O\nO O O O O O O\n    "
+        + "O O O\n    O O O";
     assertEquals(threeString, three.getGameState());
   }
 
