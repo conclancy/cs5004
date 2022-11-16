@@ -92,7 +92,7 @@ public class TicTacToeModel implements TicTacToe {
    */
   @Override
   public boolean isGameOver() {
-    if (getWinner() != null) {
+    if (this.getWinner() != null) {
       return true;
     }
     for (int i = 0; i < 3; i++) {
@@ -157,7 +157,8 @@ public class TicTacToeModel implements TicTacToe {
   @Override
   public Player getMarkAt(int r, int c) {
     if (r < 0 || r > 3 && c > 3 || c < 0) {
-      throw new IllegalArgumentException("Bad data");
+      throw new IllegalArgumentException("Location entered is not valid. Enter row or columns "
+          + "between 0 and 2.");
     }
     return this.board[r][c];
   }
