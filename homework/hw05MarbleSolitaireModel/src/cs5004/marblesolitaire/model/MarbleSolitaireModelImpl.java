@@ -297,11 +297,22 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
     for (ArrayList<CellState> row : this.marbleBoard) {
       for (CellState cell : row) {
         switch (cell) {
-          case INVALID -> gameString.append(" ");
-          case MARBLE -> gameString.append("O");
-          case EMPTY -> gameString.append("_");
-          default -> gameString.append("X");
+          case INVALID:
+            gameString.append("  ");
+            break;
+          case MARBLE:
+            gameString.append("O ");
+            break;
+          case EMPTY:
+            gameString.append("_ ");
+            break;
+          default:
+            gameString.append("X ");
+            break;
         }
+      }
+      while (gameString.charAt(gameString.length() - 1) == ' ') {
+        gameString.deleteCharAt(gameString.length() - 1);
       }
       gameString.append("\n");
     }
@@ -330,7 +341,7 @@ public class MarbleSolitaireModelImpl implements MarbleSolitaireModel {
    *
    * @return a list of CellState enums representing the game board.
    */
-  private List<CellState> getFlatBoard () {
+  private List<CellState> getFlatBoard() {
     return this.marbleBoard.stream()
         .flatMap(List::stream)
         .collect(Collectors.toList());
