@@ -144,8 +144,7 @@ public class TicTacToeModelTest {
     assertEquals(Player.O, bd2[2][0]);
   }
 
-  // TODO: test case where board is full AND there is a winner
-  // Test board is full
+  // Test board is full and there is a winner.
   @Test(expected = IllegalStateException.class)
   public void testFullBoard() {
     ttt1.move(0, 0);
@@ -155,7 +154,7 @@ public class TicTacToeModelTest {
     ttt1.move(1, 2);
     ttt1.move(2, 1);
     ttt1.move(2, 0);
-    ttt1.move(0, 2);
+    ttt1.move(1, 0);
     ttt1.move(0, 1);
     ttt1.move(0,0);
   }
