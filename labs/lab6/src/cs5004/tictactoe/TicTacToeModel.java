@@ -3,6 +3,11 @@ package cs5004.tictactoe;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+/**
+ * A single game of Tic Tac Toe, played on a three-by-three grid with two players, with the object
+ * of the game to achieve three markers in a row either vertically, horizontally, or diagonally.
+ * {@link Player} X goes first.
+ */
 public class TicTacToeModel implements TicTacToe {
 
   private final Player[][] board;
@@ -140,7 +145,7 @@ public class TicTacToeModel implements TicTacToe {
   @Override
   public Player[][] getBoard() {
     Player[][] copyBoard = new Player[3][3];
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < this.board.length; i++) {
       System.arraycopy(this.board[i], 0, copyBoard[i], 0, 3);
     }
     return copyBoard;

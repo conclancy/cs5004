@@ -11,8 +11,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Test cases for the tic tac toe model. Verifying that game state is properly managed, and
- * all game actions are properly validated.
+ * Test cases for the tic tac toe model. Verifying that game state is properly managed, and all game
+ * actions are properly validated.
  */
 public class TicTacToeModelTest {
 
@@ -108,7 +108,7 @@ public class TicTacToeModelTest {
     ttt1.move(2, 0);
     assertTrue(ttt1.isGameOver());
     assertNull(ttt1.getWinner());
-    assertEquals( " X | O | X\n"
+    assertEquals(" X | O | X\n"
         + "-----------\n"
         + " O | O | X\n"
         + "-----------\n"
@@ -156,6 +156,8 @@ public class TicTacToeModelTest {
     ttt1.move(2, 0);
     ttt1.move(1, 0);
     ttt1.move(0, 1);
-    ttt1.move(0,0);
+    assertTrue(ttt1.isGameOver());
+    assertEquals(Player.X, ttt1.getWinner());
+    ttt1.move(0, 0);
   }
 }

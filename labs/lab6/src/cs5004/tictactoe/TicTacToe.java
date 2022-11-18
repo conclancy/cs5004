@@ -1,9 +1,9 @@
 package cs5004.tictactoe;
 
 /**
- * A single game of Tic Tac Toe, played on a three-by-three grid with two players,
- * with the object of the game to achieve three markers in a row either vertically,
- * horizontally, or diagonally. {@link Player} X goes first.
+ * A single game of Tic Tac Toe, played on a three-by-three grid with two players, with the object
+ * of the game to achieve three markers in a row either vertically, horizontally, or diagonally.
+ * {@link Player} X goes first.
  */
 public interface TicTacToe {
 
@@ -13,7 +13,7 @@ public interface TicTacToe {
    * @param r the row of the intended move
    * @param c the column of the intended move
    * @throws IllegalArgumentException if the space is occupied or the position is otherwise invalid
-   * @throws IllegalStateException if the game is over
+   * @throws IllegalStateException    if the game is over
    */
   void move(int r, int c);
 
@@ -25,16 +25,16 @@ public interface TicTacToe {
   Player getTurn();
 
   /**
-   * Return whether the game is over. The game is over when either the board is full, or
-   * one player has won.
+   * Return whether the game is over. The game is over when either the board is full, or one player
+   * has won.
    *
    * @return true if the game is over, false otherwise
    */
   boolean isGameOver();
 
   /**
-   * Return the winner of the game, or {@code null} if there is no winner. If the game is not
-   * over, returns {@code null}.
+   * Return the winner of the game, or {@code null} if there is no winner. If the game is not over,
+   * returns {@code null}.
    *
    * @return the winner, or null if there is no winner
    */
