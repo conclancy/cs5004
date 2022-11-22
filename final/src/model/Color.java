@@ -123,9 +123,6 @@ public class Color {
    */
   public void setHex(String hex) throws IllegalArgumentException {
 
-    int greenHex = 0;
-    int blueHex = 0;
-
     if (!hex.matches("[0-9A-F]+")) {
       throw new IllegalStateException(
           "String must be a hexadecimal.  Valid characters are 0 - 9 and the letters A - F.");
@@ -136,7 +133,11 @@ public class Color {
     int redHex = ((Character.getNumericValue(hex.charAt(0))) * 16) + Character.getNumericValue(
         hex.charAt(1));
 
-    // TODO test this after an initial implementation.
+    int greenHex = ((Character.getNumericValue(hex.charAt(2))) * 16) + Character.getNumericValue(
+        hex.charAt(3));
+
+    int blueHex = ((Character.getNumericValue(hex.charAt(4))) * 16) + Character.getNumericValue(
+        hex.charAt(5));
 
     this.setRGB(redHex, greenHex, blueHex);
   }
@@ -185,6 +186,37 @@ public class Color {
   public String getHex() {
     //TODO
     return null;
+  }
+
+  /**
+   * Determine if two objects are logically equivalent.
+   *
+   * @param other the other object to be tested.
+   * @return true if both items are logically equivalent.
+   */
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof Color otherColor)) {
+      return false;
+    }
+
+    return this.getRed() == otherColor.getRed()
+        && this.getGreen() == otherColor.getGreen()
+        && this.getBlue() == otherColor.getBlue();
+  }
+
+  /**
+   * Hash code for the color object.
+   *
+   * @return the RGB color model as a hash of each of the colors integer values.
+   */
+  @Override
+  public int hashCode() {
+    return Integer.parseInt(
+        String.valueOf(this.red) + String.valueOf(this.green) + String.valueOf(this.blue));
   }
 
 }
