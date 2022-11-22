@@ -1,5 +1,8 @@
 package cs5004.tictactoe;
 
+/**
+ * Represents the two players in a Tic Tac Toe game.
+ */
 public enum Player {
   X("X"),
   O("O");
