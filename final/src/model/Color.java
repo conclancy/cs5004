@@ -184,7 +184,46 @@ public class Color {
    * @return the color model in hexadecimal form, as a string.
    */
   public String getHex() {
-    //TODO
+    return this.hexIntToStringHelper(this.getRed() / 16)
+        + this.hexIntToStringHelper(this.getRed() % 16)
+        + this.hexIntToStringHelper(this.getGreen() / 16)
+        + this.hexIntToStringHelper(this.getGreen() % 16)
+        + this.hexIntToStringHelper(this.getBlue() / 16)
+        + this.hexIntToStringHelper(this.getBlue() % 16);
+  }
+
+  /**
+   * Helper method for converting an integer into a hexadecimal string.
+   *
+   * @param i the integer for conversion.
+   * @return hexadecimal string representation.
+   * @throws IllegalArgumentException if {@param i} is less than 0 or greater than 15.
+   */
+  private String hexIntToStringHelper(int i) throws IllegalArgumentException {
+
+    if(i < 0) {
+      throw new IllegalArgumentException("Vale must be greater than 0.");
+    } else if (i < 10) {
+      return String.valueOf(i);
+    } else if (i < 16) {
+      switch (i) {
+        case 10:
+          return "A";
+        case 11:
+          return "B";
+        case 12:
+          return "C";
+        case 13:
+          return "D";
+        case 14:
+          return "E";
+        case 15:
+          return "F";
+      }
+    } else {
+      throw new IllegalArgumentException("Value must be less than 16.");
+    }
+
     return null;
   }
 
