@@ -45,9 +45,24 @@ public interface IShape extends Comparable<IShape> {
   IShape copy();
 
   /**
+   * Compare two shape objects to determine which is larger.
    *
    * @param other the object to be compared.
-   * @return
+   * @return an -1 if the shape is smaller, 1 if the shape is larger, and 0 if they are the same.
    */
   int compareTo(IShape other);
+
+  /**
+   * Get the color of the this {@link IShape}.
+   *
+   * @return the {@link Color} object of the this {@link IShape}.
+   */
+  Color getColor();
+
+  /**
+   * Get the reference point for this {@link IShape}.
+   *
+   * @return the reference point of the shape, as a {@link Point2D} object.
+   */
+  Point2D getReference();
 }
