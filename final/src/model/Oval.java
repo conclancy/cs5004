@@ -32,13 +32,18 @@ public class Oval extends AbstractShape {
   }
 
   /**
-   * Get the perimeter of the shape.
+   * Get the perimeter of the shape using Ramanujan's Equation.
    *
    * @return perimeter of the shape, as a double.
    */
   @Override
   public double perimeter() {
-    return Math.PI * 2 * Math.sqrt((Math.pow(majorAxis, 2) * Math.pow(minorAxis, 2)) / 2);
+    double a = this.majorAxis;
+    double b = this.minorAxis;
+    double h = Math.pow((a - b), 2) / Math.pow((a + b), 2);
+
+    return Math.PI * (a + b) * (1 + ((3 * h) / (10 + (Math.sqrt(4 - (3 * h))))));
+    //return Math.PI * 2 * Math.sqrt((Math.pow(majorAxis, 2) + Math.pow(minorAxis, 2)) / 2);
   }
 
   /**
