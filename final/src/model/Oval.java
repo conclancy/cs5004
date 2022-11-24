@@ -9,6 +9,19 @@ public class Oval extends AbstractShape {
   protected double majorAxis;
   protected double minorAxis;
 
+  /**
+   * Constructor for the circle class. A circle is a special case of an oval where the major and
+   * minor axis are equal to one another.
+   *
+   * @param x         coordinate of the horizontal location of the oval's center, as a double.
+   * @param y         coordinate of the vertical location of the oval's center as a double.
+   * @param majorAxis longest distance between the center point and the perimeter of the oval, as a
+   *                  double.
+   * @param minorAxis smallest distance between the center point and the perimeter of the oval, as a
+   *                  double.
+   * @param color     the color of the oval, as a {@link Color} object.
+   * @throws IllegalArgumentException if either or both axis provided are less than or equal to 0.
+   */
   public Oval(double x, double y, double majorAxis, double minorAxis, Color color)
       throws IllegalArgumentException {
     super(new Point2D(x, y), color);
