@@ -10,8 +10,7 @@ public class Oval extends AbstractShape {
   protected double minorAxis;
 
   /**
-   * Constructor for the circle class. A circle is a special case of an oval where the major and
-   * minor axis are equal to one another.
+   * Constructor for the oval class.
    *
    * @param x         coordinate of the horizontal location of the oval's center, as a double.
    * @param y         coordinate of the vertical location of the oval's center as a double.
