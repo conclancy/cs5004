@@ -59,8 +59,13 @@ public class Rectangle extends AbstractShape {
    */
   @Override
   public IShape resize(double size) throws IllegalArgumentException {
-    return new Rectangle(super.getReference().getX(), super.getReference().getY(), this.width * 2,
-        this.height * 2, this.color);
+
+    if(size <= 0) {
+      throw new IllegalArgumentException("The resizing factor must be greater than 0.");
+    }
+
+    return new Rectangle(super.getReference().getX(), super.getReference().getY(),
+        this.width * size, this.height * size, this.color);
   }
 
   /**
