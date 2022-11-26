@@ -38,5 +38,6 @@ public class TestOval {
 
     assertEquals(0, smallOval.compareTo(smallOvalCopy));
     assertEquals(smallOval.getColor(), smallOvalCopy.getColor());
+    assertEquals(true, smallOval.equals(smallOvalCopy));
   }
 }

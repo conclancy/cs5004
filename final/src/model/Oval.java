@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 /**
  * Class representing an oval shape.  Ovals have an x and y coordinate, a majorAxis, a minorAxis,
  * and a color.
@@ -86,5 +88,53 @@ public class Oval extends AbstractShape {
   public IShape copy() {
     return new Oval(super.reference.getX(), super.reference.getY(), this.majorAxis, this.minorAxis,
         super.color);
+  }
+
+  /**
+   * Get the length of the oval major axis for the oval.
+   *
+   * @return length of the oval's major axis, as a double.
+   */
+  public double getMajorAxis() {
+    return this.majorAxis;
+  }
+
+  /**
+   * Get the length of the oval minor axis for the oval.
+   *
+   * @return length of the oval's minor axis as a double.
+   */
+  public double getMinorAxis() {
+    return this.minorAxis;
+  }
+
+  /**
+   * Determine if two oval objects are equal to one another.
+   *
+   * @param other the other object for comparison.
+   * @return true if the objects are equal.
+   */
+  @Override
+  public boolean equals(Object other) {
+    if (this==other) {
+      return true;
+    }
+    if (!(other instanceof Oval otherOval)) {
+      return false;
+    }
+
+    return super.getReference().equals(otherOval.getReference())
+        && this.minorAxis == otherOval.getMinorAxis()
+        && this.majorAxis == otherOval.getMajorAxis();
+  }
+
+  /**
+   * Create a hash table of an Oval object.
+   *
+   * @return Oval hash table.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.reference, ",", this.majorAxis, ",", this.minorAxis);
   }
 }
