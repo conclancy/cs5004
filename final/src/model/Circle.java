@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Circle extends Oval {
 
   /**
@@ -15,4 +17,5 @@ public class Circle extends Oval {
   public Circle(double x, double y, double radius, Color color) throws IllegalArgumentException {
     super(x, y, radius, radius, color);
   }
+
 }

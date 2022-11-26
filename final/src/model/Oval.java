@@ -116,16 +116,20 @@ public class Oval extends AbstractShape {
    */
   @Override
   public boolean equals(Object other) {
-    if (this==other) {
+    if (this == other) {
       return true;
     }
-    if (!(other instanceof Oval otherOval)) {
+    if (!(other instanceof Oval)) {
       return false;
     }
 
-    return super.getReference().equals(otherOval.getReference())
+    Oval otherOval = (Oval) other;
+
+    return super.getReference().getX() == otherOval.getReference().getX()
+        && super.getReference().getY() == otherOval.getReference().getY()
         && this.minorAxis == otherOval.getMinorAxis()
-        && this.majorAxis == otherOval.getMajorAxis();
+        && this.majorAxis == otherOval.getMajorAxis()
+        && super.getColor().getHex().equals(otherOval.getColor().getHex());
   }
 
   /**
@@ -135,6 +139,7 @@ public class Oval extends AbstractShape {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(this.reference, ",", this.majorAxis, ",", this.minorAxis);
+    return Objects.hash(this.reference, ",", this.majorAxis, ",", this.minorAxis, ",",
+        super.getColor());
   }
 }
