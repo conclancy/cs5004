@@ -25,4 +25,10 @@ public class TestSquare {
     assertEquals(6.25, doubleSquare.area(), .01);
   }
 
+  @Test
+  public void testPerimeter() {
+    assertEquals(4, intSquare.perimeter(), .01);
+    assertEquals(10, doubleSquare.perimeter(), .01);
+  }
+
 }
