@@ -35,12 +35,48 @@ public class TestPoint2D {
   }
 
   @Test
+  public void testSetX() {
+    origin.setX(5);
+    assertEquals(5, origin.getX(), .01);
+    origin.setX(0);
+    assertEquals(0, origin.getX(), .01);
+
+    origin.setX(-1);
+    assertEquals(-1, origin.getX(), .01);
+    origin.setX(0);
+    assertEquals(0, origin.getX(), .01);
+
+    origin.setX(8.2);
+    assertEquals(8.2, origin.getX(), .01);
+    origin.setX(0);
+    assertEquals(0, origin.getX(), .01);
+  }
+
+  @Test
   public void testGetY() {
     assertEquals(0, origin.getY(), .01);
     assertEquals(1, one.getY(), .01);
     assertEquals(18, tt.getY(), .01);
     assertEquals(0, fiveFour.getY(), .01);
     assertEquals(-2, negative.getY(), .01);
+  }
+
+  @Test
+  public void testSetY() {
+    origin.setY(5);
+    assertEquals(5, origin.getY(), .01);
+    origin.setY(0);
+    assertEquals(0, origin.getY(), .01);
+
+    origin.setY(-1);
+    assertEquals(-1, origin.getY(), .01);
+    origin.setY(0);
+    assertEquals(0, origin.getY(), .01);
+
+    origin.setY(8.2);
+    assertEquals(8.2, origin.getY(), .01);
+    origin.setY(0);
+    assertEquals(0, origin.getY(), .01);
   }
 
   @Test

@@ -40,12 +40,30 @@ public class Point2D {
   }
 
   /**
+   * Setter method to change the Point's x coordinate.
+   *
+   * @param x the horizontal coordinate of the point, as an int.
+   */
+  public void setX(double x) {
+    this.x = x;
+  }
+
+  /**
    * Return the y-coordinate of this point
    *
    * @return y-coordinate of this point
    */
   public double getY() {
     return y;
+  }
+
+  /**
+   * Setter method to change the Point's y coordinate.
+   *
+   * @param y the vertical coordinate of the point, as an int.
+   */
+  public void setY(double y) {
+    this.y = y;
   }
 
   /**
