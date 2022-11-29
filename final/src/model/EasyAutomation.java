@@ -43,7 +43,7 @@ public class EasyAutomation implements IEasyAutomation {
   @Override
   public void setSpeed(double speed) throws IllegalArgumentException {
 
-    if(speed <= 0) {
+    if (speed <= 0) {
       throw new IllegalArgumentException("Speed must be greater than 0.");
     }
 
@@ -55,8 +55,9 @@ public class EasyAutomation implements IEasyAutomation {
    *
    * @param shapeName the name of the shape that is being automated.
    * @param action    the action object being applied to the shape.
-   * @throws IllegalArgumentException if the {@param shapeName} provided does not exist.
-   * @throws IndexOutOfBoundsException if the {@param action} appears or disappears does not exist in the `animationLength()`dsaaa
+   * @throws IllegalArgumentException  if the {@param shapeName} provided does not exist.
+   * @throws IndexOutOfBoundsException if the {@param action} appears or disappears does not exist
+   *                                   in the `animationLength()`
    */
   @Override
   public void setAction(String shapeName, IAction action) throws IllegalArgumentException {
