@@ -46,9 +46,10 @@ public interface IAction {
   /**
    * Set the location of the associated {@link IShape} during this automation.
    *
-   * @param point the coordinates of the {@link IShape}, as a {@link Point2D}.
+   * @param x the horizontal coordinate of the {@link IShape}, as an int.
+   * @param y the vertical coordinate of the {@link IShape}, as an int.
    */
-  void setPoint2D(Point2D point);
+  void setPoint2D(int x, int y);
 
   /**
    * Get the color of the associated {@link IShape} during the automation.
@@ -77,8 +78,9 @@ public interface IAction {
    * scale.
    *
    * @param size the scaling factor of the associated {@link IShape} as a double.
+   * @throws IllegalArgumentException if {@param size} is less than 0.
    */
-  void setSize(double size);
+  void setSize(double size) throws IllegalArgumentException;
 
 
 }

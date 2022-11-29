@@ -40,7 +40,7 @@ public interface IEasyAutomation {
    *
    * @return shapes available in the automation, as a List of IShape objects.
    */
-  List<IShape> getShapes();
+  List<String> getShapes();
 
   /**
    * Get the length of the automation as an int.  The
