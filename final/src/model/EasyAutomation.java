@@ -1,12 +1,21 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class EasyAutomation implements IEasyAutomation {
 
-  private List<HashMap<String, List<IShape>>> animation;
+  private LinkedHashMap<String, IShape> shapes;
+  private LinkedHashMap<String, ArrayList<IAction>> animation;
   private double speed;
+
+  public EasyAutomation() {
+    this.animation = new LinkedHashMap<>();
+    this.shapes = new LinkedHashMap<>();
+    this.speed = 1;
+  }
 
   /**
    * Add a new shape to the automation program.
@@ -14,18 +23,15 @@ public class EasyAutomation implements IEasyAutomation {
    * @param shape the shape object to be added to the program.
    */
   @Override
-  public void addShape(IShape shape) {
+  public void addShape(String shapeName, IShape shape) {
     // TODO
     // add a HashMap key in the `animation` list
     // scale the list to have enough IShapes to list the longest length
+
+    this.shapes.put(shapeName, shape);
+    this.animation.put(shapeName, new ArrayList<>());
   }
 
-  private int automationLength() {
-    // TODO
-    // return the length of the longest list in `animation`
-    // implement a check to ensure all the lists in `animation` are this length
-    return 0;
-  }
 
   /**
    * Set the speed of the automation.  Default speed is 1.0, speed greater than this will increase
@@ -53,10 +59,14 @@ public class EasyAutomation implements IEasyAutomation {
    * @throws IndexOutOfBoundsException if the {@param action} appears or disappears does not exist in the `animationLength()`dsaaa
    */
   @Override
-  public void setAction(String shapeName, IAction action) throws IllegalArgumentException, IndexOutOfBoundsException {
-    // TODO
-    // Validate that the shape name exists
-    //
+  public void setAction(String shapeName, IAction action) throws IllegalArgumentException {
+    // TODO: shapeActionList may need to be ordered by start index.
+    if (!(this.shapes.containsKey(shapeName))) {
+      throw new IllegalArgumentException("Shape name `" + shapeName + "` is not in the Automation");
+    } else {
+      ArrayList<IAction> shapeActionList = this.animation.get(shapeName);
+      shapeActionList.add(action);
+    }
   }
 
   /**

@@ -15,7 +15,7 @@ public interface IEasyAutomation {
    *
    * @param shape the shape object to be added to the program.
    */
-  void addShape(IShape shape);
+  void addShape(String shapeName, IShape shape);
 
   /**
    * Set the speed of the automation.  Default speed is 1.0, speed greater than this will increase
