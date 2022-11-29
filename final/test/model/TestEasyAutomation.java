@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,6 +29,13 @@ public class TestEasyAutomation {
   @Test
   public void testSetSpeed() {
     simpleSquare.setSpeed(1);
+  }
+
+  @Test
+  public void testGetShapes() {
+    ArrayList<String> expected = new ArrayList<String>();
+    expected.add("square");
+    assertEquals(expected, simpleSquare.getShapes());
   }
 
   @Test
