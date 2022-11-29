@@ -238,9 +238,11 @@ public class Color {
     if (this == other) {
       return true;
     }
-    if (!(other instanceof Color otherColor)) {
+    if (!(other instanceof Color)) {
       return false;
     }
+
+    Color otherColor = (Color) other;
 
     return this.getRed() == otherColor.getRed()
         && this.getGreen() == otherColor.getGreen()

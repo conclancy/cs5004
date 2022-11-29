@@ -56,12 +56,14 @@ public class Point2D {
    */
   @Override
   public boolean equals(Object other) {
-    if (this==other) {
+    if (this == other) {
       return true;
     }
-    if (!(other instanceof Point2D other2D)) {
-      return false; //other cannot be equal to this as it is not a Person object!
+    if (!(other instanceof Point2D)) {
+      return false;
     }
+
+    Point2D other2D = (Point2D) other;
 
     return this.getX() == other2D.getX()
         && this.getY() == other2D.getY();
