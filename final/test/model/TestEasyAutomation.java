@@ -32,11 +32,11 @@ public class TestEasyAutomation {
 
   @Test
   public void testSetAction() {
-    simpleSquare.setAction("square", new Action());
+    simpleSquare.setAction("square", new Action(0,1,0,0, black));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testSetInvalidAction() {
-    simpleSquare.setAction("rectangle", new Action());
+    simpleSquare.setAction("rectangle", new Action(0,1,0,0, black));
   }
 }

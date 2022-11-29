@@ -7,8 +7,8 @@ import java.util.List;
 
 public class EasyAutomation implements IEasyAutomation {
 
-  private LinkedHashMap<String, IShape> shapes;
-  private LinkedHashMap<String, ArrayList<IAction>> animation;
+  private final LinkedHashMap<String, IShape> shapes;
+  private final LinkedHashMap<String, ArrayList<IAction>> animation;
   private double speed;
 
   public EasyAutomation() {
@@ -76,8 +76,8 @@ public class EasyAutomation implements IEasyAutomation {
    * @return shapes available in the automation, as a List of IShape objects.
    */
   @Override
-  public List<IShape> getShapes() {
-    return null;
+  public List<String> getShapes() {
+    return new ArrayList<String>(this.shapes.keySet());
   }
 
   /**
@@ -87,6 +87,7 @@ public class EasyAutomation implements IEasyAutomation {
    */
   @Override
   public int getLength() {
+    // TODO: This will need to get implemented once I know how the controller will process actions.
     return 0;
   }
 
@@ -98,6 +99,7 @@ public class EasyAutomation implements IEasyAutomation {
    */
   @Override
   public List<HashMap<String, IAction>> playback() {
+    // TODO: This will need to get implemented once I know how the controller will process actions.
     return null;
   }
 }

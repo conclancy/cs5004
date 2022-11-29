@@ -1,14 +1,39 @@
 package model;
 
 /**
- * This class represents a shape's action.
+ * This class represents a shape's action. Each object represents the state of the shape from the
+ * appears int until the disappears int.
  */
 public class Action implements IAction {
 
-  // TODO create fields
+  private int appears;
+  private int disappears;
+  private final Point2D reference;
+  private Color color;
+  private double size;
 
-  public Action() {
-    // TODO implement instantiation
+  /**
+   * Constructor for the action class.
+   *
+   * @param appears    the time at which the action appears.
+   * @param disappears the time at which the action disappears.
+   * @param x          the x coordinate of the shape while this action is taking place.
+   * @param y          the y coordinate of the shape while this action is taking place.
+   * @param color      the color of the shape during this action.
+   * @throws IllegalArgumentException is thrown if the user inputs a {@param disappears} time that
+   *                                  occurs before the {@param appears} time.
+   */
+  public Action(int appears, int disappears, int x, int y, Color color)
+      throws IllegalArgumentException {
+
+    if (appears >= disappears) {
+      throw new IllegalArgumentException("The action cannot disappear before it appears.");
+    }
+
+    this.appears = appears;
+    this.disappears = disappears;
+    this.reference = new Point2D(x, y);
+    this.color = color;
   }
 
   /**
@@ -18,7 +43,7 @@ public class Action implements IAction {
    */
   @Override
   public int getAppears() {
-    return 0;
+    return this.appears;
   }
 
   /**
@@ -29,7 +54,12 @@ public class Action implements IAction {
    */
   @Override
   public void setAppears(int appears) throws IllegalArgumentException {
-
+    if (appears < 0 || appears >= this.disappears) {
+      throw new IllegalArgumentException(
+          "Appears cannot be less than 0 or greater than the disappears value for this action.");
+    } else {
+      this.appears = appears;
+    }
   }
 
   /**
@@ -39,7 +69,7 @@ public class Action implements IAction {
    */
   @Override
   public int getDisappears() {
-    return 0;
+    return this.disappears;
   }
 
   /**
@@ -51,6 +81,12 @@ public class Action implements IAction {
   @Override
   public void setDisappears(int disappears) throws IllegalArgumentException {
 
+    if (disappears < 1 || disappears <= this.appears) {
+      throw new IllegalArgumentException(
+          "Disappears cannot be less than 1 or less than the appears value for this action.");
+    } else {
+      this.disappears = disappears;
+    }
   }
 
   /**
@@ -61,17 +97,19 @@ public class Action implements IAction {
    */
   @Override
   public Point2D getPoint2D() {
-    return null;
+    return this.reference;
   }
 
   /**
    * Set the location of the associated {@link IShape} during this automation.
    *
-   * @param point the coordinates of the {@link IShape}, as a {@link Point2D}.
+   * @param x the horizontal coordinate of the {@link IShape}, as an int.
+   * @param y the vertical coordinate of the {@link IShape}, as an int.
    */
   @Override
-  public void setPoint2D(Point2D point) {
-
+  public void setPoint2D(int x, int y) {
+    this.reference.setX(x);
+    this.reference.setY(y);
   }
 
   /**
@@ -81,7 +119,7 @@ public class Action implements IAction {
    */
   @Override
   public Color getColor() {
-    return null;
+    return this.color;
   }
 
   /**
@@ -91,7 +129,7 @@ public class Action implements IAction {
    */
   @Override
   public void setColor(Color color) {
-
+    this.color = color;
   }
 
   /**
@@ -101,7 +139,7 @@ public class Action implements IAction {
    */
   @Override
   public double getSize() {
-    return 0;
+    return this.size;
   }
 
   /**
@@ -110,9 +148,16 @@ public class Action implements IAction {
    * scale.
    *
    * @param size the scaling factor of the associated {@link IShape} as a double.
+   * @throws IllegalArgumentException if {@param size} is less than 0.
    */
   @Override
-  public void setSize(double size) {
+  public void setSize(double size) throws IllegalArgumentException {
+
+    if(size <= 0) {
+      throw new IllegalArgumentException("Cannot scale to 0 or less.");
+    }
+
+    this.size = size;
 
   }
 }
