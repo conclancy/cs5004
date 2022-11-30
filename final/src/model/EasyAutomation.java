@@ -5,12 +5,19 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * Represents the model for the Easy Automation program.  Each instance of this class represents a
+ * single instance of the easy automation program.
+ */
 public class EasyAutomation implements IEasyAutomation {
 
   private final LinkedHashMap<String, IShape> shapes;
   private final LinkedHashMap<String, ArrayList<IAction>> animation;
   private double speed;
 
+  /**
+   * Constructor for the EasyAutomation class.
+   */
   public EasyAutomation() {
     this.animation = new LinkedHashMap<>();
     this.shapes = new LinkedHashMap<>();
@@ -24,10 +31,6 @@ public class EasyAutomation implements IEasyAutomation {
    */
   @Override
   public void addShape(String shapeName, IShape shape) {
-    // TODO
-    // add a HashMap key in the `animation` list
-    // scale the list to have enough IShapes to list the longest length
-
     this.shapes.put(shapeName, shape);
     this.animation.put(shapeName, new ArrayList<>());
   }

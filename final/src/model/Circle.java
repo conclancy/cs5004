@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * This class represents a circle.  Circles are special cases of ovals where the axis is the same
+ * length (called a radius) around the entire perimeter of the circle.
+ */
 public class Circle extends Oval {
 
   /**

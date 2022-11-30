@@ -18,11 +18,11 @@ public class TestPoint2D {
 
   @Before
   public void init() {
-    origin = new Point2D(0,0);
-    one = new Point2D(1,1);
-    tt = new Point2D(22,18);
-    fiveFour = new Point2D(5.4,0);
-    negative = new Point2D(-1,-2);
+    origin = new Point2D(0, 0);
+    one = new Point2D(1, 1);
+    tt = new Point2D(22, 18);
+    fiveFour = new Point2D(5.4, 0);
+    negative = new Point2D(-1, -2);
   }
 
   @Test
@@ -83,8 +83,8 @@ public class TestPoint2D {
   public void testDistToOrigin() {
     assertEquals(0, origin.distToOrigin(), .01);
     assertEquals(Math.sqrt(2), one.distToOrigin(), .01);
-    assertEquals(Math.sqrt(18*18+22*22), tt.distToOrigin(), .01);
-    assertEquals(Math.sqrt(5.4*5.4), fiveFour.distToOrigin(), .01);
-    assertEquals(Math.sqrt(-1*-1+-2*-2), negative.distToOrigin(), .01);
+    assertEquals(Math.sqrt(18 * 18 + 22 * 22), tt.distToOrigin(), .01);
+    assertEquals(Math.sqrt(5.4 * 5.4), fiveFour.distToOrigin(), .01);
+    assertEquals(Math.sqrt(-1 * -1 + -2 * -2), negative.distToOrigin(), .01);
   }
 }

@@ -38,6 +38,7 @@ public class TestCircle {
   @Test
   public void testResize() {
     // TODO
+    assertEquals(6.28, smallCircle.perimeter(), .01);
   }
 
   @Test

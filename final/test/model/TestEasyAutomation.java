@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * This class tests an automation
+ * This class tests an automation.
  */
 public class TestEasyAutomation {
 
@@ -27,11 +27,6 @@ public class TestEasyAutomation {
   }
 
   @Test
-  public void testSetSpeed() {
-    simpleSquare.setSpeed(1);
-  }
-
-  @Test
   public void testGetShapes() {
     ArrayList<String> expected = new ArrayList<String>();
     expected.add("square");
@@ -41,6 +36,7 @@ public class TestEasyAutomation {
   @Test
   public void testSetAction() {
     simpleSquare.setAction("square", new Action(0,1,0,0, black));
+    assertEquals(0, simpleSquare.getLength());
   }
 
   @Test(expected = IllegalArgumentException.class)

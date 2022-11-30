@@ -201,7 +201,7 @@ public class Color {
    */
   private String hexIntToStringHelper(int i) throws IllegalArgumentException {
 
-    if(i < 0) {
+    if (i < 0) {
       throw new IllegalArgumentException("Vale must be greater than 0.");
     } else if (i < 10) {
       return String.valueOf(i);
@@ -219,6 +219,7 @@ public class Color {
           return "E";
         case 15:
           return "F";
+        default: // Leave blank if nothing happens
       }
     } else {
       throw new IllegalArgumentException("Value must be less than 16.");

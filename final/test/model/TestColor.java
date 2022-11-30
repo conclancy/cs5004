@@ -28,7 +28,7 @@ public class TestColor {
     blackInt = new Color(0,0,0);
     blackHex = new Color("000000");
     aquamarineInt = new Color(127, 255, 212);
-    aquamarineHex = new Color ("7FFFD4");
+    aquamarineHex = new Color("7FFFD4");
   }
 
   @Test
@@ -89,6 +89,7 @@ public class TestColor {
 
   @Test
   public void testAllValidColors() {
+    assertEquals(255, whiteInt.getRed());
     for (int r = 0; r < 256; r++) {
       for (int g = 0; g < 256; g++) {
         for (int b = 0; b < 256; b++) {
@@ -100,48 +101,50 @@ public class TestColor {
 
   @Test
   public void testNegativeSets() {
+    assertEquals(255, whiteInt.getRed());
     for (int i = -1; i > -1000; i--) {
 
       try {
         blackHex.setRed(i);
       } catch (IllegalArgumentException e) {
-        ;
+        assertEquals(255, whiteInt.getRed());
       }
 
       try {
         blackHex.setGreen(i);
       } catch (IllegalArgumentException e) {
-        ;
+        assertEquals(255, whiteInt.getRed());
       }
 
       try {
         blackHex.setBlue(i);
       } catch (IllegalArgumentException e) {
-        ;
+        assertEquals(255, whiteInt.getRed());
       }
     }
   }
 
   @Test
   public void testBigSets() {
+    assertEquals(255, whiteInt.getRed());
     for (int i = 256; i <= 1000; i++) {
 
       try {
         blackHex.setRed(i);
       } catch (IllegalArgumentException e) {
-        ;
+        assertEquals(255, whiteInt.getRed());
       }
 
       try {
         blackHex.setGreen(i);
       } catch (IllegalArgumentException e) {
-        ;
+        assertEquals(255, whiteInt.getRed());
       }
 
       try {
         blackHex.setBlue(i);
       } catch (IllegalArgumentException e) {
-        ;
+        assertEquals(255, whiteInt.getRed());
       }
     }
   }

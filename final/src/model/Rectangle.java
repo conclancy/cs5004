@@ -2,6 +2,10 @@ package model;
 
 import java.util.Objects;
 
+/**
+ * This class represents a rectangle as an instance of {@link IShape}.  Rectangles have 4 sides and
+ * can be identified by their lower left-hand corner with an x and y coordinate.
+ */
 public class Rectangle extends AbstractShape {
 
   private double width;
@@ -60,7 +64,7 @@ public class Rectangle extends AbstractShape {
   @Override
   public IShape resize(double size) throws IllegalArgumentException {
 
-    if(size <= 0) {
+    if (size <= 0) {
       throw new IllegalArgumentException("The resizing factor must be greater than 0.");
     }
 

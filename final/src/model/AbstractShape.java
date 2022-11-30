@@ -13,7 +13,7 @@ public abstract class AbstractShape implements IShape {
    * Constructor for an AbstractShape objects.
    *
    * @param reference the reference point for the shape, as a {@link Point2D}.
-   * @param color the color of the shape, as a {@link Color}.
+   * @param color     the color of the shape, as a {@link Color}.
    */
   public AbstractShape(Point2D reference, Color color) {
     this.reference = reference;

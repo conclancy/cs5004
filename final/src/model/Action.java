@@ -34,6 +34,33 @@ public class Action implements IAction {
     this.disappears = disappears;
     this.reference = new Point2D(x, y);
     this.color = color;
+    this.size = 1;
+  }
+
+  /**
+   * Constructor for the action class.
+   *
+   * @param appears    the time at which the action appears.
+   * @param disappears the time at which the action disappears.
+   * @param x          the x coordinate of the shape while this action is taking place.
+   * @param y          the y coordinate of the shape while this action is taking place.
+   * @param size       the size to scale the shape effected by the action.
+   * @param color      the color of the shape during this action.
+   * @throws IllegalArgumentException is thrown if the user inputs a {@param disappears} time that
+   *                                  occurs before the {@param appears} time.
+   */
+  public Action(int appears, int disappears, int x, int y, double size, Color color)
+      throws IllegalArgumentException {
+
+    if (appears >= disappears) {
+      throw new IllegalArgumentException("The action cannot disappear before it appears.");
+    }
+
+    this.appears = appears;
+    this.disappears = disappears;
+    this.reference = new Point2D(x, y);
+    this.color = color;
+    this.size = size;
   }
 
   /**
@@ -47,7 +74,7 @@ public class Action implements IAction {
   }
 
   /**
-   * Set when this action should first appear within an automation
+   * Set when this action should first appear within an automation.
    *
    * @param appears first appearance of this automation, as an int.
    * @throws IllegalStateException if {@param appears} is less than 0.
@@ -73,7 +100,7 @@ public class Action implements IAction {
   }
 
   /**
-   * Set when this action should last appear within an automation
+   * Set when this action should last appear within an automation.
    *
    * @param disappears last appearance of this automation, as an int.
    * @throws IllegalStateException if {@param disappears} is less than 0.
@@ -153,7 +180,7 @@ public class Action implements IAction {
   @Override
   public void setSize(double size) throws IllegalArgumentException {
 
-    if(size <= 0) {
+    if (size <= 0) {
       throw new IllegalArgumentException("Cannot scale to 0 or less.");
     }
 

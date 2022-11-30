@@ -47,11 +47,6 @@ public class TestOval {
   }
 
   @Test
-  public void testResize() {
-    // TODO
-  }
-
-  @Test
   public void testCopy() {
     Oval smallOvalCopy = (Oval) smallOval.copy();
 

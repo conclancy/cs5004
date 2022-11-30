@@ -75,8 +75,8 @@ public class Oval extends AbstractShape {
       throw new IllegalArgumentException("Size factor must be greater than 0.");
     }
 
-    return new Oval(super.reference.getX(), super.reference.getY(), Math.sqrt(size) *
-        majorAxis, Math.sqrt(size) * minorAxis, super.color);
+    return new Oval(super.reference.getX(), super.reference.getY(),
+        Math.sqrt(size) * majorAxis, Math.sqrt(size) * minorAxis, super.color);
   }
 
   /**

@@ -11,7 +11,7 @@ public class Point2D {
   private double y;
 
   /**
-   * Construct a 2d point with the given coordinates
+   * Construct a 2d point with the given coordinates.
    *
    * @param x the x-coordinate of this point
    * @param y the y-coordinate of this point
@@ -22,7 +22,7 @@ public class Point2D {
   }
 
   /**
-   * Compute and return the Euclidean distance of this point to the origin
+   * Compute and return the Euclidean distance of this point to the origin.
    *
    * @return the euclidean distance
    */
@@ -31,9 +31,9 @@ public class Point2D {
   }
 
   /**
-   * Return the x-coordinate of this point
+   * Return the x-coordinate of this point.
    *
-   * @return x-coordinate of this point
+   * @return x-coordinate of this point.
    */
   public double getX() {
     return x;
@@ -49,9 +49,9 @@ public class Point2D {
   }
 
   /**
-   * Return the y-coordinate of this point
+   * Return the y-coordinate of this point.
    *
-   * @return y-coordinate of this point
+   * @return y-coordinate of this point.
    */
   public double getY() {
     return y;
@@ -70,7 +70,7 @@ public class Point2D {
    * Determines if two Point2D objects are equal to one another.
    *
    * @param other the other object to be compared.
-   * @return true if the objects are the same
+   * @return true if the objects are the same.
    */
   @Override
   public boolean equals(Object other) {

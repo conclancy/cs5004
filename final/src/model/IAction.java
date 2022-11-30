@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Object representing an action of a shape object at a specific point
+ * Object representing an action of a shape object at a specific point.
  */
 public interface IAction {
 
@@ -13,7 +13,7 @@ public interface IAction {
   int getAppears();
 
   /**
-   * Set when this action should first appear within an automation
+   * Set when this action should first appear within an automation.
    *
    * @param appears first appearance of this automation, as an int.
    * @throws IllegalStateException if {@param appears} is less than 0.
@@ -28,7 +28,7 @@ public interface IAction {
   int getDisappears();
 
   /**
-   * Set when this action should last appear within an automation
+   * Set when this action should last appear within an automation.
    *
    * @param disappears last appearance of this automation, as an int.
    * @throws IllegalStateException if {@param disappears} is less than 0.
