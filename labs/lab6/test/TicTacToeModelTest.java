@@ -1,8 +1,8 @@
 import org.junit.Test;
 
-import cs5004.tictactoe.Player;
-import cs5004.tictactoe.TicTacToe;
-import cs5004.tictactoe.TicTacToeModel;
+import cs5004.tictactoeLab6.Player;
+import cs5004.tictactoeLab6.TicTacToe;
+import cs5004.tictactoeLab6.TicTacToeModel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

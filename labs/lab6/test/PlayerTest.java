@@ -1,4 +1,4 @@
-import cs5004.tictactoe.Player;
+import cs5004.tictactoeLab6.Player;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

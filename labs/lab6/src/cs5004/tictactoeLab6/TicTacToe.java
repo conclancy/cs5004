@@ -1,9 +1,9 @@
-package cs5004.tictactoe;
+package cs5004.tictactoeLab6;
 
 /**
  * A single game of Tic Tac Toe, played on a three-by-three grid with two players, with the object
  * of the game to achieve three markers in a row either vertically, horizontally, or diagonally.
- * {@link Player} X goes first.
+ * {@link cs5004.tictactoeLab6.Player} X goes first.
  */
 public interface TicTacToe {
 
@@ -20,9 +20,9 @@ public interface TicTacToe {
   /**
    * Get the current turn, i.e., the player who will mark on the next call to move().
    *
-   * @return the {@link Player} whose turn it is
+   * @return the {@link cs5004.tictactoeLab6.Player} whose turn it is
    */
-  Player getTurn();
+  cs5004.tictactoeLab6.Player getTurn();
 
   /**
    * Return whether the game is over. The game is over when either the board is full, or one player
@@ -38,7 +38,7 @@ public interface TicTacToe {
    *
    * @return the winner, or null if there is no winner
    */
-  Player getWinner();
+  cs5004.tictactoeLab6.Player getWinner();
 
   /**
    * Return the current game state, as a 2D array of Player. A {@code null} value in the grid
@@ -46,10 +46,10 @@ public interface TicTacToe {
    *
    * @return the current game board
    */
-  Player[][] getBoard();
+  cs5004.tictactoeLab6.Player[][] getBoard();
 
   /**
-   * Return the current {@link Player} mark at a given row and column, or {@code null} if the
+   * Return the current {@link cs5004.tictactoeLab6.Player} mark at a given row and column, or {@code null} if the
    * position is empty.
    *
    * @param r the row

@@ -1,4 +1,4 @@
-package cs5004.tictactoe;
+package cs5004.tictactoeLab6;
 
 /**
  * Represents the two players in a Tic Tac Toe game.

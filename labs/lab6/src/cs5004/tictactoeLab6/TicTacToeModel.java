@@ -1,4 +1,4 @@
-package cs5004.tictactoe;
+package cs5004.tictactoeLab6;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -6,18 +6,18 @@ import java.util.stream.Collectors;
 /**
  * A single game of Tic Tac Toe, played on a three-by-three grid with two players, with the object
  * of the game to achieve three markers in a row either vertically, horizontally, or diagonally.
- * {@link Player} X goes first.
+ * {@link cs5004.tictactoeLab6.Player} X goes first.
  */
 public class TicTacToeModel implements TicTacToe {
 
-  private final Player[][] board;
+  private final cs5004.tictactoeLab6.Player[][] board;
   private boolean xTurn;
 
   /**
    * Constructor for a Tic Tac Toe game.
    */
   public TicTacToeModel() {
-    this.board = new Player[3][3];
+    this.board = new cs5004.tictactoeLab6.Player[3][3];
     this.xTurn = true;
   }
 
@@ -63,14 +63,14 @@ public class TicTacToeModel implements TicTacToe {
   /**
    * Get the current turn, i.e., the player who will mark on the next call to move().
    *
-   * @return the {@link Player} whose turn it is
+   * @return the {@link cs5004.tictactoeLab6.Player} whose turn it is
    */
   @Override
-  public Player getTurn() {
+  public cs5004.tictactoeLab6.Player getTurn() {
     if (this.xTurn) {
-      return Player.X;
+      return cs5004.tictactoeLab6.Player.X;
     } else {
-      return Player.O;
+      return cs5004.tictactoeLab6.Player.O;
     }
   }
 
@@ -102,7 +102,7 @@ public class TicTacToeModel implements TicTacToe {
    * @return the winner, or null if there is no winner
    */
   @Override
-  public Player getWinner() {
+  public cs5004.tictactoeLab6.Player getWinner() {
     for (int i = 0; i < 3; i++) {
       if (this.board[i][0] == this.board[i][1] && this.board[i][1] == this.board[i][2]) {
         return this.board[i][0];
@@ -128,8 +128,8 @@ public class TicTacToeModel implements TicTacToe {
    * @return the current game board
    */
   @Override
-  public Player[][] getBoard() {
-    Player[][] copyBoard = new Player[3][3];
+  public cs5004.tictactoeLab6.Player[][] getBoard() {
+    cs5004.tictactoeLab6.Player[][] copyBoard = new cs5004.tictactoeLab6.Player[3][3];
     for (int i = 0; i < this.board.length; i++) {
       System.arraycopy(this.board[i], 0, copyBoard[i], 0, 3);
     }
@@ -137,7 +137,7 @@ public class TicTacToeModel implements TicTacToe {
   }
 
   /**
-   * Return the current {@link Player} mark at a given row and column, or {@code null} if the
+   * Return the current {@link cs5004.tictactoeLab6.Player} mark at a given row and column, or {@code null} if the
    * position is empty.
    *
    * @param r the row
