@@ -1,9 +1,10 @@
 import static org.junit.Assert.assertEquals;
 
-import cs5004.tictactoeLab6.TicTacToe;
+import cs5004.tictactoe.FailingAppendable;
 import cs5004.tictactoe.TicTacToeConsoleController;
 import cs5004.tictactoe.TicTacToeController;
-import cs5004.tictactoeLab6.TicTacToeModel;
+import cs5004.tictactoe.TicTacToeModel;
+import cs5004.tictactoe.TicTacToe;
 import java.io.StringReader;
 import java.util.Arrays;
 import org.junit.Test;
