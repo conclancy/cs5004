@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
  * Test cases for the tic tac toe model. Verifying that game state is properly managed, and all game
  * actions are properly validated.
  */
-public class TicTacToeModelTest {
+public class TicTacToeModelTest6 {
 
   private TicTacToe ttt1 = new TicTacToeModel();
 
