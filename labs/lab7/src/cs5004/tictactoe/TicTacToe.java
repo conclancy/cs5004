@@ -3,7 +3,7 @@ package cs5004.tictactoe;
 /**
  * A single game of Tic Tac Toe, played on a three-by-three grid with two players, with the object
  * of the game to achieve three markers in a row either vertically, horizontally, or diagonally.
- * {@link cs5004.tictactoeLab6.Player} X goes first.
+ * {@link Player} X goes first.
  */
 public interface TicTacToe {
 
@@ -20,7 +20,7 @@ public interface TicTacToe {
   /**
    * Get the current turn, i.e., the player who will mark on the next call to move().
    *
-   * @return the {@link cs5004.tictactoeLab6.Player} whose turn it is
+   * @return the {@link Player} whose turn it is
    */
   Player getTurn();
 
@@ -49,7 +49,7 @@ public interface TicTacToe {
   Player[][] getBoard();
 
   /**
-   * Return the current {@link cs5004.tictactoeLab6.Player} mark at a given row and column, or {@code null} if the
+   * Return the current {@link Player} mark at a given row and column, or {@code null} if the
    * position is empty.
    *
    * @param r the row

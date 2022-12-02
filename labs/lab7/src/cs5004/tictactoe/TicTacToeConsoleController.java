@@ -4,12 +4,18 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * Represents a Controller for Tic Tac Toe: handle user moves collected by the console view and
+ * executes them using the model; convey move outcomes to the user in the form of console outputs.
+ */
 public class TicTacToeConsoleController implements TicTacToeController {
 
   private final Appendable appendable;
   private final Scanner scan;
 
   /**
+   * Constructor of the TicTacToeConsoleController controller.
+   *
    * @param readable   the input values to run the game.
    * @param appendable the output values for the game.
    * @throws IllegalArgumentException if either of the params are null when passed.
@@ -86,6 +92,12 @@ public class TicTacToeConsoleController implements TicTacToeController {
     }
   }
 
+  /**
+   * Helper method for the playGame method.
+   *
+   * @param t an instance of TicTacToe model that will allow game play.
+   * @throws IOException when invalid inputs are received by the controller.
+   */
   private void playGameHelper(TicTacToe t) throws IOException {
     appendable.append(t.toString()).append("\n");
     appendable.append("Enter a move for ").append(t.getTurn().toString()).append(":\n");
