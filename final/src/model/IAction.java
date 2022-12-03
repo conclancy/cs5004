@@ -5,6 +5,7 @@ package model;
  */
 public interface IAction {
 
+  // About to make changes
   /**
    * Show when this action first appears within the automation.
    *
