@@ -1,16 +1,19 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The Animation Interface allows access to a series of Animation objects that can be read in order
- * to describe the automation and movement of another object throughout an automation visual.
- *
- * @param <T> Support action objects, including {@link Point2D} to describe movement, {@link Color}
- *            to describe a color change, and {@link Size} to describe a change in the objects
- *            physical dimensions.
- */
-public interface IAnimation<T> {
+public class Animation<T> implements IAnimation<T> {
+
+  private List<IAction<T>> actions;
+
+  /**
+   * Constructor for the Animation object that initializes the Animation with no predefined
+   * actions.
+   */
+  public Animation() {
+    this.actions = new ArrayList<IAction<T>>();
+  }
 
   /**
    * Adds a new animation to the beginning of the animation series. All existing animations will be
@@ -21,7 +24,27 @@ public interface IAnimation<T> {
    *              their current start point to occur after this value.
    * @param to    The ending object of this animation.
    */
-  public void addAnimationFront(int start, int end, T to);
+  @Override
+  public void addAnimationFront(int start, int end, T to) {
+
+    // If the actions list is empty, just append the provided action.
+    if (this.actions.size() > 0) {
+      int currentStart = this.actions.get(0).getStart();
+
+      if (currentStart <= end) {
+        int updatedStart = end + 1;
+
+        for (IAction<T> a : this.actions) {
+          int aInterval = a.getEnd() - a.getStart();
+          a.setEnd(updatedStart + aInterval);
+          a.setStart(updatedStart);
+          updatedStart = a.getEnd() + 1;
+        }
+      }
+    }
+
+    this.actions.add(0, new Action<T>(start, end, to));
+  }
 
   /**
    * Adds a new animation to the end of the animation series.  Existing animations will not be
@@ -30,7 +53,10 @@ public interface IAnimation<T> {
    * @param intervalLength the length of this automation.
    * @param to             the ending object of this animation.
    */
-  public void addAnimationBack(int intervalLength, T to);
+  @Override
+  public void addAnimationBack(int intervalLength, T to) {
+
+  }
 
   /**
    * Adds a new animation to the middle of the animation series.  Existing animations that begin
@@ -42,19 +68,28 @@ public interface IAnimation<T> {
    * @param to    the desired state of this automation.
    * @throws IllegalArgumentException if the {@param start} value is less than 0.
    */
-  public void addAnimation(int start, int end, T to) throws IllegalArgumentException;
+  @Override
+  public void addAnimation(int start, int end, T to) throws IllegalArgumentException {
+
+  }
 
   /**
    * Remove the first animation in this series.  All other animations will be shifted forward by the
    * interval contained by this removed value.
    */
-  public void removeAnimationFront();
+  @Override
+  public void removeAnimationFront() {
+
+  }
 
   /**
    * Remove the final animation in this series.  All other animation will not be affected by this
    * method.
    */
-  public void removeAnimationBack();
+  @Override
+  public void removeAnimationBack() {
+
+  }
 
   /**
    * Remove an animation at a specific {@param index}.  Note that we begin indexing at 0, e.g. the
@@ -64,7 +99,10 @@ public interface IAnimation<T> {
    * @throws IndexOutOfBoundsException if the {@param index} provided does not exist in the current
    *                                   animation series.
    */
-  public void removeAnimationAtIndex(int index) throws IndexOutOfBoundsException;
+  @Override
+  public void removeAnimationAtIndex(int index) throws IndexOutOfBoundsException {
+
+  }
 
   /**
    * Remove an animation at a specific {@param start} value.  All animations proceeding this
@@ -74,14 +112,20 @@ public interface IAnimation<T> {
    * @throws IllegalArgumentException if no animations start exactly at the provided {@param start}
    *                                  value.
    */
-  public void removeAnimationAtStart(int start) throws IllegalArgumentException;
+  @Override
+  public void removeAnimationAtStart(int start) throws IllegalArgumentException {
+
+  }
 
   /**
    * Get the number of animation objects currently stored in this series.
    *
    * @return the number of animation objects, as an integer.
    */
-  public int getNumberOfAnimations();
+  @Override
+  public int getNumberOfAnimations() {
+    return 0;
+  }
 
   /**
    * Retrieve the Action at a given {@param index}. Note that we begin indexing at 0, e.g. the first
@@ -92,7 +136,10 @@ public interface IAnimation<T> {
    * @throws IndexOutOfBoundsException if the provided {@param index} does not exist in the current
    *                                   series.
    */
-  public IAction<T> getActionAtIndex(int index) throws IndexOutOfBoundsException;
+  @Override
+  public IAction<T> getActionAtIndex(int index) throws IndexOutOfBoundsException {
+    return null;
+  }
 
   /**
    * Retrieve the animation at a specific {@param start} value.
@@ -102,13 +149,39 @@ public interface IAnimation<T> {
    * @throws IllegalArgumentException if no animations start exactly at the provided {@param start}
    *                                  value.
    */
-  public IAction<T> getActionAtStart(int start) throws IllegalArgumentException;
+  @Override
+  public IAction<T> getActionAtStart(int start) throws IllegalArgumentException {
+    return null;
+  }
 
   /**
    * Return a String description of each Action contained in the series.
    *
    * @return a list of String description for each Action contained in the series.
    */
-  public List<String> playTextDescription();
+  @Override
+  public List<String> playTextDescription() {
 
+    List<String> playBack = new ArrayList<>();
+
+    for (IAction<T> action : this.actions) {
+      EActionType type = action.getType();
+      String line;
+
+      if (type == EActionType.COLOR) {
+        line = "changes color to ";
+      } else if (type == EActionType.MOVE) {
+        line = "moves to ";
+      } else if (type == EActionType.SIZE) {
+        line = "scales to ";
+      } else {
+        line = "unknown action to ";
+      }
+
+      playBack.add(line + action.getTo().toString() + " from t=" + action.getStart() + " to t="
+          + action.getEnd());
+    }
+
+    return playBack;
+  }
 }
