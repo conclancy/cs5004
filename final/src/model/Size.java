@@ -77,4 +77,35 @@ public class Size {
     return dimension;
   }
 
+  /**
+   * Determines if two Size objects are logically equal.
+   *
+   * @param other the other object to test.
+   * @return boolean if the objects are equal.
+   */
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof Size)) {
+      return false;
+    }
+
+    Size otherSize = (Size) other;
+
+    return this.getDimensionOne() == otherSize.getDimensionOne()
+        && this.getDimensionTwo() == otherSize.getDimensionTwo();
+  }
+
+  /**
+   * Hash code for the Size object.
+   *
+   * @return the dimensions of the Size object, as a hashCode integer.
+   */
+  @Override
+  public int hashCode() {
+    return Integer.parseInt(String.valueOf(this.dimensionOne) + String.valueOf(this.dimensionTwo));
+  }
+
 }
