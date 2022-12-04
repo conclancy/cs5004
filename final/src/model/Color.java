@@ -261,4 +261,14 @@ public class Color {
         String.valueOf(this.red) + String.valueOf(this.green) + String.valueOf(this.blue));
   }
 
+  /**
+   * Get the String version of this object.  Returns the value of the Color as a color hex.
+   *
+   * @return the value of the Color as a color hex.
+   */
+  @Override
+  public String toString() {
+    return this.getHex();
+  }
+
 }
