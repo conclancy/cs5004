@@ -16,14 +16,14 @@ public class TestAction {
 
   @Before
   public void init() {
-    basicMove = new Action<Point2D>(0, 1, new Point2D(0, 0), new Point2D(1, 1));
-    basicColor = new Action<Color>(1, 2, new Color("000000"), new Color("FFFFFF"));
-    basicSize = new Action<Size>(2, 3, new Size(1), new Size(2));
+    basicMove = new Action<Point2D>(0, 1, new Point2D(1, 1));
+    basicColor = new Action<Color>(1, 2, new Color("FFFFFF"));
+    basicSize = new Action<Size>(2, 3, new Size(2));
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testInvalidStartEnd() {
-    Action<Color> test = new Action<Color>(1, 0, new Color("000000"), new Color("FFFFFF"));
+    Action<Color> test = new Action<Color>(1, 0, new Color("FFFFFF"));
   }
 
   @Test
@@ -45,13 +45,6 @@ public class TestAction {
     assertEquals(1, basicMove.getEnd());
     assertEquals(2, basicColor.getEnd());
     assertEquals(3, basicSize.getEnd());
-  }
-
-  @Test
-  public void testGetFrom() {
-    assertEquals(new Point2D(0, 0), basicMove.getFrom());
-    assertEquals(new Color("000000"), basicColor.getFrom());
-    assertEquals(new Size(1), basicSize.getFrom());
   }
 
   @Test
@@ -106,33 +99,24 @@ public class TestAction {
   public void testSetToFrom() {
 
     // Test basicMove
-    assertEquals(new Point2D(0, 0), basicMove.getFrom());
     assertEquals(new Point2D(1, 1), basicMove.getTo());
-    basicMove.setToFrom(new Point2D(1, 1), new Point2D(12, 16));
-    assertEquals(new Point2D(1, 1), basicMove.getFrom());
+    basicMove.setTo(new Point2D(12, 16));
     assertEquals(new Point2D(12, 16), basicMove.getTo());
-    basicMove.setToFrom(new Point2D(0, 0), new Point2D(1, 1));
-    assertEquals(new Point2D(0, 0), basicMove.getFrom());
+    basicMove.setTo(new Point2D(1, 1));
     assertEquals(new Point2D(1, 1), basicMove.getTo());
 
     // Test basicColor
-    assertEquals(new Color("000000"), basicColor.getFrom());
     assertEquals(new Color("FFFFFF"), basicColor.getTo());
-    basicColor.setToFrom(new Color("123456"), new Color("ABCDEF"));
-    assertEquals(new Color("123456"), basicColor.getFrom());
+    basicColor.setTo(new Color("ABCDEF"));
     assertEquals(new Color("ABCDEF"), basicColor.getTo());
-    basicColor.setToFrom(new Color("000000"), new Color("FFFFFF"));
-    assertEquals(new Color("000000"), basicColor.getFrom());
+    basicColor.setTo(new Color("FFFFFF"));
     assertEquals(new Color("FFFFFF"), basicColor.getTo());
 
     // Test basicSize
-    assertEquals(new Size(1, 1), basicSize.getFrom());
     assertEquals(new Size(2, 2), basicSize.getTo());
-    basicSize.setToFrom(new Size(3), new Size(5, 6));
-    assertEquals(new Size(3, 3), basicSize.getFrom());
+    basicSize.setTo(new Size(5, 6));
     assertEquals(new Size(5, 6), basicSize.getTo());
-    basicSize.setToFrom(new Size(1, 1), new Size(2));
-    assertEquals(new Size(1, 1), basicSize.getFrom());
+    basicSize.setTo(new Size(2));
     assertEquals(new Size(2, 2), basicSize.getTo());
   }
 }

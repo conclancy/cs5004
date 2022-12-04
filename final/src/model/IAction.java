@@ -29,13 +29,6 @@ public interface IAction<T> {
   int getEnd();
 
   /**
-   * Provide the starting state of the action.
-   *
-   * @return starting state, relating to {@link EActionType}.
-   */
-  T getFrom();
-
-  /**
    * Provide the ending state of the action.
    *
    * @return ending state, relating to {@link EActionType}.
@@ -61,9 +54,8 @@ public interface IAction<T> {
   /**
    * Modify the type of action performed during this action.
    *
-   * @param from the beginning state of the action.
    * @param to the ending state of the action
    * @throws InvalidTypeException if the from and to values do not match.
    */
-  void setToFrom(T from, T to) throws InvalidTypeException;
+  void setTo(T to) throws InvalidTypeException;
 }

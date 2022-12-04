@@ -8,7 +8,6 @@ public class Action<T> implements IAction<T> {
 
   private int start;
   private int end;
-  private T from;
   private T to;
 
   /**
@@ -16,18 +15,16 @@ public class Action<T> implements IAction<T> {
    *
    * @param start the start value of this action, as an int.
    * @param end   the end value of this action, as an int.
-   * @param from  the beginning state of the action, as a generic object.
    * @param to    the ending state of the action, as a generic object.
    * @throws IllegalArgumentException The start value must be less than the end value.
    * @throws IllegalStateException     The from and to types must match.
    */
-  public Action(int start, int end, T from, T to)
+  public Action(int start, int end, T to)
       throws IllegalArgumentException, IllegalStateException {
     this.checkStartEnd(start, end);
 
     this.start = start;
     this.end = end;
-    this.from = from;
     this.to = to;
   }
 
@@ -51,11 +48,11 @@ public class Action<T> implements IAction<T> {
    */
   @Override
   public EActionType getType() {
-    if(this.from.getClass().equals(Point2D.class)) {
+    if(this.to.getClass().equals(Point2D.class)) {
       return EActionType.MOVE;
-    } else if (this.from.getClass().equals(Color.class)) {
+    } else if (this.to.getClass().equals(Color.class)) {
       return EActionType.COLOR;
-    } else if (this.from.getClass().equals(Size.class)) {
+    } else if (this.to.getClass().equals(Size.class)) {
       return EActionType.SIZE;
     }
     return EActionType.UNKNOWN;
@@ -79,16 +76,6 @@ public class Action<T> implements IAction<T> {
   @Override
   public int getEnd() {
     return this.end;
-  }
-
-  /**
-   * Provide the starting state of the action.
-   *
-   * @return starting state, relating to {@link EActionType}.
-   */
-  @Override
-  public T getFrom() {
-    return this.from;
   }
 
   /**
@@ -128,13 +115,11 @@ public class Action<T> implements IAction<T> {
   /**
    * Modify the type of action performed during this action.
    *
-   * @param from the beginning state of the action.
    * @param to   the ending state of the action
    * @throws IllegalStateException if the from and to values do not match.
    */
   @Override
-  public void setToFrom(T from, T to) throws IllegalStateException {
-    this.from = from;
+  public void setTo(T to) throws IllegalStateException {
     this.to = to;
   }
 }
