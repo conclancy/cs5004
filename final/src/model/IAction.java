@@ -1,87 +1,69 @@
 package model;
 
+import com.sun.jdi.InvalidTypeException;
+
 /**
  * Object representing an action of a shape object at a specific point.
  */
-public interface IAction {
-
-  // About to make changes
-  /**
-   * Show when this action first appears within the automation.
-   *
-   * @return the first appears of the automation, as an int.
-   */
-  int getAppears();
+public interface IAction<T> {
 
   /**
-   * Set when this action should first appear within an automation.
+   * Provides the type of action that an automation will preform while reading this action.
    *
-   * @param appears first appearance of this automation, as an int.
-   * @throws IllegalStateException if {@param appears} is less than 0.
+   * @return the {@link EActionType} of this action.
    */
-  void setAppears(int appears) throws IllegalArgumentException;
+  EActionType getType();
 
   /**
-   * Show when this action last appears within the automation.
+   * Provide the starting interval for this action.
    *
-   * @return the last appears of the automation, as an int.
+   * @return starting interval, as an int.
    */
-  int getDisappears();
+  int getStart();
 
   /**
-   * Set when this action should last appear within an automation.
+   * Provide the ending interval for this action.
    *
-   * @param disappears last appearance of this automation, as an int.
-   * @throws IllegalStateException if {@param disappears} is less than 0.
+   * @return ending interval, as an int.
    */
-  void setDisappears(int disappears) throws IllegalArgumentException;
+  int getEnd();
 
   /**
-   * Get the position of the associated {@link IShape} during this automation.
+   * Provide the starting state of the action.
    *
-   * @return the coordinates of the {@link IShape} during this specific action, as a
-   * {@link Point2D}.
+   * @return starting state, relating to {@link EActionType}.
    */
-  Point2D getPoint2D();
+  T getFrom();
 
   /**
-   * Set the location of the associated {@link IShape} during this automation.
+   * Provide the ending state of the action.
    *
-   * @param x the horizontal coordinate of the {@link IShape}, as an int.
-   * @param y the vertical coordinate of the {@link IShape}, as an int.
+   * @return ending state, relating to {@link EActionType}.
    */
-  void setPoint2D(int x, int y);
+  T getTo();
 
   /**
-   * Get the color of the associated {@link IShape} during the automation.
+   * Modify the starting interval for an action.
    *
-   * @return the color of the associated {@link IShape} as a {@link Color}.
+   * @param start beginning of the interval, as an int.
+   * @throws IllegalArgumentException if the start is not less than the end value.
    */
-  Color getColor();
+  void setStart(int start) throws IllegalArgumentException;
 
   /**
-   * Set the color of the associated {@link IShape} during this automation.
+   * Modify the ending interval for the action.
    *
-   * @param color the coordinates of the {@link IShape} as a {@link Color}.
+   * @param end the end of the interval, as an int.
+   * @throws IllegalArgumentException if the start is not less than the end value.
    */
-  void setColor(Color color);
+  void setEnd(int end) throws IllegalArgumentException;
 
   /**
-   * Get the scaled size of the {@link IShape} during this automation.
+   * Modify the type of action performed during this action.
    *
-   * @return the scaled size of the associated {@link IShape} during this automation as a double.
+   * @param from the beginning state of the action.
+   * @param to the ending state of the action
+   * @throws InvalidTypeException if the from and to values do not match.
    */
-  double getSize();
-
-  /**
-   * Set the scaled size of the {@link IShape} during this automation.  Default size is 1.0, size
-   * greater than this will increase shape's scale, and soze lower than 1.0 will decrease the
-   * scale.
-   *
-   * @param size the scaling factor of the associated {@link IShape} as a double.
-   * @throws IllegalArgumentException if {@param size} is less than 0.
-   */
-  void setSize(double size) throws IllegalArgumentException;
-
-
+  void setToFrom(T from, T to) throws InvalidTypeException;
 }

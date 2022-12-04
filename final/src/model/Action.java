@@ -4,187 +4,137 @@ package model;
  * This class represents a shape's action. Each object represents the state of the shape from the
  * appears int until the disappears int.
  */
-public class Action implements IAction {
+public class Action<T> implements IAction<T> {
 
-  private int appears;
-  private int disappears;
-  private final Point2D reference;
-  private Color color;
-  private double size;
+  private int start;
+  private int end;
+  private T from;
+  private T to;
 
   /**
-   * Constructor for the action class.
+   * Constructor for the Action class.
    *
-   * @param appears    the time at which the action appears.
-   * @param disappears the time at which the action disappears.
-   * @param x          the x coordinate of the shape while this action is taking place.
-   * @param y          the y coordinate of the shape while this action is taking place.
-   * @param color      the color of the shape during this action.
-   * @throws IllegalArgumentException is thrown if the user inputs a {@param disappears} time that
-   *                                  occurs before the {@param appears} time.
+   * @param start the start value of this action, as an int.
+   * @param end   the end value of this action, as an int.
+   * @param from  the beginning state of the action, as a generic object.
+   * @param to    the ending state of the action, as a generic object.
+   * @throws IllegalArgumentException The start value must be less than the end value.
+   * @throws IllegalStateException     The from and to types must match.
    */
-  public Action(int appears, int disappears, int x, int y, Color color)
-      throws IllegalArgumentException {
+  public Action(int start, int end, T from, T to)
+      throws IllegalArgumentException, IllegalStateException {
+    this.checkStartEnd(start, end);
 
-    if (appears >= disappears) {
-      throw new IllegalArgumentException("The action cannot disappear before it appears.");
-    }
-
-    this.appears = appears;
-    this.disappears = disappears;
-    this.reference = new Point2D(x, y);
-    this.color = color;
-    this.size = 1;
+    this.start = start;
+    this.end = end;
+    this.from = from;
+    this.to = to;
   }
 
   /**
-   * Constructor for the action class.
+   * Checks to ensure the {@param start} value is less than the {@param end} value.
    *
-   * @param appears    the time at which the action appears.
-   * @param disappears the time at which the action disappears.
-   * @param x          the x coordinate of the shape while this action is taking place.
-   * @param y          the y coordinate of the shape while this action is taking place.
-   * @param size       the size to scale the shape effected by the action.
-   * @param color      the color of the shape during this action.
-   * @throws IllegalArgumentException is thrown if the user inputs a {@param disappears} time that
-   *                                  occurs before the {@param appears} time.
+   * @param start value to test, as an int.
+   * @param end   value to test, as an int.
+   * @throws IllegalArgumentException The start value must be less than the end value.
    */
-  public Action(int appears, int disappears, int x, int y, double size, Color color)
-      throws IllegalArgumentException {
-
-    if (appears >= disappears) {
-      throw new IllegalArgumentException("The action cannot disappear before it appears.");
-    }
-
-    this.appears = appears;
-    this.disappears = disappears;
-    this.reference = new Point2D(x, y);
-    this.color = color;
-    this.size = size;
-  }
-
-  /**
-   * Show when this action first appears within the automation.
-   *
-   * @return the first appears of the automation, as an int.
-   */
-  @Override
-  public int getAppears() {
-    return this.appears;
-  }
-
-  /**
-   * Set when this action should first appear within an automation.
-   *
-   * @param appears first appearance of this automation, as an int.
-   * @throws IllegalStateException if {@param appears} is less than 0.
-   */
-  @Override
-  public void setAppears(int appears) throws IllegalArgumentException {
-    if (appears < 0 || appears >= this.disappears) {
-      throw new IllegalArgumentException(
-          "Appears cannot be less than 0 or greater than the disappears value for this action.");
-    } else {
-      this.appears = appears;
+  private void checkStartEnd(int start, int end) throws IllegalArgumentException {
+    if (start >= end) {
+      throw new IllegalArgumentException("Action start value must be less than the end value.");
     }
   }
 
   /**
-   * Show when this action last appears within the automation.
+   * Provides the type of action that an automation will preform while reading this action.
    *
-   * @return the last appears of the automation, as an int.
+   * @return the {@link EActionType} of this action.
    */
   @Override
-  public int getDisappears() {
-    return this.disappears;
-  }
-
-  /**
-   * Set when this action should last appear within an automation.
-   *
-   * @param disappears last appearance of this automation, as an int.
-   * @throws IllegalStateException if {@param disappears} is less than 0.
-   */
-  @Override
-  public void setDisappears(int disappears) throws IllegalArgumentException {
-
-    if (disappears < 1 || disappears <= this.appears) {
-      throw new IllegalArgumentException(
-          "Disappears cannot be less than 1 or less than the appears value for this action.");
-    } else {
-      this.disappears = disappears;
+  public EActionType getType() {
+    if(this.from.getClass().equals(Point2D.class)) {
+      return EActionType.MOVE;
+    } else if (this.from.getClass().equals(Color.class)) {
+      return EActionType.COLOR;
+    } else if (this.from.getClass().equals(Size.class)) {
+      return EActionType.SIZE;
     }
+    return EActionType.UNKNOWN;
   }
 
   /**
-   * Get the position of the associated {@link IShape} during this automation.
+   * Provide the starting interval for this action.
    *
-   * @return the coordinates of the {@link IShape} during this specific action, as a
-   * {@link Point2D}.
+   * @return starting interval, as an int.
    */
   @Override
-  public Point2D getPoint2D() {
-    return this.reference;
+  public int getStart() {
+    return this.start;
   }
 
   /**
-   * Set the location of the associated {@link IShape} during this automation.
+   * Provide the ending interval for this action.
    *
-   * @param x the horizontal coordinate of the {@link IShape}, as an int.
-   * @param y the vertical coordinate of the {@link IShape}, as an int.
+   * @return ending interval, as an int.
    */
   @Override
-  public void setPoint2D(int x, int y) {
-    this.reference.setX(x);
-    this.reference.setY(y);
+  public int getEnd() {
+    return this.end;
   }
 
   /**
-   * Get the color of the associated {@link IShape} during the automation.
+   * Provide the starting state of the action.
    *
-   * @return the color of the associated {@link IShape} as a {@link Color}.
+   * @return starting state, relating to {@link EActionType}.
    */
   @Override
-  public Color getColor() {
-    return this.color;
+  public T getFrom() {
+    return this.from;
   }
 
   /**
-   * Set the color of the associated {@link IShape} during this automation.
+   * Provide the ending state of the action.
    *
-   * @param color the coordinates of the {@link IShape} as a {@link Color}.
+   * @return ending state, relating to {@link EActionType}.
    */
   @Override
-  public void setColor(Color color) {
-    this.color = color;
+  public T getTo() {
+    return this.to;
   }
 
   /**
-   * Get the scaled size of the {@link IShape} during this automation.
+   * Modify the starting interval for an action.
    *
-   * @return the scaled size of the associated {@link IShape} during this automation as a double.
+   * @param start beginning of the interval, as an int.
+   * @throws IllegalArgumentException if the start is not less than the end value.
    */
   @Override
-  public double getSize() {
-    return this.size;
+  public void setStart(int start) throws IllegalArgumentException {
+    this.checkStartEnd(start, this.end);
+    this.start = start;
   }
 
   /**
-   * Set the scaled size of the {@link IShape} during this automation.  Default size is 1.0, size
-   * greater than this will increase shape's scale, and soze lower than 1.0 will decrease the
-   * scale.
+   * Modify the ending interval for the action.
    *
-   * @param size the scaling factor of the associated {@link IShape} as a double.
-   * @throws IllegalArgumentException if {@param size} is less than 0.
+   * @param end the end of the interval, as an int.
+   * @throws IllegalArgumentException if the start is not less than the end value.
    */
   @Override
-  public void setSize(double size) throws IllegalArgumentException {
+  public void setEnd(int end) throws IllegalArgumentException {
+    this.checkStartEnd(this.start, end);
+    this.end = end;
+  }
 
-    if (size <= 0) {
-      throw new IllegalArgumentException("Cannot scale to 0 or less.");
-    }
-
-    this.size = size;
-
+  /**
+   * Modify the type of action performed during this action.
+   *
+   * @param from the beginning state of the action.
+   * @param to   the ending state of the action
+   * @throws IllegalStateException if the from and to values do not match.
+   */
+  @Override
+  public void setToFrom(T from, T to) throws IllegalStateException {
+    this.from = from;
+    this.to = to;
   }
 }
