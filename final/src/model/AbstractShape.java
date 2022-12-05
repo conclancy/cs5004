@@ -1,5 +1,7 @@
 package model;
 
+// TODO implement all of the animation methods here.
+
 /**
  * Abstract implementation of the IShape class containing all of the common methods shared between
  * shape objects.
@@ -8,6 +10,7 @@ public abstract class AbstractShape implements IShape {
 
   protected Point2D reference;
   protected Color color;
+  protected final IAnimation<Object> animation;
 
   /**
    * Constructor for an AbstractShape objects.
@@ -18,6 +21,7 @@ public abstract class AbstractShape implements IShape {
   public AbstractShape(Point2D reference, Color color) {
     this.reference = reference;
     this.color = color;
+    this.animation = new Animation<Object>();
   }
 
   /**
