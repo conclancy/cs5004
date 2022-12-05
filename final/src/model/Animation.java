@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Animation<T> implements IAnimation<T> {
 
@@ -56,20 +57,50 @@ public class Animation<T> implements IAnimation<T> {
   @Override
   public void addAnimationBack(int intervalLength, T to) {
 
+    if (this.actions.size() == 0) {
+      this.actions.add(new Action<T>(0, intervalLength, to));
+    } else {
+      int currentEnd = this.actions.get(this.actions.size() - 1).getEnd();
+      this.actions.add(new Action<T>(currentEnd + 1, currentEnd + intervalLength, to));
+    }
   }
 
   /**
-   * Adds a new animation to the middle of the animation series.  Existing animations that begin
-   * after this animation new start point will be pushed back by the difference in value between the
+   * Adds a new animation to the middle of the animation series.  This method is intended to add an
+   * animation exactly where another automation already begins. Existing animations that begin after
+   * this animation new start point will be pushed back by the difference in value between the
    * {@param start} and the {@param end} values. Preceding actions will not be affected.
    *
    * @param start the time this interval should start.
    * @param end   the time this interval should end.
    * @param to    the desired state of this automation.
-   * @throws IllegalArgumentException if the {@param start} value is less than 0.
+   * @throws IllegalArgumentException if the {@param start} value is less than 0 or greater than the
+   *                                  end value.
+   * @throws NoSuchElementException   if there is no action with a start value matching
+   *                                  {@param start}.
    */
   @Override
-  public void addAnimation(int start, int end, T to) throws IllegalArgumentException {
+  public void addAnimation(int start, int end, T to)
+      throws IllegalArgumentException, NoSuchElementException {
+
+    // Instantiate new action immediately to see if an IllegalArgumentException is thrown.
+    Action<T> newAction = new Action<T>(start, end, to);
+
+    // Find the index where the new action should be inserted.
+    int index = -1;
+
+    index = this.findStartIndex(start);
+
+    // Shift the end and start values for proceeding elements.
+    int interval = end - start + 1;
+
+    for (int j = index; j < this.actions.size(); j++) {
+      this.actions.get(j).setEnd(this.actions.get(j).getEnd() + interval);
+      this.actions.get(j).setStart(this.actions.get(j).getStart() + interval);
+    }
+
+    // Add the new action to the actions list.
+    this.actions.add(index, newAction);
 
   }
 
@@ -79,7 +110,7 @@ public class Animation<T> implements IAnimation<T> {
    */
   @Override
   public void removeAnimationFront() {
-
+    this.actions.remove(0);
   }
 
   /**
@@ -88,7 +119,7 @@ public class Animation<T> implements IAnimation<T> {
    */
   @Override
   public void removeAnimationBack() {
-
+    this.actions.remove(this.actions.size() - 1);
   }
 
   /**
@@ -101,7 +132,7 @@ public class Animation<T> implements IAnimation<T> {
    */
   @Override
   public void removeAnimationAtIndex(int index) throws IndexOutOfBoundsException {
-
+    this.actions.remove(index);
   }
 
   /**
@@ -109,12 +140,12 @@ public class Animation<T> implements IAnimation<T> {
    * animation will be moved forward by the length of the removed Animation.
    *
    * @param start specific start value to be removed.
-   * @throws IllegalArgumentException if no animations start exactly at the provided {@param start}
+   * @throws NoSuchElementException if no animations start exactly at the provided {@param start}
    *                                  value.
    */
   @Override
-  public void removeAnimationAtStart(int start) throws IllegalArgumentException {
-
+  public void removeAnimationAtStart(int start) throws NoSuchElementException {
+    this.actions.remove(this.findStartIndex(start));
   }
 
   /**
@@ -124,7 +155,7 @@ public class Animation<T> implements IAnimation<T> {
    */
   @Override
   public int getNumberOfAnimations() {
-    return 0;
+    return this.actions.size();
   }
 
   /**
@@ -138,7 +169,7 @@ public class Animation<T> implements IAnimation<T> {
    */
   @Override
   public IAction<T> getActionAtIndex(int index) throws IndexOutOfBoundsException {
-    return null;
+    return this.actions.get(index);
   }
 
   /**
@@ -146,12 +177,12 @@ public class Animation<T> implements IAnimation<T> {
    *
    * @param start specific start value to be retrieved.
    * @return an {@link IAction} object representing what happens during this Animation.
-   * @throws IllegalArgumentException if no animations start exactly at the provided {@param start}
+   * @throws NoSuchElementException if no animations start exactly at the provided {@param start}
    *                                  value.
    */
   @Override
-  public IAction<T> getActionAtStart(int start) throws IllegalArgumentException {
-    return null;
+  public IAction<T> getActionAtStart(int start) throws NoSuchElementException {
+    return this.actions.get(this.findStartIndex(start));
   }
 
   /**
@@ -183,5 +214,25 @@ public class Animation<T> implements IAnimation<T> {
     }
 
     return playBack;
+  }
+
+  /**
+   * Method for finding the index of an action with a give start value.
+   *
+   * @param start the start value we are looking to find.
+   * @return the index of the start value, as an int.
+   * @throws NoSuchElementException if the passed start value does not correspond with an index
+   *                                value in the list.
+   */
+  private int findStartIndex(int start) throws NoSuchElementException {
+    for (int i = 0; i < this.actions.size(); i++) {
+      if (this.actions.get(i).getStart() == start) {
+        return i;
+      }
+    }
+
+    throw new NoSuchElementException(
+        "No action exists with the given start value.  The start value passed must match an "
+            + "existing start value");
   }
 }

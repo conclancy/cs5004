@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * The Animation Interface allows access to a series of Animation objects that can be read in order
@@ -33,16 +34,20 @@ public interface IAnimation<T> {
   public void addAnimationBack(int intervalLength, T to);
 
   /**
-   * Adds a new animation to the middle of the animation series.  Existing animations that begin
-   * after this animation new start point will be pushed back by the difference in value between the
+   * Adds a new animation to the middle of the animation series.  This method is intended to add an
+   * animation exactly where another automation already begins. Existing animations that begin after
+   * this animation new start point will be pushed back by the difference in value between the
    * {@param start} and the {@param end} values. Preceding actions will not be affected.
    *
    * @param start the time this interval should start.
    * @param end   the time this interval should end.
    * @param to    the desired state of this automation.
    * @throws IllegalArgumentException if the {@param start} value is less than 0.
+   * @throws NoSuchElementException   if there is no action with a start value matching
+   *                                  {@param start}.
    */
-  public void addAnimation(int start, int end, T to) throws IllegalArgumentException;
+  public void addAnimation(int start, int end, T to)
+      throws IllegalArgumentException, NoSuchElementException;
 
   /**
    * Remove the first animation in this series.  All other animations will be shifted forward by the
@@ -71,10 +76,10 @@ public interface IAnimation<T> {
    * animation will be moved forward by the length of the removed Animation.
    *
    * @param start specific start value to be removed.
-   * @throws IllegalArgumentException if no animations start exactly at the provided {@param start}
+   * @throws NoSuchElementException if no animations start exactly at the provided {@param start}
    *                                  value.
    */
-  public void removeAnimationAtStart(int start) throws IllegalArgumentException;
+  public void removeAnimationAtStart(int start) throws NoSuchElementException;
 
   /**
    * Get the number of animation objects currently stored in this series.
@@ -99,10 +104,10 @@ public interface IAnimation<T> {
    *
    * @param start specific start value to be retrieved.
    * @return an {@link IAction} object representing what happens during this Animation.
-   * @throws IllegalArgumentException if no animations start exactly at the provided {@param start}
+   * @throws NoSuchElementException if no animations start exactly at the provided {@param start}
    *                                  value.
    */
-  public IAction<T> getActionAtStart(int start) throws IllegalArgumentException;
+  public IAction<T> getActionAtStart(int start) throws NoSuchElementException;
 
   /**
    * Return a String description of each Action contained in the series.
