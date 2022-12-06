@@ -110,4 +110,14 @@ public class Size {
     return Objects.hash(this.dimensionOne, ",", this.dimensionTwo);
   }
 
+  /**
+   * Create a toString method that returns the dimensions of the object at its new size.
+   *
+   * @return dimensions of the new object, as a floating point string with two decimal places.
+   */
+  @Override
+  public String toString() {
+    return String.format("(dimension one: %.2f, dimension two: %.2f)", dimensionOne, dimensionTwo);
+  }
+
 }

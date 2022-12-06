@@ -96,4 +96,14 @@ public class Point2D {
   public int hashCode() {
     return Objects.hash(this.x, ",", this.y);
   }
+
+  /**
+   * Create a toString method that returns the dimensions of the object at its new size.
+   *
+   * @return dimensions of the new object, as a floating point string with two decimal places.
+   */
+  @Override
+  public String toString() {
+    return String.format("(x: %.2f, y: %.2f)", this.x, this.y);
+  }
 }
