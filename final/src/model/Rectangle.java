@@ -25,12 +25,27 @@ public class Rectangle extends AbstractShape {
       throws IllegalArgumentException {
     super(new Point2D(x, y), color);
 
-    if (width <= 0 || height <= 0) {
-      throw new IllegalArgumentException("Dimensions must be greater than 0.");
-    }
+    this.width = positiveIntChecker(width);
+    this.height = positiveIntChecker(height);
+  }
 
-    this.width = width;
-    this.height = height;
+  /**
+   * Construct a rectangle with a name.
+   *
+   * @param name
+   * @param x
+   * @param y
+   * @param width
+   * @param height
+   * @param color
+   * @throws IllegalArgumentException
+   */
+  public Rectangle (String name, double x, double y, double width, double height, Color color)
+    throws IllegalArgumentException {
+    super(name, new Point2D(x, y), color);
+
+    this.width = positiveIntChecker(width);
+    this.height = positiveIntChecker(height);
   }
 
   /**

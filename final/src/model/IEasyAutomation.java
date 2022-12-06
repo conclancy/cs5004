@@ -27,15 +27,6 @@ public interface IEasyAutomation {
   void setSpeed(double speed) throws IllegalArgumentException;
 
   /**
-   * Create or update an action on a given shape.
-   *
-   * @param shapeName the name of the shape that is being automated.
-   * @param action    the action object being applied to the shape.
-   * @throws IllegalArgumentException if the {@param shapeName} provided does not exist.
-   */
-  void setAction(String shapeName, IAction action) throws IllegalArgumentException;
-
-  /**
    * Get a list of all the shapes available in the automation.
    *
    * @return shapes available in the automation, as a List of IShape objects.
@@ -49,12 +40,5 @@ public interface IEasyAutomation {
    */
   int getLength();
 
-  /**
-   * Returns a list of hash maps that contain the shape's name as a string and the action state this
-   * shape will be in at this index.
-   *
-   * @return a full list of the shapes and their actions at each index of the automation list.
-   */
-  List<HashMap<String, IAction>> playback();
 
 }

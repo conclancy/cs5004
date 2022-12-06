@@ -12,6 +12,7 @@ public abstract class AbstractShape implements IShape {
   protected Point2D reference;
   protected Color color;
   protected final IAnimation<Object> animation;
+  protected final String name;
 
   /**
    * Constructor for an AbstractShape objects.
@@ -23,6 +24,21 @@ public abstract class AbstractShape implements IShape {
     this.reference = reference;
     this.color = color;
     this.animation = new Animation<Object>();
+    this.name = null;
+  }
+
+  /**
+   * Constructor for an AbstractShape with a name.
+   *
+   * @param name      the name of the shape.
+   * @param reference the reference point for the shape, as a {@link Point2D}.
+   * @param color     the color of the shape, as a {@link Color}.
+   */
+  public AbstractShape(String name, Point2D reference, Color color) {
+    this.reference = reference;
+    this.color = color;
+    this.animation = new Animation<Object>();
+    this.name = name;
   }
 
   /**
@@ -238,7 +254,7 @@ public abstract class AbstractShape implements IShape {
    *
    * @param start specific start value to be removed.
    * @throws NoSuchElementException if no animations start exactly at the provided {@param start}
-   *                                  value.
+   *                                value.
    */
   @Override
   public void removeAnimationAtStart(int start) throws NoSuchElementException {
@@ -263,5 +279,28 @@ public abstract class AbstractShape implements IShape {
   @Override
   public List<String> playTextDescription() {
     return this.animation.playTextDescription();
+  }
+
+  /**
+   * Get the name of this shape.
+   *
+   * @return the name of the shape, as a String.
+   */
+  public String getName() {
+    return this.name;
+  }
+
+  /**
+   * Checks to make sure numbers that are passed are positive.
+   *
+   * @param n the number to check, as a double.
+   * @return the number
+   */
+  protected double positiveIntChecker(double n) throws IllegalArgumentException {
+    if (n <= 0) {
+      throw new IllegalArgumentException("Dimensions must be greater than 0.");
+    } else {
+      return n;
+    }
   }
 }

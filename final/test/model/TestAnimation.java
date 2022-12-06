@@ -63,7 +63,7 @@ public class TestAnimation<T> {
     List<String> expectedTwo = new ArrayList<>(
         Arrays.asList(
             "changes color to 000000 from t=0 to t=1",
-            "changes color to FFFFFF from t=2 to t=4"));
+            "changes color to FFFFFF from t=2 to t=5"));
     assertEquals(expectedTwo, backColor.playTextDescription());
 
     // third add
@@ -71,8 +71,8 @@ public class TestAnimation<T> {
     List<String> expectedThree = new ArrayList<>(
         Arrays.asList(
             "changes color to 000000 from t=0 to t=1",
-            "changes color to FFFFFF from t=2 to t=4",
-            "changes color to 000000 from t=5 to t=10"));
+            "changes color to FFFFFF from t=2 to t=5",
+            "changes color to 000000 from t=6 to t=12"));
     assertEquals(expectedThree, backColor.playTextDescription());
   }
 

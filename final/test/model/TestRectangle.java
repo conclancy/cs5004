@@ -113,4 +113,9 @@ public class TestRectangle {
 
     assertEquals(expected, smallRectangle.playTextDescription());
   }
+
+  @Test
+  public void testGetName() {
+    // Rectangle named = new Rectangle()
+  }
 }
