@@ -61,7 +61,7 @@ public class Animation<T> implements IAnimation<T> {
       this.actions.add(new Action<T>(0, intervalLength, to));
     } else {
       int currentEnd = this.actions.get(this.actions.size() - 1).getEnd();
-      this.actions.add(new Action<T>(currentEnd + 1, currentEnd + intervalLength, to));
+      this.actions.add(new Action<T>(currentEnd + 1, currentEnd + 1 + intervalLength, to));
     }
   }
 

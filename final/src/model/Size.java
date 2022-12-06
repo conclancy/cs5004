@@ -119,5 +119,4 @@ public class Size {
   public String toString() {
     return String.format("(dimension one: %.2f, dimension two: %.2f)", dimensionOne, dimensionTwo);
   }
-
 }
