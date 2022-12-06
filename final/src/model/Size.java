@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Size {
 
   private final double dimensionOne;
@@ -105,7 +107,7 @@ public class Size {
    */
   @Override
   public int hashCode() {
-    return Integer.parseInt(String.valueOf(this.dimensionOne) + String.valueOf(this.dimensionTwo));
+    return Objects.hash(this.dimensionOne, ",", this.dimensionTwo);
   }
 
 }
