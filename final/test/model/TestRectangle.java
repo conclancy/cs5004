@@ -2,6 +2,9 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -83,16 +86,31 @@ public class TestRectangle {
 
   @Test(expected = IllegalArgumentException.class)
   public void testNegWidth() {
-    IShape errorRectangle = new Rectangle(0,0,-1,0, black);
+    IShape errorRectangle = new Rectangle(0, 0, -1, 0, black);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testNegHeight() {
-    IShape errorRectangle = new Rectangle(0,0,0,-100, black);
+    IShape errorRectangle = new Rectangle(0, 0, 0, -100, black);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testNegBoth() {
-    IShape errorRectangle = new Rectangle(0,0,-10,-8, black);
+    IShape errorRectangle = new Rectangle(0, 0, -10, -8, black);
+  }
+
+  @Test
+  public void addAnimations() {
+    smallRectangle.addAutomationFrontColor(0, 1, black);
+    smallRectangle.addAnimationBackSize(1, new Size(4,2));
+    smallRectangle.addAnimationMovement(2,3, new Point2D(1,1));
+
+    List<String> expected = new ArrayList<>(
+        Arrays.asList(
+            "changes color to 000000 from t=0 to t=1",
+            "moves to (x: 1.00, y: 1.00) from t=2 to t=3",
+            "scales to (dimension one: 4.00, dimension two: 2.00) from t=4 to t=5"));
+
+    assertEquals(expected, smallRectangle.playTextDescription());
   }
 }
