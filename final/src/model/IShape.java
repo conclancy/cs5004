@@ -207,7 +207,7 @@ public interface IShape extends Comparable<IShape> {
    *
    * @param start specific start value to be removed.
    * @throws NoSuchElementException if no animations start exactly at the provided {@param start}
-   *                                  value.
+   *                                value.
    */
   void removeAnimationAtStart(int start) throws NoSuchElementException;
 
@@ -224,4 +224,12 @@ public interface IShape extends Comparable<IShape> {
    * @return a list of String description for each Action contained in the series.
    */
   List<String> playTextDescription();
+
+  /**
+   * Return the shape's name. Shapes are not required to have a name, if the shape does not have a
+   * name, this method returns null.
+   *
+   * @return the name of the shape, as a string.
+   */
+  String getName();
 }

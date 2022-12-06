@@ -286,6 +286,7 @@ public abstract class AbstractShape implements IShape {
    *
    * @return the name of the shape, as a String.
    */
+  @Override
   public String getName() {
     return this.name;
   }
