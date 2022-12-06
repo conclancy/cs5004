@@ -27,12 +27,29 @@ public class Oval extends AbstractShape {
       throws IllegalArgumentException {
     super(new Point2D(x, y), color);
 
-    if (majorAxis <= 0 || minorAxis <= 0) {
-      throw new IllegalArgumentException("Axis values must be greater than 0.");
-    }
+    this.majorAxis = super.positiveIntChecker(majorAxis);
+    this.minorAxis = super.positiveIntChecker(minorAxis);
+  }
 
-    this.majorAxis = majorAxis;
-    this.minorAxis = minorAxis;
+  /**
+   * Constructor for the oval class.
+   *
+   * @param name      name of the oval.
+   * @param x         coordinate of the horizontal location of the oval's center, as a double.
+   * @param y         coordinate of the vertical location of the oval's center as a double.
+   * @param majorAxis longest distance between the center point and the perimeter of the oval, as a
+   *                  double.
+   * @param minorAxis smallest distance between the center point and the perimeter of the oval, as a
+   *                  double.
+   * @param color     the color of the oval, as a {@link Color} object.
+   * @throws IllegalArgumentException if either or both axis provided are less than or equal to 0.
+   */
+  public Oval(String name, double x, double y, double majorAxis, double minorAxis, Color color)
+      throws IllegalArgumentException {
+    super(name, new Point2D(x, y), color);
+
+    this.majorAxis = super.positiveIntChecker(majorAxis);
+    this.minorAxis = super.positiveIntChecker(minorAxis);
   }
 
   /**

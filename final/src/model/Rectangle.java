@@ -18,7 +18,7 @@ public class Rectangle extends AbstractShape {
    * @param y      coordinate of the vertical location of the oval's center as a double.
    * @param width  the width of the rectangle, as a double.
    * @param height the height of the rectangle, as a double.
-   * @param color  the color of the rectangle, a a {@link Color} object.
+   * @param color  the color of the rectangle, a {@link Color} object.
    * @throws IllegalArgumentException if the width or height of the object is 0 or less.
    */
   public Rectangle(double x, double y, double width, double height, Color color)
@@ -32,13 +32,13 @@ public class Rectangle extends AbstractShape {
   /**
    * Construct a rectangle with a name.
    *
-   * @param name
-   * @param x
-   * @param y
-   * @param width
-   * @param height
-   * @param color
-   * @throws IllegalArgumentException
+   * @param name   the name of the rectangle.
+   * @param x      coordinate of the horizontal location of the oval's center, as a double.
+   * @param y      coordinate of the vertical location of the oval's center as a double.
+   * @param width  the width of the rectangle, as a double.
+   * @param height the height of the rectangle, as a double.
+   * @param color  the color of the rectangle, a {@link Color} object.
+   * @throws IllegalArgumentException if the width or height of the object is 0 or less.
    */
   public Rectangle (String name, double x, double y, double width, double height, Color color)
     throws IllegalArgumentException {

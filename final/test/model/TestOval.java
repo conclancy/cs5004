@@ -56,4 +56,10 @@ public class TestOval {
 
     assertEquals(false, smallOvalCopy.equals(smallCircle));
   }
+
+  @Test
+  public void testGetName() {
+    Oval named = new Oval("test", 0, 0, 2, 1, new Color("000000"));
+    assertEquals("test", named.getName());
+  }
 }

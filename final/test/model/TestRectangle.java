@@ -116,6 +116,7 @@ public class TestRectangle {
 
   @Test
   public void testGetName() {
-    // Rectangle named = new Rectangle()
+    Rectangle named = new Rectangle("test", 0, 0, 2, 1, black);
+    assertEquals("test", named.getName());
   }
 }
