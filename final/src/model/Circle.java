@@ -32,7 +32,7 @@ public class Circle extends Oval {
    * @throws IllegalArgumentException if the radius provided is less than or equal to 0.
    */
   public Circle(String name, double x, double y, double radius, Color color) throws IllegalArgumentException {
-    super(x, y, radius, radius, color);
+    super(name, x, y, radius, radius, color);
   }
 
 }

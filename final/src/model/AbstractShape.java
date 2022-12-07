@@ -304,4 +304,14 @@ public abstract class AbstractShape implements IShape {
       return n;
     }
   }
+
+  /**
+   * Get the length of the animation as an int.  This is the last `end` value of the automation.
+   *
+   * @return the length of the automation, as an int.
+   */
+  @Override
+  public int getAnimationLength() {
+    return this.animation.getAnimationLength();
+  }
 }

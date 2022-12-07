@@ -235,4 +235,22 @@ public class Animation<T> implements IAnimation<T> {
         "No action exists with the given start value.  The start value passed must match an "
             + "existing start value");
   }
+
+  /**
+   * Get the length of the automation as an int.  This is the last `end` value of the automation.
+   *
+   * @return the length of the automation, as an int.
+   */
+  public int getAnimationLength() {
+
+    // prevent an error being thrown if no animations are present for a given shape in the
+    // {@link EasyAutomation} class getLength() method.
+    try {
+      return this.actions.get(this.actions.size() - 1).getEnd();
+    } catch (IndexOutOfBoundsException e) {
+      return 0;
+    }
+
+
+  }
 }

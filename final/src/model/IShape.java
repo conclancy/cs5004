@@ -232,4 +232,11 @@ public interface IShape extends Comparable<IShape> {
    * @return the name of the shape, as a string.
    */
   String getName();
+
+  /**
+   * Get the length of the animation as an int.  This is the last `end` value of the automation.
+   *
+   * @return the length of the automation, as an int.
+   */
+  int getAnimationLength();
 }

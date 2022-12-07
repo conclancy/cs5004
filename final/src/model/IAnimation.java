@@ -116,4 +116,10 @@ public interface IAnimation<T> {
    */
   public List<String> playTextDescription();
 
+  /**
+   * Get the length of the automation as an int.  This is the last `end` value of the automation.
+   *
+   * @return the length of the automation, as an int.
+   */
+  int getAnimationLength();
 }
