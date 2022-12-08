@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import cs5004.animator.model.Point2D;
 import org.junit.Before;
 import org.junit.Test;
 

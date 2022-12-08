@@ -1,4 +1,4 @@
-package model;
+package cs5004.animator.model;
 
 /**
  * Special instance of a {@link Rectangle} where all 4 sides of the square are the same length.

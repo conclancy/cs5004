@@ -1,4 +1,4 @@
-package model;
+package cs5004.animator.model;
 
 /**
  * This class represents a shape's action. Each object represents the state of the shape from the

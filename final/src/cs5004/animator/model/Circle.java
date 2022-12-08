@@ -1,4 +1,4 @@
-package model;
+package cs5004.animator.model;
 
 /**
  * This class represents a circle.  Circles are special cases of ovals where the axis is the same

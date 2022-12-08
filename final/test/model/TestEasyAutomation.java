@@ -3,6 +3,14 @@ package model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import cs5004.animator.model.Circle;
+import cs5004.animator.model.Color;
+import cs5004.animator.model.EasyAutomation;
+import cs5004.animator.model.IEasyAutomation;
+import cs5004.animator.model.IShape;
+import cs5004.animator.model.Oval;
+import cs5004.animator.model.Rectangle;
+import cs5004.animator.model.Square;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -2,6 +2,9 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
+import cs5004.animator.model.Animation;
+import cs5004.animator.model.Color;
+import cs5004.animator.model.IAnimation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -1,6 +1,5 @@
-package model;
+package cs5004.animator.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
