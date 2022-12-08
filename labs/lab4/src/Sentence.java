@@ -28,8 +28,9 @@ public interface Sentence extends Cloneable {
    * Returns a clone of this sentence.
    *
    * @return cloned identical sentence
+   * @throws IllegalArgumentException if the clone cannot be created.
    */
-  Sentence clone() throws CloneNotSupportedException;
+  Sentence clone() throws IllegalArgumentException;
 
   /**
    * Combine two sentences into a singular new sentence.

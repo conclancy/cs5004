@@ -41,10 +41,10 @@ public abstract class AbstractSentence implements Sentence, Cloneable {
    * Creates a clone of the sentence.
    *
    * @return a new sentence object with the same nodes.
-   * @throws CloneNotSupportedException if the clone cannot be created.
+   * @throws IllegalArgumentException if the clone cannot be created.
    */
   @Override
-  public Sentence clone() throws CloneNotSupportedException {
+  public Sentence clone() throws IllegalArgumentException {
     return null;
   }
 }

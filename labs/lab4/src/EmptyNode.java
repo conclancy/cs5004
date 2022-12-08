@@ -23,17 +23,18 @@ public class EmptyNode extends AbstractSentence implements Cloneable {
   }
 
   /**
-   * Returns the new empty node for the duplicate sentence.
+   * Returns a clone of this sentence.
    *
-   * @return a duplicate of the sentence
+   * @return cloned identical sentence
+   * @throws IllegalArgumentException if the clone cannot be created.
    */
   @Override
-  public Sentence clone() throws CloneNotSupportedException {
+  public Sentence clone() throws IllegalArgumentException {
     try {
       return new EmptyNode();
     }
     catch (Exception e) {
-      throw new CloneNotSupportedException("This sentence node cannot be cloned.");
+      throw new IllegalArgumentException("This sentence node cannot be cloned.");
     }
   }
 
