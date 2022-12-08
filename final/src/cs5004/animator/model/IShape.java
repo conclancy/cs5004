@@ -69,8 +69,6 @@ public interface IShape extends Comparable<IShape> {
    */
   Point2D getReference();
 
-  // TODO update with IAnimation methods
-
   /**
    * Adds a new Color animation to the beginning of the animation series. All existing animations
    * will be moved by the interval length between the {@param start} and {@param end}.

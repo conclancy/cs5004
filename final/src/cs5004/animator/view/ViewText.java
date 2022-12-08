@@ -1,5 +1,8 @@
 package cs5004.animator.view;
 
+import cs5004.animator.controller.ControllerGUI;
+import cs5004.animator.controller.IController;
+
 public class ViewText implements IViewText {
 
   private Appendable output;
@@ -12,7 +15,7 @@ public class ViewText implements IViewText {
    * Display the EasyAnimation using the view.
    */
   @Override
-  public void display() {
+  public void display(ControllerGUI controller) {
 
   }
 
