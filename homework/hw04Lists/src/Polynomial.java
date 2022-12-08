@@ -51,6 +51,6 @@ public interface Polynomial {
    * @return A new polynomial which is a combination of the two inputs.
    * @throws IllegalArgumentException if the object passed is not of type polynomial.
    */
-  Polynomial add(Polynomial other) throws IllegalArgumentException, CloneNotSupportedException;
+  Polynomial add(Polynomial other) throws IllegalArgumentException;
 
 }

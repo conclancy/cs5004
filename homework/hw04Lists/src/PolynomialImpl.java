@@ -144,7 +144,7 @@ public class PolynomialImpl implements Polynomial {
    */
   @Override
   public Polynomial add(Polynomial other)
-      throws IllegalArgumentException, CloneNotSupportedException {
+      throws IllegalArgumentException {
 
     if (!(other instanceof PolynomialImpl)) {
       throw new IllegalArgumentException("'other' must be of type PolynomialImpl");
@@ -155,7 +155,7 @@ public class PolynomialImpl implements Polynomial {
     try {
       combined = (PolynomialImpl) this.clone();
     } catch (CloneNotSupportedException e) {
-      throw new CloneNotSupportedException("This polynomial cannot be copied");
+      throw new IllegalArgumentException("This polynomial cannot be copied");
     }
 
     // Create temporary variables for the loop
