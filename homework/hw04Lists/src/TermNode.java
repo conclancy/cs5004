@@ -132,9 +132,9 @@ public class TermNode extends AbstractNode {
     // Equal powers
     else {
       return new TermNode(super.getPower(), super.getCoefficient() + other.getCoefficient(),
-          other.getRest());
+            other.getRest());
+      }
     }
-  }
 
   /**
    * Remove a node with the given power.

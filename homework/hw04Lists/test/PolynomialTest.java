@@ -69,6 +69,12 @@ public class PolynomialTest {
     // Test the @Before for the complex term
     String expectedComplex = "1x^22 8x^3 -2x^2";
     assertEquals(expectedComplex, complexPoly.toString());
+
+    // Test cancelling out a term with a 0 coefficient.
+    PolynomialImpl test0 = new PolynomialImpl("1x^22 8x^3 -2x^2");
+    assertEquals(expectedComplex, test0.toString());
+    test0.addTerm(2,2);
+    assertEquals("1x^22 8x^3", test0.toString());
   }
 
   @Test

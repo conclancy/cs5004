@@ -86,7 +86,9 @@ public class PolynomialImpl implements Polynomial {
    */
   @Override
   public Polynomial addTerm(int coefficient, int power) throws IllegalArgumentException {
-    this.poly = this.poly.addNode(new TermNode(power, coefficient));
+    if (coefficient != 0) {
+      this.poly = this.poly.addNode(new TermNode(power, coefficient));
+    }
     return this;
   }
 
