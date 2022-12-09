@@ -1,6 +1,7 @@
 package cs5004.animator.model;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Interface for the EasyAnimation Model component.
@@ -21,8 +22,9 @@ public interface IModel {
    *
    * @param name the name of the animation, as a String.
    * @param animation the animation, as an {@link IAnimation} object.
+   * @throws NoSuchElementException if the shape name is not in the animation.
    */
-  void addAnimation(String name, IAnimation animation);
+  void addAnimation(String name, IAnimation animation) throws NoSuchElementException;
 
   /**
    * Set the model's canvas properties.
