@@ -59,11 +59,13 @@ public class Rectangle extends AbstractShape {
    * Provide a reference to the shape in SVG format.
    *
    * @return a description of the shape in SVG format.
+   * @throws IllegalStateException if the shape object does not have the required fields to create
+   *                               an SVG string tag.
    */
   @Override
-  public String toString() {
+  public String toString() throws IllegalStateException {
     if (super.reference == null || super.color == null) {
-      return "there is no reference or color in this shape";
+      throw new IllegalStateException("Reference and Color objects required for SVG generation");
     }
 
     return String.format("<rect id='%s' x='%d' y='%d' width='%d' "
