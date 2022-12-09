@@ -1,7 +1,6 @@
-package cs5004.animator.view;
+package cs5004.animatoVersion1.view;
 
-import cs5004.animator.controller.ControllerGUI;
-import cs5004.animator.controller.IController;
+import cs5004.animatoVersion1.controller.ControllerGUI;
 
 public class ViewText implements IViewText {
 

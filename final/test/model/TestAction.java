@@ -2,11 +2,11 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
-import cs5004.animator.model.Action;
-import cs5004.animator.model.Color;
-import cs5004.animator.model.EActionType;
-import cs5004.animator.model.Point2D;
-import cs5004.animator.model.Size;
+import cs5004.animatoVersion1.model.Action;
+import cs5004.animatoVersion1.model.Color;
+import cs5004.animatoVersion1.model.EActionType;
+import cs5004.animatoVersion1.model.Point2D;
+import cs5004.animatoVersion1.model.Size;
 import org.junit.Before;
 import org.junit.Test;
 

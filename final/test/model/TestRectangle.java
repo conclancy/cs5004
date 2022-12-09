@@ -2,11 +2,11 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
-import cs5004.animator.model.Color;
-import cs5004.animator.model.IShape;
-import cs5004.animator.model.Point2D;
-import cs5004.animator.model.Rectangle;
-import cs5004.animator.model.Size;
+import cs5004.animatoVersion1.model.Color;
+import cs5004.animatoVersion1.model.IShape;
+import cs5004.animatoVersion1.model.Point2D;
+import cs5004.animatoVersion1.model.Rectangle;
+import cs5004.animatoVersion1.model.Size;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

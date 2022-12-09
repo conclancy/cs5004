@@ -1,4 +1,4 @@
-package cs5004.animator.view;
+package cs5004.animatoVersion1.view;
 
 import java.awt.Color;
 import java.awt.Graphics;

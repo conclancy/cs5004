@@ -1,4 +1,4 @@
-package cs5004.animator.model;
+package cs5004.animatoVersion1.model;
 
 /**
  * Represents an instance of a color represented in blue, green, and red.  Each instance of this

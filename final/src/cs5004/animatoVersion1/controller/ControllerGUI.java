@@ -1,10 +1,8 @@
-package cs5004.animator.controller;
+package cs5004.animatoVersion1.controller;
 
-import cs5004.animator.model.Color;
-import cs5004.animator.model.EasyAutomation;
-import cs5004.animator.model.IEasyAutomation;
-import cs5004.animator.view.IView;
-import cs5004.animator.view.IViewGUI;
+import cs5004.animatoVersion1.model.Color;
+import cs5004.animatoVersion1.model.IEasyAutomation;
+import cs5004.animatoVersion1.view.IViewGUI;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

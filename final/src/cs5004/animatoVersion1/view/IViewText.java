@@ -1,4 +1,4 @@
-package cs5004.animator.view;
+package cs5004.animatoVersion1.view;
 
 /**
  * This interface represents a text view of the EasyAnimation.

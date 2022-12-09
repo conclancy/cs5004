@@ -1,6 +1,6 @@
-package cs5004.animator.controller;
+package cs5004.animatoVersion1.controller;
 
-import cs5004.animator.model.IEasyAutomation;
+import cs5004.animatoVersion1.model.IEasyAutomation;
 
 /**
  * This class represents the controller for the EasyAnimation program.

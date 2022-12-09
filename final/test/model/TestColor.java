@@ -2,7 +2,7 @@ package model;
 
 import static org.junit.Assert.assertEquals;
 
-import cs5004.animator.model.Color;
+import cs5004.animatoVersion1.model.Color;
 import org.junit.Before;
 import org.junit.Test;
 
