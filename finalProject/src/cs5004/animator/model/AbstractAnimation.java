@@ -23,9 +23,8 @@ public abstract class AbstractAnimation implements IAnimation {
    */
   protected static int tween(int currentTime, int startTime, int endTime, int startValue,
       int endValue) {
-    int totalTime = endTime - startTime;
-    return startValue * ((endTime - currentTime) / totalTime) + endValue * (
-        (currentTime - startTime) / totalTime);
+    double totalTime = (double)endTime - (double)startTime;
+    return (int) (startValue * ((endTime - currentTime) / totalTime) + endValue * ((currentTime - startTime) / totalTime));
   }
 
   public AbstractAnimation(int startTick, int endTick) {

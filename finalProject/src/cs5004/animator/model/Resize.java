@@ -57,8 +57,11 @@ public class Resize extends AbstractAnimation {
    */
   @Override
   public void setTickInterval(IShape shape, int tick) throws IllegalArgumentException {
-    int width = tween(tick, super.startTick, super.endTick, widthStart, widthEnd);
-    int height = tween(tick, super.startTick, super.endTick, heightStart, heightEnd);
+
+    int t = super.checkValidTick(tick);
+
+    int width = tween(t, super.startTick, super.endTick, widthStart, widthEnd);
+    int height = tween(t, super.startTick, super.endTick, heightStart, heightEnd);
 
     shape.setWidth(width);
     shape.setHeight(height);

@@ -113,6 +113,6 @@ public class Point2D {
    */
   @Override
   public String toString() {
-    return String.format("(x: %.2f, y: %.2f)", this.x, this.y);
+    return String.format("(x: %d, y: %d)", this.x, this.y);
   }
 }
