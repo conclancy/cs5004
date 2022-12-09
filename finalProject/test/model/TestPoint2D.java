@@ -1,0 +1,91 @@
+package model;
+
+import static org.junit.Assert.assertEquals;
+
+import cs5004.animator.model.Point2D;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * Test cases for the Point2D class.
+ */
+public class TestPoint2D {
+
+  private Point2D origin;
+  private Point2D one;
+  private Point2D tt;
+  private Point2D fiveFour;
+  private Point2D negative;
+
+  @Before
+  public void init() {
+    origin = new Point2D(0, 0);
+    one = new Point2D(1, 1);
+    tt = new Point2D(22, 18);
+    fiveFour = new Point2D(5, 0);
+    negative = new Point2D(-1, -2);
+  }
+
+  @Test
+  public void testGetX() {
+    assertEquals(0, origin.getX(), .01);
+    assertEquals(1, one.getX(), .01);
+    assertEquals(22, tt.getX(), .01);
+    assertEquals(5, fiveFour.getX(), .01);
+    assertEquals(-1, negative.getX(), .01);
+  }
+
+  @Test
+  public void testSetX() {
+    origin.setX(5);
+    assertEquals(5, origin.getX(), .01);
+    origin.setX(0);
+    assertEquals(0, origin.getX(), .01);
+
+    origin.setX(-1);
+    assertEquals(-1, origin.getX(), .01);
+    origin.setX(0);
+    assertEquals(0, origin.getX(), .01);
+
+    origin.setX(8);
+    assertEquals(8, origin.getX(), .01);
+    origin.setX(0);
+    assertEquals(0, origin.getX(), .01);
+  }
+
+  @Test
+  public void testGetY() {
+    assertEquals(0, origin.getY(), .01);
+    assertEquals(1, one.getY(), .01);
+    assertEquals(18, tt.getY(), .01);
+    assertEquals(0, fiveFour.getY(), .01);
+    assertEquals(-2, negative.getY(), .01);
+  }
+
+  @Test
+  public void testSetY() {
+    origin.setY(5);
+    assertEquals(5, origin.getY(), .01);
+    origin.setY(0);
+    assertEquals(0, origin.getY(), .01);
+
+    origin.setY(-1);
+    assertEquals(-1, origin.getY(), .01);
+    origin.setY(0);
+    assertEquals(0, origin.getY(), .01);
+
+    origin.setY(8);
+    assertEquals(8, origin.getY(), .01);
+    origin.setY(0);
+    assertEquals(0, origin.getY(), .01);
+  }
+
+  @Test
+  public void testDistToOrigin() {
+    assertEquals(0, origin.distToOrigin(), .01);
+    assertEquals(Math.sqrt(2), one.distToOrigin(), .01);
+    assertEquals(Math.sqrt(18 * 18 + 22 * 22), tt.distToOrigin(), .01);
+    assertEquals(Math.sqrt(5.0 * 5.0), fiveFour.distToOrigin(), .01);
+    assertEquals(Math.sqrt(-1 * -1 + -2 * -2), negative.distToOrigin(), .01);
+  }
+}
