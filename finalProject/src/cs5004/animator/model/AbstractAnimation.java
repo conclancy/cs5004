@@ -9,8 +9,6 @@ public abstract class AbstractAnimation implements IAnimation {
   protected int endTick;
   protected IShape shape;
 
-  //TODO can this be made non-Static in some way?
-
   /**
    * Calculates the `tween` value for the automation.
    *
