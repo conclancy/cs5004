@@ -84,6 +84,17 @@ public abstract class AbstractShape implements IShape {
   }
 
   /**
+   * Set the reference position of the shape.
+   *
+   * @param x the X coordinate for the shape.
+   * @param y the Y coordinate for the shape.
+   */
+  @Override
+  public void setReference(int x, int y) {
+    this.reference = new Point2D(x, y);
+  }
+
+  /**
    * Set the color of the object.
    *
    * @param color the RGB color the shape should change to, as a {@link Color} object.
@@ -91,6 +102,18 @@ public abstract class AbstractShape implements IShape {
   @Override
   public void setColor(Color color) {
     this.color = color;
+  }
+
+  /**
+   * Set the color of the shape.
+   *
+   * @param red the amount of red light in the color.
+   * @param green the amount of green light in the color.
+   * @param blue the amount of blue light in the color.
+   */
+  @Override
+  public void setColor(int red, int green, int blue) {
+    this.color = new Color(red, green, blue);
   }
 
   /**

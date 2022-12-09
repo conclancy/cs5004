@@ -159,7 +159,8 @@ public class TestRectangle {
   @Test
   public void testToString() {
     assertEquals(
-        "<rect id='fullRec' x='0' y='0' width='10' height='5' fill='000000' visibility='visible'>***</rect>",
+        "<rect id='fullRec' x='0' y='0' width='10' height='5' fill='rgb(0, 0, 0)' "
+            + "visibility='visible'>***</rect>",
         initFull.toString());
   }
 

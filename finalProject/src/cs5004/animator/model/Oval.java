@@ -1,5 +1,7 @@
 package cs5004.animator.model;
 
+import java.util.Objects;
+
 /**
  * This class represents an oval.  Each instance of this class represents a single oval.
  */
@@ -69,8 +71,44 @@ public class Oval extends AbstractShape {
 
     return String.format("<ellipse id='%s' cx='%d' cy='%d' rx='%d' "
             + "ry='%d' fill='%s' visibility='visible' >***</ellipse>", super.name,
-        super.reference.getX(), super.reference.getY(), super.width, super.height,
-        super.color.toString());
+        super.reference.getX(), super.reference.getY(), this.width, this.height,
+        this.color.getRGB());
+  }
+
+  /**
+   * Determine if two oval objects are equal to one another.
+   *
+   * @param other the other object for comparison.
+   * @return true if the objects are equal.
+   */
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof Oval)) {
+      return false;
+    }
+
+    Oval otherOval = (Oval) other;
+
+    return super.getReference().getX() == otherOval.getReference().getX()
+        && super.getReference().getY() == otherOval.getReference().getY()
+        && super.width == otherOval.getWidth()
+        && super.height == otherOval.getHeight()
+        && super.getColor().getHex().equals(otherOval.getColor().getHex())
+        && super.getName().equals(otherOval.getName());
+  }
+
+  /**
+   * Create a hash table of an Oval object.
+   *
+   * @return Oval hash table.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.reference, ",", super.width, ",", super.height, ",",
+        super.getColor(), super.getName());
   }
 }
 

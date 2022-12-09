@@ -95,11 +95,28 @@ public interface IShape {
   void setReference(Point2D reference);
 
   /**
+   * Set the reference position of the shape.
+   *
+   * @param x the X coordinate for the shape.
+   * @param y the Y coordinate for the shape.
+   */
+  void setReference(int x, int y);
+
+  /**
    * Set the color of the object.
    *
    * @param color the RGB color the shape should change to, as a {@link Color} object.
    */
   void setColor(Color color);
+
+  /**
+   * Set the color of the shape.
+   *
+   * @param red the amount of red light in the color.
+   * @param green the amount of green light in the color.
+   * @param blue the amount of blue light in the color.
+   */
+  void setColor(int red, int green, int blue);
 
   /**
    * Set the width of the shape.

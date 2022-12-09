@@ -1,5 +1,7 @@
 package cs5004.animator.model;
 
+import java.util.Objects;
+
 /**
  * This class represents a rectangle, a four sided polynomial with four 90 degree angles. Each
  * instance of this class represents a single rectangle.
@@ -71,6 +73,42 @@ public class Rectangle extends AbstractShape {
     return String.format("<rect id='%s' x='%d' y='%d' width='%d' "
             + "height='%d' fill='%s' visibility='visible'>***</rect>", super.name,
         super.reference.getX(), super.reference.getY(), super.width, super.height,
-        super.color.toString());
+        super.color.getRGB());
+  }
+
+  /**
+   * Determine if two oval objects are equal to one another.
+   *
+   * @param other the other object for comparison.
+   * @return true if the objects are equal.
+   */
+  @Override
+  public boolean equals(Object other) {
+    if(this == other) {
+      return true;
+    }
+    if(!(other instanceof Rectangle)) {
+      return false;
+    }
+
+    Rectangle otherRectangle = (Rectangle) other;
+
+    return super.getReference().getX() == otherRectangle.getReference().getX()
+        && super.getReference().getY() == otherRectangle.getReference().getY()
+        && super.width == otherRectangle.getWidth()
+        && super.height == otherRectangle.getHeight()
+        && super.getColor().getHex().equals(otherRectangle.getColor().getHex())
+        && super.getName().equals(otherRectangle.getName());
+  }
+
+  /**
+   * Create a hash table of an Oval object.
+   *
+   * @return Oval hash table.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.reference, ",", super.width, ",", super.height, ",",
+        super.getColor(), super.getName());
   }
 }
