@@ -194,8 +194,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Extra Credit function to allow user to edit shapes.
-   * TODO: Complete this
+   * Create an editor pane that allows for shape editing within the GUI.
    */
   private void createShapesEditor() {
     JLabel title = new JLabel("Shapes Menu", SwingConstants.CENTER);
@@ -211,13 +210,11 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     this.shapesEditor = new JPanel(new BorderLayout());
     this.shapesEditor.add(title, BorderLayout.NORTH);
     this.shapesEditor.add(scrollieShapes, BorderLayout.CENTER);
-    //this.shapesEditor.add(buttons, BorderLayout.SOUTH);
     this.shapesEditor.setPreferredSize(new Dimension(254, 82));
   }
 
   /**
-   * Extra Credit function to allow user to edit shapes.
-   * TODO: Complete this
+   * Create an editor that allows users to edit frames.
    */
   private void createFramesEditor() {
     JLabel title = new JLabel("Event List", SwingConstants.CENTER);
@@ -262,7 +259,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   /**
    * Retrieves the shapes to be displayed.
    *
-   * @return a list of shapes
+   * @return a list of shapes.
    */
   @Override
   public List<InterfaceShapeCell> getShapes() {
@@ -398,8 +395,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Extra Credit function to allow user to edit shapes.
-   * TODO: Complete this
+   * Method to update the frames within the animation.
    */
   private void updateFramesList() {
     this.framesList.clear();
@@ -423,8 +419,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
 
   /**
-   * Extra Credit function to allow user to edit shapes.
-   * TODO: Complete this
+   * Event listener waiting for the user to select a list item within the view.
    */
   @Override
   public void valueChanged(ListSelectionEvent event) {
@@ -450,8 +445,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Extra Credit function to allow user to edit shapes.
-   * TODO: Complete this
+   * Event listener waiting for actions to be performed on the view.
    */
   @Override
   public void actionPerformed(ActionEvent event) {
