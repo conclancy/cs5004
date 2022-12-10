@@ -40,14 +40,14 @@ import cs5004.animator.controller.StatusKeyFrame;
 import cs5004.animator.model.InterfaceInterpretShape;
 
 /**
- * This PlaybackView class is the GUI that will act as the fourth view for the animation. This will
+ * This PlaybackView class is the GUI that will act as the third view for the animation. This will
  * allow users to scroll through the animation, select specific frames, select speed, play, pause,
  * restart, loop, and export to SVG.
  */
 public class PlaybackView extends JFrame implements InterfacePlaybackView, ListSelectionListener,
     ActionListener, ChangeListener {
 
-  private final AbstractDrawPanel drawingPanel;
+  private final PaintPanel drawingPanel;
   private JPanel toolbar;
   private JPanel shapesEditor;
   private JPanel framesEditor;
@@ -92,7 +92,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
     this.setLayout(new BorderLayout());
 
-    this.drawingPanel = new DrawPanel();
+    this.drawingPanel = new PaintPanel();
     this.drawingPanel.setPreferredSize(new Dimension(this.width, this.height));
 
     JScrollPane scrollPanel = new JScrollPane(this.drawingPanel);
@@ -250,7 +250,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    */
   @Override
   public void display(List<InterfaceInterpretShape> shapes) {
-    this.drawingPanel.draw(shapes);
+    this.drawingPanel.paint(shapes);
   }
 
   /**

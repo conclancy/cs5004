@@ -7,11 +7,12 @@ import cs5004.animator.model.InterfaceInterpretShape;
 /**
  * Interface represents the panel for drawing the animation using the draw() method.
  */
-public interface InterfaceDrawPanel {
+public interface IPaintPanel {
 
   /**
    * Method that paints the list of shapes onto the screen.
+   *
    * @param shapes the shapes to be painted on to the screen.
    */
-  void draw(List<InterfaceInterpretShape> shapes);
+  void paint(List<InterfaceInterpretShape> shapes);
 }

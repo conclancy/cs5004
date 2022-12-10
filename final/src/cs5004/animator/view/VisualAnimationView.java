@@ -20,7 +20,7 @@ import cs5004.animator.model.InterfaceInterpretShape;
 public class VisualAnimationView extends JFrame implements InterfaceView {
   private InterfaceAniModel model;
   private Timer timer;
-  private AbstractDrawPanel panel;
+  private PaintPanel panel;
   private final int tempo;
 
   /**
@@ -42,7 +42,7 @@ public class VisualAnimationView extends JFrame implements InterfaceView {
     this.model = model;
     this.tempo = ticksPS;
 
-    this.panel = new DrawPanel();
+    this.panel = new PaintPanel();
     this.panel.setPreferredSize(this.getNeededSpace());
 
     JScrollPane scrollPane = new JScrollPane(this.panel);
@@ -106,7 +106,7 @@ public class VisualAnimationView extends JFrame implements InterfaceView {
         timer.cancel();
       }
       List<InterfaceInterpretShape> shapesAtTick = model.getState(this.tick);
-      panel.draw(shapesAtTick);
+      panel.paint(shapesAtTick);
       this.tick ++;
     }
   }
