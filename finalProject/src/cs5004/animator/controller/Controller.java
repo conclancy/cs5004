@@ -4,8 +4,6 @@ import cs5004.animator.model.IModel;
 import cs5004.animator.model.IShape;
 import cs5004.animator.view.IView;
 import cs5004.animator.view.ViewGUI;
-import java.awt.Graphics;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

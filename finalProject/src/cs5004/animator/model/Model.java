@@ -45,6 +45,7 @@ public class Model implements IModel {
         this.shapes.put(name, new Rectangle(name));
         break;
       case "oval":
+      case "ellipse":
         this.shapes.put(name, new Oval(name));
         break;
       default:
