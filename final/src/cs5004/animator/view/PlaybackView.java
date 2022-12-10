@@ -45,35 +45,35 @@ import cs5004.animator.model.InterfaceInterpretShape;
  * restart, loop, and export to SVG.
  */
 public class PlaybackView extends JFrame implements InterfacePlaybackView, ListSelectionListener,
-        ActionListener, ChangeListener {
+    ActionListener, ChangeListener {
 
-  private AbstractDrawPanel drawingPanel;
+  private final AbstractDrawPanel drawingPanel;
   private JPanel toolbar;
   private JPanel shapesEditor;
   private JPanel framesEditor;
-  private JSlider sliderFunction;
+  private final JSlider sliderFunction;
 
-  private JTextField tickSpeedField;
+  private final JTextField tickSpeedField;
   private JList<InterfaceShapeCell> shapeListContainer;
   private JLabel frameListLabel;
   private JList<InterpretStatusKeyFrame> frameListContainer;
-  private DefaultListModel<InterfaceShapeCell> shapesList;
-  private DefaultListModel<InterpretStatusKeyFrame> framesList;
+  private final DefaultListModel<InterfaceShapeCell> shapesList;
+  private final DefaultListModel<InterpretStatusKeyFrame> framesList;
   private Map<String, List<InterpretStatusKeyFrame>> keyframes;
 
-  private List<ActionListener> buttonListeners;
-  private List<PropertyChangeListener> tickSpeedListeners;
+  private final List<ActionListener> buttonListeners;
+  private final List<PropertyChangeListener> tickSpeedListeners;
 
   private int width = 1000;
   private int height = 600;
   private int shapeSelected = -1;
   private int frameSelected = -1;
-  private InterfaceViewInputHandler handler;
-  private boolean sliderPauser = true;
+  private final InterfaceViewInputHandler handler;
+  private boolean pause = true;
 
   /**
-   * This constructor constructs the playback view which creates an enviroment similar to the visual
-   * view. The user is able to interact with the view.
+   * This constructor constructs the playback view which creates an environment similar to the
+   * visual view. The user is able to interact with the view.
    *
    * @param ticksPS the starting speed of the animation in ticks per second
    */
@@ -119,7 +119,6 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     this.add(this.toolbar, BorderLayout.SOUTH);
 
     this.setSize(this.width + 500, this.height + 50);
-    //this.setBackground(Color.blue);
 
   }
 
@@ -127,7 +126,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * Method that paints borders.
    */
   private void addBorder(JComponent comp) {
-    comp.setBorder(BorderFactory.createLineBorder(Color.black));
+    comp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
   }
 
 
@@ -147,7 +146,6 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     pause.setActionCommand("PAUSE");
     pause.addActionListener(this);
 
-
     JPanel playPause = new JPanel();
     playPause.add(play);
     playPause.add(pause);
@@ -157,15 +155,14 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     restart.setActionCommand("RESTART");
     restart.addActionListener(this);
 
-    // Loop Button
-    JLabel loop = new JLabel("LOOP:");
+    // Repeat Button
+    JLabel loop = new JLabel("Repeat:");
     JCheckBox loopToggle = new JCheckBox();
     loopToggle.setActionCommand("LOOP");
     loopToggle.addActionListener(this);
     JPanel loopPanel = new JPanel();
     loopPanel.add(loop);
     loopPanel.add(loopToggle);
-
 
     // Export to SVG
     JButton export = new JButton("Save as SVG File");
@@ -204,12 +201,12 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
     this.shapeListContainer = new JList<>(this.shapesList);
     this.shapeListContainer.addListSelectionListener(this);
-    JScrollPane scrollieShapes = new JScrollPane(this.shapeListContainer);
-    this.addBorder(scrollieShapes);
+    JScrollPane scrollShapes = new JScrollPane(this.shapeListContainer);
+    this.addBorder(scrollShapes);
 
     this.shapesEditor = new JPanel(new BorderLayout());
     this.shapesEditor.add(title, BorderLayout.NORTH);
-    this.shapesEditor.add(scrollieShapes, BorderLayout.CENTER);
+    this.shapesEditor.add(scrollShapes, BorderLayout.CENTER);
     this.shapesEditor.setPreferredSize(new Dimension(254, 82));
   }
 
@@ -224,14 +221,14 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
     this.frameListContainer = new JList<>(this.framesList);
     this.frameListContainer.addListSelectionListener(this);
-    JScrollPane scrollieFrames = new JScrollPane(this.frameListContainer);
-    this.addBorder(scrollieFrames);
+    JScrollPane scrollFrames = new JScrollPane(this.frameListContainer);
+    this.addBorder(scrollFrames);
     this.frameListLabel = new JLabel("First, Select a Shape from Shapes Menu",
-            SwingConstants.CENTER);
+        SwingConstants.CENTER);
     this.frameListLabel.setPreferredSize(new Dimension(254, 40));
     this.addBorder(this.frameListLabel);
     JPanel frameListTitled = new JPanel(new BorderLayout());
-    frameListTitled.add(scrollieFrames, BorderLayout.CENTER);
+    frameListTitled.add(scrollFrames, BorderLayout.CENTER);
     frameListTitled.add(this.frameListLabel, BorderLayout.NORTH);
 
     this.framesEditor = new JPanel(new BorderLayout());
@@ -249,7 +246,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * This method will display a list of shapes onto the graphical interface for the user.
+   * Display a list of shapes int the GUI.
    */
   @Override
   public void display(List<InterfaceInterpretShape> shapes) {
@@ -257,13 +254,14 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Retrieves the shapes to be displayed.
+   * Retrieves the shapes for the animation.
    *
-   * @return a list of shapes.
+   * @return a list of {@link ShapeCell}
    */
   @Override
   public List<InterfaceShapeCell> getShapes() {
     List<InterfaceShapeCell> output = new ArrayList<>();
+
     for (int i = 0; i < this.shapesList.size(); i++) {
       output.add(this.shapesList.elementAt(i));
     }
@@ -272,7 +270,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Places a map of all shapes in animation in the view.
+   * Add shapes to the view.
    *
    * @param shapes all the shapes in the animation.
    */
@@ -289,7 +287,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Retrieves all keyframes.
+   * Get keyframes for automation.
    */
   @Override
   public Map<String, List<InterpretStatusKeyFrame>> getKeyframes() {
@@ -297,7 +295,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Sets all keyframes.
+   * Sets all keyframes for automation.
    */
   @Override
   public void setKeyframes(Map<String, List<InterpretStatusKeyFrame>> keyframes) {
@@ -307,8 +305,8 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
       for (InterpretStatusKeyFrame frame : keyframes.get(id)) {
         newList.add(new StatusKeyFrame(frame.getTime(), frame.getX(), frame.getY(),
-                frame.getWidth(), frame.getHeight(), frame.getShapeRotation(),
-                frame.getColor()));
+            frame.getWidth(), frame.getHeight(), frame.getShapeRotation(),
+            frame.getColor()));
       }
       this.keyframes.put(id, newList);
     }
@@ -316,7 +314,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * sets the width of a shape.
+   * Set the width of the GUI.
    */
   @Override
   public void setWidth(int width) {
@@ -325,7 +323,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * sets the height of a shape.
+   * Set the height of the GUI.
    */
   @Override
   public void setHeight(int height) {
@@ -351,7 +349,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Adds a listener that receives a SHAPE CHANGE event.
+   * Adds a listener that receives a shape change events.
    */
   @Override
   public void addShapeChangeListener(InterfaceShapeChangeListener listener) {
@@ -359,7 +357,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   }
 
   /**
-   * Adds a listener that receives a frame change event.
+   * Adds a listener that receives frame change events.
    */
   @Override
   public void addFrameChangeListener(InterfaceFrameChangeListener listener) {
@@ -372,25 +370,25 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   @Override
   public void displayError(String s) {
     JOptionPane.showMessageDialog(this, s, "An error occurred",
-            JOptionPane.ERROR_MESSAGE);
+        JOptionPane.ERROR_MESSAGE);
   }
 
   /**
    * Helper method for actions performed.
    */
-  private void fireButtonEvent(String type) {
+  private void buttonEventHelper(String type) {
     for (ActionListener listener : this.buttonListeners) {
       listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, type));
     }
   }
 
   /**
-   * Helper method for change events.
+   * Helper method for changing the speed of the automation.
    */
-  private void changeTickSpeed(String type, String newValue) {
+  private void changeSpeed(String type, String newValue) {
     for (PropertyChangeListener listener : this.tickSpeedListeners) {
       listener.propertyChange(new PropertyChangeEvent(this, type,
-              newValue, newValue));
+          newValue, newValue));
     }
   }
 
@@ -452,7 +450,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     String process = event.getActionCommand();
 
     if (process.equals("TICK SPEED")) {
-      this.changeTickSpeed("TICK SPEED", this.tickSpeedField.getText());
+      this.changeSpeed("TICK SPEED", this.tickSpeedField.getText());
       return;
     }
 
@@ -469,7 +467,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     if (this.shapeSelected != -1 || !this.shapeListContainer.isSelectionEmpty()) {
       shape = this.shapesList.elementAt(this.shapeSelected);
     } else {
-      this.fireButtonEvent(process);
+      this.buttonEventHelper(process);
       return;
     }
 
@@ -487,37 +485,47 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     if (this.frameSelected != -1 || !this.frameListContainer.isSelectionEmpty()) {
       keyframe = this.framesList.elementAt(this.frameSelected);
     } else {
-      this.fireButtonEvent(process);
+      this.buttonEventHelper(process);
       return;
     }
 
     switch (process) {
       case "frame edit":
         this.handler.changeFrame(this, FrameChange.EDIT, shape.getID(), keyframe.getTime(),
-                keyframe.getX(), keyframe.getY(), keyframe.getWidth(), keyframe.getHeight(),
-                keyframe.getShapeRotation(), keyframe.getColor());
+            keyframe.getX(), keyframe.getY(), keyframe.getWidth(), keyframe.getHeight(),
+            keyframe.getShapeRotation(), keyframe.getColor());
         break;
       case "frame delete":
         this.handler.changeFrame(this, FrameChange.DELETE, shape.getID(),
-                keyframe.getTime());
+            keyframe.getTime());
         break;
       default:
-        this.fireButtonEvent(process);
+        this.buttonEventHelper(process);
     }
   }
 
+  /**
+   * Method waiting for a shape change.
+   *
+   * @param event the change event.
+   */
   @Override
   public void stateChanged(ChangeEvent event) {
-    if (sliderPauser) {
-      this.changeTickSpeed("SLIDER", "" + sliderFunction.getValue());
+    if (pause) {
+      this.changeSpeed("SLIDER", "" + sliderFunction.getValue());
     } else {
-      sliderPauser = true;
+      pause = true;
     }
   }
 
+  /**
+   * Set the current state of the GUI playback slider.
+   *
+   * @param tick to set the slider at.
+   */
   @Override
   public void setSlider(double tick) {
-    sliderPauser = false;
+    pause = false;
     sliderFunction.setValue((int) (tick * 100));
   }
 }
