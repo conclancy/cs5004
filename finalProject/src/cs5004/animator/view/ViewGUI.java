@@ -1,7 +1,9 @@
 package cs5004.animator.view;
 
 import cs5004.animator.controller.IController;
+import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -65,7 +67,14 @@ public class ViewGUI extends JFrame implements IView, ActionListener {
     exit.addActionListener(this);
     file.add(exit);
 
-    this.setJMenuBar(menuBar);
+    super.setJMenuBar(menuBar);
+
+    Component canvas = new EasyAnimatorCanvas(this.controller, this.x, this.y, this.width,
+        this.height, speed);
+
+    super.add(canvas);
+    canvas.repaint();
+    super.setVisible(true);
   }
 
   /**
@@ -85,16 +94,11 @@ public class ViewGUI extends JFrame implements IView, ActionListener {
    */
   @Override
   public void actionPerformed(ActionEvent e) {
+    Component component = (Component) e.getSource();
 
+    if(component.getName().equals("exit")) {
+      System.exit(0);
+    }
   }
 
-  //TODO move this to its own clas.
-  private void buildPanel() {
-    JPanel panel = new JPanel(true);
-    panel.setBackground(Color.WHITE);
-    panel.setSize(new Dimension(this.width, this.height));
-    panel.setLocation(new Point(this.x, this.y));
-
-    panel.delay
-  }
 }
