@@ -78,7 +78,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * @param ticksPS the starting speed of the animation in ticks per second
    */
   public PlaybackView(int ticksPS) {
-    super();
+    super("EasyAnimator - CS5004 Final - cclancy");
 
     this.tickSpeedField = new JTextField("" + ticksPS);
 
