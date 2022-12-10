@@ -82,7 +82,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
     this.tickSpeedField = new JTextField("" + ticksPS);
 
-    this.handler = new InputHandler();
+    this.handler = new UserInputHandler();
     this.buttonListeners = new ArrayList<>();
     this.tickSpeedListeners = new ArrayList<>();
     this.keyframes = new LinkedHashMap<>();
@@ -477,7 +477,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     }
 
     if (process.equals("frame add")) {
-      this.handler.changeFrame(this, FrameChange.ADD, shape.getID(), 0);
+      this.handler.changeFrame(this, EFrameChange.ADD, shape.getID(), 0);
       return;
     }
 
@@ -491,12 +491,12 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
     switch (process) {
       case "frame edit":
-        this.handler.changeFrame(this, FrameChange.EDIT, shape.getID(), keyframe.getTime(),
+        this.handler.changeFrame(this, EFrameChange.EDIT, shape.getID(), keyframe.getTime(),
             keyframe.getX(), keyframe.getY(), keyframe.getWidth(), keyframe.getHeight(),
             keyframe.getShapeRotation(), keyframe.getColor());
         break;
       case "frame delete":
-        this.handler.changeFrame(this, FrameChange.DELETE, shape.getID(),
+        this.handler.changeFrame(this, EFrameChange.DELETE, shape.getID(),
             keyframe.getTime());
         break;
       default:

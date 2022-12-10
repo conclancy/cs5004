@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
  */
 public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
 
-  private final FrameChange changeType;
+  private final EFrameChange changeType;
   private final String name;
   private final int tick;
   private final int x;
@@ -22,7 +22,7 @@ public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
    * Construct a FrameChangeEvent for receiving listener updates.
    *
    * @param source     object sending the change event
-   * @param changeType {@link FrameChange} type occurring within this keyframe.
+   * @param changeType {@link EFrameChange} type occurring within this keyframe.
    * @param name       name of the shape displayed within this keyframe.
    * @param tick       tick at which this keyframe occurs.
    * @param x          x coordinate of the shape at this tick.
@@ -32,7 +32,7 @@ public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
    * @param degree     degree of rotation of the shape at this tick.
    * @param color      {@link Color} of the shape at this frame
    */
-  public FrameChangeEvent(Object source, FrameChange changeType, String name, int tick,
+  public FrameChangeEvent(Object source, EFrameChange changeType, String name, int tick,
       int x, int y, int width, int height, int degree, Color color) {
 
     super(source, ActionEvent.ACTION_PERFORMED, "frame change");
@@ -51,10 +51,10 @@ public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
   /**
    * Get the change type of this event.
    *
-   * @return the event, as a {@link FrameChange}
+   * @return the event, as a {@link EFrameChange}
    */
   @Override
-  public FrameChange getType() {
+  public EFrameChange getType() {
     return this.changeType;
   }
 

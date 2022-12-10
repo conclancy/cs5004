@@ -10,9 +10,9 @@ public interface IFrameChangeEvent {
   /**
    * Get the change type of this event.
    *
-   * @return the event, as a {@link FrameChange}
+   * @return the event, as a {@link EFrameChange}
    */
-  FrameChange getType();
+  EFrameChange getType();
 
   /**
    * Get the name of the shape that is being changed.

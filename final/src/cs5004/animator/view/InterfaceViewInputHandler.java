@@ -37,11 +37,11 @@ public interface InterfaceViewInputHandler {
   /**
    * Method for a changeFrame using the parent, type and id and time only.
    */
-  void changeFrame(Component parent, FrameChange type, String id, int time);
+  void changeFrame(Component parent, EFrameChange type, String id, int time);
 
   /**
    * A frame change event in addition to other shape attributes as arguments.
    */
-  void changeFrame(Component parent, FrameChange type, String id, int time, int x,
+  void changeFrame(Component parent, EFrameChange type, String id, int time, int x,
                    int y, int width, int height, int rotationDegree, Color color);
 }
