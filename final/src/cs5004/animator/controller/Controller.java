@@ -81,7 +81,7 @@ public class Controller implements InterfaceController, ActionListener,
 
   /**
    * A method using action listener for changes in key frame. This is the functionalty that supports
-   * the user to change key frames. TODO: Keep working on this for part3. Not working yet.
+   * the user to change key frames.
    *
    * @param event which is the event of the change by the user to be sent to the controller.
    */
