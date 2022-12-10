@@ -2,11 +2,23 @@ package cs5004.animator.view;
 
 import cs5004.animator.controller.IController;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Scanner;
 
 public class ViewText implements  IView {
   private Appendable output;
   private IController controller;
+  private String format;
+
+  public ViewText(Appendable text) {
+    this.output = text;
+    this.format = "TEXT";
+  }
+
+  public ViewText(Writer svg) {
+    this.output = svg;
+    this.format = "SVG";
+  }
 
 
   /**
@@ -16,6 +28,23 @@ public class ViewText implements  IView {
    */
   @Override
   public void display(int speed) {
+    switch(this.format) {
+      case "TEXT":
+        displayText(speed);
+        break;
+      case "SVG":
+        displaySVG();
+        break;
+      default:
+    }
+  }
+
+  /**
+   * Display the text as a system output on the command line.
+   *
+   * @param speed at which the lines should appear on the screen.
+   */
+  private void displayText(int speed) {
     Scanner scan = new Scanner(this.controller.getSVGTextOutput());
 
     while (scan.hasNext()) {
@@ -29,6 +58,22 @@ public class ViewText implements  IView {
     }
 
     scan.close();
+  }
+
+  /**
+   * Generate an SVG file as the output.
+   */
+  private void displaySVG() {
+    Writer writer = (Writer) output;
+
+    try {
+      String svg = this.controller.getSVGTextOutput();
+      writer.write(svg);
+      writer.close();
+      System.out.println("SVG file write process complete.");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
