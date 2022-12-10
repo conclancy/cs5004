@@ -1,6 +1,7 @@
 package cs5004.animator.controller;
 
 import cs5004.animator.model.IShape;
+import java.awt.Graphics;
 import java.util.List;
 
 /**
