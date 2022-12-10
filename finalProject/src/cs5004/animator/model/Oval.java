@@ -42,7 +42,7 @@ public class Oval extends AbstractShape {
    */
   @Override
   public String getShapeType() {
-    return "OVAL";
+    return "oval";
   }
 
   /**

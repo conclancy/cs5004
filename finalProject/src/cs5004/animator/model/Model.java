@@ -41,14 +41,14 @@ public class Model implements IModel {
   @Override
   public void addShape(String name, String shapeType) throws IllegalArgumentException {
     switch (shapeType) {
-      case "RECTANGLE":
+      case "rectangle":
         this.shapes.put(name, new Rectangle(name));
         break;
-      case "OVAL":
+      case "oval":
         this.shapes.put(name, new Oval(name));
         break;
       default:
-        throw new IllegalArgumentException("shapeType must be 'RECTANGLE' or 'OVAL'.");
+        throw new IllegalArgumentException("Shape type passed " + shapeType + ". shapeType must be 'rectangle' or 'oval'.");
     }
   }
 

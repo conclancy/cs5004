@@ -43,7 +43,7 @@ public class Rectangle extends AbstractShape {
    */
   @Override
   public String getShapeType() {
-    return "RECTANGLE";
+    return "rectangle";
   }
 
   /**
