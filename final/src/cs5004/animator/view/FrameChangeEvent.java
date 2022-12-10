@@ -6,51 +6,52 @@ import java.awt.event.ActionEvent;
 /**
  * This class represents an action event for key frame changes for the playback view.
  */
-public class FrameChangeEvent extends ActionEvent implements InterfaceFrameChangeEvent {
+public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
+
   private final FrameChange changeType;
-  private final String id;
-  private final int frameTime;
+  private final String name;
+  private final int tick;
   private final int x;
   private final int y;
   private final int width;
   private final int height;
-  private final int rotationDegree;
+  private final int degree;
   private final Color color;
 
   /**
-   * This constructor creates a Frame Change Event for receiving listener updates.
+   * Construct a FrameChangeEvent for receiving listener updates.
    *
-   * @param source     is the object sending the event
-   * @param changeType is the type of change being made.
-   * @param id         is the id of the shape that this keyframe corresponds to
-   * @param frameTime  is the tick at which this keyframe represents its shape
-   * @param x          is the x coordinate of the shape at this frame
-   * @param y          is the y coordinate of the shape at this frame
-   * @param width      is the width of the shape at this frame
-   * @param height     is the height of the shape at this frame
-   * @param color      is the color of the shape at this frame
+   * @param source     object sending the change event
+   * @param changeType {@link FrameChange} type occurring within this keyframe.
+   * @param name       name of the shape displayed within this keyframe.
+   * @param tick       tick at which this keyframe occurs.
+   * @param x          x coordinate of the shape at this tick.
+   * @param y          y coordinate of the shape at this tick
+   * @param width      width of the shape at this tick.
+   * @param height     height of the shape at this tick.
+   * @param degree     degree of rotation of the shape at this tick.
+   * @param color      {@link Color} of the shape at this frame
    */
-  public FrameChangeEvent(Object source, FrameChange changeType, String id, int frameTime,
-                          int x, int y,
-                          int width, int height,
-                          int rotationDegree, Color color) {
+  public FrameChangeEvent(Object source, FrameChange changeType, String name, int tick,
+      int x, int y, int width, int height, int degree, Color color) {
+
     super(source, ActionEvent.ACTION_PERFORMED, "frame change");
 
     this.changeType = changeType;
-    this.id = id;
-    this.frameTime = frameTime;
+    this.name = name;
+    this.tick = tick;
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
-    this.rotationDegree = rotationDegree;
+    this.degree = degree;
     this.color = color;
   }
 
   /**
-   * A getter method for the type of change that was made.
+   * Get the change type of this event.
    *
-   * @return A frame was changed.
+   * @return the event, as a {@link FrameChange}
    */
   @Override
   public FrameChange getType() {
@@ -58,29 +59,29 @@ public class FrameChangeEvent extends ActionEvent implements InterfaceFrameChang
   }
 
   /**
-   * A getter method for the ID of the shape.
+   * Get the name of the shape that is being changed.
    *
-   * @return the id of the shape.
+   * @return the name of the shape, as a String.
    */
   @Override
-  public String getId() {
-    return this.id;
+  public String getShapeName() {
+    return this.name;
   }
 
   /**
-   * A getter method for the time.
+   * Get the tick at which this change occurs.
    *
-   * @return the time.
+   * @return the tick at which the event occurs, as an int.
    */
   @Override
-  public int getTime() {
-    return this.frameTime;
+  public int getTick() {
+    return this.tick;
   }
 
   /**
-   * A getter method for the x coordinate.
+   * Get the X coordinate of the shape.
    *
-   * @return the x coordinate
+   * @return the X coordinate of the shape, as an int.
    */
   @Override
   public int getX() {
@@ -88,9 +89,9 @@ public class FrameChangeEvent extends ActionEvent implements InterfaceFrameChang
   }
 
   /**
-   * A getter method for the y coordinate.
+   * Get the Y coordinate of the shape.
    *
-   * @return the y coordinate
+   * @return the y coordinate of the shape, as an int.
    */
   @Override
   public int getY() {
@@ -98,9 +99,9 @@ public class FrameChangeEvent extends ActionEvent implements InterfaceFrameChang
   }
 
   /**
-   * A getter method for the width of the shape.
+   * Get the width of the shape.
    *
-   * @return the width.
+   * @return the width of the shape, as an int.
    */
   @Override
   public int getWidth() {
@@ -108,9 +109,9 @@ public class FrameChangeEvent extends ActionEvent implements InterfaceFrameChang
   }
 
   /**
-   * A getter method for the height of the shape.
+   * Get the height of the shape.
    *
-   * @return the height.
+   * @return the height of the shape, as an int.
    */
   @Override
   public int getHeight() {
@@ -118,19 +119,19 @@ public class FrameChangeEvent extends ActionEvent implements InterfaceFrameChang
   }
 
   /**
-   * A getter method for the rotationDegree of the shape.
+   * Get the rotation degree of the shape.
    *
-   * @return the rotationDegree in degrees
+   * @return the rotation degree of the shape, as an int.
    */
   @Override
   public int getShapeRotation() {
-    return this.rotationDegree;
+    return this.degree;
   }
 
   /**
-   * A getter method for the color of the shape.
+   * Get the {@link Color} of the shape.
    *
-   * @return the color object.
+   * @return the color of the shape, as a {@link Color}.
    */
   @Override
   public Color getColor() {

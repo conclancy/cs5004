@@ -20,7 +20,7 @@ import cs5004.animator.model.InterfaceInterpretStatusProcess;
 import cs5004.animator.model.InterfaceInterpretShape;
 import cs5004.animator.model.SuperGeneralProcess;
 import cs5004.animator.view.InterfacePlaybackView;
-import cs5004.animator.view.InterfaceFrameChangeEvent;
+import cs5004.animator.view.IFrameChangeEvent;
 import cs5004.animator.view.InterfaceFrameChangeListener;
 import cs5004.animator.view.InterfaceShapeChangeEvent;
 import cs5004.animator.view.InterfaceShapeChangeListener;
@@ -86,10 +86,10 @@ public class Controller implements InterfaceController, ActionListener,
    * @param event which is the event of the change by the user to be sent to the controller.
    */
   @Override
-  public void keyframeChanged(InterfaceFrameChangeEvent event) {
+  public void keyframeChanged(IFrameChangeEvent event) {
     List<InterfaceInterpretStatusProcess> processes = playbackBuilder.getProcesses()
-            .get(event.getId());
-    if (event.getTime() < 0) {
+            .get(event.getShapeName());
+    if (event.getTick() < 0) {
       playbackView.displayError("The ticks must be positive!");
       return;
     }
@@ -97,10 +97,10 @@ public class Controller implements InterfaceController, ActionListener,
       case ADD:
         if (processes == null) {
           try {
-            playbackBuilder.addMotion(event.getId(), event.getTime(), event.getX(), event.getY(),
+            playbackBuilder.addMotion(event.getShapeName(), event.getTick(), event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
-                    event.getColor().getBlue(), event.getTime(), event.getX(), event.getY(),
+                    event.getColor().getBlue(), event.getTick(), event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue());
@@ -113,15 +113,15 @@ public class Controller implements InterfaceController, ActionListener,
           }
           return;
         }
-        if (timeExists(event.getTime(), processes)) {
+        if (timeExists(event.getTick(), processes)) {
           playbackView.displayError("This keyframe already exists.");
           return;
         }
-        if (event.getTime() < processes.get(0).getStartTime()) {
+        if (event.getTick() < processes.get(0).getStartTime()) {
           try {
             playbackBuilder.addMotion(
-                    event.getId(),
-                    event.getTime(),
+                    event.getShapeName(),
+                    event.getTick(),
                     event.getX(),
                     event.getY(),
                     event.getWidth(),
@@ -149,19 +149,19 @@ public class Controller implements InterfaceController, ActionListener,
           }
           return;
         }
-        else if (event.getTime() > processes.get(processes.size() - 1).getEndTime()) {
+        else if (event.getTick() > processes.get(processes.size() - 1).getEndTime()) {
           InterfaceInterpretStatusProcess temp = processes.get(processes.size() - 1);
           try {
-            playbackBuilder.addMotion(event.getId(), temp.getEndTime(),
+            playbackBuilder.addMotion(event.getShapeName(), temp.getEndTime(),
                     temp.getEndX(), temp.getEndY(), temp.getEndWidth(),
                     temp.getEndHeight(), temp.getEndRotationDegree(), temp.getEndColor().getRed(),
                     temp.getEndColor().getGreen(), temp.getEndColor().getBlue(),
-                    event.getTime(), event.getX(), event.getY(),
+                    event.getTick(), event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue());
             if (temp.getStartTime() == temp.getEndTime()) {
-              this.playbackBuilder.removeProcess(event.getId(), temp.getStartTime());
+              this.playbackBuilder.removeProcess(event.getShapeName(), temp.getStartTime());
             }
             playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
             lastTickNum = playbackBuilder.build().getLastTick();
@@ -173,25 +173,25 @@ public class Controller implements InterfaceController, ActionListener,
         }
         else {
           for (InterfaceInterpretStatusProcess process : processes) {
-            if (event.getTime() == process.getStartTime()
-                    || event.getTime() == process.getEndTime()) {
+            if (event.getTick() == process.getStartTime()
+                    || event.getTick() == process.getEndTime()) {
               this.playbackView.displayError("There is already a keyframe at this tick.");
               return;
             }
-            if ( event.getTime() > process.getStartTime()
-                    && event.getTime() < process.getEndTime()) {
+            if ( event.getTick() > process.getStartTime()
+                    && event.getTick() < process.getEndTime()) {
               try {
-                playbackBuilder.removeProcess(event.getId(), process.getStartTime());
-                playbackBuilder.addMotion(event.getId(), process.getStartTime(),
+                playbackBuilder.removeProcess(event.getShapeName(), process.getStartTime());
+                playbackBuilder.addMotion(event.getShapeName(), process.getStartTime(),
                         process.getStartX(), process.getStartY(), process.getStartWidth(),
                         process.getStartHeight(), process.getStartRotationDegree(),
                         process.getStartColor().getRed(), process.getStartColor().getGreen(),
-                        process.getStartColor().getBlue(), event.getTime(), event.getX(),
+                        process.getStartColor().getBlue(), event.getTick(), event.getX(),
                         event.getY(), event.getWidth(), event.getHeight(),
                         event.getShapeRotation(),
                         event.getColor().getRed(), event.getColor().getGreen(),
                         event.getColor().getBlue());
-                playbackBuilder.addMotion(event.getId(), event.getTime(), event.getX(),
+                playbackBuilder.addMotion(event.getShapeName(), event.getTick(), event.getX(),
                         event.getY(),
                         event.getWidth(), event.getHeight(), event.getShapeRotation(),
                         event.getColor().getRed(), event.getColor().getGreen(),
@@ -211,15 +211,15 @@ public class Controller implements InterfaceController, ActionListener,
         }
         return;
       case EDIT:
-        if (!timeExists(event.getTime(), processes)) {
+        if (!timeExists(event.getTick(), processes)) {
           playbackView.displayError("Keyframe does not exist at this time.");
           return;
         }
 
-        if (event.getTime() == processes.get(0).getStartTime()) {
+        if (event.getTick() == processes.get(0).getStartTime()) {
           try {
-            playbackBuilder.removeProcess(event.getId(), event.getTime());
-            playbackBuilder.addMotion(event.getId(), event.getTime(), event.getX(), event.getY(),
+            playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
+            playbackBuilder.addMotion(event.getShapeName(), event.getTick(), event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue(), processes.get(0).getEndTime(),
@@ -234,12 +234,12 @@ public class Controller implements InterfaceController, ActionListener,
             playbackView.displayError(e.getMessage());
           }
         }
-        else if (event.getTime() == processes.get(processes.size() - 1).getEndTime()) {
+        else if (event.getTick() == processes.get(processes.size() - 1).getEndTime()) {
           try {
-            playbackBuilder.removeProcess(event.getId(), event.getTime());
+            playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
 
             InterfaceInterpretStatusProcess lastProcess = processes.get(processes.size() - 1);
-            playbackBuilder.addMotion(event.getId(),
+            playbackBuilder.addMotion(event.getShapeName(),
                     lastProcess.getStartTime(),
                     lastProcess.getStartX(),
                     lastProcess.getStartY(),
@@ -248,7 +248,7 @@ public class Controller implements InterfaceController, ActionListener,
                     lastProcess.getStartRotationDegree(),
                     lastProcess.getStartColor().getRed(),
                     lastProcess.getStartColor().getGreen(),
-                    lastProcess.getStartColor().getBlue(), event.getTime(),
+                    lastProcess.getStartColor().getBlue(), event.getTick(),
                     event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(),
                     event.getShapeRotation(), event.getColor().getRed(),
@@ -261,11 +261,11 @@ public class Controller implements InterfaceController, ActionListener,
         }
 
         for (int i = 1; i < processes.size(); i++) {
-          if (event.getTime() == processes.get(i).getStartTime()) {
+          if (event.getTick() == processes.get(i).getStartTime()) {
             try {
-              playbackBuilder.removeProcess(event.getId(), processes.get(i).getStartTime());
-              playbackBuilder.removeProcess(event.getId(), processes.get(i - 1).getStartTime());
-              playbackBuilder.addMotion(event.getId(), processes.get(i - 1).getStartTime(),
+              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i).getStartTime());
+              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTime());
+              playbackBuilder.addMotion(event.getShapeName(), processes.get(i - 1).getStartTime(),
                       processes.get(i - 1).getStartX(),
                       processes.get(i - 1).getStartY(), processes.get(i - 1).getStartWidth(),
                       processes.get(i - 1).getStartHeight(),
@@ -273,12 +273,12 @@ public class Controller implements InterfaceController, ActionListener,
                       processes.get(i - 1).getStartColor().getRed(),
                       processes.get(i - 1).getStartColor().getGreen(),
                       processes.get(i - 1).getStartColor().getBlue(),
-                      event.getTime(), event.getX(), event.getY(),
+                      event.getTick(), event.getX(), event.getY(),
                       event.getWidth(), event.getHeight(), event.getShapeRotation(),
                       event.getColor().getRed(), event.getColor().getGreen(),
                       event.getColor().getBlue());
-              playbackBuilder.addMotion(event.getId(),
-                      event.getTime(), event.getX(), event.getY(),
+              playbackBuilder.addMotion(event.getShapeName(),
+                      event.getTick(), event.getX(), event.getY(),
                       event.getWidth(), event.getHeight(), event.getShapeRotation(),
                       event.getColor().getRed(), event.getColor().getGreen(),
                       event.getColor().getBlue(), processes.get(i).getEndTime(),
@@ -297,14 +297,14 @@ public class Controller implements InterfaceController, ActionListener,
         }
         return;
       case DELETE:
-        if (!timeExists(event.getTime(), processes)) {
+        if (!timeExists(event.getTick(), processes)) {
           playbackView.displayError("Keyframe does not exist at this time.");
           return;
         }
-        if (event.getTime() == processes.get(0).getStartTime()
-                || (event.getTime() == processes.get(processes.size() - 1).getEndTime())) {
+        if (event.getTick() == processes.get(0).getStartTime()
+                || (event.getTick() == processes.get(processes.size() - 1).getEndTime())) {
           try {
-            playbackBuilder.removeProcess(event.getId(), event.getTime());
+            playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
             playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
           }
           catch (IllegalArgumentException e) {
@@ -313,12 +313,12 @@ public class Controller implements InterfaceController, ActionListener,
         }
         else {
           for (int i = 0; i < processes.size(); i++) {
-            if (event.getTime() == processes.get(i).getStartTime()) {
+            if (event.getTick() == processes.get(i).getStartTime()) {
               SuperGeneralProcess process = combine(processes.get(i - 1), processes.get(i));
               try {
-                playbackBuilder.removeProcess(event.getId(), event.getTime());
-                playbackBuilder.removeProcess(event.getId(), processes.get(i - 1).getStartTime());
-                playbackBuilder.addMotion(event.getId(), process.getStartTime(),
+                playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
+                playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTime());
+                playbackBuilder.addMotion(event.getShapeName(), process.getStartTime(),
                         process.getStartX(),
                         process.getStartY(), process.getStartWidth(), process.getStartHeight(),
                         process.getStartRotationDegree(),

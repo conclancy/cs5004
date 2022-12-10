@@ -10,5 +10,5 @@ public interface InterfaceFrameChangeListener extends ActionListener {
   /**
    * Method that is used when a event change happens.
    */
-  void keyframeChanged(InterfaceFrameChangeEvent event);
+  void keyframeChanged(IFrameChangeEvent event);
 }
