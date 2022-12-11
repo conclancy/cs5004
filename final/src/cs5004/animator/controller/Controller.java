@@ -32,7 +32,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * This class represents the controller that implements the main playback view.
  */
-public class Controller implements InterfaceController, ActionListener,
+public class Controller implements IController, ActionListener,
     IFrameChangeListener,
     IShapeChangeListener, PropertyChangeListener {
 

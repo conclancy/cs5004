@@ -15,7 +15,7 @@ import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 import cs5004.animator.controller.Controller;
-import cs5004.animator.controller.InterfaceController;
+import cs5004.animator.controller.IController;
 import cs5004.animator.util.AnimationReader;
 import cs5004.animator.model.IModel;
 import cs5004.animator.view.ViewGUISimple;
@@ -39,7 +39,7 @@ public final class EasyAnimator {
     IModel model;
     IVewText textView;
     IViewGUI editView;
-    InterfaceController controller;
+    IController controller;
     Readable in = new StringReader("");
     int ticksPS = 1;
     String viewType = "";
