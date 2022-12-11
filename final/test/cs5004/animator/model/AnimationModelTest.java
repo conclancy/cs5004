@@ -237,11 +237,11 @@ public class AnimationModelTest {
     LinkedHashMap<String, List<IProcess>> map = new LinkedHashMap<>();
     List<IProcess> processes1 = new ArrayList<>();
     List<IProcess> processes2 = new ArrayList<>();
-    processes1.add(new SuperGeneralProcess("Motion", 0, 10, 10, 10, 30, 0, 255, 0, 5,
+    processes1.add(new GeneralProcess("Motion", 0, 10, 10, 10, 30, 0, 255, 0, 5,
             20, 10, 10, 30, 0, 255, 0,0,0));
-    processes1.add(new SuperGeneralProcess("Motion", 6, 20, 10, 10, 30, 0, 255, 0, 10,
+    processes1.add(new GeneralProcess("Motion", 6, 20, 10, 10, 30, 0, 255, 0, 10,
             20, 20, 10, 30, 0, 255, 0, 0, 0));
-    processes2.add(new SuperGeneralProcess("Motion", 0, 1, 1, 20, 20, 255, 0, 0, 10,
+    processes2.add(new GeneralProcess("Motion", 0, 1, 1, 20, 20, 255, 0, 0, 10,
             20, 20, 20, 20, 255, 0, 0, 0,0));
     map.put("rectangle", processes1);
     map.put("Steve", processes2);

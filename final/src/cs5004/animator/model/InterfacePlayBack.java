@@ -31,7 +31,7 @@ public interface InterfacePlayBack extends AnimationBuilder {
    * This method will retrieve the processes from the playbackBuilder.
    * @return a map of the ids for the processes in the playbackBuilder.
    */
-  LinkedHashMap<String, List<IStatusProcess>> getProcesses();
+  LinkedHashMap<String, List<IProcess>> getProcesses();
 
   /**
    * This method will retrieve the shapes from the playbackBuilder.

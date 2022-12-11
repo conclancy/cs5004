@@ -1,5 +1,7 @@
 package cs5004.animator.controller;
 
+import cs5004.animator.model.GeneralProcess;
+import cs5004.animator.model.IProcess;
 import cs5004.animator.view.IVewText;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.SVGStringGenerator;
@@ -19,9 +21,7 @@ import java.util.TimerTask;
 
 import cs5004.animator.model.IModel;
 import cs5004.animator.model.InterfacePlayBack;
-import cs5004.animator.model.IStatusProcess;
 import cs5004.animator.model.IShape;
-import cs5004.animator.model.SuperGeneralProcess;
 import cs5004.animator.view.IFrameChangeEvent;
 import cs5004.animator.view.IFrameChangeListener;
 import cs5004.animator.view.IShapeChangeEvent;
@@ -87,7 +87,7 @@ public class Controller implements InterfaceController, ActionListener,
    */
   @Override
   public void frameChanged(IFrameChangeEvent event) {
-    List<IStatusProcess> processes = playbackBuilder.getProcesses()
+    List<IProcess> processes = playbackBuilder.getProcesses()
             .get(event.getShapeName());
     if (event.getTick() < 0) {
       playbackView.displayError("The ticks must be positive!");
@@ -150,7 +150,7 @@ public class Controller implements InterfaceController, ActionListener,
           return;
         }
         else if (event.getTick() > processes.get(processes.size() - 1).getEndTime()) {
-          IStatusProcess temp = processes.get(processes.size() - 1);
+          IProcess temp = processes.get(processes.size() - 1);
           try {
             playbackBuilder.addMotion(event.getShapeName(), temp.getEndTime(),
                     temp.getEndX(), temp.getEndY(), temp.getEndWidth(),
@@ -172,7 +172,7 @@ public class Controller implements InterfaceController, ActionListener,
           return;
         }
         else {
-          for (IStatusProcess process : processes) {
+          for (IProcess process : processes) {
             if (event.getTick() == process.getStartTime()
                     || event.getTick() == process.getEndTime()) {
               this.playbackView.displayError("There is already a keyframe at this tick.");
@@ -238,7 +238,7 @@ public class Controller implements InterfaceController, ActionListener,
           try {
             playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
 
-            IStatusProcess lastProcess = processes.get(processes.size() - 1);
+            IProcess lastProcess = processes.get(processes.size() - 1);
             playbackBuilder.addMotion(event.getShapeName(),
                     lastProcess.getStartTime(),
                     lastProcess.getStartX(),
@@ -314,7 +314,7 @@ public class Controller implements InterfaceController, ActionListener,
         else {
           for (int i = 0; i < processes.size(); i++) {
             if (event.getTick() == processes.get(i).getStartTime()) {
-              SuperGeneralProcess process = combine(processes.get(i - 1), processes.get(i));
+              IProcess process = combine(processes.get(i - 1), processes.get(i));
               try {
                 playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
                 playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTime());
@@ -344,9 +344,8 @@ public class Controller implements InterfaceController, ActionListener,
 
   // takes the starting values of one process and the ending values of a second to make one new
   // process.
-  private SuperGeneralProcess combine(IStatusProcess process1,
-                                      IStatusProcess process2) {
-    return new SuperGeneralProcess(process1.getType(), process1.getStartTime(),
+  private IProcess combine(IProcess process1, IProcess process2) {
+    return new GeneralProcess(process1.getType(), process1.getStartTime(),
             process1.getStartX(),
             process1.getStartY(), process1.getStartWidth(), process1.getStartHeight(),
             process1.getStartRotationDegree(),
@@ -360,14 +359,14 @@ public class Controller implements InterfaceController, ActionListener,
 
 
   // Checks if any process starts with the given time, or the last process ends on this time.
-  private boolean timeExists(int time, List<IStatusProcess> list) {
+  private boolean timeExists(int time, List<IProcess> list) {
     if (list == null) {
       return false;
     }
     else if (time == list.get(list.size() - 1).getEndTime()) {
       return true;
     }
-    for (IStatusProcess process : list) {
+    for (IProcess process : list) {
       if (time == process.getStartTime()) {
         return true;
       }
@@ -556,10 +555,10 @@ public class Controller implements InterfaceController, ActionListener,
 
   // Converts a list of processes into a list of keyframes.
   private Map<String, List<InterpretStatusKeyFrame>> convertToKeyFrames(Map<String,
-          List<IStatusProcess>> map) {
+          List<IProcess>> map) {
     Map<String, List<InterpretStatusKeyFrame>> output = new LinkedHashMap<>();
 
-    for (Map.Entry<String, List<IStatusProcess>> entry : map.entrySet()) {
+    for (Map.Entry<String, List<IProcess>> entry : map.entrySet()) {
       ArrayList<InterpretStatusKeyFrame> temp = new ArrayList<>();
       if (map.get(entry.getKey()) == null)  {
         output.put(entry.getKey(), new ArrayList<>());
@@ -569,7 +568,7 @@ public class Controller implements InterfaceController, ActionListener,
       for (int i = 0; i < entry.getValue().size(); i++) {
         temp.add(this.convertToKeyFrame(entry.getValue().get(i)));
       }
-      IStatusProcess last = entry.getValue().get(entry.getValue().size() - 1);
+      IProcess last = entry.getValue().get(entry.getValue().size() - 1);
 
       if (last.getStartTime() != last.getEndTime()) {
         temp.add(new StatusKeyFrame(last.getEndTime(), last.getEndX(), last.getEndY(),
@@ -582,7 +581,7 @@ public class Controller implements InterfaceController, ActionListener,
   }
 
   // converts a process to keyframes using its starting values.
-  private InterpretStatusKeyFrame convertToKeyFrame(IStatusProcess process) {
+  private InterpretStatusKeyFrame convertToKeyFrame(IProcess process) {
     return new StatusKeyFrame(process.getStartTime(), process.getStartX(), process.getStartY(),
             process.getStartWidth(), process.getStartHeight(), process.getStartRotationDegree(),
             process.getStartColor());
@@ -591,7 +590,7 @@ public class Controller implements InterfaceController, ActionListener,
   // Gets the first tick of the animation and starts it at that. If there
   // are no processes then set tick to 0;
   private int getFirstTick() {
-    Map<String, List<IStatusProcess>> processes = this.playbackBuilder
+    Map<String, List<IProcess>> processes = this.playbackBuilder
             .getProcesses();
     int firstTickNum = Integer.MAX_VALUE;
 

@@ -4,7 +4,7 @@ package cs5004.animator.model;
 /**
  * This class represents the actual process that a shape can take within an animation.
  */
-public class SuperGeneralProcess extends GeneralProcess implements InterfaceRotateShape {
+public class SuperGeneralProcess extends GeneralProcess implements IProcess {
   private final int startOrientation;
   private final int endOrientation;
 
@@ -44,8 +44,7 @@ public class SuperGeneralProcess extends GeneralProcess implements InterfaceRota
     this.endOrientation = o2;
   }
 
-  @Override
-  public IShape setState(int time, IShape shape) {
+  public IShape setDegreeState(int time, IShape shape) {
     shape.setDegrees(this.findPointAt(time, this.startOrientation, this.endOrientation));
     return super.setState(time, shape);
   }

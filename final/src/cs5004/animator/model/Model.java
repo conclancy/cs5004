@@ -17,7 +17,7 @@ import cs5004.animator.util.AnimationBuilder;
  */
 public class Model implements IModel {
 
-  private final LinkedHashMap<String, List<InterfaceRotateShape>> processes;
+  private final LinkedHashMap<String, List<IProcess>> processes;
   private final LinkedHashMap<String, IShape> shapes;
 
   private final int x;
@@ -35,7 +35,7 @@ public class Model implements IModel {
    *                  processes that the shape will have.
    * @param shapes    which is also a linked hashmap that contains the IDs and shapes.
    */
-  private Model(LinkedHashMap<String, List<InterfaceRotateShape>> processes,
+  private Model(LinkedHashMap<String, List<IProcess>> processes,
       LinkedHashMap<String, IShape> shapes,
       int x, int y, int width, int height) {
     this.processes = processes;
@@ -53,7 +53,7 @@ public class Model implements IModel {
    * @param startingTime the time to search for within the processes.
    * @return the index int of the process.
    */
-  private static int indexOfProcess(List<InterfaceRotateShape> list, int startingTime) {
+  private static int indexOfProcess(List<IProcess> list, int startingTime) {
     if (list.isEmpty()) {
       return 0;
     }
@@ -92,7 +92,7 @@ public class Model implements IModel {
   public List<IShape> getState(int timeOfInterest) {
     List<IShape> output = new ArrayList<>();
     //iterate through the shape list
-    for (Map.Entry<String, List<InterfaceRotateShape>> entry : this.processes.entrySet()) {
+    for (Map.Entry<String, List<IProcess>> entry : this.processes.entrySet()) {
       String id = entry.getKey();
       IShape currShapes = this.shapes.get(id);
 
@@ -134,10 +134,10 @@ public class Model implements IModel {
    * @return processes from model in the map.
    */
   @Override
-  public LinkedHashMap<String, List<IStatusProcess>> getProcesses() {
-    LinkedHashMap<String, List<IStatusProcess>> output = new LinkedHashMap<>();
+  public LinkedHashMap<String, List<IProcess>> getProcesses() {
+    LinkedHashMap<String, List<IProcess>> output = new LinkedHashMap<>();
     for (String key : this.processes.keySet()) {
-      List<IStatusProcess> newProcesss = new ArrayList<>();
+      List<IProcess> newProcesss = new ArrayList<>();
       newProcesss.addAll(this.processes.get(key));
       output.put(key, newProcesss);
     }
@@ -184,7 +184,7 @@ public class Model implements IModel {
   @Override
   public int getLastTick() {
     int output = 0;
-    for (List<InterfaceRotateShape> processList : this.processes.values()) {
+    for (List<IProcess> processList : this.processes.values()) {
       output = Math.max(output, processList.get(processList.size() - 1).getEndTime());
     }
     return output;
@@ -198,7 +198,7 @@ public class Model implements IModel {
   @Override
   public String toString() {
     StringBuilder output = new StringBuilder();
-    for (Map.Entry<String, List<InterfaceRotateShape>> entry : this.processes.entrySet()) {
+    for (Map.Entry<String, List<IProcess>> entry : this.processes.entrySet()) {
       IShape shape = this.shapes.get(entry.getKey());
       output.append("Shape ").append(entry.getKey()).append(" ").append(shape.getShapeType())
           .append("\n");
@@ -242,7 +242,7 @@ public class Model implements IModel {
    */
   public static class AnimationModelBuilder implements InterfacePlayBack {
 
-    private LinkedHashMap<String, List<InterfaceRotateShape>> processes;
+    private LinkedHashMap<String, List<IProcess>> processes;
     private LinkedHashMap<String, IShape> shapesList;
     private int x = 0;
     private int y = 0;
@@ -363,7 +363,7 @@ public class Model implements IModel {
         int r1, int g1, int b1, int t2, int x2, int y2, int w2,
         int h2, int o2, int r2, int g2, int b2) {
       String type = this.getType(x1, y1, w1, h1, o1, r1, g1, b1, x2, y2, w2, h2, o2, r2, g2, b2);
-      InterfaceRotateShape process = new SuperGeneralProcess(type, t1, x1, y1, w1, h1, o1,
+      IProcess process = new SuperGeneralProcess(type, t1, x1, y1, w1, h1, o1,
           r1, g1, b1, t2, x2, y2, w2, h2, o2, r2, g2, b2);
       if (this.processes.containsKey(name)) {
         this.addIfValidProcess(name, this.processes.get(name), process,
@@ -407,7 +407,7 @@ public class Model implements IModel {
         int r2, int g2, int b2) {
 
       String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
-      InterfaceRotateShape process = new SuperGeneralProcess(type, t1, x1, y1, w1, h1,
+      IProcess process = new SuperGeneralProcess(type, t1, x1, y1, w1, h1,
           0, r1, g1, b1, t2, x2, y2, w2, h2, 0, r2, g2, b2);
       if (this.processes.containsKey(name)) {
         this.addIfValidProcess(name, this.processes.get(name), process,
@@ -494,8 +494,8 @@ public class Model implements IModel {
      * Helper method that adds a process into a list with a specific index when no overlap is
      * observed.
      */
-    private void addIfValidProcess(String id, List<InterfaceRotateShape> list,
-        InterfaceRotateShape process,
+    private void addIfValidProcess(String id, List<IProcess> list,
+        IProcess process,
         int addIndex) {
       int startTick = process.getStartTime();
       IShape shapeCopy1 = this.shapesList.get(id).getCopy();
@@ -540,7 +540,7 @@ public class Model implements IModel {
       int maxX = this.x;
       int maxY = this.y;
 
-      for (List<IStatusProcess> processList : this.getProcesses().values()) {
+      for (List<IProcess> processList : this.getProcesses().values()) {
         minX = Math.min(minX,
             processList.get(0).getStartX());
         minY = Math.min(minY,
@@ -613,10 +613,10 @@ public class Model implements IModel {
      * @return the map of the processes from the model.
      */
     @Override
-    public LinkedHashMap<String, List<IStatusProcess>> getProcesses() {
-      LinkedHashMap<String, List<IStatusProcess>> output = new LinkedHashMap<>();
+    public LinkedHashMap<String, List<IProcess>> getProcesses() {
+      LinkedHashMap<String, List<IProcess>> output = new LinkedHashMap<>();
       for (String key : this.processes.keySet()) {
-        List<IStatusProcess> newProcesss = new ArrayList<>();
+        List<IProcess> newProcesss = new ArrayList<>();
         newProcesss.addAll(this.processes.get(key));
         output.put(key, newProcesss);
       }
