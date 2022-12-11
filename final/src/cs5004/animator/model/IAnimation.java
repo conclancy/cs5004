@@ -3,110 +3,121 @@ package cs5004.animator.model;
 import java.awt.Color;
 
 /**
- * This class represents the interpreting methods for the process for a shape during an animation.
+ * Interface for Animations that can be paired with a {@link IShape}.
  */
 public interface IAnimation {
-  /**
-   * This method will retrieve the start time for the process of the object.
-   * @return the start time of the process.
-   */
-  int getStartTime();
 
   /**
-   * This method will retrieve the end time for the process of the object.
-   * @return returns the end time of the process.
+   * Get the starting tick of the Animation
+   *
+   * @return the starting tick of the Animation, as an int.
    */
-  int getEndTime();
+  int getStartTick();
 
   /**
-   * This method will retrieve the shape type of the object.
-   * @return the type of the shape.
+   * Get the last tick of an Animation
+   *
+   * @return the ending tick of the Animation, as an int.
+   */
+  int getEndTick();
+
+  /**
+   * Get the type of shape contained within the Animation.
+   *
+   * @return the type of the shape, as a String.
    */
   String getType();
 
   /**
-   * This method will retrieve the x coordinate type of the object.
-   * @return the starting x coordinate.
+   * Get the starting x coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting x coordinate, as an int.
    */
   int getStartX();
 
   /**
-   * This method will retrieve the y coordinate type of the object.
-   * @return the starting y coordinate.
+   * Get the starting y coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting y coordinate, as an int.
    */
   int getStartY();
 
   /**
-   * This method will retrieve width of the object.
-   * @return the starting width.
+   * Get the starting width of the {@link IShape} in the Animation.
+   *
+   * @return the starting width, as an int.
    */
   int getStartWidth();
 
   /**
-   * This method will retrieve height of the object.
-   * @return the starting height.
+   * Get the starting height of the {@link IShape} in the Animation.
+   *
+   * @return the starting width, as an int.
    */
   int getStartHeight();
 
   /**
-   * This method will retrieve starting color of the object.
-   * @return the starting color of the shape in this process.
+   * Get the starting {@link Color} of the {@link IShape} in the Animation.
+   *
+   * @return the starting color of the shape, as an {@link Color} object.
    */
   Color getStartColor();
 
   /**
-   * This method will retrieve end x coordinate of the object.
-   * @return the ending X coordinate.
+   * Get the starting x coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting x coordinate, as an int.
    */
   int getEndX();
 
   /**
-   * This method will retrieve end y coordinate of the object.
-   * @return the end y coordinate.
+   * Get the starting y coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting y coordinate, as an int.
    */
   int getEndY();
 
   /**
-   * This method will retrieve end width of the object.
-   * @return the ending width.
+   * Get the ending width of the {@link IShape} in the Animation.
+   *
+   * @return the ending width, as an int.
    */
   int getEndWidth();
 
   /**
-   * This method will retrieve end height of the object.
-   * @return the ending height.
+   * Get the ending height of the {@link IShape} in the Animation.
+   *
+   * @return the ending height, as an int.
    */
   int getEndHeight();
 
   /**
-   * This method will retrieve the end color of the object.
-   * @return the ending color
+   * Get the ending {@link Color} of the {@link IShape} in the Animation.
+   *
+   * @return the ending color of the shape, as an {@link Color} object.
    */
   Color getEndColor();
 
   /**
-   * This method will mutate a shape within a process to a state at the given time of the overall
-   * process.
+   * Get the state of the associated {@link IShape} at a given tick.
    *
-   * @param time  is the time to mutate the shape to the state.
+   * @param tick  is the tick to mutate the shape to the state.
    * @param shape the shape of the object before the process starts.
-   * @return IShape which is the mutated shape.
+   * @return the current version of the shape, as an {@link IShape} object
    */
-  IShape setState(int time, IShape shape);
+  IShape setState(int tick, IShape shape);
 
   /**
-   * This method will retrieve the rotationDegree of this process which the starting rotationDegree
-   * of the shape.
+   * Get the starting degree of rotation of the associated {@link IShape}.
    *
-   * @return int that represents the rotationDegree in degrees
+   * @return the degree of rotation of the {@link IShape}, as an int.
    */
   int getStartRotationDegree();
 
   /**
-   * This method will retrieve the rotationDegree of this process which the final rotationDegree of
-   * the shape.
+   * Get the ending degree of rotation of the associated {@link IShape}.
    *
-   * @return int that represents the rotationDegree in degrees
+   * @return the ending of rotation of the {@link IShape}, as an int.
    */
   int getEndRotationDegree();
 }
