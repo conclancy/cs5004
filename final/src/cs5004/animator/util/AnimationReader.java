@@ -4,8 +4,7 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import cs5004.animator.model.InterfaceAniModel;
-import cs5004.animator.util.AnimationBuilder;
+import cs5004.animator.model.IModel;
 
 /**
  * A helper to read animation data and construct an animation from it.
@@ -34,7 +33,7 @@ public class AnimationReader {
    * @param playbackBuilder  A playbackBuilder for helping to construct a new animation
    * @return
    */
-  public static InterfaceAniModel parseFile(Readable readable, AnimationBuilder playbackBuilder) {
+  public static IModel parseFile(Readable readable, AnimationBuilder playbackBuilder) {
     Objects.requireNonNull(readable, "Must have non-null readable source");
     Objects.requireNonNull(playbackBuilder, "Must provide a non-null AnimationBuilder");
     Scanner s = new Scanner(readable);

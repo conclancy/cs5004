@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * This interface represent the model for the actual animation.
  */
-public interface InterfaceAniModel {
+public interface IModel {
 
   /**
    * This method creates a list of the shapes at the state of the animation at the given timestamp.

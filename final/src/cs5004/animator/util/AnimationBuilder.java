@@ -1,6 +1,6 @@
 package cs5004.animator.util;
 
-import cs5004.animator.model.InterfaceAniModel;
+import cs5004.animator.model.IModel;
 
 /**
  * Represents the interface for playbackBuilder that creates an animation with the specified fields.
@@ -10,7 +10,7 @@ public interface AnimationBuilder {
    * Constructs a final document.
    * @return the newly constructed document
    */
-  InterfaceAniModel build();
+  IModel build();
 
 
   /**

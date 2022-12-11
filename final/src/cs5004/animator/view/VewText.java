@@ -5,7 +5,7 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
-import cs5004.animator.model.InterfaceAniModel;
+import cs5004.animator.model.IModel;
 import cs5004.animator.model.InterfaceInterpretStatusProcess;
 
 /**
@@ -13,14 +13,14 @@ import cs5004.animator.model.InterfaceInterpretStatusProcess;
  */
 public class VewText implements IVewText {
   private Appendable outputTemp;
-  private InterfaceAniModel model;
+  private IModel model;
 
   /**
    * A constructor that constructs a VewText by creating a long string.
    *
    * @param model is the model for which the VewText will create a constructor for
    */
-  public VewText(InterfaceAniModel model) {
+  public VewText(IModel model) {
     this.model = model;
     outputTemp = new StringWriter();
   }

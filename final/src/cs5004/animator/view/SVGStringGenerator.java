@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import cs5004.animator.model.InterfaceAniModel;
+import cs5004.animator.model.IModel;
 import cs5004.animator.model.InterfaceInterpretProcess;
 import cs5004.animator.model.InterfaceInterpretStatusProcess;
 
@@ -18,7 +18,7 @@ public class SVGStringGenerator implements IVewText {
   private final int x;
   private final int y;
   Appendable output;
-  InterfaceAniModel model;
+  IModel model;
 
   // TODO: this functionality should exist within the model, not the View.
 
@@ -28,7 +28,7 @@ public class SVGStringGenerator implements IVewText {
    * @param model model used for the animation.
    * @param speed is the ticks per second  of the animation.
    */
-  public SVGStringGenerator(InterfaceAniModel model, int speed) {
+  public SVGStringGenerator(IModel model, int speed) {
     if (speed < 1) {
       throw new IllegalArgumentException("Cannot pass a negative ticks per second");
     }

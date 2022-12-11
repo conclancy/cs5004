@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cs5004.animator.model.InterfaceAniModel;
+import cs5004.animator.model.IModel;
 import cs5004.animator.model.InterfacePlayBack;
 import cs5004.animator.model.InterfaceInterpretStatusProcess;
 import cs5004.animator.model.IShape;
@@ -69,7 +69,7 @@ public class Controller implements InterfaceController, ActionListener,
    * A void method that will start the view and creates the animation with the given input.
    */
   public void play() {
-    InterfaceAniModel model = this.playbackBuilder.build();
+    IModel model = this.playbackBuilder.build();
     if (this.animationPaused && this.currentTickNum
             < model.getLastTick()) {
       this.firstTickNum = this.getFirstTick();
@@ -518,10 +518,10 @@ public class Controller implements InterfaceController, ActionListener,
    */
   private class DrawFrameTask extends TimerTask {
     private final int lastTickNum;
-    private final InterfaceAniModel model;
+    private final IModel model;
 
     // takes a final tick at which to stop the animation.
-    private DrawFrameTask(InterfaceAniModel model) {
+    private DrawFrameTask(IModel model) {
       super();
       this.lastTickNum = model.getLastTick();
       this.model = model;

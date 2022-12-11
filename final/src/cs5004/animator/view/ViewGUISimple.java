@@ -10,7 +10,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import cs5004.animator.model.InterfaceAniModel;
+import cs5004.animator.model.IModel;
 import cs5004.animator.model.InterfaceInterpretProcess;
 import cs5004.animator.model.InterfaceInterpretStatusProcess;
 
@@ -18,7 +18,7 @@ import cs5004.animator.model.InterfaceInterpretStatusProcess;
  * This class represents a visual view that displays the animation.
  */
 public class ViewGUISimple extends JFrame implements IView {
-  private final InterfaceAniModel model;
+  private final IModel model;
   private final Timer timer;
   private final PaintPanel panel;
   private final int tempo;
@@ -29,7 +29,7 @@ public class ViewGUISimple extends JFrame implements IView {
    * @param model the incoming model used.
    * @param ticksPS is the tickRate.
    */
-  public ViewGUISimple(InterfaceAniModel model, int ticksPS) {
+  public ViewGUISimple(IModel model, int ticksPS) {
     super();
 
     if (model == null) {

@@ -15,7 +15,7 @@ import cs5004.animator.util.AnimationBuilder;
  * This class represents the animation model of a process an animation using a list of the shapes
  * and a list of the processes.
  */
-public class AnimationModel implements InterfaceAniModel {
+public class Model implements IModel {
 
   private final LinkedHashMap<String, List<InterfaceRotateShape>> processes;
   private final LinkedHashMap<String, IShape> shapes;
@@ -35,7 +35,7 @@ public class AnimationModel implements InterfaceAniModel {
    *                  processes that the shape will have.
    * @param shapes    which is also a linked hashmap that contains the IDs and shapes.
    */
-  private AnimationModel(LinkedHashMap<String, List<InterfaceRotateShape>> processes,
+  private Model(LinkedHashMap<String, List<InterfaceRotateShape>> processes,
       LinkedHashMap<String, IShape> shapes,
       int x, int y, int width, int height) {
     this.processes = processes;
@@ -261,7 +261,7 @@ public class AnimationModel implements InterfaceAniModel {
     /**
      * A method that constructs a new model given the processes and shapes in the PlaybackBuilder.
      */
-    public InterfaceAniModel build() {
+    public IModel build() {
 
       for (String key : this.shapesList.keySet()) {
         if (!this.processes.containsKey(key)) {
@@ -273,7 +273,7 @@ public class AnimationModel implements InterfaceAniModel {
           throw new IllegalStateException("A process must have at least one shape");
         }
       }
-      return new AnimationModel(this.processes,
+      return new Model(this.processes,
           this.shapesList,
           this.x,
           this.y,
