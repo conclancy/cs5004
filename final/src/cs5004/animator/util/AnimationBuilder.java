@@ -144,7 +144,7 @@ public class AnimationBuilder implements IAnimationBuilder {
         r1, g1, b1, t2, x2, y2, w2, h2, o2, r2, g2, b2);
     if (this.processes.containsKey(name)) {
       this.addIfValidProcess(name, this.processes.get(name), process,
-          this.indexOfProcess(this.processes.get(name), process.getStartTime()) + 1);
+          this.indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);
     } else {
       this.processes.put(name, new ArrayList<>(Collections.singletonList(process)));
     }
@@ -188,7 +188,7 @@ public class AnimationBuilder implements IAnimationBuilder {
         0, r1, g1, b1, t2, x2, y2, w2, h2, 0, r2, g2, b2);
     if (this.processes.containsKey(name)) {
       this.addIfValidProcess(name, this.processes.get(name), process,
-          this.indexOfProcess(this.processes.get(name), process.getStartTime()) + 1);
+          this.indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);
     } else {
       this.processes.put(name, new ArrayList<>(Collections.singletonList(process)));
     }
@@ -274,7 +274,7 @@ public class AnimationBuilder implements IAnimationBuilder {
   private void addIfValidProcess(String id, List<IAnimation> list,
       IAnimation process,
       int addIndex) {
-    int startTick = process.getStartTime();
+    int startTick = process.getStartTick();
     IShape shapeCopy1 = this.shapesList.get(id).getCopy();
     IShape shapeCopy2 = this.shapesList.get(id).getCopy();
 
@@ -285,10 +285,10 @@ public class AnimationBuilder implements IAnimationBuilder {
 
     IAnimation previousProcess = list.get(addIndex - 1);
 
-    previousProcess.setState(previousProcess.getEndTime(), shapeCopy1);
+    previousProcess.setState(previousProcess.getEndTick(), shapeCopy1);
     process.setState(startTick, shapeCopy2);
 
-    if (previousProcess.getEndTime() != startTick) {
+    if (previousProcess.getEndTick() != startTick) {
       throw new IllegalArgumentException("The start and end times of a process must overlap!");
     } else if (this.shapesAreEqual(shapeCopy1, shapeCopy2)) {
       list.add(addIndex, process);
@@ -346,12 +346,12 @@ public class AnimationBuilder implements IAnimationBuilder {
       throw new IllegalArgumentException("The given ID does not have any processes");
     }
     for (int i = 0; i < processes.get(id).size(); i++) {
-      if (time == processes.get(id).get(i).getStartTime()) {
+      if (time == processes.get(id).get(i).getStartTick()) {
         processes.get(id).remove(i);
         return;
       }
     }
-    if (time == processes.get(id).get(processes.get(id).size() - 1).getEndTime()) {
+    if (time == processes.get(id).get(processes.get(id).size() - 1).getEndTick()) {
       processes.get(id).remove(processes.get(id).size() - 1);
       return;
     }
@@ -423,7 +423,7 @@ public class AnimationBuilder implements IAnimationBuilder {
 
     while (indexMin < indexMax) {
       int indexMiddle = (indexMin + indexMax) / 2;
-      int middleTime = list.get(indexMiddle).getStartTime();
+      int middleTime = list.get(indexMiddle).getStartTick();
 
       if (startingTime == middleTime) {
         return indexMiddle;
@@ -434,7 +434,7 @@ public class AnimationBuilder implements IAnimationBuilder {
       }
     }
 
-    if (startingTime < list.get(indexMin).getStartTime()) {
+    if (startingTime < list.get(indexMin).getStartTick()) {
       return indexMin - 1;
     } else {
       return indexMin;

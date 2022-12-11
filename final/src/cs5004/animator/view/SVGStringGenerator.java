@@ -95,8 +95,8 @@ public class SVGStringGenerator implements IVewText {
 
     for (IAnimation process : list) {
       startingStringValue = "    <animate attributeType=\"xml\" begin=\""
-          + process.getStartTime() * speed + "ms\" dur=\""
-          + (process.getEndTime() - process.getStartTime()) * speed + "ms\" "
+          + process.getStartTick() * speed + "ms\" dur=\""
+          + (process.getEndTick() - process.getStartTick()) * speed + "ms\" "
           + "attributeName=\"";
 
       if (process.getStartRotationDegree() != process.getEndRotationDegree()) {
@@ -108,7 +108,7 @@ public class SVGStringGenerator implements IVewText {
               .append("\" to=\"").append(process.getEndRotationDegree()).append(" ")
               .append(process.getStartX() + process.getStartWidth() / 2 - this.x).append(" ")
               .append(process.getStartY() + process.getStartHeight() / 2 - this.y)
-              .append("\" dur=\"").append((process.getEndTime() - process.getStartTime()) * speed)
+              .append("\" dur=\"").append((process.getEndTick() - process.getStartTick()) * speed)
               .append("ms\" ").append("repeatCount=\"0\"/>\n");
         } else if (type.equals("ellipse")) {
           output.append("<animateTransform attributeName=\"transform\" attributeType=\"xml\""
@@ -118,7 +118,7 @@ public class SVGStringGenerator implements IVewText {
               .append("\" to=\"").append(process.getEndRotationDegree()).append(" ")
               .append(process.getStartX() - this.x + process.getStartWidth() / 2).append(" ")
               .append(process.getStartY() - this.y + process.getStartHeight() / 2)
-              .append("\" dur=\"").append((process.getEndTime() - process.getStartTime()) * speed)
+              .append("\" dur=\"").append((process.getEndTick() - process.getStartTick()) * speed)
               .append("ms\" repeatCount=\"0\"/>\n");
         }
         continue;

@@ -85,8 +85,8 @@ public class ProcessTest {
     IAnimation move2 = new Animation("Motion", 12, 10, 10,
             10, 30, 0, 255, 0, 17, 20, 10, 10, 30,
             0, 255, 0);
-    assertEquals(move1.getStartTime(), 1);
-    assertEquals(move2.getStartTime(), 12);
+    assertEquals(move1.getStartTick(), 1);
+    assertEquals(move2.getStartTick(), 12);
   }
 
   /**
@@ -100,8 +100,8 @@ public class ProcessTest {
     IAnimation move2 = new Animation("Motion", 5, 10, 10, 10,
             30, 0, 255, 0, 15, 20, 10, 10, 30,
             0, 255, 0);
-    assertEquals(move1.getEndTime(), 2);
-    assertEquals(move2.getEndTime(), 15);
+    assertEquals(move1.getEndTick(), 2);
+    assertEquals(move2.getEndTick(), 15);
   }
 
   /**

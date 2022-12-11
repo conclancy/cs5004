@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
 /**
- * Interface for shape objects that can be used in the Easy Animation program.  EShapeTypes have a type,
- * {@link Point2D}, width, height, degree of rotation, and {@link Color}.
+ * Interface for shape objects that can be used in the Easy Animation program.  EShapeTypes have a
+ * type, {@link Point2D}, width, height, degree of rotation, and {@link Color}.
  */
 public interface IShape {
 

@@ -59,7 +59,7 @@ public class Model implements IModel {
 
     while (indexMin < indexMax) {
       int indexMiddle = (indexMin + indexMax) / 2;
-      int middleTime = list.get(indexMiddle).getStartTime();
+      int middleTime = list.get(indexMiddle).getStartTick();
 
       if (startingTime == middleTime) {
         return indexMiddle;
@@ -70,7 +70,7 @@ public class Model implements IModel {
       }
     }
 
-    if (startingTime < list.get(indexMin).getStartTime()) {
+    if (startingTime < list.get(indexMin).getStartTick()) {
       return indexMin - 1;
     } else {
       return indexMin;
@@ -97,7 +97,7 @@ public class Model implements IModel {
       if (index == -1) {
         continue;
       }
-      if (timeOfInterest <= this.processes.get(id).get(index).getEndTime()) {
+      if (timeOfInterest <= this.processes.get(id).get(index).getEndTick()) {
         this.processes.get(id).get(index).setState(timeOfInterest, currShapes);
       } else {
         continue;
@@ -181,7 +181,7 @@ public class Model implements IModel {
   public int getLastTick() {
     int output = 0;
     for (List<IAnimation> processList : this.processes.values()) {
-      output = Math.max(output, processList.get(processList.size() - 1).getEndTime());
+      output = Math.max(output, processList.get(processList.size() - 1).getEndTick());
     }
     return output;
   }
@@ -200,13 +200,13 @@ public class Model implements IModel {
           .append("\n");
       for (IAnimation process : entry.getValue()) {
         StringBuilder temp = new StringBuilder(process.getType()).append(" ")
-            .append(entry.getKey()).append(" ").append(process.getStartTime()).append(" ");
+            .append(entry.getKey()).append(" ").append(process.getStartTick()).append(" ");
 
-        process.setState(process.getStartTime(), shape);
+        process.setState(process.getStartTick(), shape);
         temp.append(this.getShapeInfo(shape)).append("    ");
 
-        process.setState(process.getEndTime(), shape);
-        temp.append(process.getEndTime()).append(" ").append(this.getShapeInfo(shape)).append("\n");
+        process.setState(process.getEndTick(), shape);
+        temp.append(process.getEndTick()).append(" ").append(this.getShapeInfo(shape)).append("\n");
         output.append(temp);
       }
       output.append("\n");

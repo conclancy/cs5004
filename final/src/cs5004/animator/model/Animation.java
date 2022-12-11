@@ -4,12 +4,13 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 
 /**
- * Represents a process on a Shape, with each of the starting values and ending values of the fields
- * of the shape.
+ * Represents a {@link IShape} objects animation by holding the starting and ending values of the
+ * shapes fields during a specific interval of the animation.
  */
 public class Animation implements IAnimation {
-  protected final int startingTime;
-  protected final int endTime;
+
+  protected final int startTick;
+  protected final int endTick;
   private final String shapeType;
   private final int startingX;
   private final int startingY;
@@ -27,61 +28,47 @@ public class Animation implements IAnimation {
   /**
    * Constructor for master process that initializes each of the fields of the process.
    *
-   * @param shapeType represents what type of process this is.
-   * @param t1        represents starting time of the process.
-   * @param x1        represents the starting x coordinate of the shape in the process.
-   * @param y1        represents the starting y coordinate of the shape in this process.
-   * @param w1        represents the starting width of the shape in this process.
-   * @param h1        represents the starting height of the shape in this process.
-   * @param r1        represents the starting value for red of the shape.
-   * @param g1        represents the starting value for green of the shape.
-   * @param b1        represents the starting value for blue of the shape.
-   * @param t2        represents the ending time of the process.
-   * @param x2        represents the ending x coordinate of the shape in this process.
-   * @param y2        represents the ending y coordinate of the shape in this process.
-   * @param w2        represents the ending width of the shape in this process.
-   * @param h2        represents the ending height of the shape.
-   * @param r2        represents the ending red value for the shape.
-   * @param g2        represents the ending green value for the shape.
-   * @param b2        represents the ending blue value for the shape.
+   * @param shapeType      represents what type of process this is.
+   * @param startingTick   represents starting time of the process.
+   * @param startingX      represents the starting x coordinate of the shape in the process.
+   * @param startingY      represents the starting y coordinate of the shape in this process.
+   * @param startingWidth  represents the starting width of the shape in this process.
+   * @param startingHeight represents the starting height of the shape in this process.
+   * @param startingRed    represents the starting value for red of the shape.
+   * @param startingGreen  represents the starting value for green of the shape.
+   * @param startingBlue   represents the starting value for blue of the shape.
+   * @param endingTick     represents the ending time of the process.
+   * @param endingX        represents the ending x coordinate of the shape in this process.
+   * @param endingY        represents the ending y coordinate of the shape in this process.
+   * @param endingWidth    represents the ending width of the shape in this process.
+   * @param endingHeight   represents the ending height of the shape.
+   * @param endingRed      represents the ending red value for the shape.
+   * @param endingGreen    represents the ending green value for the shape.
+   * @param endingBlue     represents the ending blue value for the shape.
    * @throws IllegalArgumentException when the start time or end time is negative, if the width or
    *                                  height is negative at any point, or if the start time is after
    *                                  the end time.
    */
-  public Animation(String shapeType, int t1, int x1, int y1, int w1, int h1, int r1, int g1,
-                        int b1,
-                        int t2, int x2, int y2, int w2, int h2, int r2, int g2, int b2)
-          throws IllegalArgumentException {
-    if (t1 > t2 || t1 < 0) {
-      throw new IllegalArgumentException("-------- Invalid start or end time. Check settings.");
-    }
-
-    if (w1 < 0 || w2 < 0) {
-      throw new IllegalArgumentException("-------- Width cannot be a negative number.");
-    }
-
-    if (h1 < 0 || h2 < 0) {
-      throw new IllegalArgumentException("-------- Height cannot be negative number.");
-    }
-
-    if (r1 < 0 || r2 < 0 || g1 < 0 || g2 < 0 || b1 < 0 || b2 < 0
-            || r1 > 255 || r2 > 255 || g1 > 255 || g2 > 255 || b1 > 255 || b2 > 255) {
-      throw new IllegalArgumentException("-------- RGB values must be between 0 and 255");
-    }
+  public Animation(String shapeType, int startingTick, int startingX, int startingY,
+      int startingWidth, int startingHeight, int startingRed, int startingGreen,
+      int startingBlue, int endingTick, int endingX, int endingY, int endingWidth, int endingHeight,
+      int endingRed, int endingGreen, int endingBlue)
+      throws IllegalArgumentException {
 
     this.shapeType = shapeType;
-    this.startingTime = t1;
-    this.startingX = x1;
-    this.startingY = y1;
-    this.startingWidth = w1;
-    this.startingHeight = h1;
-    this.startColor = new Color(r1, g1, b1);
-    this.endTime = t2;
-    this.endX = x2;
-    this.endY = y2;
-    this.endWidth = w2;
-    this.endHeight = h2;
-    this.endColor = new Color(r2, g2, b2);
+    this.startTick = this.checkPositiveInt(startingTick, "Starting Tick");
+    this.startingX = this.checkPositiveInt(startingX, "Starting X");
+    this.startingY = this.checkPositiveInt(startingY, "Starting Y");
+    this.startingWidth = this.checkPositiveInt(startingWidth, "Starting Width");
+    this.startingHeight = this.checkPositiveInt(startingHeight, "Starting Height");
+    this.startColor = new Color(startingRed, startingGreen, startingBlue);
+
+    this.endTick = this.checkPositiveInt(endingTick, "Ending Tick");
+    this.endX = this.checkPositiveInt(endingX, "Ending X");
+    this.endY = this.checkPositiveInt(endingY, "Ending Y");
+    this.endWidth = this.checkPositiveInt(endingWidth, "Ending Width");
+    this.endHeight = this.checkPositiveInt(endingHeight, "Ending Height");
+    this.endColor = new Color(endingRed, endingGreen, endingBlue);
     this.startOrientation = 0;
     this.endOrientation = 0;
 
@@ -90,99 +77,137 @@ public class Animation implements IAnimation {
   /**
    * Constructor for super master process that initializes each of the fields of the process.
    *
-   * @param type is what type of process.
-   * @param t1   is starting time of the process.
-   * @param x1   is the starting x coordinate of the shape.
-   * @param y1   is the starting y coordinate of the shape.
-   * @param w1   is the starting width of the shape.
-   * @param h1   is the starting height of the shape.
-   * @param o1   is the starting rotationDegree of the shape.
-   * @param r1   is the starting value for red of the shape.
-   * @param g1   is the starting value for green of the shape.
-   * @param b1   is the starting value for blue of the shape.
-   * @param t2   is the ending time of the process.
-   * @param x2   is the ending x coordinate of the shape.
-   * @param y2   is the ending y coordinate of the shape.
-   * @param w2   is the ending width of the shape.
-   * @param h2   is the ending height of the shape.
-   * @param o2   is the ending rotationDegree of the shape.
-   * @param r2   is the ending red value for the shape.
-   * @param g2   is the ending green value for the shape.
-   * @param b2   is the ending blue value for the shape.
+   * @param shapeType      is what type of process.
+   * @param startingTick   is starting time of the process.
+   * @param startingX      is the starting x coordinate of the shape.
+   * @param startingY      is the starting y coordinate of the shape.
+   * @param startingWidth  is the starting width of the shape.
+   * @param startingHeight is the starting height of the shape.
+   * @param startingDegree is the starting rotationDegree of the shape.
+   * @param startingRed    is the starting value for red of the shape.
+   * @param startingGreen  is the starting value for green of the shape.
+   * @param startingBlue   is the starting value for blue of the shape.
+   * @param endingTick     is the ending time of the process.
+   * @param endingX        is the ending x coordinate of the shape.
+   * @param endingY        is the ending y coordinate of the shape.
+   * @param endingWidth    is the ending width of the shape.
+   * @param endingHeight   is the ending height of the shape.
+   * @param endingDegree   is the ending rotationDegree of the shape.
+   * @param endingRed      is the ending red value for the shape.
+   * @param endingGreen    is the ending green value for the shape.
+   * @param endingBlue     is the ending blue value for the shape.
    * @throws IllegalArgumentException will be thrown if the start time and or the end time is
    *                                  negative, or if the width and or the height are negative. the
    *                                  end time.
    */
-  public Animation(String type, int t1, int x1, int y1, int w1, int h1, int o1, int r1,
-      int g1, int b1, int t2, int x2, int y2, int w2, int h2, int o2, int r2,
-      int g2, int b2) throws IllegalArgumentException {
+  public Animation(String shapeType, int startingTick, int startingX, int startingY,
+      int startingWidth, int startingHeight, int startingDegree, int startingRed,
+      int startingGreen, int startingBlue, int endingTick, int endingX, int endingY,
+      int endingWidth, int endingHeight, int endingDegree, int endingRed,
+      int endingGreen, int endingBlue) throws IllegalArgumentException {
 
-    this.shapeType = type;
-    this.startingTime = t1;
-    this.startingX = x1;
-    this.startingY = y1;
-    this.startingWidth = w1;
-    this.startingHeight = h1;
-    this.startColor = new Color(r1, g1, b1);
-    this.endTime = t2;
-    this.endX = x2;
-    this.endY = y2;
-    this.endWidth = w2;
-    this.endHeight = h2;
-    this.endColor = new Color(r2, g2, b2);
+    this.shapeType = shapeType;
+    this.startTick = this.checkPositiveInt(startingTick, "Starting Tick");
+    this.startingX = this.checkPositiveInt(startingX, "Starting X");
+    this.startingY = this.checkPositiveInt(startingY, "Starting Y");
+    this.startingWidth = this.checkPositiveInt(startingWidth, "Starting Width");
+    this.startingHeight = this.checkPositiveInt(startingHeight, "Starting Height");
+    this.startColor = new Color(startingRed, startingGreen, startingBlue);
+    this.startOrientation = startingDegree;
 
-    this.startOrientation = o1;
-    this.endOrientation = o2;
+    this.endTick = this.checkPositiveInt(endingTick, "Ending Tick");
+    this.endX = this.checkPositiveInt(endingX, "Ending X");
+    this.endY = this.checkPositiveInt(endingY, "Ending Y");
+    this.endWidth = this.checkPositiveInt(endingWidth, "Ending Width");
+    this.endHeight = this.checkPositiveInt(endingHeight, "Ending Height");
+    this.endColor = new Color(endingRed, endingGreen, endingBlue);
+    this.endOrientation = endingDegree;
+
   }
 
+  /**
+   * Get the type of shape contained within the Animation.
+   *
+   * @return the type of the shape, as a String.
+   */
   @Override
   public String getType() {
     return this.shapeType;
   }
 
+  /**
+   * Get the starting tick of the Animation
+   *
+   * @return the starting tick of the Animation, as an int.
+   */
   @Override
-  public int getStartTime() {
-    return this.startingTime;
+  public int getStartTick() {
+    return this.startTick;
   }
 
+  /**
+   * Get the starting x coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting x coordinate, as an int.
+   */
   @Override
   public int getStartX() {
     return startingX;
   }
 
+  /**
+   * Get the starting y coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting y coordinate, as an int.
+   */
   @Override
   public int getStartY() {
     return startingY;
   }
 
+  /**
+   * Get the starting width of the {@link IShape} in the Animation.
+   *
+   * @return the starting width, as an int.
+   */
   @Override
   public int getStartWidth() {
     return startingWidth;
   }
 
+  /**
+   * Get the starting height of the {@link IShape} in the Animation.
+   *
+   * @return the starting width, as an int.
+   */
   @Override
   public int getStartHeight() {
     return startingHeight;
   }
 
+  /**
+   * Get the starting {@link Color} of the {@link IShape} in the Animation.
+   *
+   * @return the starting color of the shape, as an {@link Color} object.
+   */
   @Override
   public Color getStartColor() {
     return startColor;
   }
 
-
   /**
-   * Sets the state of an object at a given time.
+   * Get the state of the associated {@link IShape} at a given tick.
    *
-   * @param time  The time that state is to be set.
-   * @param shape the starting shape of the set.
-   * @return a new interfaceShape for the shape.
+   * @param tick  is the tick to mutate the shape to the state.
+   * @param shape the shape of the object before the process starts.
+   * @return the current version of the shape, as an {@link IShape} object
+   * @throws IllegalArgumentException if the tick value is larger than the ending tick value.
    */
   @Override
-  public IShape setState(int time, IShape shape) {
-    if (time < this.startingTime || time > this.endTime) {
+  public IShape setState(int tick, IShape shape) throws IllegalArgumentException {
+    if (tick < this.startTick || tick > this.endTick) {
       throw new IllegalArgumentException("Please check the time input value.");
-    } else if (this.startingTime == this.endTime) {
+    } else if (this.startTick == this.endTick) {
       shape.setReference(new Point2D.Double(this.endX, this.endY));
       shape.setWidth(this.endWidth);
       shape.setHeight(this.endHeight);
@@ -190,26 +215,25 @@ public class Animation implements IAnimation {
       return shape;
     }
 
-    int newX = this.findPointAt(time, this.startingX, this.endX);
-    int newY = this.findPointAt(time, this.startingY, this.endY);
+    int newX = this.findPointAt(tick, this.startingX, this.endX);
+    int newY = this.findPointAt(tick, this.startingY, this.endY);
     shape.setReference(new Point2D.Double(newX, newY));
 
-    shape.setWidth(this.findPointAt(time, this.startingWidth, this.endWidth));
-    shape.setHeight(this.findPointAt(time, this.startingHeight, this.endHeight));
+    shape.setWidth(this.findPointAt(tick, this.startingWidth, this.endWidth));
+    shape.setHeight(this.findPointAt(tick, this.startingHeight, this.endHeight));
 
-    int newerRed = this.findPointAt(time, this.startColor.getRed(), this.endColor.getRed());
-    int newerGreen = this.findPointAt(time, this.startColor.getGreen(), this.endColor.getGreen());
-    int newerBlue = this.findPointAt(time, this.startColor.getBlue(), this.endColor.getBlue());
+    int newerRed = this.findPointAt(tick, this.startColor.getRed(), this.endColor.getRed());
+    int newerGreen = this.findPointAt(tick, this.startColor.getGreen(), this.endColor.getGreen());
+    int newerBlue = this.findPointAt(tick, this.startColor.getBlue(), this.endColor.getBlue());
     shape.setColor(new Color(newerRed, newerGreen, newerBlue));
 
     return shape;
   }
 
   /**
-   * This method will retrieve the rotationDegree of this process which the starting rotationDegree
-   * of the shape.
+   * Get the starting degree of rotation of the associated {@link IShape}.
    *
-   * @return int that represents the rotationDegree in degrees
+   * @return the degree of rotation of the {@link IShape}, as an int.
    */
   @Override
   public int getStartRotationDegree() {
@@ -217,64 +241,104 @@ public class Animation implements IAnimation {
   }
 
   /**
-   * This method will retrieve the rotationDegree of this process which the final rotationDegree of
-   * the shape.
+   * Get the ending degree of rotation of the associated {@link IShape}.
    *
-   * @return int that represents the rotationDegree in degrees
+   * @return the ending of rotation of the {@link IShape}, as an int.
    */
   @Override
   public int getEndRotationDegree() {
     return 0;
   }
 
+  /**
+   * Get the last tick of an Animation
+   *
+   * @return the ending tick of the Animation, as an int.
+   */
   @Override
-  public int getEndTime() {
-    return this.endTime;
+  public int getEndTick() {
+    return this.endTick;
   }
 
+  /**
+   * Get the starting x coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting x coordinate, as an int.
+   */
   @Override
   public int getEndX() {
     return endX;
   }
 
+  /**
+   * Get the starting y coordinate of the {@link IShape} in the Animation.
+   *
+   * @return the starting y coordinate, as an int.
+   */
   @Override
   public int getEndY() {
     return endY;
   }
 
+  /**
+   * Get the ending width of the {@link IShape} in the Animation.
+   *
+   * @return the ending width, as an int.
+   */
   @Override
   public int getEndWidth() {
     return endWidth;
   }
 
+  /**
+   * Get the ending height of the {@link IShape} in the Animation.
+   *
+   * @return the ending height, as an int.
+   */
   @Override
   public int getEndHeight() {
     return endHeight;
   }
 
+  /**
+   * Get the ending {@link Color} of the {@link IShape} in the Animation.
+   *
+   * @return the ending color of the shape, as an {@link Color} object.
+   */
   @Override
   public Color getEndColor() {
     return endColor;
   }
 
-
   /**
-   * helper method that calculates the middle coordinate position.
+   * Calculates the middle coordinate position.
    *
-   * @return int of the coordinate result.
+   * @return the middle coordinate value, as an int.
    */
-  protected int findPointAt(int time, int startValue, int endValue) {
-    if (this.startingTime == this.endTime) {
+  private int findPointAt(int time, int startValue, int endValue) {
+    if (this.startTick == this.endTick) {
       return endValue;
     } else {
-      return ((endValue - startValue) * (time - this.startingTime))
-              / (this.endTime - this.startingTime) + startValue;
+      return ((endValue - startValue) * (time - this.startTick))
+          / (this.endTick - this.startTick) + startValue;
     }
   }
 
-  public IShape setDegreeState(int time, IShape shape) {
-    shape.setDegrees(this.findPointAt(time, this.startOrientation, this.endOrientation));
-    return this.setState(time, shape);
+  /**
+   * Checks to ensure that an input value is greater than or equal to 0.
+   *
+   * @param i         the integer to be checked.
+   * @param fieldName the checking field name, only used if an error is thrown.
+   * @return the valid passed integer, as an int.
+   * @throws IllegalArgumentException if the value passed is less than 0.
+   */
+  private int checkPositiveInt(int i, String fieldName) throws IllegalArgumentException {
+
+    if (i >= 0) {
+      return i;
+    } else {
+      throw new IllegalArgumentException(fieldName + " requires a positive input value.");
+    }
   }
 
 }

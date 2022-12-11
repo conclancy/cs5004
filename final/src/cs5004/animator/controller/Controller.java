@@ -117,7 +117,7 @@ public class Controller implements InterfaceController, ActionListener,
           playbackView.displayError("This keyframe already exists.");
           return;
         }
-        if (event.getTick() < processes.get(0).getStartTime()) {
+        if (event.getTick() < processes.get(0).getStartTick()) {
           try {
             playbackBuilder.addMotion(
                     event.getShapeName(),
@@ -130,7 +130,7 @@ public class Controller implements InterfaceController, ActionListener,
                     event.getColor().getRed(),
                     event.getColor().getGreen(),
                     event.getColor().getBlue(),
-                    processes.get(0).getStartTime(),
+                    processes.get(0).getStartTick(),
                     processes.get(0).getStartX(),
                     processes.get(0).getStartY(),
                     processes.get(0).getStartWidth(),
@@ -149,10 +149,10 @@ public class Controller implements InterfaceController, ActionListener,
           }
           return;
         }
-        else if (event.getTick() > processes.get(processes.size() - 1).getEndTime()) {
+        else if (event.getTick() > processes.get(processes.size() - 1).getEndTick()) {
           IAnimation temp = processes.get(processes.size() - 1);
           try {
-            playbackBuilder.addMotion(event.getShapeName(), temp.getEndTime(),
+            playbackBuilder.addMotion(event.getShapeName(), temp.getEndTick(),
                     temp.getEndX(), temp.getEndY(), temp.getEndWidth(),
                     temp.getEndHeight(), temp.getEndRotationDegree(), temp.getEndColor().getRed(),
                     temp.getEndColor().getGreen(), temp.getEndColor().getBlue(),
@@ -160,8 +160,8 @@ public class Controller implements InterfaceController, ActionListener,
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue());
-            if (temp.getStartTime() == temp.getEndTime()) {
-              this.playbackBuilder.removeProcess(event.getShapeName(), temp.getStartTime());
+            if (temp.getStartTick() == temp.getEndTick()) {
+              this.playbackBuilder.removeProcess(event.getShapeName(), temp.getStartTick());
             }
             playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
             lastTickNum = playbackBuilder.build().getLastTick();
@@ -173,16 +173,16 @@ public class Controller implements InterfaceController, ActionListener,
         }
         else {
           for (IAnimation process : processes) {
-            if (event.getTick() == process.getStartTime()
-                    || event.getTick() == process.getEndTime()) {
+            if (event.getTick() == process.getStartTick()
+                    || event.getTick() == process.getEndTick()) {
               this.playbackView.displayError("There is already a keyframe at this tick.");
               return;
             }
-            if ( event.getTick() > process.getStartTime()
-                    && event.getTick() < process.getEndTime()) {
+            if ( event.getTick() > process.getStartTick()
+                    && event.getTick() < process.getEndTick()) {
               try {
-                playbackBuilder.removeProcess(event.getShapeName(), process.getStartTime());
-                playbackBuilder.addMotion(event.getShapeName(), process.getStartTime(),
+                playbackBuilder.removeProcess(event.getShapeName(), process.getStartTick());
+                playbackBuilder.addMotion(event.getShapeName(), process.getStartTick(),
                         process.getStartX(), process.getStartY(), process.getStartWidth(),
                         process.getStartHeight(), process.getStartRotationDegree(),
                         process.getStartColor().getRed(), process.getStartColor().getGreen(),
@@ -195,7 +195,7 @@ public class Controller implements InterfaceController, ActionListener,
                         event.getY(),
                         event.getWidth(), event.getHeight(), event.getShapeRotation(),
                         event.getColor().getRed(), event.getColor().getGreen(),
-                        event.getColor().getBlue(), process.getEndTime(), process.getEndX(),
+                        event.getColor().getBlue(), process.getEndTick(), process.getEndX(),
                         process.getEndY(), process.getEndWidth(), process.getEndHeight(),
                         process.getEndRotationDegree(), process.getEndColor().getRed(),
                         process.getEndColor().getGreen(), process.getEndColor().getBlue());
@@ -216,13 +216,13 @@ public class Controller implements InterfaceController, ActionListener,
           return;
         }
 
-        if (event.getTick() == processes.get(0).getStartTime()) {
+        if (event.getTick() == processes.get(0).getStartTick()) {
           try {
             playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
             playbackBuilder.addMotion(event.getShapeName(), event.getTick(), event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
-                    event.getColor().getBlue(), processes.get(0).getEndTime(),
+                    event.getColor().getBlue(), processes.get(0).getEndTick(),
                     processes.get(0).getEndX(), processes.get(0).getEndY(),
                     processes.get(0).getEndWidth(), processes.get(0).getEndHeight(),
                     processes.get(0).getEndRotationDegree(), processes.get(0).getEndColor()
@@ -234,13 +234,13 @@ public class Controller implements InterfaceController, ActionListener,
             playbackView.displayError(e.getMessage());
           }
         }
-        else if (event.getTick() == processes.get(processes.size() - 1).getEndTime()) {
+        else if (event.getTick() == processes.get(processes.size() - 1).getEndTick()) {
           try {
             playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
 
             IAnimation lastProcess = processes.get(processes.size() - 1);
             playbackBuilder.addMotion(event.getShapeName(),
-                    lastProcess.getStartTime(),
+                    lastProcess.getStartTick(),
                     lastProcess.getStartX(),
                     lastProcess.getStartY(),
                     lastProcess.getStartWidth(),
@@ -261,11 +261,11 @@ public class Controller implements InterfaceController, ActionListener,
         }
 
         for (int i = 1; i < processes.size(); i++) {
-          if (event.getTick() == processes.get(i).getStartTime()) {
+          if (event.getTick() == processes.get(i).getStartTick()) {
             try {
-              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i).getStartTime());
-              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTime());
-              playbackBuilder.addMotion(event.getShapeName(), processes.get(i - 1).getStartTime(),
+              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i).getStartTick());
+              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTick());
+              playbackBuilder.addMotion(event.getShapeName(), processes.get(i - 1).getStartTick(),
                       processes.get(i - 1).getStartX(),
                       processes.get(i - 1).getStartY(), processes.get(i - 1).getStartWidth(),
                       processes.get(i - 1).getStartHeight(),
@@ -281,7 +281,7 @@ public class Controller implements InterfaceController, ActionListener,
                       event.getTick(), event.getX(), event.getY(),
                       event.getWidth(), event.getHeight(), event.getShapeRotation(),
                       event.getColor().getRed(), event.getColor().getGreen(),
-                      event.getColor().getBlue(), processes.get(i).getEndTime(),
+                      event.getColor().getBlue(), processes.get(i).getEndTick(),
                       processes.get(i).getEndX(), processes.get(i).getEndY(),
                       processes.get(i).getEndWidth(), processes.get(i).getEndHeight(),
                       processes.get(i).getEndRotationDegree(), processes.get(i).getEndColor()
@@ -301,8 +301,8 @@ public class Controller implements InterfaceController, ActionListener,
           playbackView.displayError("Keyframe does not exist at this time.");
           return;
         }
-        if (event.getTick() == processes.get(0).getStartTime()
-                || (event.getTick() == processes.get(processes.size() - 1).getEndTime())) {
+        if (event.getTick() == processes.get(0).getStartTick()
+                || (event.getTick() == processes.get(processes.size() - 1).getEndTick())) {
           try {
             playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
             playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
@@ -313,17 +313,17 @@ public class Controller implements InterfaceController, ActionListener,
         }
         else {
           for (int i = 0; i < processes.size(); i++) {
-            if (event.getTick() == processes.get(i).getStartTime()) {
+            if (event.getTick() == processes.get(i).getStartTick()) {
               IAnimation process = combine(processes.get(i - 1), processes.get(i));
               try {
                 playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
-                playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTime());
-                playbackBuilder.addMotion(event.getShapeName(), process.getStartTime(),
+                playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTick());
+                playbackBuilder.addMotion(event.getShapeName(), process.getStartTick(),
                         process.getStartX(),
                         process.getStartY(), process.getStartWidth(), process.getStartHeight(),
                         process.getStartRotationDegree(),
                         process.getStartColor().getRed(), process.getStartColor().getGreen(),
-                        process.getStartColor().getBlue(), process.getEndTime(), process.getEndX(),
+                        process.getStartColor().getBlue(), process.getEndTick(), process.getEndX(),
                         process.getEndY(), process.getEndWidth(), process.getEndHeight(),
                         process.getEndRotationDegree(),
                         process.getEndColor().getRed(), process.getEndColor().getGreen(),
@@ -345,12 +345,12 @@ public class Controller implements InterfaceController, ActionListener,
   // takes the starting values of one process and the ending values of a second to make one new
   // process.
   private IAnimation combine(IAnimation process1, IAnimation process2) {
-    return new Animation(process1.getType(), process1.getStartTime(),
+    return new Animation(process1.getType(), process1.getStartTick(),
             process1.getStartX(),
             process1.getStartY(), process1.getStartWidth(), process1.getStartHeight(),
             process1.getStartRotationDegree(),
             process1.getStartColor().getRed(), process1.getStartColor().getGreen(),
-            process1.getStartColor().getBlue(), process2.getEndTime(), process2.getEndX(),
+            process1.getStartColor().getBlue(), process2.getEndTick(), process2.getEndX(),
             process2.getEndY(), process2.getEndWidth(), process2.getEndHeight(),
             process2.getEndRotationDegree(),
             process2.getEndColor().getRed(), process2.getEndColor().getGreen(),
@@ -363,11 +363,11 @@ public class Controller implements InterfaceController, ActionListener,
     if (list == null) {
       return false;
     }
-    else if (time == list.get(list.size() - 1).getEndTime()) {
+    else if (time == list.get(list.size() - 1).getEndTick()) {
       return true;
     }
     for (IAnimation process : list) {
-      if (time == process.getStartTime()) {
+      if (time == process.getStartTick()) {
         return true;
       }
     }
@@ -570,8 +570,8 @@ public class Controller implements InterfaceController, ActionListener,
       }
       IAnimation last = entry.getValue().get(entry.getValue().size() - 1);
 
-      if (last.getStartTime() != last.getEndTime()) {
-        temp.add(new StatusKeyFrame(last.getEndTime(), last.getEndX(), last.getEndY(),
+      if (last.getStartTick() != last.getEndTick()) {
+        temp.add(new StatusKeyFrame(last.getEndTick(), last.getEndX(), last.getEndY(),
                 last.getEndWidth(), last.getEndHeight(), last.getEndRotationDegree(),
                 last.getEndColor()));
       }
@@ -582,7 +582,7 @@ public class Controller implements InterfaceController, ActionListener,
 
   // converts a process to keyframes using its starting values.
   private InterpretStatusKeyFrame convertToKeyFrame(IAnimation process) {
-    return new StatusKeyFrame(process.getStartTime(), process.getStartX(), process.getStartY(),
+    return new StatusKeyFrame(process.getStartTick(), process.getStartX(), process.getStartY(),
             process.getStartWidth(), process.getStartHeight(), process.getStartRotationDegree(),
             process.getStartColor());
   }
@@ -596,7 +596,7 @@ public class Controller implements InterfaceController, ActionListener,
 
     for (String id : processes.keySet()) {
       if (!processes.get(id).isEmpty()) {
-        firstTickNum = Math.min(firstTickNum, processes.get(id).get(0).getStartTime());
+        firstTickNum = Math.min(firstTickNum, processes.get(id).get(0).getStartTick());
       }
     }
     if (firstTickNum == Integer.MAX_VALUE) {

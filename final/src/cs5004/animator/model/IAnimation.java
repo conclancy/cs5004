@@ -104,8 +104,9 @@ public interface IAnimation {
    * @param tick  is the tick to mutate the shape to the state.
    * @param shape the shape of the object before the process starts.
    * @return the current version of the shape, as an {@link IShape} object
+   * @throws IllegalArgumentException if the tick value is larger than the ending tick value.
    */
-  IShape setState(int tick, IShape shape);
+  IShape setState(int tick, IShape shape) throws IllegalArgumentException;
 
   /**
    * Get the starting degree of rotation of the associated {@link IShape}.

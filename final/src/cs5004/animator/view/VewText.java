@@ -59,8 +59,8 @@ public class VewText implements IVewText {
                 .append(process.getEndY()).append(") and color ")
                 .append(process.getStartColor()).append(" to ")
                 .append(process.getEndColor()).append(" over t=")
-                .append(process.getStartTime()).append(" to ")
-                .append(process.getEndTime()).append(".")
+                .append(process.getStartTick()).append(" to ")
+                .append(process.getEndTick()).append(".")
 
                 .append("\n");
         output.append(temp);
