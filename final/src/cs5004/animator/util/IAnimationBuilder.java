@@ -20,13 +20,13 @@ public interface IAnimationBuilder {
 
   /**
    * Specify the bounding box to be used for the animation.
-   * @param x The leftmost x value
-   * @param y The topmost y value
-   * @param width The width of the bounding box
+   *
+   * @param x      The leftmost x value
+   * @param y      The topmost y value
+   * @param width  The width of the bounding box
    * @param height The height of the bounding box
-   * @return This {@link IAnimationBuilder}
    */
-  IAnimationBuilder setBounds(int x, int y, int width, int height);
+  void setBounds(int x, int y, int width, int height);
 
   /**
    * Adds a new shape to the growing document.
@@ -93,22 +93,6 @@ public interface IAnimationBuilder {
   IAnimationBuilder addMotion(String name, int t1, int x1, int y1, int w1, int h1, int o1, int r1,
                              int g1, int b1, int t2, int x2, int y2, int w2, int h2, int o2,
                              int r2, int g2, int b2);
-
-  /**
-   * Adds an individual keyframe to the growing document.
-   * @param name The name of the shape (added with {@link IAnimationBuilder#declareShape})
-   * @param t    The time for this keyframe
-   * @param x    The x-coordinatePosition of the shape
-   * @param y    The y-coordinatePosition of the shape
-   * @param w    The width of the shape
-   * @param h    The height of the shape
-   * @param r    The red color-value of the shape
-   * @param g    The green color-value of the shape
-   * @param b    The blue color-value of the shape
-   * @return This {@link IAnimationBuilder}
-   */
-  IAnimationBuilder addKeyframe(String name,
-                                    int t, int x, int y, int w, int h, int r, int g, int b);
 
   /**
    * This method removes a process from the current playbackBuilder with the given start time.

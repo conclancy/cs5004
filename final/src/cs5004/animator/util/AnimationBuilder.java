@@ -14,13 +14,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * This class is the builder class for the animation model class. This allows the users to input
- * processes and shapes for the playBackBuilder.
+ * This class is the builder class for the animation model class. This allows the controller to
+ * input animations and shapes to the model for building an Easy Animation.
  */
 public class AnimationBuilder implements IAnimationBuilder {
 
-  private LinkedHashMap<String, List<IAnimation>> processes;
-  private LinkedHashMap<String, IShape> shapesList;
+  private final LinkedHashMap<String, List<IAnimation>> processes;
+  private final LinkedHashMap<String, IShape> shapesList;
   private int x = 0;
   private int y = 0;
   private int width = 1000;
@@ -36,7 +36,7 @@ public class AnimationBuilder implements IAnimationBuilder {
   }
 
   /**
-   * A method that constructs a new model given the processes and shapes in the PlaybackBuilder.
+   * Constructs a new model with the given Shape and Animation objects.
    */
   public IModel build() {
 
@@ -45,43 +45,38 @@ public class AnimationBuilder implements IAnimationBuilder {
         throw new IllegalStateException("A shape must contain at least one processes");
       }
     }
+
     for (String key : this.processes.keySet()) {
       if (!this.shapesList.containsKey(key)) {
         throw new IllegalStateException("A process must have at least one shape");
       }
     }
-    return new Model(this.processes,
-        this.shapesList,
-        this.x,
-        this.y,
-        this.width,
-        this.height);
+
+    return new Model(this.processes, this.shapesList, this.x, this.y, this.width, this.height);
   }
 
   /**
    * Specify the bounding box to be used for the animation.
    *
-   * @param x      The leftmost x value
-   * @param y      The topmost y value
+   * @param x      The leftmost x value of the animation.
+   * @param y      The topmost y value of the animation.
    * @param width  The width of the bounding box
    * @param height The height of the bounding box
-   * @return This {@link IAnimationBuilder}
    */
   @Override
-  public IAnimationBuilder setBounds(int x, int y, int width, int height) {
+  public void setBounds(int x, int y, int width, int height) {
     if (width < 0 || height < 0) {
-      throw new IllegalArgumentException("Error! The shape cannot have a negative"
-          + "width or height");
+      throw new IllegalArgumentException("The view cannot have a negative dimensions");
     }
+
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
-    return this;
   }
 
   /**
-   * This method adds a new shape to the document.
+   * Adds a new shape to the document.
    *
    * @param name The unique name of the shape.
    * @param type The type of shape such as a rectangle or ellipse.
@@ -398,12 +393,6 @@ public class AnimationBuilder implements IAnimationBuilder {
       output.put(key, newProcesss);
     }
     return output;
-  }
-
-  @Override
-  public IAnimationBuilder addKeyframe(String name, int t, int x, int y, int w,
-      int h, int r, int g, int b) {
-    throw new UnsupportedOperationException("Error Please check settings");
   }
 
   /**
