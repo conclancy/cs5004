@@ -1,6 +1,6 @@
 package cs5004.animator;
 
-import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.AnimationBuilder;
 import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IVewText;
 import cs5004.animator.view.IViewGUI;
@@ -34,8 +34,8 @@ public final class EasyAnimator {
    * @param args the input that allows the user to specify what kind of animation they desire.
    */
   public static void main(String [] args) {
-    IAnimationBuilder playbackBuilder = new AnimationModelBuilder();
-    IAnimationBuilder editBuilder = new AnimationModelBuilder();
+    IAnimationBuilder playbackBuilder = new AnimationBuilder();
+    IAnimationBuilder editBuilder = new AnimationBuilder();
     IModel model;
     IVewText textView;
     IViewGUI editView;

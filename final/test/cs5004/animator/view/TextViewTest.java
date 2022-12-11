@@ -1,7 +1,7 @@
 package cs5004.animator.view;
 
 
-import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.AnimationBuilder;
 import cs5004.animator.util.IAnimationBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +30,7 @@ public class TextViewTest {
 
   @Before
   public void setUp() {
-    this.aniBuilder = new AnimationModelBuilder();
+    this.aniBuilder = new AnimationBuilder();
     System.setOut(new PrintStream(outContent));
   }
 

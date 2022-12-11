@@ -1,6 +1,6 @@
 package cs5004.animator.view;
 
-import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.AnimationBuilder;
 import cs5004.animator.util.IAnimationBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class SVGAnimationViewTest {
 
   @Before
   public void setUp() {
-    this.playbackBuilder = new AnimationModelBuilder();
+    this.playbackBuilder = new AnimationBuilder();
     System.setOut(new PrintStream(outContent));
   }
 

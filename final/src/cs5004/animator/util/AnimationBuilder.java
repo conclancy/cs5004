@@ -17,7 +17,7 @@ import java.util.List;
  * This class is the builder class for the animation model class. This allows the users to input
  * processes and shapes for the playBackBuilder.
  */
-public class AnimationModelBuilder implements IAnimationBuilder {
+public class AnimationBuilder implements IAnimationBuilder {
 
   private LinkedHashMap<String, List<IProcess>> processes;
   private LinkedHashMap<String, IShape> shapesList;
@@ -28,9 +28,9 @@ public class AnimationModelBuilder implements IAnimationBuilder {
 
 
   /**
-   * Constructor for the AnimationModelBuilder.
+   * Constructor for the AnimationBuilder.
    */
-  public AnimationModelBuilder() {
+  public AnimationBuilder() {
     this.processes = new LinkedHashMap<>();
     this.shapesList = new LinkedHashMap<>();
   }

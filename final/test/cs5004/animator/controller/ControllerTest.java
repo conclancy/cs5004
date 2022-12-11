@@ -1,6 +1,6 @@
 package cs5004.animator.controller;
 
-import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.AnimationBuilder;
 import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.ViewGUIEditor;
@@ -38,7 +38,7 @@ public class ControllerTest {
 
   @Before
   public void setUp() {
-    this.animationBuilder = new AnimationModelBuilder();
+    this.animationBuilder = new AnimationBuilder();
     FileReader in;
     try {
       in = new FileReader("./starter_code/smalldemo.txt");

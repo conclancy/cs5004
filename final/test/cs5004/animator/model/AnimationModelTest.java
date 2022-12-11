@@ -1,6 +1,6 @@
 package cs5004.animator.model;
 
-import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.AnimationBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,17 +19,17 @@ import static org.junit.Assert.assertEquals;
  * Tests for the animation model class.
  */
 public class AnimationModelTest {
-  private AnimationModelBuilder aniBuilder;
+  private AnimationBuilder aniBuilder;
   private IModel model;
 
   @Before
   public void setUp() {
-    this.aniBuilder = new AnimationModelBuilder();
+    this.aniBuilder = new AnimationBuilder();
   }
 
   @Test
   public void testBuildAndConstructor() {
-    this.aniBuilder = new AnimationModelBuilder();
+    this.aniBuilder = new AnimationBuilder();
     this.model = this.aniBuilder.build();
     assertEquals("", this.model.toString());
   }
