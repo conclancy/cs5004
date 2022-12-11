@@ -139,9 +139,9 @@ public class AnimationBuilder implements IAnimationBuilder {
   public IAnimationBuilder addMotion(String name, int t1, int x1, int y1, int w1, int h1, int o1,
       int r1, int g1, int b1, int t2, int x2, int y2, int w2,
       int h2, int o2, int r2, int g2, int b2) {
-    String type = this.getType(x1, y1, w1, h1, o1, r1, g1, b1, x2, y2, w2, h2, o2, r2, g2, b2);
-    IAnimation process = new Animation(type, t1, x1, y1, w1, h1, o1,
-        r1, g1, b1, t2, x2, y2, w2, h2, o2, r2, g2, b2);
+    String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
+    IAnimation process = new Animation(type, t1, x1, y1, w1, h1,
+        r1, g1, b1, t2, x2, y2, w2, h2, r2, g2, b2);
     if (this.processes.containsKey(name)) {
       this.addIfValidProcess(name, this.processes.get(name), process,
           this.indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);
@@ -184,8 +184,8 @@ public class AnimationBuilder implements IAnimationBuilder {
       int r2, int g2, int b2) {
 
     String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
-    IAnimation process = new Animation(type, t1, x1, y1, w1, h1,
-        0, r1, g1, b1, t2, x2, y2, w2, h2, 0, r2, g2, b2);
+    IAnimation process = new Animation(type, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2,
+        g2, b2);
     if (this.processes.containsKey(name)) {
       this.addIfValidProcess(name, this.processes.get(name), process,
           this.indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);

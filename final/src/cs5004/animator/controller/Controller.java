@@ -346,15 +346,13 @@ public class Controller implements InterfaceController, ActionListener,
   // process.
   private IAnimation combine(IAnimation process1, IAnimation process2) {
     return new Animation(process1.getType(), process1.getStartTick(),
-            process1.getStartX(),
-            process1.getStartY(), process1.getStartWidth(), process1.getStartHeight(),
-            process1.getStartRotationDegree(),
-            process1.getStartColor().getRed(), process1.getStartColor().getGreen(),
-            process1.getStartColor().getBlue(), process2.getEndTick(), process2.getEndX(),
-            process2.getEndY(), process2.getEndWidth(), process2.getEndHeight(),
-            process2.getEndRotationDegree(),
-            process2.getEndColor().getRed(), process2.getEndColor().getGreen(),
-            process2.getEndColor().getBlue());
+        process1.getStartX(),
+        process1.getStartY(), process1.getStartWidth(), process1.getStartHeight(),
+        process1.getStartColor().getRed(), process1.getStartColor().getGreen(),
+        process1.getStartColor().getBlue(), process2.getEndTick(), process2.getEndX(),
+        process2.getEndY(), process2.getEndWidth(), process2.getEndHeight(),
+        process2.getEndColor().getRed(), process2.getEndColor().getGreen(),
+        process2.getEndColor().getBlue());
   }
 
 

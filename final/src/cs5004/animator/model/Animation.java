@@ -75,57 +75,6 @@ public class Animation implements IAnimation {
   }
 
   /**
-   * Constructor for super master process that initializes each of the fields of the process.
-   *
-   * @param shapeType      is what type of process.
-   * @param startingTick   is starting time of the process.
-   * @param startingX      is the starting x coordinate of the shape.
-   * @param startingY      is the starting y coordinate of the shape.
-   * @param startingWidth  is the starting width of the shape.
-   * @param startingHeight is the starting height of the shape.
-   * @param startingDegree is the starting rotationDegree of the shape.
-   * @param startingRed    is the starting value for red of the shape.
-   * @param startingGreen  is the starting value for green of the shape.
-   * @param startingBlue   is the starting value for blue of the shape.
-   * @param endingTick     is the ending time of the process.
-   * @param endingX        is the ending x coordinate of the shape.
-   * @param endingY        is the ending y coordinate of the shape.
-   * @param endingWidth    is the ending width of the shape.
-   * @param endingHeight   is the ending height of the shape.
-   * @param endingDegree   is the ending rotationDegree of the shape.
-   * @param endingRed      is the ending red value for the shape.
-   * @param endingGreen    is the ending green value for the shape.
-   * @param endingBlue     is the ending blue value for the shape.
-   * @throws IllegalArgumentException will be thrown if the start time and or the end time is
-   *                                  negative, or if the width and or the height are negative. the
-   *                                  end time.
-   */
-  public Animation(String shapeType, int startingTick, int startingX, int startingY,
-      int startingWidth, int startingHeight, int startingDegree, int startingRed,
-      int startingGreen, int startingBlue, int endingTick, int endingX, int endingY,
-      int endingWidth, int endingHeight, int endingDegree, int endingRed,
-      int endingGreen, int endingBlue) throws IllegalArgumentException {
-
-    this.shapeType = shapeType;
-    this.startTick = this.checkPositiveInt(startingTick, "Starting Tick");
-    this.startingX = this.checkPositiveInt(startingX, "Starting X");
-    this.startingY = this.checkPositiveInt(startingY, "Starting Y");
-    this.startingWidth = this.checkPositiveInt(startingWidth, "Starting Width");
-    this.startingHeight = this.checkPositiveInt(startingHeight, "Starting Height");
-    this.startColor = new Color(startingRed, startingGreen, startingBlue);
-    this.startOrientation = startingDegree;
-
-    this.endTick = this.checkPositiveInt(endingTick, "Ending Tick");
-    this.endX = this.checkPositiveInt(endingX, "Ending X");
-    this.endY = this.checkPositiveInt(endingY, "Ending Y");
-    this.endWidth = this.checkPositiveInt(endingWidth, "Ending Width");
-    this.endHeight = this.checkPositiveInt(endingHeight, "Ending Height");
-    this.endColor = new Color(endingRed, endingGreen, endingBlue);
-    this.endOrientation = endingDegree;
-
-  }
-
-  /**
    * Get the type of shape contained within the Animation.
    *
    * @return the type of the shape, as a String.
@@ -237,7 +186,7 @@ public class Animation implements IAnimation {
    */
   @Override
   public int getStartRotationDegree() {
-    return 0;
+    return this.startOrientation;
   }
 
   /**
@@ -247,7 +196,7 @@ public class Animation implements IAnimation {
    */
   @Override
   public int getEndRotationDegree() {
-    return 0;
+    return this.endOrientation;
   }
 
   /**
