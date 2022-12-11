@@ -109,7 +109,7 @@ public class AnimationBuilder implements IAnimationBuilder {
   }
 
   /**
-   * Adds a transformation to the growing document.
+   * Adds a new Animation to the model.
    *
    * @param name is the name of the shape.
    * @param t1   is the start time of this transformation
@@ -128,18 +128,48 @@ public class AnimationBuilder implements IAnimationBuilder {
    * @param r2   is the final red color-value.
    * @param g2   is the final green color-value.
    * @param b2   is the final blue color-value.
-   * @return AniBuilder List.
+   * @return a new {@link AnimationBuilder} object.
    */
   @Override
-  public IAnimationBuilder addMotion(String name, int t1, int x1, int y1, int w1, int h1, int o1,
+  public IAnimationBuilder addAnimation(String name, int t1, int x1, int y1, int w1, int h1, int o1,
       int r1, int g1, int b1, int t2, int x2, int y2, int w2,
       int h2, int o2, int r2, int g2, int b2) {
+    return updateAnimationBuilder(name, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2, g2,
+        b2);
+  }
+
+  /**
+   * Return an updated copy of the {@link IAnimationBuilder} object that is powering the Easy
+   * Animator program.
+   *
+   * @param name is the name of the shape.
+   * @param t1   is the start time of this transformation
+   * @param x1   is the initial x-coordinatePosition.
+   * @param y1   is the initial y-coordinatePosition.
+   * @param w1   is the initial width of the shape
+   * @param h1   is the initial height.
+   * @param r1   is the initial red color-value.
+   * @param g1   is the initial green color-value.
+   * @param b1   is the initial blue color-value.
+   * @param t2   is the end time of this transformation
+   * @param x2   is the final x-coordinatePosition.
+   * @param y2   is the final y-coordinatePosition.
+   * @param w2   is the final width.
+   * @param h2   is the final height.
+   * @param r2   is the final red color-value.
+   * @param g2   is the final green color-value.
+   * @param b2   is the final blue color-value.
+   * @return a new {@link AnimationBuilder} object.
+   */
+  private IAnimationBuilder updateAnimationBuilder(String name, int t1, int x1, int y1, int w1,
+      int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
+      int b2) {
     String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
     IAnimation process = new Animation(type, t1, x1, y1, w1, h1,
         r1, g1, b1, t2, x2, y2, w2, h2, r2, g2, b2);
     if (this.processes.containsKey(name)) {
-      this.addIfValidProcess(name, this.processes.get(name), process,
-          this.indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);
+      this.addAnimationHelper(name, this.processes.get(name), process,
+          indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);
     } else {
       this.processes.put(name, new ArrayList<>(Collections.singletonList(process)));
     }
@@ -169,7 +199,7 @@ public class AnimationBuilder implements IAnimationBuilder {
    * @return AniBuilder List.
    */
   @Override
-  public IAnimationBuilder addMotion(String name, int t1,
+  public IAnimationBuilder addAnimation(String name, int t1,
       int x1, int y1,
       int w1, int h1,
       int r1, int g1, int b1,
@@ -178,20 +208,12 @@ public class AnimationBuilder implements IAnimationBuilder {
       int w2, int h2,
       int r2, int g2, int b2) {
 
-    String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
-    IAnimation process = new Animation(type, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2,
-        g2, b2);
-    if (this.processes.containsKey(name)) {
-      this.addIfValidProcess(name, this.processes.get(name), process,
-          this.indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);
-    } else {
-      this.processes.put(name, new ArrayList<>(Collections.singletonList(process)));
-    }
-    return this;
+    return updateAnimationBuilder(name, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2, g2,
+        b2);
   }
 
   /**
-   * This method will return a description of the motion.
+   * This method will return a description of the animation type.
    *
    * @param x1 is the initial x-coordinatePosition.
    * @param y1 is the initial y-coordinatePosition.
@@ -207,41 +229,7 @@ public class AnimationBuilder implements IAnimationBuilder {
    * @param r2 is the final red color-value.
    * @param g2 is the final green color-value.
    * @param b2 is the final blue color-value.
-   * @return AniBuilder List.
-   */
-  private String getType(int x1, int y1, int w1, int h1, int o1, int r1, int g1, int b1,
-      int x2, int y2, int w2, int h2, int o2, int r2, int g2, int b2) {
-    String testDescription = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
-
-    if (o1 != o2) {
-      if (testDescription.equals("Nothing")) {
-        testDescription = "Rotate";
-      } else {
-        testDescription += " and Rotate";
-      }
-    }
-
-    return testDescription;
-  }
-
-  /**
-   * This method will return a description of the motion.
-   *
-   * @param x1 is the initial x-coordinatePosition.
-   * @param y1 is the initial y-coordinatePosition.
-   * @param w1 is the initial width of the shape
-   * @param h1 is the initial height.
-   * @param r1 is the initial red color-value.
-   * @param g1 is the initial green color-value.
-   * @param b1 is the initial blue color-value.
-   * @param x2 is the final x-coordinatePosition.
-   * @param y2 is the final y-coordinatePosition.
-   * @param w2 is the final width.
-   * @param h2 is the final height.
-   * @param r2 is the final red color-value.
-   * @param g2 is the final green color-value.
-   * @param b2 is the final blue color-value.
-   * @return AniBuilder List.
+   * @return the animation type, as a String.
    */
   private String getType(int x1, int y1, int w1, int h1, int r1, int g1, int b1, int x2, int y2,
       int w2, int h2, int r2, int g2, int b2) {
@@ -263,56 +251,47 @@ public class AnimationBuilder implements IAnimationBuilder {
 
 
   /**
-   * Helper method that adds a process into a list with a specific index when no overlap is
+   * Helper method that adds an animation into a list with a specific index when no overlap is
    * observed.
    */
-  private void addIfValidProcess(String id, List<IAnimation> list,
-      IAnimation process,
+  private void addAnimationHelper(String name, List<IAnimation> list, IAnimation animation,
       int addIndex) {
-    int startTick = process.getStartTick();
-    IShape shapeCopy1 = this.shapesList.get(id).getCopy();
-    IShape shapeCopy2 = this.shapesList.get(id).getCopy();
+    int startTick = animation.getStartTick();
+    IShape shapeCopy1 = this.shapesList.get(name).getCopy();
+    IShape shapeCopy2 = this.shapesList.get(name).getCopy();
 
     if (addIndex == 0) {
-      list.add(addIndex, process);
+      list.add(addIndex, animation);
       return;
     }
 
     IAnimation previousProcess = list.get(addIndex - 1);
 
     previousProcess.setState(previousProcess.getEndTick(), shapeCopy1);
-    process.setState(startTick, shapeCopy2);
+    animation.setState(startTick, shapeCopy2);
 
     if (previousProcess.getEndTick() != startTick) {
-      throw new IllegalArgumentException("The start and end times of a process must overlap!");
-    } else if (this.shapesAreEqual(shapeCopy1, shapeCopy2)) {
-      list.add(addIndex, process);
+      throw new IllegalArgumentException("The start and end times of a animation must overlap!");
+    } else if (shapeCopy1.equals(shapeCopy2)) {
+      list.add(addIndex, animation);
     } else {
       throw new IllegalArgumentException("Illegal object management here.");
     }
   }
 
   /**
-   * Method that determines if two shapes are equal.
+   * Get the dimensions required for this Easy Animation.
+   *
+   * @return the dimensions for the Easy Animation. .
    */
-  private boolean shapesAreEqual(IShape shape1, IShape shape2) {
-    return shape1.getShapeType().equals(shape2.getShapeType())
-        && shape1.getWidth() == shape2.getWidth()
-        && shape1.getHeight() == shape2.getHeight()
-        && shape1.getReference().getX() == shape2.getReference().getX()
-        && shape1.getReference().getY() == shape2.getReference().getY()
-        && shape1.getDegrees() == shape2.getDegrees()
-        && shape1.getColor().getRGB() == shape2.getColor().getRGB();
-  }
-
   @Override
-  public Dimension getNeededSpace() {
+  public Dimension getRequiredDimensions() {
     int minX = this.x;
     int minY = this.y;
     int maxX = this.x;
     int maxY = this.y;
 
-    for (List<IAnimation> processList : this.getProcesses().values()) {
+    for (List<IAnimation> processList : this.getAnimations().values()) {
       minX = Math.min(minX,
           processList.get(0).getStartX());
       minY = Math.min(minY,
@@ -333,42 +312,49 @@ public class AnimationBuilder implements IAnimationBuilder {
   }
 
   /**
-   * Method that removes a process.
+   * Removes and animation from the model.
+   *
+   * @param name the name of the shape that the animation is associated with.
+   * @param tick starting tick of the animation being removed.
+   * @throws IllegalArgumentException if the shape or animation do not exist.
    */
   @Override
-  public void removeProcess(String id, int time) {
-    if (processes.get(id) == null) {
-      throw new IllegalArgumentException("The given ID does not have any processes");
+  public void removeAnimation(String name, int tick) throws IllegalArgumentException {
+    if (processes.get(name) == null) {
+      throw new IllegalArgumentException("The given name does not have any animations");
     }
-    for (int i = 0; i < processes.get(id).size(); i++) {
-      if (time == processes.get(id).get(i).getStartTick()) {
-        processes.get(id).remove(i);
+    for (int i = 0; i < processes.get(name).size(); i++) {
+      if (tick == processes.get(name).get(i).getStartTick()) {
+        processes.get(name).remove(i);
         return;
       }
     }
-    if (time == processes.get(id).get(processes.get(id).size() - 1).getEndTick()) {
-      processes.get(id).remove(processes.get(id).size() - 1);
+    if (tick == processes.get(name).get(processes.get(name).size() - 1).getEndTick()) {
+      processes.get(name).remove(processes.get(name).size() - 1);
       return;
     }
-    throw new IllegalArgumentException("There are no processes to remove.");
+    throw new IllegalArgumentException("There are no animations to remove.");
   }
 
   /**
-   * Method that removes a shape.
+   * Removes a shape with the passed name from the model.
+   *
+   * @param name the name of the shape being removed.
+   * @throws IllegalArgumentException if the shape name passed does not exist.
    */
   @Override
-  public void removeShape(String id) {
-    if (!shapesList.containsKey(id)) {
-      throw new IllegalArgumentException("This ID is not associated with any shapes here");
+  public void removeShape(String name) throws IllegalArgumentException {
+    if (!shapesList.containsKey(name)) {
+      throw new IllegalArgumentException("This name is not associated with any shapes here");
     }
-    shapesList.remove(id);
-    processes.remove(id);
+    shapesList.remove(name);
+    processes.remove(name);
   }
 
   /**
-   * THis method returns the shapes within the map.
+   * Get the shapes within the model.
    *
-   * @return the shapes within the map.
+   * @return the shapes in the model, and their associated names as a {@link LinkedHashMap}
    */
   @Override
   public LinkedHashMap<String, IShape> getShapes() {
@@ -380,27 +366,37 @@ public class AnimationBuilder implements IAnimationBuilder {
   }
 
   /**
-   * This method creates a linked hash map for all the processes from the model and returns it.
+   * Get the {@link IAnimation} objects contained within the model.
    *
    * @return the map of the processes from the model.
    */
   @Override
-  public LinkedHashMap<String, List<IAnimation>> getProcesses() {
+  public LinkedHashMap<String, List<IAnimation>> getAnimations() {
+    return getAnimationsMap(this.processes);
+  }
+
+  /**
+   * Get the animations within a model.
+   *
+   * @param animations the list of {@link IAnimation} to be parsed.
+   * @return the map of the {@link IAnimation} objects within the model
+   */
+  public static LinkedHashMap<String, List<IAnimation>> getAnimationsMap(
+      LinkedHashMap<String, List<IAnimation>> animations) {
     LinkedHashMap<String, List<IAnimation>> output = new LinkedHashMap<>();
-    for (String key : this.processes.keySet()) {
-      List<IAnimation> newProcesss = new ArrayList<>();
-      newProcesss.addAll(this.processes.get(key));
-      output.put(key, newProcesss);
+    for (String key : animations.keySet()) {
+      List<IAnimation> newAnimation = new ArrayList<>(animations.get(key));
+      output.put(key, newAnimation);
     }
     return output;
   }
 
   /**
-   * THis is a helper method that serches for index of a process using binary search.
+   * Use binary search method to find the starting time of a new animation.
    *
-   * @param list         the list of processes through which to search for a given animaiton.
+   * @param list         the list of processes through which to search for a given animation.
    * @param startingTime the time to search for within the processes.
-   * @return the index int of the process.
+   * @return the index int of the process, as an int.
    */
   private static int indexOfProcess(List<IAnimation> list, int startingTime) {
     if (list.isEmpty()) {

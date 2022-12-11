@@ -8,12 +8,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Represents the interface for playbackBuilder that creates an animation with the specified fields.
+ * Interface for animation builder that creates an animation for the controller to pass to the
+ * view.
  */
 public interface IAnimationBuilder {
+
   /**
-   * Constructs a final document.
-   * @return the newly constructed document
+   * Constructs a model.
+   *
+   * @return the newly constructed {@link IModel}
    */
   IModel build();
 
@@ -31,19 +34,18 @@ public interface IAnimationBuilder {
   /**
    * Adds a new shape to the growing document.
    *
-   * @param name The unique name of the shape to be added.  
-   *             No shape with this name should already exist.
-   * @param type The type of shape (e.g. "ellipse", "rectangle") to be added.  
-   *             The set of supported shapes is unspecified, but should 
-   *             include "ellipse" and "rectangle" as a minimum.
+   * @param name The unique name of the shape to be added. No shape with this name should already
+   *             exist.
+   * @param type The type of shape (e.g. "ellipse", "rectangle") to be added. The set of supported
+   *             shapes is unspecified, but should include "ellipse" and "rectangle" as a minimum.
    * @return This {@link IAnimationBuilder}
    */
   IAnimationBuilder declareShape(String name, String type);
 
   /**
    * Adds a transformation to the growing document.
-   * 
-   * @param name The name of the shape (added with {@link IAnimationBuilder#declareShape})
+   *
+   * @param name The name of the shape (added with {@link IAnimationBuilder})
    * @param t1   The start time of this transformation
    * @param x1   The initial x-coordinatePosition of the shape
    * @param y1   The initial y-coordinatePosition of the shape
@@ -62,14 +64,14 @@ public interface IAnimationBuilder {
    * @param b2   The final blue color-value of the shape
    * @return This {@link IAnimationBuilder}
    */
-  IAnimationBuilder addMotion(String name,
-                                  int t1, int x1, int y1, int w1, int h1, int r1, int g1, int b1,
-                                  int t2, int x2, int y2, int w2, int h2, int r2, int g2, int b2);
+  IAnimationBuilder addAnimation(String name,
+      int t1, int x1, int y1, int w1, int h1, int r1, int g1, int b1,
+      int t2, int x2, int y2, int w2, int h2, int r2, int g2, int b2);
 
   /**
    * Adds a transformation to the growing document.
    *
-   * @param name The name of the shape (added with {@link IAnimationBuilder#declareShape})
+   * @param name The name of the shape (added with {@link IAnimationBuilder})
    * @param t1   The start time of this transformation
    * @param x1   The initial x-coordinatePosition of the shape
    * @param y1   The initial y-coordinatePosition of the shape
@@ -90,41 +92,46 @@ public interface IAnimationBuilder {
    * @param b2   The final blue color-value of the shape
    * @return This {@link IAnimationBuilder}
    */
-  IAnimationBuilder addMotion(String name, int t1, int x1, int y1, int w1, int h1, int o1, int r1,
-                             int g1, int b1, int t2, int x2, int y2, int w2, int h2, int o2,
-                             int r2, int g2, int b2);
+  IAnimationBuilder addAnimation(String name, int t1, int x1, int y1, int w1, int h1, int o1,
+      int r1,
+      int g1, int b1, int t2, int x2, int y2, int w2, int h2, int o2,
+      int r2, int g2, int b2);
 
   /**
-   * This method removes a process from the current playbackBuilder with the given start time.
+   * Removes and animation from the model.
    *
-   * @param id           is the id of the shape that the process you are removing is associated
-   *                     with.
-   * @param startingTime is the start time of the process you remove.
+   * @param name the name of the shape that the animation is associated with.
+   * @param tick starting tick of the animation being removed.
+   * @throws IllegalArgumentException if the shape or animation do not exist.
    */
-  void removeProcess(String id, int startingTime);
+  void removeAnimation(String name, int tick) throws IllegalArgumentException;
 
   /**
-   * This method removes a shape from the current playbackBuilder.
+   * Removes a shape with the passed name from the model.
    *
-   * @param id is the id of the shape that the process you are removing is associated with.
+   * @param name the name of the shape being removed.
+   * @throws IllegalArgumentException if the shape name passed does not exist.
    */
-  void removeShape(String id);
+  void removeShape(String name) throws IllegalArgumentException;
 
   /**
-   * This method will retrieve the processes from the playbackBuilder.
-   * @return a map of the ids for the processes in the playbackBuilder.
+   * This method will retrieve the processes from the animation builder.
+   *
+   * @return a map of the ids for the processes in the animation builder.
    */
-  LinkedHashMap<String, List<IAnimation>> getProcesses();
+  LinkedHashMap<String, List<IAnimation>> getAnimations();
 
   /**
-   * This method will retrieve the shapes from the playbackBuilder.
-   * @return a map of the ids for the shapes in the playbackBuilder.
+   * Get the shapes within the model.
+   *
+   * @return the shapes in the model, and their associated names as a {@link LinkedHashMap}
    */
   LinkedHashMap<String, IShape> getShapes();
 
   /**
-   * This method will retrieve the needed space from the playbackBuilder.
-   * @return the dimensions for the animation.
+   * Get the dimensions required for this Easy Animation.
+   *
+   * @return the dimensions for the Easy Animation. .
    */
-  Dimension getNeededSpace();
+  Dimension getRequiredDimensions();
 }

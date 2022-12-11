@@ -1,5 +1,7 @@
 package cs5004.animator.model;
 
+import static cs5004.animator.util.AnimationBuilder.getAnimationsMap;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -131,13 +133,7 @@ public class Model implements IModel {
    */
   @Override
   public LinkedHashMap<String, List<IAnimation>> getProcesses() {
-    LinkedHashMap<String, List<IAnimation>> output = new LinkedHashMap<>();
-    for (String key : this.processes.keySet()) {
-      List<IAnimation> newProcesss = new ArrayList<>();
-      newProcesss.addAll(this.processes.get(key));
-      output.put(key, newProcesss);
-    }
-    return output;
+    return getAnimationsMap(this.processes);
   }
 
   /**

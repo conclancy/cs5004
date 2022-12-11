@@ -25,7 +25,7 @@ public class AnimationReader {
    * of the shape to move, and 16 integers giving the initial and final conditions of the motion:
    * eight numbers giving the time, the x and y coordinates, the width and height,
    * and the red, green and blue color values at the start of the motion; followed by 
-   * eight numbers for the end of the motion.  See {@link IAnimationBuilder#addMotion}</li>
+   * eight numbers for the end of the motion.  See {@link IAnimationBuilder#addAnimation}</li>
    * </ul>
    * </p>
    *
@@ -110,13 +110,13 @@ public class AnimationReader {
       vals[17] = getInt(s, "Motion", fieldNames[17]);
     }
     else {
-      playbackBuilder.addMotion(name,
+      playbackBuilder.addAnimation(name,
               vals[0 ], vals[1 ], vals[2 ], vals[3 ], vals[4 ], vals[5 ], vals[6 ], vals[7 ],
               vals[8 ], vals[9 ], vals[10], vals[11], vals[12], vals[13], vals[14], vals[15]);
       return;
     }
 
-    playbackBuilder.addMotion(name,
+    playbackBuilder.addAnimation(name,
             vals[0 ], vals[1 ], vals[2 ], vals[3 ], vals[4 ], vals[5 ], vals[6 ], vals[7 ],
             vals[8 ], vals[9 ], vals[10], vals[11], vals[12], vals[13], vals[14], vals[15],
             vals[16], vals[17]);

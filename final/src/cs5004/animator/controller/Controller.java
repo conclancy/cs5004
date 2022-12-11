@@ -87,7 +87,7 @@ public class Controller implements InterfaceController, ActionListener,
    */
   @Override
   public void frameChanged(IFrameChangeEvent event) {
-    List<IAnimation> processes = playbackBuilder.getProcesses()
+    List<IAnimation> processes = playbackBuilder.getAnimations()
             .get(event.getShapeName());
     if (event.getTick() < 0) {
       playbackView.displayError("The ticks must be positive!");
@@ -97,7 +97,7 @@ public class Controller implements InterfaceController, ActionListener,
       case ADD:
         if (processes == null) {
           try {
-            playbackBuilder.addMotion(event.getShapeName(), event.getTick(), event.getX(), event.getY(),
+            playbackBuilder.addAnimation(event.getShapeName(), event.getTick(), event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue(), event.getTick(), event.getX(), event.getY(),
@@ -105,7 +105,7 @@ public class Controller implements InterfaceController, ActionListener,
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue());
             this.playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder
-                    .getProcesses()));
+                    .getAnimations()));
             lastTickNum = playbackBuilder.build().getLastTick();
           }
           catch (IllegalArgumentException e) {
@@ -119,7 +119,7 @@ public class Controller implements InterfaceController, ActionListener,
         }
         if (event.getTick() < processes.get(0).getStartTick()) {
           try {
-            playbackBuilder.addMotion(
+            playbackBuilder.addAnimation(
                     event.getShapeName(),
                     event.getTick(),
                     event.getX(),
@@ -140,7 +140,7 @@ public class Controller implements InterfaceController, ActionListener,
                     processes.get(0).getStartColor().getGreen(),
                     processes.get(0).getStartColor().getBlue());
 
-            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
             lastTickNum = playbackBuilder.build().getLastTick();
           }
 
@@ -152,7 +152,7 @@ public class Controller implements InterfaceController, ActionListener,
         else if (event.getTick() > processes.get(processes.size() - 1).getEndTick()) {
           IAnimation temp = processes.get(processes.size() - 1);
           try {
-            playbackBuilder.addMotion(event.getShapeName(), temp.getEndTick(),
+            playbackBuilder.addAnimation(event.getShapeName(), temp.getEndTick(),
                     temp.getEndX(), temp.getEndY(), temp.getEndWidth(),
                     temp.getEndHeight(), temp.getEndRotationDegree(), temp.getEndColor().getRed(),
                     temp.getEndColor().getGreen(), temp.getEndColor().getBlue(),
@@ -161,9 +161,9 @@ public class Controller implements InterfaceController, ActionListener,
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue());
             if (temp.getStartTick() == temp.getEndTick()) {
-              this.playbackBuilder.removeProcess(event.getShapeName(), temp.getStartTick());
+              this.playbackBuilder.removeAnimation(event.getShapeName(), temp.getStartTick());
             }
-            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
             lastTickNum = playbackBuilder.build().getLastTick();
           }
           catch (IllegalArgumentException e) {
@@ -181,8 +181,8 @@ public class Controller implements InterfaceController, ActionListener,
             if ( event.getTick() > process.getStartTick()
                     && event.getTick() < process.getEndTick()) {
               try {
-                playbackBuilder.removeProcess(event.getShapeName(), process.getStartTick());
-                playbackBuilder.addMotion(event.getShapeName(), process.getStartTick(),
+                playbackBuilder.removeAnimation(event.getShapeName(), process.getStartTick());
+                playbackBuilder.addAnimation(event.getShapeName(), process.getStartTick(),
                         process.getStartX(), process.getStartY(), process.getStartWidth(),
                         process.getStartHeight(), process.getStartRotationDegree(),
                         process.getStartColor().getRed(), process.getStartColor().getGreen(),
@@ -191,7 +191,7 @@ public class Controller implements InterfaceController, ActionListener,
                         event.getShapeRotation(),
                         event.getColor().getRed(), event.getColor().getGreen(),
                         event.getColor().getBlue());
-                playbackBuilder.addMotion(event.getShapeName(), event.getTick(), event.getX(),
+                playbackBuilder.addAnimation(event.getShapeName(), event.getTick(), event.getX(),
                         event.getY(),
                         event.getWidth(), event.getHeight(), event.getShapeRotation(),
                         event.getColor().getRed(), event.getColor().getGreen(),
@@ -199,7 +199,7 @@ public class Controller implements InterfaceController, ActionListener,
                         process.getEndY(), process.getEndWidth(), process.getEndHeight(),
                         process.getEndRotationDegree(), process.getEndColor().getRed(),
                         process.getEndColor().getGreen(), process.getEndColor().getBlue());
-                playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+                playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
                 lastTickNum = playbackBuilder.build().getLastTick();
               }
               catch (IllegalArgumentException e) {
@@ -218,8 +218,8 @@ public class Controller implements InterfaceController, ActionListener,
 
         if (event.getTick() == processes.get(0).getStartTick()) {
           try {
-            playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
-            playbackBuilder.addMotion(event.getShapeName(), event.getTick(), event.getX(), event.getY(),
+            playbackBuilder.removeAnimation(event.getShapeName(), event.getTick());
+            playbackBuilder.addAnimation(event.getShapeName(), event.getTick(), event.getX(), event.getY(),
                     event.getWidth(), event.getHeight(), event.getShapeRotation(),
                     event.getColor().getRed(), event.getColor().getGreen(),
                     event.getColor().getBlue(), processes.get(0).getEndTick(),
@@ -229,17 +229,17 @@ public class Controller implements InterfaceController, ActionListener,
                             .getRed(),
                     processes.get(0).getEndColor().getGreen(),
                     processes.get(0).getEndColor().getBlue());
-            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
           } catch (IllegalArgumentException e) {
             playbackView.displayError(e.getMessage());
           }
         }
         else if (event.getTick() == processes.get(processes.size() - 1).getEndTick()) {
           try {
-            playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
+            playbackBuilder.removeAnimation(event.getShapeName(), event.getTick());
 
             IAnimation lastProcess = processes.get(processes.size() - 1);
-            playbackBuilder.addMotion(event.getShapeName(),
+            playbackBuilder.addAnimation(event.getShapeName(),
                     lastProcess.getStartTick(),
                     lastProcess.getStartX(),
                     lastProcess.getStartY(),
@@ -253,7 +253,7 @@ public class Controller implements InterfaceController, ActionListener,
                     event.getWidth(), event.getHeight(),
                     event.getShapeRotation(), event.getColor().getRed(),
                     event.getColor().getGreen(), event.getColor().getBlue());
-            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
           }
           catch (IllegalArgumentException e) {
             playbackView.displayError(e.getMessage());
@@ -263,9 +263,9 @@ public class Controller implements InterfaceController, ActionListener,
         for (int i = 1; i < processes.size(); i++) {
           if (event.getTick() == processes.get(i).getStartTick()) {
             try {
-              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i).getStartTick());
-              playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTick());
-              playbackBuilder.addMotion(event.getShapeName(), processes.get(i - 1).getStartTick(),
+              playbackBuilder.removeAnimation(event.getShapeName(), processes.get(i).getStartTick());
+              playbackBuilder.removeAnimation(event.getShapeName(), processes.get(i - 1).getStartTick());
+              playbackBuilder.addAnimation(event.getShapeName(), processes.get(i - 1).getStartTick(),
                       processes.get(i - 1).getStartX(),
                       processes.get(i - 1).getStartY(), processes.get(i - 1).getStartWidth(),
                       processes.get(i - 1).getStartHeight(),
@@ -277,7 +277,7 @@ public class Controller implements InterfaceController, ActionListener,
                       event.getWidth(), event.getHeight(), event.getShapeRotation(),
                       event.getColor().getRed(), event.getColor().getGreen(),
                       event.getColor().getBlue());
-              playbackBuilder.addMotion(event.getShapeName(),
+              playbackBuilder.addAnimation(event.getShapeName(),
                       event.getTick(), event.getX(), event.getY(),
                       event.getWidth(), event.getHeight(), event.getShapeRotation(),
                       event.getColor().getRed(), event.getColor().getGreen(),
@@ -288,7 +288,7 @@ public class Controller implements InterfaceController, ActionListener,
                               .getRed(),
                       processes.get(i).getEndColor().getGreen(),
                       processes.get(i).getEndColor().getBlue());
-              playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+              playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
             }
             catch (IllegalArgumentException e) {
               playbackView.displayError(e.getMessage());
@@ -304,8 +304,8 @@ public class Controller implements InterfaceController, ActionListener,
         if (event.getTick() == processes.get(0).getStartTick()
                 || (event.getTick() == processes.get(processes.size() - 1).getEndTick())) {
           try {
-            playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
-            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+            playbackBuilder.removeAnimation(event.getShapeName(), event.getTick());
+            playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
           }
           catch (IllegalArgumentException e) {
             playbackView.displayError(e.getMessage());
@@ -316,9 +316,9 @@ public class Controller implements InterfaceController, ActionListener,
             if (event.getTick() == processes.get(i).getStartTick()) {
               IAnimation process = combine(processes.get(i - 1), processes.get(i));
               try {
-                playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
-                playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTick());
-                playbackBuilder.addMotion(event.getShapeName(), process.getStartTick(),
+                playbackBuilder.removeAnimation(event.getShapeName(), event.getTick());
+                playbackBuilder.removeAnimation(event.getShapeName(), processes.get(i - 1).getStartTick());
+                playbackBuilder.addAnimation(event.getShapeName(), process.getStartTick(),
                         process.getStartX(),
                         process.getStartY(), process.getStartWidth(), process.getStartHeight(),
                         process.getStartRotationDegree(),
@@ -328,7 +328,7 @@ public class Controller implements InterfaceController, ActionListener,
                         process.getEndRotationDegree(),
                         process.getEndColor().getRed(), process.getEndColor().getGreen(),
                         process.getEndColor().getBlue());
-                playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getProcesses()));
+                playbackView.setKeyframes(convertToKeyFrames(playbackBuilder.getAnimations()));
               }
               catch (IllegalArgumentException e) {
                 playbackView.displayError(e.getMessage());
@@ -392,7 +392,7 @@ public class Controller implements InterfaceController, ActionListener,
         try {
           playbackBuilder.declareShape(event.getName(), event.getShapeType());
           playbackView.setShapes(playbackBuilder.getShapes());
-          playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getProcesses()));
+          playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getAnimations()));
         }
         catch (IllegalArgumentException e) {
           playbackView.displayError(e.getMessage());
@@ -406,7 +406,7 @@ public class Controller implements InterfaceController, ActionListener,
         try {
           playbackBuilder.removeShape(event.getName());
           playbackView.setShapes(playbackBuilder.getShapes());
-          playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getProcesses()));
+          playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getAnimations()));
           lastTickNum = playbackBuilder.build().getLastTick();
         }
         catch (IllegalArgumentException e) {
@@ -498,14 +498,14 @@ public class Controller implements InterfaceController, ActionListener,
 
   @Override
   public void start() {
-    this.playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getProcesses()));
+    this.playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getAnimations()));
     this.playbackView.setShapes(this.playbackBuilder.getShapes());
     this.playbackView.addButtonListener(this);
     this.playbackView.addFrameChangeListener(this);
     this.playbackView.addShapeChangeListener(this);
     this.playbackView.addPropertyListener(this);
-    this.playbackView.setWidth((int) this.playbackBuilder.getNeededSpace().getWidth());
-    this.playbackView.setHeight((int) this.playbackBuilder.getNeededSpace().getHeight());
+    this.playbackView.setWidth((int) this.playbackBuilder.getRequiredDimensions().getWidth());
+    this.playbackView.setHeight((int) this.playbackBuilder.getRequiredDimensions().getHeight());
     this.playbackView.play();
     this.playbackView.display(this.playbackBuilder.build().getState(this.firstTickNum));
   }
@@ -589,7 +589,7 @@ public class Controller implements InterfaceController, ActionListener,
   // are no processes then set tick to 0;
   private int getFirstTick() {
     Map<String, List<IAnimation>> processes = this.playbackBuilder
-            .getProcesses();
+            .getAnimations();
     int firstTickNum = Integer.MAX_VALUE;
 
     for (String id : processes.keySet()) {

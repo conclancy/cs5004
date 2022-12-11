@@ -44,14 +44,14 @@ public class TextViewTest {
   @Test
   public void testAniModelTextwithShapes() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 5, 5, 10, 10, 0, 0,
+            .addAnimation("R", 0, 5, 5, 10, 10, 0, 0,
                     255, 5, 10,
                     10, 15, 15, 0, 255, 0)
-            .addMotion("R", 5, 10, 10, 15, 15, 0,
+            .addAnimation("R", 5, 10, 10, 15, 15, 0,
                     255, 0, 15, 20,
                     20, 10, 30, 0, 255, 0)
             .declareShape("C", "Ellipse")
-            .addMotion("C", 0, 5, 5, 20, 20, 255,
+            .addAnimation("C", 0, 5, 5, 20, 20, 255,
                     255, 255, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.aniModel = this.aniBuilder.build();
@@ -84,17 +84,17 @@ public class TextViewTest {
   @Test
   public void testAniModelTextPlayRectangleAndEllipse() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 5, 5, 10, 10, 0,
+            .addAnimation("R", 0, 5, 5, 10, 10, 0,
                     0, 255, 5, 10,
                     10, 15, 15, 0, 255, 0)
 
-            .addMotion("R", 5, 10, 10, 15, 15, 0,
+            .addAnimation("R", 5, 10, 10, 15, 15, 0,
                     255, 0, 15, 20,
                     20, 10, 30, 0, 255, 0)
 
             .declareShape("C", "Ellipse")
 
-            .addMotion("C", 0, 5, 5, 20, 20, 255,
+            .addAnimation("C", 0, 5, 5, 20, 20, 255,
                     255, 255, 10, 20,
                     20, 20, 20, 255, 0, 0);
 
@@ -115,21 +115,21 @@ public class TextViewTest {
   @Test
   public void testAniModelWithMotions() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 5, 5, 10, 10, 0,
+            .addAnimation("R", 0, 5, 5, 10, 10, 0,
                     0, 255, 5, 10,
                     10, 15, 15, 0, 255, 0)
 
-            .addMotion("R", 5, 10, 10, 15, 15, 0,
+            .addAnimation("R", 5, 10, 10, 15, 15, 0,
                     255, 0, 15, 20,
                     20, 10, 30, 0, 255, 0)
 
             .declareShape("C", "Ellipse")
 
-            .addMotion("C", 0, 5, 5, 20, 20, 0,
+            .addAnimation("C", 0, 5, 5, 20, 20, 0,
                     0, 255, 10, 20,
                     20, 20, 20, 100, 0, 0)
 
-            .addMotion("C", 10, 20, 20, 20, 20, 100,
+            .addAnimation("C", 10, 20, 20, 20, 20, 100,
                     0, 0, 22, 30,
                     30, 20, 20, 255, 0, 0);
 

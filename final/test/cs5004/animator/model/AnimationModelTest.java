@@ -37,7 +37,7 @@ public class AnimationModelTest {
   @Test
   public void testAddProcess() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 0, 0, 10, 10, 255, 255, 255, 50, 20,
+            .addAnimation("R", 0, 0, 0, 10, 10, 255, 255, 255, 50, 20,
                     20, 10, 100, 255, 255, 255);
     this.model = this.aniBuilder.build();
     assertEquals("Shape R Rectangle\n"
@@ -49,7 +49,7 @@ public class AnimationModelTest {
   @Test
   public void testAddOtherProcess() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 0, 0, 10, 10, 255, 255, 255, 50, 20,
+            .addAnimation("R", 0, 0, 0, 10, 10, 255, 255, 255, 50, 20,
                     20, 10, 100, 255, 255, 255);
     this.model = this.aniBuilder.build();
     assertEquals("Shape R Rectangle\n" +
@@ -60,9 +60,9 @@ public class AnimationModelTest {
   @Test
   public void testAddTwoProcesss() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 0, 0, 10, 10, 255, 255, 255, 50, 20,
+            .addAnimation("R", 0, 0, 0, 10, 10, 255, 255, 255, 50, 20,
                     20, 10, 100, 255, 255, 255)
-            .addMotion("R", 50, 20, 20, 10, 100, 255, 255, 255, 100, 40,
+            .addAnimation("R", 50, 20, 20, 10, 100, 255, 255, 255, 100, 40,
                     40, 100, 100, 255, 255, 255);
     this.model = this.aniBuilder.build();
     assertEquals("Shape R Rectangle\n" +
@@ -75,18 +75,18 @@ public class AnimationModelTest {
   @Test
   public void testAddTwoProcesssOutOfOrder() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 5, 5, 10, 10, 0, 0, 255, 5, 10,
+            .addAnimation("R", 0, 5, 5, 10, 10, 0, 0, 255, 5, 10,
                     10, 15, 15, 0, 255, 0)
 
-            .addMotion("R", 5, 10, 10, 15, 15, 0, 255, 0, 15, 20,
+            .addAnimation("R", 5, 10, 10, 15, 15, 0, 255, 0, 15, 20,
                     20, 10, 30, 0, 255, 0)
 
             .declareShape("C", "Ellipse")
 
-            .addMotion("C", 0, 5, 5, 20, 20, 0, 0, 255, 10, 20,
+            .addAnimation("C", 0, 5, 5, 20, 20, 0, 0, 255, 10, 20,
                     20, 20, 20, 100, 0, 0)
 
-            .addMotion("C", 10, 20, 20, 20, 20, 100, 0, 0, 22, 30,
+            .addAnimation("C", 10, 20, 20, 20, 20, 100, 0, 0, 22, 30,
                     30, 20, 20, 255, 0, 0);
     this.model = this.aniBuilder.build();
     assertEquals("Shape R Rectangle\n" +
@@ -108,9 +108,9 @@ public class AnimationModelTest {
   @Test(expected = IllegalStateException.class)
   public void testAddProcessFailsDiffIds() {
     this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("Steve", 5, 20, 10, 10, 30, 0, 255, 0, 10, 20,
+            .addAnimation("Steve", 5, 20, 10, 10, 30, 0, 255, 0, 10, 20,
                     20, 10, 30, 0, 255, 0);
     this.model = this.aniBuilder.build();
   }
@@ -118,9 +118,9 @@ public class AnimationModelTest {
   @Test(expected = IllegalArgumentException.class)
   public void testAddProcesssInvalidOverlap() {
     this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("rectangle", 3, 16, 10, 10, 30, 0, 255, 0, 7, 26,
+            .addAnimation("rectangle", 3, 16, 10, 10, 30, 0, 255, 0, 7, 26,
                     15, 10, 30, 0, 255, 0);
     this.model = this.aniBuilder.build();
     assertEquals("Shape rectangle Rectangle\n"
@@ -131,9 +131,9 @@ public class AnimationModelTest {
   @Test //processes who start on the same tick that another ends are valid and work.
   public void testAddProcesssValidOverlap() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
+            .addAnimation("R", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("R", 5, 20, 10, 10, 30, 0, 255, 0, 8, 20,
+            .addAnimation("R", 5, 20, 10, 10, 30, 0, 255, 0, 8, 20,
                     10, 10, 30, 0, 0, 255);
     this.model = this.aniBuilder.build();
     assertEquals("Shape R Rectangle\n" +
@@ -145,9 +145,9 @@ public class AnimationModelTest {
   @Test(expected = IllegalArgumentException.class)
   public void testAddProcesssInvalidTeleport() {
     this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("rectangle", 5, 35, 10, 10, 30, 0, 255, 0, 10, 45,
+            .addAnimation("rectangle", 5, 35, 10, 10, 30, 0, 255, 0, 10, 45,
                     15, 10, 30, 0, 255, 0);
     this.model = this.aniBuilder.build();
     assertEquals("Shape rectangle Rectangle\n"
@@ -165,7 +165,7 @@ public class AnimationModelTest {
   @Test
   public void testGetState() {
     this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20, 10,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20, 10,
                     10, 30, 0, 255, 0);
     this.model = this.aniBuilder.build();
     List<IShape> expected = new ArrayList<>(Arrays.asList(
@@ -176,12 +176,12 @@ public class AnimationModelTest {
   @Test
   public void testToString() {
     this.aniBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 5, 5, 5, 22, 0, 255, 0, 5, 15, 15,
+            .addAnimation("R", 0, 5, 5, 5, 22, 0, 255, 0, 5, 15, 15,
                     15, 22, 0, 255, 0)
-            .addMotion("R", 5, 15, 15, 15, 22, 0, 255, 0, 33, 33, 33,
+            .addAnimation("R", 5, 15, 15, 15, 22, 0, 255, 0, 33, 33, 33,
                     33, 33, 0, 255, 0)
             .declareShape("C", "Ellipse")
-            .addMotion("C", 0, 1, 1, 20, 20, 255, 255, 255, 10, 20, 20,
+            .addAnimation("C", 0, 1, 1, 20, 20, 255, 255, 255, 10, 20, 20,
                     20, 20, 255, 0, 0);
     this.model = this.aniBuilder.build();
     assertEquals("Shape R Rectangle\n" +
@@ -209,12 +209,12 @@ public class AnimationModelTest {
   @Test
   public void testGetShapes() {
     this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("rectangle", 5, 20, 10, 10, 30, 0, 255, 0, 10, 20,
+            .addAnimation("rectangle", 5, 20, 10, 10, 30, 0, 255, 0, 10, 20,
                     20, 10, 30, 0, 255, 0)
             .declareShape("Steve", "Ellipse")
-            .addMotion("Steve", 0, 1, 1, 20, 20, 255, 0, 0, 10, 20,
+            .addAnimation("Steve", 0, 1, 1, 20, 20, 255, 0, 0, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.model = this.aniBuilder.build();
     LinkedHashMap<String, IShape> map = new LinkedHashMap<>();
@@ -226,12 +226,12 @@ public class AnimationModelTest {
   @Test
   public void testGetProcesss() {
     this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("rectangle", 5, 20, 10, 10, 30, 0, 255, 0, 10, 20,
+            .addAnimation("rectangle", 5, 20, 10, 10, 30, 0, 255, 0, 10, 20,
                     20, 10, 30, 0, 255, 0)
             .declareShape("Steve", "Ellipse")
-            .addMotion("Steve", 0, 1, 1, 20, 20, 255, 0, 0, 10, 20,
+            .addAnimation("Steve", 0, 1, 1, 20, 20, 255, 0, 0, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.model = this.aniBuilder.build();
     LinkedHashMap<String, List<IAnimation>> map = new LinkedHashMap<>();
@@ -252,12 +252,12 @@ public class AnimationModelTest {
   @Test
   public void testGetFinalTick() {
     this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5,
                     20, 10, 10, 30, 0, 255, 0)
-            .addMotion("rectangle", 5, 20, 10, 10, 30, 0, 255, 0, 10,
+            .addAnimation("rectangle", 5, 20, 10, 10, 30, 0, 255, 0, 10,
                     20, 20, 10, 30, 0, 255, 0)
             .declareShape("Steve", "Ellipse")
-            .addMotion("Steve", 0, 1, 1, 20, 20, 255, 0, 0, 30,
+            .addAnimation("Steve", 0, 1, 1, 20, 20, 255, 0, 0, 30,
                     20, 20, 20, 20, 255, 0, 0);
     this.model = this.aniBuilder.build();
     assertEquals(model.getLastTick(), 30);

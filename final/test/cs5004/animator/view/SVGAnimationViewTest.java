@@ -57,14 +57,14 @@ public class SVGAnimationViewTest {
   @Test
   public void testXMLAppendingWithShapes() {
     this.playbackBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255,
                     0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("rectangle", 5, 20, 10, 10, 30, 0, 255,
+            .addAnimation("rectangle", 5, 20, 10, 10, 30, 0, 255,
                     0, 10, 20,
                     20, 10, 30, 0, 255, 0)
             .declareShape("Steve", "Ellipse")
-            .addMotion("Steve", 0, 1, 1, 20, 20, 255, 0,
+            .addAnimation("Steve", 0, 1, 1, 20, 20, 255, 0,
                     0, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.model = this.playbackBuilder.build();
@@ -90,14 +90,14 @@ public class SVGAnimationViewTest {
   @Test
   public void testPlay1() {
     this.playbackBuilder.declareShape("R", "Rectangle")
-            .addMotion("R", 0, 10, 10, 10, 30, 0, 255,
+            .addAnimation("R", 0, 10, 10, 10, 30, 0, 255,
                     0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("R", 5, 20, 10, 10, 30, 0, 255,
+            .addAnimation("R", 5, 20, 10, 10, 30, 0, 255,
                     0, 10, 20,
                     20, 10, 30, 0, 255, 0)
             .declareShape("C", "Ellipse")
-            .addMotion("C", 0, 1, 1, 20, 20, 255, 0,
+            .addAnimation("C", 0, 1, 1, 20, 20, 255, 0,
                     0, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.model = this.playbackBuilder.build();
@@ -128,10 +128,10 @@ public class SVGAnimationViewTest {
   @Test
   public void testXMLAppendingWithMotions() {
     this.playbackBuilder.declareShape("rectangle", "Rectangle")
-            .addMotion("rectangle", 0, 10, 10, 10, 30, 0, 255,
+            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255,
                     0, 5, 20,
                     10, 10, 30, 0, 255, 0)
-            .addMotion("rectangle", 5, 20, 10, 10, 30, 0, 255,
+            .addAnimation("rectangle", 5, 20, 10, 10, 30, 0, 255,
                     0, 8, 20,
                     10, 10, 30, 0, 0, 255);
     this.model = this.playbackBuilder.build();
