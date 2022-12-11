@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  * This class represents the interpreting methods for the process for a shape during an animation.
  */
-public interface InterfaceInterpretProcess {
+public interface IProcess {
   /**
    * This method will retrieve the start time for the process of the object.
    * @return the start time of the process.
@@ -83,4 +83,30 @@ public interface InterfaceInterpretProcess {
    * @return the ending color
    */
   Color getEndColor();
+
+  /**
+   * This method will mutate a shape within a process to a state at the given time of the overall
+   * process.
+   *
+   * @param time  is the time to mutate the shape to the state.
+   * @param shape the shape of the object before the process starts.
+   * @return IShape which is the mutated shape.
+   */
+  IShape setState(int time, IShape shape);
+
+  /**
+   * This method will retrieve the rotationDegree of this process which the starting rotationDegree
+   * of the shape.
+   *
+   * @return int that represents the rotationDegree in degrees
+   */
+  int getStartRotationDegree();
+
+  /**
+   * This method will retrieve the rotationDegree of this process which the final rotationDegree of
+   * the shape.
+   *
+   * @return int that represents the rotationDegree in degrees
+   */
+  int getEndRotationDegree();
 }

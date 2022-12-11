@@ -134,10 +134,10 @@ public class Model implements IModel {
    * @return processes from model in the map.
    */
   @Override
-  public LinkedHashMap<String, List<InterfaceInterpretStatusProcess>> getProcesses() {
-    LinkedHashMap<String, List<InterfaceInterpretStatusProcess>> output = new LinkedHashMap<>();
+  public LinkedHashMap<String, List<IStatusProcess>> getProcesses() {
+    LinkedHashMap<String, List<IStatusProcess>> output = new LinkedHashMap<>();
     for (String key : this.processes.keySet()) {
-      List<InterfaceInterpretStatusProcess> newProcesss = new ArrayList<>();
+      List<IStatusProcess> newProcesss = new ArrayList<>();
       newProcesss.addAll(this.processes.get(key));
       output.put(key, newProcesss);
     }
@@ -202,7 +202,7 @@ public class Model implements IModel {
       IShape shape = this.shapes.get(entry.getKey());
       output.append("Shape ").append(entry.getKey()).append(" ").append(shape.getShapeType())
           .append("\n");
-      for (InterfaceProcess process : entry.getValue()) {
+      for (IProcess process : entry.getValue()) {
         StringBuilder temp = new StringBuilder(process.getType()).append(" ")
             .append(entry.getKey()).append(" ").append(process.getStartTime()).append(" ");
 
@@ -506,7 +506,7 @@ public class Model implements IModel {
         return;
       }
 
-      InterfaceProcess previousProcess = list.get(addIndex - 1);
+      IProcess previousProcess = list.get(addIndex - 1);
 
       previousProcess.setState(previousProcess.getEndTime(), shapeCopy1);
       process.setState(startTick, shapeCopy2);
@@ -540,7 +540,7 @@ public class Model implements IModel {
       int maxX = this.x;
       int maxY = this.y;
 
-      for (List<InterfaceInterpretStatusProcess> processList : this.getProcesses().values()) {
+      for (List<IStatusProcess> processList : this.getProcesses().values()) {
         minX = Math.min(minX,
             processList.get(0).getStartX());
         minY = Math.min(minY,
@@ -550,7 +550,7 @@ public class Model implements IModel {
         maxY = Math.max(maxY,
             processList.get(0).getStartY() + processList.get(0).getStartHeight());
 
-        for (InterfaceInterpretProcess process : processList) {
+        for (IProcess process : processList) {
           minX = Math.min(minX, process.getEndX());
           minY = Math.min(minY, process.getEndY());
           maxX = Math.max(maxX, process.getEndX() + process.getEndWidth());
@@ -564,19 +564,19 @@ public class Model implements IModel {
      * Method that removes a process.
      */
     @Override
-    public InterfacePlayBack removeProcess(String id, int time) {
+    public void removeProcess(String id, int time) {
       if (processes.get(id) == null) {
         throw new IllegalArgumentException("The given ID does not have any processes");
       }
       for (int i = 0; i < processes.get(id).size(); i++) {
         if (time == processes.get(id).get(i).getStartTime()) {
           processes.get(id).remove(i);
-          return this;
+          return;
         }
       }
       if (time == processes.get(id).get(processes.get(id).size() - 1).getEndTime()) {
         processes.get(id).remove(processes.get(id).size() - 1);
-        return this;
+        return;
       }
       throw new IllegalArgumentException("There are no processes to remove.");
     }
@@ -585,13 +585,12 @@ public class Model implements IModel {
      * Method that removes a shape.
      */
     @Override
-    public InterfacePlayBack removeShape(String id) {
+    public void removeShape(String id) {
       if (!shapesList.containsKey(id)) {
         throw new IllegalArgumentException("This ID is not associated with any shapes here");
       }
       shapesList.remove(id);
       processes.remove(id);
-      return this;
     }
 
     /**
@@ -614,10 +613,10 @@ public class Model implements IModel {
      * @return the map of the processes from the model.
      */
     @Override
-    public LinkedHashMap<String, List<InterfaceInterpretStatusProcess>> getProcesses() {
-      LinkedHashMap<String, List<InterfaceInterpretStatusProcess>> output = new LinkedHashMap<>();
+    public LinkedHashMap<String, List<IStatusProcess>> getProcesses() {
+      LinkedHashMap<String, List<IStatusProcess>> output = new LinkedHashMap<>();
       for (String key : this.processes.keySet()) {
-        List<InterfaceInterpretStatusProcess> newProcesss = new ArrayList<>();
+        List<IStatusProcess> newProcesss = new ArrayList<>();
         newProcesss.addAll(this.processes.get(key));
         output.put(key, newProcesss);
       }

@@ -13,24 +13,25 @@ public interface InterfacePlayBack extends AnimationBuilder {
 
   /**
    * This method removes a process from the current playbackBuilder with the given start time.
-   * @param id is the id of the shape that the process you are removing is associated with.
+   *
+   * @param id           is the id of the shape that the process you are removing is associated
+   *                     with.
    * @param startingTime is the start time of the process you remove.
-   * @return the playbackBuilder after removal.
    */
-  InterfacePlayBack removeProcess(String id, int startingTime);
+  void removeProcess(String id, int startingTime);
 
   /**
    * This method removes a shape from the current playbackBuilder.
+   *
    * @param id is the id of the shape that the process you are removing is associated with.
-   * @return the playbackBuilder after removal.
    */
-  InterfacePlayBack removeShape(String id);
+  void removeShape(String id);
 
   /**
    * This method will retrieve the processes from the playbackBuilder.
    * @return a map of the ids for the processes in the playbackBuilder.
    */
-  LinkedHashMap<String, List<InterfaceInterpretStatusProcess>> getProcesses();
+  LinkedHashMap<String, List<IStatusProcess>> getProcesses();
 
   /**
    * This method will retrieve the shapes from the playbackBuilder.

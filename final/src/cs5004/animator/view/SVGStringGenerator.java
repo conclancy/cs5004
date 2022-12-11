@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import cs5004.animator.model.IModel;
-import cs5004.animator.model.InterfaceInterpretProcess;
-import cs5004.animator.model.InterfaceInterpretStatusProcess;
+import cs5004.animator.model.IProcess;
+import cs5004.animator.model.IStatusProcess;
 
 /**
  * This class allows for the creation of SVG files.
@@ -51,7 +51,7 @@ public class SVGStringGenerator implements IVewText {
         + "xmlns=\"http://www.w3.org/2000/svg\">\n");
 
     for (Map.Entry<String, IShape> entry : model.getShapes().entrySet()) {
-      List<InterfaceInterpretStatusProcess> processes = model.getProcesses().get(entry.getKey());
+      List<IStatusProcess> processes = model.getProcesses().get(entry.getKey());
       switch (entry.getValue().getShapeType()) {
         case "Rectangle":
           type = "rect";
@@ -89,12 +89,12 @@ public class SVGStringGenerator implements IVewText {
    * Helper method that ingests the status list, and type and passes all associated information into
    * SVG format.
    */
-  private String toSVGStringHelper(List<InterfaceInterpretStatusProcess> list, String type) {
+  private String toSVGStringHelper(List<IStatusProcess> list, String type) {
     StringBuilder output = new StringBuilder();
     String startingStringValue;
     String endingStringValue = "\" fill=\"freeze\" />\n";
 
-    for (InterfaceInterpretStatusProcess process : list) {
+    for (IStatusProcess process : list) {
       startingStringValue = "    <animate attributeType=\"xml\" begin=\""
           + process.getStartTime() * speed + "ms\" dur=\""
           + (process.getEndTime() - process.getStartTime()) * speed + "ms\" "
@@ -197,7 +197,7 @@ public class SVGStringGenerator implements IVewText {
   /**
    * Get the state of a given shape during this process step.
    */
-  private String shapeStateHelper(InterfaceInterpretProcess process, String type) {
+  private String shapeStateHelper(IProcess process, String type) {
     StringBuilder output = new StringBuilder();
     switch (type) {
       case "rect":

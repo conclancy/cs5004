@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
  * Represents a process on a Shape, with each of the starting values and ending values of the fields
  * of the shape.
  */
-public class GeneralProcess implements InterfaceProcess {
+public class GeneralProcess implements IProcess {
   protected final int startingTime;
   protected final int endTime;
   private final String shapeType;
@@ -150,6 +150,28 @@ public class GeneralProcess implements InterfaceProcess {
     shape.setColor(new Color(newerRed, newerGreen, newerBlue));
 
     return shape;
+  }
+
+  /**
+   * This method will retrieve the rotationDegree of this process which the starting rotationDegree
+   * of the shape.
+   *
+   * @return int that represents the rotationDegree in degrees
+   */
+  @Override
+  public int getStartRotationDegree() {
+    return 0;
+  }
+
+  /**
+   * This method will retrieve the rotationDegree of this process which the final rotationDegree of
+   * the shape.
+   *
+   * @return int that represents the rotationDegree in degrees
+   */
+  @Override
+  public int getEndRotationDegree() {
+    return 0;
   }
 
   @Override

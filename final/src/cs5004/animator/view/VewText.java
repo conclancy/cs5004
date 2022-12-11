@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import cs5004.animator.model.IModel;
-import cs5004.animator.model.InterfaceInterpretStatusProcess;
+import cs5004.animator.model.IStatusProcess;
 
 /**
  * Class that represents a text description of the given animation.
@@ -41,7 +41,7 @@ public class VewText implements IVewText {
 
     StringBuilder output = new StringBuilder();
     for (Map.Entry<String,
-            List<InterfaceInterpretStatusProcess>> entry : this.model.getProcesses().entrySet()) {
+            List<IStatusProcess>> entry : this.model.getProcesses().entrySet()) {
       IShape shape = this.model.getShapes().get(entry.getKey());
       output.append("Create ").append(shape.getShapeType()).append(" ")
               .append(entry.getKey()).append(" ")
@@ -50,7 +50,7 @@ public class VewText implements IVewText {
               .append(shape.getHeight()).append(".")
               .append("\n");
 
-      for (InterfaceInterpretStatusProcess process : entry.getValue()) {
+      for (IStatusProcess process : entry.getValue()) {
         StringBuilder temp = new StringBuilder().append("Transform ");
         temp.append(entry.getKey()).append(" from location (")
                 .append(process.getStartX()).append(", ")
