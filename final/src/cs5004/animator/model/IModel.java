@@ -10,6 +10,7 @@ public interface IModel {
 
   /**
    * This method creates a list of the shapes at the state of the animation at the given timestamp.
+   *
    * @param time which is represented in ticks which is unit less.
    */
   List<IShape> getState(int time);

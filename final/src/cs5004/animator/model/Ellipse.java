@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 
 /**
- * This class represents a Ellipse shape. Ellipses care shapes that can be traced by a point moving
+ * This class represents an Ellipse shape. Ellipses care shapes that can be traced by a point moving
  * in a plane so that the sum of its distances from two other points (the foci) is constant, or
  * resulting when a cone is cut by an oblique plane which does not intersect the base
  */
@@ -51,8 +51,8 @@ public class Ellipse extends AbstractShape {
   }
 
   /**
-   * Get a deep copy of the Ellipse.  This allows access to a shape without risking the changing
-   * of the underlying shape attributes.
+   * Get a deep copy of the Ellipse.  This allows access to a shape without risking the changing of
+   * the underlying shape attributes.
    *
    * @return an exact replica of the Rectangle, as a new {@link Rectangle} object.
    */
