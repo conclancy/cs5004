@@ -1,11 +1,16 @@
 package cs5004.animator.util;
 
 import cs5004.animator.model.IModel;
+import cs5004.animator.model.IProcess;
+import cs5004.animator.model.IShape;
+import java.awt.Dimension;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Represents the interface for playbackBuilder that creates an animation with the specified fields.
  */
-public interface AnimationBuilder {
+public interface IAnimationBuilder {
   /**
    * Constructs a final document.
    * @return the newly constructed document
@@ -19,9 +24,9 @@ public interface AnimationBuilder {
    * @param y The topmost y value
    * @param width The width of the bounding box
    * @param height The height of the bounding box
-   * @return This {@link AnimationBuilder}
+   * @return This {@link IAnimationBuilder}
    */
-  AnimationBuilder setBounds(int x, int y, int width, int height);
+  IAnimationBuilder setBounds(int x, int y, int width, int height);
 
   /**
    * Adds a new shape to the growing document.
@@ -31,14 +36,14 @@ public interface AnimationBuilder {
    * @param type The type of shape (e.g. "ellipse", "rectangle") to be added.  
    *             The set of supported shapes is unspecified, but should 
    *             include "ellipse" and "rectangle" as a minimum.
-   * @return This {@link AnimationBuilder}
+   * @return This {@link IAnimationBuilder}
    */
-  AnimationBuilder declareShape(String name, String type);
+  IAnimationBuilder declareShape(String name, String type);
 
   /**
    * Adds a transformation to the growing document.
    * 
-   * @param name The name of the shape (added with {@link AnimationBuilder#declareShape})
+   * @param name The name of the shape (added with {@link IAnimationBuilder#declareShape})
    * @param t1   The start time of this transformation
    * @param x1   The initial x-coordinatePosition of the shape
    * @param y1   The initial y-coordinatePosition of the shape
@@ -55,16 +60,16 @@ public interface AnimationBuilder {
    * @param r2   The final red color-value of the shape
    * @param g2   The final green color-value of the shape
    * @param b2   The final blue color-value of the shape
-   * @return This {@link AnimationBuilder}
+   * @return This {@link IAnimationBuilder}
    */
-  AnimationBuilder addMotion(String name,
+  IAnimationBuilder addMotion(String name,
                                   int t1, int x1, int y1, int w1, int h1, int r1, int g1, int b1,
                                   int t2, int x2, int y2, int w2, int h2, int r2, int g2, int b2);
 
   /**
    * Adds a transformation to the growing document.
    *
-   * @param name The name of the shape (added with {@link AnimationBuilder#declareShape})
+   * @param name The name of the shape (added with {@link IAnimationBuilder#declareShape})
    * @param t1   The start time of this transformation
    * @param x1   The initial x-coordinatePosition of the shape
    * @param y1   The initial y-coordinatePosition of the shape
@@ -83,15 +88,15 @@ public interface AnimationBuilder {
    * @param r2   The final red color-value of the shape
    * @param g2   The final green color-value of the shape
    * @param b2   The final blue color-value of the shape
-   * @return This {@link AnimationBuilder}
+   * @return This {@link IAnimationBuilder}
    */
-  AnimationBuilder addMotion(String name, int t1, int x1, int y1, int w1, int h1, int o1, int r1,
+  IAnimationBuilder addMotion(String name, int t1, int x1, int y1, int w1, int h1, int o1, int r1,
                              int g1, int b1, int t2, int x2, int y2, int w2, int h2, int o2,
                              int r2, int g2, int b2);
 
   /**
    * Adds an individual keyframe to the growing document.
-   * @param name The name of the shape (added with {@link AnimationBuilder#declareShape})
+   * @param name The name of the shape (added with {@link IAnimationBuilder#declareShape})
    * @param t    The time for this keyframe
    * @param x    The x-coordinatePosition of the shape
    * @param y    The y-coordinatePosition of the shape
@@ -100,8 +105,42 @@ public interface AnimationBuilder {
    * @param r    The red color-value of the shape
    * @param g    The green color-value of the shape
    * @param b    The blue color-value of the shape
-   * @return This {@link AnimationBuilder}
+   * @return This {@link IAnimationBuilder}
    */
-  AnimationBuilder addKeyframe(String name,
+  IAnimationBuilder addKeyframe(String name,
                                     int t, int x, int y, int w, int h, int r, int g, int b);
+
+  /**
+   * This method removes a process from the current playbackBuilder with the given start time.
+   *
+   * @param id           is the id of the shape that the process you are removing is associated
+   *                     with.
+   * @param startingTime is the start time of the process you remove.
+   */
+  void removeProcess(String id, int startingTime);
+
+  /**
+   * This method removes a shape from the current playbackBuilder.
+   *
+   * @param id is the id of the shape that the process you are removing is associated with.
+   */
+  void removeShape(String id);
+
+  /**
+   * This method will retrieve the processes from the playbackBuilder.
+   * @return a map of the ids for the processes in the playbackBuilder.
+   */
+  LinkedHashMap<String, List<IProcess>> getProcesses();
+
+  /**
+   * This method will retrieve the shapes from the playbackBuilder.
+   * @return a map of the ids for the shapes in the playbackBuilder.
+   */
+  LinkedHashMap<String, IShape> getShapes();
+
+  /**
+   * This method will retrieve the needed space from the playbackBuilder.
+   * @return the dimensions for the animation.
+   */
+  Dimension getNeededSpace();
 }

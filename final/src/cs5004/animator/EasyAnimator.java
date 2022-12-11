@@ -1,5 +1,7 @@
 package cs5004.animator;
 
+import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IVewText;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.ViewGUIEditor;
@@ -14,11 +16,8 @@ import javax.swing.JOptionPane;
 
 import cs5004.animator.controller.Controller;
 import cs5004.animator.controller.InterfaceController;
-import cs5004.animator.util.AnimationBuilder;
-import cs5004.animator.model.Model;
 import cs5004.animator.util.AnimationReader;
 import cs5004.animator.model.IModel;
-import cs5004.animator.model.InterfacePlayBack;
 import cs5004.animator.view.ViewGUISimple;
 import cs5004.animator.view.IView;
 import cs5004.animator.view.SVGStringGenerator;
@@ -35,8 +34,8 @@ public final class EasyAnimator {
    * @param args the input that allows the user to specify what kind of animation they desire.
    */
   public static void main(String [] args) {
-    AnimationBuilder playbackBuilder = new Model.AnimationModelBuilder();
-    InterfacePlayBack editBuilder = new Model.AnimationModelBuilder();
+    IAnimationBuilder playbackBuilder = new AnimationModelBuilder();
+    IAnimationBuilder editBuilder = new AnimationModelBuilder();
     IModel model;
     IVewText textView;
     IViewGUI editView;

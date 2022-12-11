@@ -1,7 +1,8 @@
 package cs5004.animator.controller;
 
-import cs5004.animator.model.GeneralProcess;
+import cs5004.animator.model.Process;
 import cs5004.animator.model.IProcess;
+import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IVewText;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.SVGStringGenerator;
@@ -20,7 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cs5004.animator.model.IModel;
-import cs5004.animator.model.InterfacePlayBack;
 import cs5004.animator.model.IShape;
 import cs5004.animator.view.IFrameChangeEvent;
 import cs5004.animator.view.IFrameChangeListener;
@@ -36,7 +36,7 @@ public class Controller implements InterfaceController, ActionListener,
     IFrameChangeListener,
     IShapeChangeListener, PropertyChangeListener {
 
-  private InterfacePlayBack playbackBuilder;
+  private IAnimationBuilder playbackBuilder;
   private IViewGUI playbackView;
 
   private Timer timer;
@@ -56,7 +56,7 @@ public class Controller implements InterfaceController, ActionListener,
    * @param view which is the view for this constructor to show to the user to interact with.
    * @param ticksPS which is the starting speed for this animation.
    */
-  public Controller(InterfacePlayBack playbackBuilder, IViewGUI view, int ticksPS) {
+  public Controller(IAnimationBuilder playbackBuilder, IViewGUI view, int ticksPS) {
     this.playbackBuilder = requireNonNull(playbackBuilder);
     this.playbackView = requireNonNull(view);
     this.ticksPS = ticksPS;
@@ -345,7 +345,7 @@ public class Controller implements InterfaceController, ActionListener,
   // takes the starting values of one process and the ending values of a second to make one new
   // process.
   private IProcess combine(IProcess process1, IProcess process2) {
-    return new GeneralProcess(process1.getType(), process1.getStartTime(),
+    return new Process(process1.getType(), process1.getStartTime(),
             process1.getStartX(),
             process1.getStartY(), process1.getStartWidth(), process1.getStartHeight(),
             process1.getStartRotationDegree(),

@@ -25,7 +25,7 @@ public class AnimationReader {
    * of the shape to move, and 16 integers giving the initial and final conditions of the motion:
    * eight numbers giving the time, the x and y coordinates, the width and height,
    * and the red, green and blue color values at the start of the motion; followed by 
-   * eight numbers for the end of the motion.  See {@link AnimationBuilder#addMotion}</li>
+   * eight numbers for the end of the motion.  See {@link IAnimationBuilder#addMotion}</li>
    * </ul>
    * </p>
    *
@@ -33,9 +33,9 @@ public class AnimationReader {
    * @param playbackBuilder  A playbackBuilder for helping to construct a new animation
    * @return
    */
-  public static IModel parseFile(Readable readable, AnimationBuilder playbackBuilder) {
+  public static IModel parseFile(Readable readable, IAnimationBuilder playbackBuilder) {
     Objects.requireNonNull(readable, "Must have non-null readable source");
-    Objects.requireNonNull(playbackBuilder, "Must provide a non-null AnimationBuilder");
+    Objects.requireNonNull(playbackBuilder, "Must provide a non-null IAnimationBuilder");
     Scanner s = new Scanner(readable);
     // Split at whitespace, and ignore # comment lines
     s.useDelimiter(Pattern.compile("(\\p{Space}+|#.*)+")); 
@@ -58,7 +58,7 @@ public class AnimationReader {
     return playbackBuilder.build();
   }
 
-  private static void readCanvas(Scanner s, AnimationBuilder playbackBuilder) {
+  private static void readCanvas(Scanner s, IAnimationBuilder playbackBuilder) {
     int[] vals = new int[4];
     String[] fieldNames = {"left", "top", "width", "height"};
     for (int i = 0; i < 4; i++) {
@@ -67,7 +67,7 @@ public class AnimationReader {
     playbackBuilder.setBounds(vals[0], vals[1], vals[2], vals[3]);
   }
 
-  private static void readShape(Scanner s, AnimationBuilder playbackBuilder) {
+  private static void readShape(Scanner s, IAnimationBuilder playbackBuilder) {
     String name;
     String type;
     if (s.hasNext()) {
@@ -83,7 +83,7 @@ public class AnimationReader {
     playbackBuilder.declareShape(name, type);
   }
 
-  private static void readMotion(Scanner s, AnimationBuilder playbackBuilder) {
+  private static void readMotion(Scanner s, IAnimationBuilder playbackBuilder) {
     String[] fieldNames = new String[]{
       "initial time",
       "initial x-coordinate", "initial y-coordinate",

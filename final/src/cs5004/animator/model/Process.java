@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
  * Represents a process on a Shape, with each of the starting values and ending values of the fields
  * of the shape.
  */
-public class GeneralProcess implements IProcess {
+public class Process implements IProcess {
   protected final int startingTime;
   protected final int endTime;
   private final String shapeType;
@@ -48,7 +48,7 @@ public class GeneralProcess implements IProcess {
    *                                  height is negative at any point, or if the start time is after
    *                                  the end time.
    */
-  public GeneralProcess(String shapeType, int t1, int x1, int y1, int w1, int h1, int r1, int g1,
+  public Process(String shapeType, int t1, int x1, int y1, int w1, int h1, int r1, int g1,
                         int b1,
                         int t2, int x2, int y2, int w2, int h2, int r2, int g2, int b2)
           throws IllegalArgumentException {
@@ -113,7 +113,7 @@ public class GeneralProcess implements IProcess {
    *                                  negative, or if the width and or the height are negative. the
    *                                  end time.
    */
-  public GeneralProcess(String type, int t1, int x1, int y1, int w1, int h1, int o1, int r1,
+  public Process(String type, int t1, int x1, int y1, int w1, int h1, int o1, int r1,
       int g1, int b1, int t2, int x2, int y2, int w2, int h2, int o2, int r2,
       int g2, int b2) throws IllegalArgumentException {
 

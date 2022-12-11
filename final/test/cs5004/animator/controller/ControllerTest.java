@@ -1,7 +1,7 @@
 package cs5004.animator.controller;
 
-import cs5004.animator.model.InterfacePlayBack;
-import cs5004.animator.util.AnimationBuilder;
+import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.ViewGUIEditor;
 import org.junit.Before;
@@ -24,7 +24,6 @@ import cs5004.animator.view.IShapeChangeEvent;
 import cs5004.animator.view.ShapeCell;
 import cs5004.animator.view.EShapeChangeType;
 import cs5004.animator.view.ShapeChangeEvent;
-import cs5004.animator.model.Model;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,13 +32,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class ControllerTest {
   private Controller controller;
-  private InterfacePlayBack animationBuilder;
+  private IAnimationBuilder animationBuilder;
   private IViewGUI view;
   private Map<String, List<InterpretStatusKeyFrame>> originalFrames;
 
   @Before
   public void setUp() {
-    this.animationBuilder = new Model.AnimationModelBuilder();
+    this.animationBuilder = new AnimationModelBuilder();
     FileReader in;
     try {
       in = new FileReader("./starter_code/smalldemo.txt");

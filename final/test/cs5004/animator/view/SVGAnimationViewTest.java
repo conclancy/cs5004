@@ -1,7 +1,7 @@
 package cs5004.animator.view;
 
-import cs5004.animator.model.Model;
-import cs5004.animator.util.AnimationBuilder;
+import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.IAnimationBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,12 +22,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class SVGAnimationViewTest {
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  private AnimationBuilder playbackBuilder;
+  private IAnimationBuilder playbackBuilder;
   private IModel model;
 
   @Before
   public void setUp() {
-    this.playbackBuilder = new Model.AnimationModelBuilder();
+    this.playbackBuilder = new AnimationModelBuilder();
     System.setOut(new PrintStream(outContent));
   }
 

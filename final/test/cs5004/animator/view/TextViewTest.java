@@ -1,8 +1,8 @@
 package cs5004.animator.view;
 
 
-import cs5004.animator.model.Model.AnimationModelBuilder;
-import cs5004.animator.util.AnimationBuilder;
+import cs5004.animator.util.AnimationModelBuilder;
+import cs5004.animator.util.IAnimationBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ import cs5004.animator.model.IModel;
 public class TextViewTest {
 
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  private AnimationBuilder aniBuilder;
+  private IAnimationBuilder aniBuilder;
   private IModel aniModel;
 
   @Before
