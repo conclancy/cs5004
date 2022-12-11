@@ -24,10 +24,10 @@ import javax.swing.JComboBox;
  * export their animation as an SVG file and allows users to change shapes and events that occur
  * within the automation.
  */
-public class UserInputHandler implements InterfaceViewInputHandler {
+public class UserInputHandler implements IUserInputHandler {
 
-  private final List<InterfaceShapeChangeListener> actionShapeChangeListeners;
-  private final List<InterfaceFrameChangeListener> actionFrameChangeListeners;
+  private final List<IShapeChangeListener> actionShapeChangeListeners;
+  private final List<IFrameChangeListener> actionFrameChangeListeners;
   private final List<PropertyChangeListener> actionExportListeners;
   private final String[] shapeChoices = new String[]{"Rectangle", "Ellipse"};
 
@@ -43,20 +43,20 @@ public class UserInputHandler implements InterfaceViewInputHandler {
   /**
    * Add a shape change listeners to the handler.
    *
-   * @param listener in the form of a {@link InterfaceShapeChangeListener}.
+   * @param listener in the form of a {@link IShapeChangeListener}.
    */
   @Override
-  public void addShapeChangeListener(InterfaceShapeChangeListener listener) {
+  public void addShapeChangeListener(IShapeChangeListener listener) {
     this.actionShapeChangeListeners.add(listener);
   }
 
   /**
    * Add frame change listeners to the handler.
    *
-   * @param listener in the form of a {@link InterfaceFrameChangeListener}
+   * @param listener in the form of a {@link IFrameChangeListener}
    */
   @Override
-  public void addFrameChangeListener(InterfaceFrameChangeListener listener) {
+  public void addFrameChangeListener(IFrameChangeListener listener) {
     this.actionFrameChangeListeners.add(listener);
   }
 
@@ -82,22 +82,22 @@ public class UserInputHandler implements InterfaceViewInputHandler {
   }
 
   /**
-   * Listen for a {@link ShapeChange} event and update the change list.
+   * Listen for a {@link EShapeChangeType} event and update the change list.
    *
-   * @param changeType the {@link ShapeChange} event type.
+   * @param changeType the {@link EShapeChangeType} event type.
    * @param shapeType  the type of shape.
    * @param name       the name of the shape.
    */
-  private void eventShapeChange(ShapeChange changeType, String shapeType, String name) {
-    for (InterfaceShapeChangeListener listener : this.actionShapeChangeListeners) {
+  private void eventShapeChange(EShapeChangeType changeType, String shapeType, String name) {
+    for (IShapeChangeListener listener : this.actionShapeChangeListeners) {
       listener.shapeChanged(new ShapeChangeEvent(this, changeType, shapeType, name));
     }
   }
 
   /**
-   * List for a {@link EFrameChange} event and add it to the keyframe change list.
+   * List for a {@link EFrameChangeType} event and add it to the keyframe change list.
    *
-   * @param type   the type of {@link EFrameChange} occurring.
+   * @param type   the type of {@link EFrameChangeType} occurring.
    * @param name   the name of the shape being changed.
    * @param tick   the tick at which the frame change occurs.
    * @param x      the X coordinate of the shape.
@@ -107,10 +107,10 @@ public class UserInputHandler implements InterfaceViewInputHandler {
    * @param degree the degree of rotation of the shape from its starting position.
    * @param color  the {@link Color} of the shape.
    */
-  private void eventFrameChange(EFrameChange type, String name, int tick, int x, int y,
+  private void eventFrameChange(EFrameChangeType type, String name, int tick, int x, int y,
       int width, int height, int degree, Color color) {
-    for (InterfaceFrameChangeListener listener : this.actionFrameChangeListeners) {
-      listener.keyframeChanged(new FrameChangeEvent(this, type, name, tick, x, y, width,
+    for (IFrameChangeListener listener : this.actionFrameChangeListeners) {
+      listener.frameChanged(new FrameChangeEvent(this, type, name, tick, x, y, width,
           height, degree, color));
     }
   }
@@ -122,8 +122,8 @@ public class UserInputHandler implements InterfaceViewInputHandler {
    * @param tick the tick at which the frame occurs.
    */
   private void eventFrameDelete(String name, int tick) {
-    for (InterfaceFrameChangeListener listener : this.actionFrameChangeListeners) {
-      listener.keyframeChanged(new FrameChangeEvent(this, EFrameChange.DELETE, name, tick,
+    for (IFrameChangeListener listener : this.actionFrameChangeListeners) {
+      listener.frameChanged(new FrameChangeEvent(this, EFrameChangeType.DELETE, name, tick,
           0, 0, 0, 0, 0, new Color(0)));
     }
   }
@@ -176,9 +176,9 @@ public class UserInputHandler implements InterfaceViewInputHandler {
    * @param name      the name of the shape being changed.
    */
   @Override
-  public void changeShape(Component component, ShapeChange type, String name) {
-    if (type == ShapeChange.DELETE) {
-      this.eventShapeChange(ShapeChange.DELETE, "", name);
+  public void changeShape(Component component, EShapeChangeType type, String name) {
+    if (type == EShapeChangeType.DELETE) {
+      this.eventShapeChange(EShapeChangeType.DELETE, "", name);
       return;
     }
 
@@ -210,7 +210,7 @@ public class UserInputHandler implements InterfaceViewInputHandler {
 
     while (result == JOptionPane.OK_OPTION) {
       if (!inputFieldName.getText().equals("")) {
-        this.eventShapeChange(ShapeChange.ADD,
+        this.eventShapeChange(EShapeChangeType.ADD,
             Objects.requireNonNull(comboShapeChoices.getSelectedItem()).toString(),
             inputFieldName.getText());
         return;
@@ -225,13 +225,13 @@ public class UserInputHandler implements InterfaceViewInputHandler {
    * Allows for ADDING or DELETING an existing frame with a given name and tick location.
    *
    * @param component  the component to be set.
-   * @param changeType the {@link EFrameChange} type occurring
+   * @param changeType the {@link EFrameChangeType} type occurring
    * @param name       the name of the frame to be changed.
    * @param tick       the tick location of the change.
    */
   @Override
-  public void changeFrame(Component component, EFrameChange changeType, String name, int tick) {
-    if (changeType == EFrameChange.EDIT) {
+  public void changeFrame(Component component, EFrameChangeType changeType, String name, int tick) {
+    if (changeType == EFrameChangeType.EDIT) {
       throw new IllegalArgumentException(
           "Editing requires using the signature that takes in additional details about the change."
               + "  This signature only supports ADDING and DELETING.");
@@ -243,7 +243,7 @@ public class UserInputHandler implements InterfaceViewInputHandler {
    * Allows for EDITING an existing frame within an animation.
    *
    * @param component  the component to be edited.
-   * @param changeType the {@link EFrameChange} type occurring
+   * @param changeType the {@link EFrameChangeType} type occurring
    * @param name       the name of the frame being changed.
    * @param tick       the tick location of the change.
    * @param x          the X coordinate of the shape.
@@ -254,7 +254,7 @@ public class UserInputHandler implements InterfaceViewInputHandler {
    * @param color      the {@link Color} of the shape.
    */
   @Override
-  public void changeFrame(Component component, EFrameChange changeType, String name, int tick,
+  public void changeFrame(Component component, EFrameChangeType changeType, String name, int tick,
       int x, int y, int width, int height, int degrees, Color color) {
 
     String change;
@@ -303,7 +303,7 @@ public class UserInputHandler implements InterfaceViewInputHandler {
 
     BorderLayout layout = new BorderLayout();
     JPanel panelTick = new JPanel(layout);
-    if (changeType == EFrameChange.ADD) {
+    if (changeType == EFrameChangeType.ADD) {
       JLabel labelTick = new JLabel("tick");
       JPanel panelTickFields = new JPanel(new GridLayout(1, 2));
       JLabel labelTickInput = new JLabel("tick:");
@@ -379,7 +379,7 @@ public class UserInputHandler implements InterfaceViewInputHandler {
     panelColor.add(panelColorFields, BorderLayout.CENTER);
 
     JPanel panelPopUp = new JPanel();
-    if (changeType == EFrameChange.ADD) {
+    if (changeType == EFrameChangeType.ADD) {
       panelPopUp.add(panelTick);
     }
     panelPopUp.add(coordinatePositionPanel);

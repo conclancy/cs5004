@@ -1,22 +1,25 @@
 package cs5004.animator.view;
 
+import java.util.Objects;
+
 /**
- * This method represents a node in a list for the GUI display in which they correspond to the
+ * This class represents a node in a list for the GUI display in which they correspond to the
  * shapes.
  */
-public class ShapeCell implements InterfaceShapeCell {
-  private String id;
-  private String type;
+public class ShapeCell implements IShapeCell {
+
+  private final String name;
+  private final String shapeType;
 
   /**
    * Constructor that creates a shape cell for a shape.
    *
-   * @param id   the unique ID of the shape.
-   * @param type the type of shape.
+   * @param name      the unique ID of the shape.
+   * @param shapeType the type of shape.
    */
-  public ShapeCell(String id, String type) {
-    this.id = id;
-    this.type = type;
+  public ShapeCell(String name, String shapeType) {
+    this.name = name;
+    this.shapeType = shapeType;
   }
 
   /**
@@ -25,8 +28,8 @@ public class ShapeCell implements InterfaceShapeCell {
    * @return the shape ID
    */
   @Override
-  public String getID() {
-    return this.id;
+  public String getName() {
+    return this.name;
   }
 
   /**
@@ -35,8 +38,8 @@ public class ShapeCell implements InterfaceShapeCell {
    * @return the shape type
    */
   @Override
-  public String getType() {
-    return this.type;
+  public String getShapeType() {
+    return this.shapeType;
   }
 
   /**
@@ -46,13 +49,13 @@ public class ShapeCell implements InterfaceShapeCell {
    */
   @Override
   public String toString() {
-    return this.id + " - " + this.type;
+    return this.name + " - " + this.shapeType;
   }
 
   /**
-   * Determines equality based on attributes.
+   * Determines equality of two shape cells.
    *
-   * @return boolean of true or false.
+   * @return true if the objects are equal.
    */
   @Override
   public boolean equals(Object other) {
@@ -66,17 +69,19 @@ public class ShapeCell implements InterfaceShapeCell {
 
     ShapeCell otherShapeCell = (ShapeCell) other;
 
-    return this.id.equals(otherShapeCell.getID())
-            && this.type.equals(otherShapeCell.getType());
+    return this.name.equals(otherShapeCell.getName())
+        && this.shapeType.equals(otherShapeCell.getShapeType());
   }
 
+  /**
+   * Provides the Hash of the object.
+   *
+   * @return the hash code of the object, as an int.
+   */
   @Override
   public int hashCode() {
-    int result = 17;
 
-    result = 31 * result + this.id.hashCode();
-    result = 31 * result + this.type.hashCode();
+    return Objects.hash(this.name, this.shapeType);
 
-    return result;
   }
 }

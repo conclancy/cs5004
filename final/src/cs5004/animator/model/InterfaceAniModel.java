@@ -12,12 +12,12 @@ public interface InterfaceAniModel {
    * This method creates a list of the shapes at the state of the animation at the given timestamp.
    * @param time which is represented in ticks which is unit less.
    */
-  List<InterfaceInterpretShape> getState(int time);
+  List<IShape> getState(int time);
 
   /**
    * THis method returns the shapes within the map.
    */
-  LinkedHashMap<String, InterfaceInterpretShape> getShapes();
+  LinkedHashMap<String, IShape> getShapes();
 
 
   /**

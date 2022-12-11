@@ -3,43 +3,47 @@ package cs5004.animator.view;
 import java.awt.event.ActionEvent;
 
 /**
- * This class represents an action event handler for SHAPE CHANGEs from the playback view.
+ * This class creates an {@link ActionEvent} for {@link IShapeChangeEvent} generated in the
+ * {@link ViewGUIEditor}.
  */
-public class ShapeChangeEvent extends ActionEvent implements InterfaceShapeChangeEvent {
-  private final ShapeChange actionChangeType;
+public class ShapeChangeEvent extends ActionEvent implements IShapeChangeEvent {
+
+  private final EShapeChangeType shapeChangeType;
   private final String actionShapeType;
-  private final String id;
+  private final String name;
 
   /**
-   * This constructor creates a SHAPE CHANGE event.
+   * This constructor creates a {@link ShapeChangeEvent} object.
    *
-   * @param source the object where the event stats
-   * @param changeType the type of change being made.
-   * @param shapeType the type of the changing shape.
-   * @param id the id of the shape.
+   * @param source     the object where the event stats
+   * @param changeType the type of {@link EShapeChangeType} being made.
+   * @param shapeType  the type of the changing shape.
+   * @param name       the name of the shape.
    */
-  public ShapeChangeEvent(Object source, ShapeChange changeType, String shapeType, String id) {
+  public ShapeChangeEvent(Object source, EShapeChangeType changeType, String shapeType,
+      String name) {
     super(source, ActionEvent.ACTION_PERFORMED, "SHAPE CHANGE");
 
-    this.actionChangeType = changeType;
+    this.shapeChangeType = changeType;
     this.actionShapeType = shapeType;
-    this.id = id;
+    this.name = name;
   }
 
   /**
-   * This method retrieves the type of change that is being made.
+   * Get the {@link EShapeChangeType} of {@link IShapeChangeEvent} that is being made within this
+   * event.
    *
-   * @return the type of change.
+   * @return the type of {@link EShapeChangeType}.
    */
   @Override
-  public ShapeChange getChangeType() {
-    return this.actionChangeType;
+  public EShapeChangeType getChangeType() {
+    return this.shapeChangeType;
   }
 
   /**
-   * This method retrieves the type of shape being changed.
+   * Get the type of Shape that is being changed as part of this {@link IShapeChangeEvent} object.
    *
-   * @return the shape type.
+   * @return the type of Shape within the event, as a String.
    */
   @Override
   public String getShapeType() {
@@ -47,12 +51,12 @@ public class ShapeChangeEvent extends ActionEvent implements InterfaceShapeChang
   }
 
   /**
-   * This method retrieves the ID of the shape being changed.
+   * Get the name of the shape being changed.
    *
-   * @return the shape ID
+   * @return the name of the shape within the event, as a String.
    */
   @Override
-  public String getId() {
-    return this.id;
+  public String getName() {
+    return this.name;
   }
 }

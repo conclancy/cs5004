@@ -1,26 +1,26 @@
 package cs5004.animator.view;
 
+import cs5004.animator.model.IShape;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
 
 import cs5004.animator.model.InterfaceAniModel;
 import cs5004.animator.model.InterfaceInterpretStatusProcess;
-import cs5004.animator.model.InterfaceInterpretShape;
 
 /**
  * Class that represents a text description of the given animation.
  */
-public class TextView implements InterfaceTextView {
+public class VewText implements IVewText {
   private Appendable outputTemp;
   private InterfaceAniModel model;
 
   /**
-   * A constructor that constructs a TextView by creating a long string.
+   * A constructor that constructs a VewText by creating a long string.
    *
-   * @param model is the model for which the TextView will create a constructor for
+   * @param model is the model for which the VewText will create a constructor for
    */
-  public TextView(InterfaceAniModel model) {
+  public VewText(InterfaceAniModel model) {
     this.model = model;
     outputTemp = new StringWriter();
   }
@@ -42,10 +42,10 @@ public class TextView implements InterfaceTextView {
     StringBuilder output = new StringBuilder();
     for (Map.Entry<String,
             List<InterfaceInterpretStatusProcess>> entry : this.model.getProcesses().entrySet()) {
-      InterfaceInterpretShape shape = this.model.getShapes().get(entry.getKey());
+      IShape shape = this.model.getShapes().get(entry.getKey());
       output.append("Create ").append(shape.getShapeType()).append(" ")
               .append(entry.getKey()).append(" ")
-              .append("with center at ").append(shape.getPosition()).append(", width of ")
+              .append("with center at ").append(shape.getReference()).append(", width of ")
               .append(shape.getWidth()).append(", height of ")
               .append(shape.getHeight()).append(".")
               .append("\n");

@@ -2,7 +2,7 @@ package cs5004.animator.view;
 
 import java.util.List;
 
-import cs5004.animator.model.InterfaceInterpretShape;
+import cs5004.animator.model.IShape;
 
 /**
  * Interface represents the panel for drawing the animation using the draw() method.
@@ -14,5 +14,5 @@ public interface IPaintPanel {
    *
    * @param shapes the shapes to be painted on to the screen.
    */
-  void paint(List<InterfaceInterpretShape> shapes);
+  void paint(List<IShape> shapes);
 }

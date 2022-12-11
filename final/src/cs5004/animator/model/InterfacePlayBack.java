@@ -36,7 +36,7 @@ public interface InterfacePlayBack extends AnimationBuilder {
    * This method will retrieve the shapes from the playbackBuilder.
    * @return a map of the ids for the shapes in the playbackBuilder.
    */
-  LinkedHashMap<String, InterfaceInterpretShape> getShapes();
+  LinkedHashMap<String, IShape> getShapes();
 
   /**
    * This method will retrieve the needed space from the playbackBuilder.

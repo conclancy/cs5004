@@ -10,7 +10,7 @@ public interface InterfaceProcess extends InterfaceInterpretProcess {
    *
    * @param time  is the time to mutate the shape to the state.
    * @param shape the shape of the object before the process starts.
-   * @return InterfaceShape which is the mutated shape.
+   * @return IShape which is the mutated shape.
    */
-  InterfaceShape setState(int time, InterfaceShape shape);
+  IShape setState(int time, IShape shape);
 }

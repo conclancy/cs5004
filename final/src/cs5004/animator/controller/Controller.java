@@ -1,5 +1,8 @@
 package cs5004.animator.controller;
 
+import cs5004.animator.view.IVewText;
+import cs5004.animator.view.IViewGUI;
+import cs5004.animator.view.SVGStringGenerator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -17,15 +20,12 @@ import java.util.TimerTask;
 import cs5004.animator.model.InterfaceAniModel;
 import cs5004.animator.model.InterfacePlayBack;
 import cs5004.animator.model.InterfaceInterpretStatusProcess;
-import cs5004.animator.model.InterfaceInterpretShape;
+import cs5004.animator.model.IShape;
 import cs5004.animator.model.SuperGeneralProcess;
-import cs5004.animator.view.InterfacePlaybackView;
 import cs5004.animator.view.IFrameChangeEvent;
-import cs5004.animator.view.InterfaceFrameChangeListener;
-import cs5004.animator.view.InterfaceShapeChangeEvent;
-import cs5004.animator.view.InterfaceShapeChangeListener;
-import cs5004.animator.view.InterfaceTextView;
-import cs5004.animator.view.SVGAnimationView;
+import cs5004.animator.view.IFrameChangeListener;
+import cs5004.animator.view.IShapeChangeEvent;
+import cs5004.animator.view.IShapeChangeListener;
 
 import static java.util.Objects.requireNonNull;
 
@@ -33,11 +33,11 @@ import static java.util.Objects.requireNonNull;
  * This class represents the controller that implements the main playback view.
  */
 public class Controller implements InterfaceController, ActionListener,
-        InterfaceFrameChangeListener,
-        InterfaceShapeChangeListener, PropertyChangeListener {
+    IFrameChangeListener,
+    IShapeChangeListener, PropertyChangeListener {
 
   private InterfacePlayBack playbackBuilder;
-  private InterfacePlaybackView playbackView;
+  private IViewGUI playbackView;
 
   private Timer timer;
   private int currentTickNum;
@@ -56,7 +56,7 @@ public class Controller implements InterfaceController, ActionListener,
    * @param view which is the view for this constructor to show to the user to interact with.
    * @param ticksPS which is the starting speed for this animation.
    */
-  public Controller(InterfacePlayBack playbackBuilder, InterfacePlaybackView view, int ticksPS) {
+  public Controller(InterfacePlayBack playbackBuilder, IViewGUI view, int ticksPS) {
     this.playbackBuilder = requireNonNull(playbackBuilder);
     this.playbackView = requireNonNull(view);
     this.ticksPS = ticksPS;
@@ -86,7 +86,7 @@ public class Controller implements InterfaceController, ActionListener,
    * @param event which is the event of the change by the user to be sent to the controller.
    */
   @Override
-  public void keyframeChanged(IFrameChangeEvent event) {
+  public void frameChanged(IFrameChangeEvent event) {
     List<InterfaceInterpretStatusProcess> processes = playbackBuilder.getProcesses()
             .get(event.getShapeName());
     if (event.getTick() < 0) {
@@ -385,15 +385,15 @@ public class Controller implements InterfaceController, ActionListener,
    *              for communication between the two.
    */
   @Override
-  public void shapeChanged(InterfaceShapeChangeEvent event) {
+  public void shapeChanged(IShapeChangeEvent event) {
     switch (event.getChangeType()) {
       case ADD:
-        if (playbackBuilder.getShapes().get(event.getId()) != null) {
+        if (playbackBuilder.getShapes().get(event.getName()) != null) {
           playbackView.displayError("Shape already exists with this id");
           return;
         }
         try {
-          playbackBuilder.declareShape(event.getId(), event.getShapeType());
+          playbackBuilder.declareShape(event.getName(), event.getShapeType());
           playbackView.setShapes(playbackBuilder.getShapes());
           playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getProcesses()));
         }
@@ -402,12 +402,12 @@ public class Controller implements InterfaceController, ActionListener,
         }
         return;
       case DELETE:
-        if (playbackBuilder.getShapes().get(event.getId()) == null) {
+        if (playbackBuilder.getShapes().get(event.getName()) == null) {
           playbackView.displayError("This shape cannot be deleted as the id does not exist");
           return;
         }
         try {
-          playbackBuilder.removeShape(event.getId());
+          playbackBuilder.removeShape(event.getName());
           playbackView.setShapes(playbackBuilder.getShapes());
           playbackView.setKeyframes(this.convertToKeyFrames(this.playbackBuilder.getProcesses()));
           lastTickNum = playbackBuilder.build().getLastTick();
@@ -474,7 +474,7 @@ public class Controller implements InterfaceController, ActionListener,
         }
         return;
       case "EXPORT":
-        InterfaceTextView svg = new SVGAnimationView(playbackBuilder.build(), ticksPS);
+        IVewText svg = new SVGStringGenerator(playbackBuilder.build(), ticksPS);
         svg.play();
         try {
           FileWriter writer = new FileWriter("./resources/" + event.getNewValue().toString()
@@ -547,7 +547,7 @@ public class Controller implements InterfaceController, ActionListener,
           animationPaused = true;
         }
       }
-      List<InterfaceInterpretShape> shapesAtTick = this.model.getState(currentTickNum);
+      List<IShape> shapesAtTick = this.model.getState(currentTickNum);
       playbackView.display(shapesAtTick);
       playbackView.setSlider((double) currentTickNum / (double) (lastTickNum - firstTickNum));
       currentTickNum++;

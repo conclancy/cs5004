@@ -18,7 +18,7 @@ import cs5004.animator.util.AnimationBuilder;
 public class AnimationModel implements InterfaceAniModel {
 
   private final LinkedHashMap<String, List<InterfaceRotateShape>> processes;
-  private final LinkedHashMap<String, InterfaceShape> shapes;
+  private final LinkedHashMap<String, IShape> shapes;
 
   private final int x;
   private final int y;
@@ -36,7 +36,7 @@ public class AnimationModel implements InterfaceAniModel {
    * @param shapes    which is also a linked hashmap that contains the IDs and shapes.
    */
   private AnimationModel(LinkedHashMap<String, List<InterfaceRotateShape>> processes,
-      LinkedHashMap<String, InterfaceShape> shapes,
+      LinkedHashMap<String, IShape> shapes,
       int x, int y, int width, int height) {
     this.processes = processes;
     this.shapes = shapes;
@@ -89,12 +89,12 @@ public class AnimationModel implements InterfaceAniModel {
    * @return the list of shapes that are the current state of the animation.
    */
   @Override
-  public List<InterfaceInterpretShape> getState(int timeOfInterest) {
-    List<InterfaceInterpretShape> output = new ArrayList<>();
+  public List<IShape> getState(int timeOfInterest) {
+    List<IShape> output = new ArrayList<>();
     //iterate through the shape list
     for (Map.Entry<String, List<InterfaceRotateShape>> entry : this.processes.entrySet()) {
       String id = entry.getKey();
-      InterfaceShape currShapes = this.shapes.get(id);
+      IShape currShapes = this.shapes.get(id);
 
       // iterate via index
       int index = indexOfProcess(this.processes.get(id), timeOfInterest);
@@ -106,9 +106,9 @@ public class AnimationModel implements InterfaceAniModel {
       } else {
         continue;
       }
-      double newX = currShapes.getPosition().getX() - this.x;
-      double newY = currShapes.getPosition().getY() - this.y;
-      currShapes.setPosition(new Point2D.Double(newX, newY));
+      double newX = currShapes.getReference().getX() - this.x;
+      double newY = currShapes.getReference().getY() - this.y;
+      currShapes.setReference(new Point2D.Double(newX, newY));
       output.add(currShapes);
     }
     return output;
@@ -120,8 +120,8 @@ public class AnimationModel implements InterfaceAniModel {
    * @return the shapes within the map.
    */
   @Override
-  public LinkedHashMap<String, InterfaceInterpretShape> getShapes() {
-    LinkedHashMap<String, InterfaceInterpretShape> output = new LinkedHashMap<>();
+  public LinkedHashMap<String, IShape> getShapes() {
+    LinkedHashMap<String, IShape> output = new LinkedHashMap<>();
     for (String currKey : shapes.keySet()) {
       output.put(currKey, shapes.get(currKey));
     }
@@ -199,7 +199,7 @@ public class AnimationModel implements InterfaceAniModel {
   public String toString() {
     StringBuilder output = new StringBuilder();
     for (Map.Entry<String, List<InterfaceRotateShape>> entry : this.processes.entrySet()) {
-      InterfaceShape shape = this.shapes.get(entry.getKey());
+      IShape shape = this.shapes.get(entry.getKey());
       output.append("Shape ").append(entry.getKey()).append(" ").append(shape.getShapeType())
           .append("\n");
       for (InterfaceProcess process : entry.getValue()) {
@@ -224,10 +224,10 @@ public class AnimationModel implements InterfaceAniModel {
    * @param shape is the shape.
    * @return String that is the description.
    */
-  private String getShapeInfo(InterfaceShape shape) {
+  private String getShapeInfo(IShape shape) {
     StringBuilder temp = new StringBuilder();
-    temp.append(shape.getPosition().getX()).append(" ")
-        .append(shape.getPosition().getY()).append(" ")
+    temp.append(shape.getReference().getX()).append(" ")
+        .append(shape.getReference().getY()).append(" ")
         .append(shape.getWidth()).append(" ")
         .append(shape.getHeight()).append(" ")
         .append(shape.getColor().getRed()).append(" ")
@@ -243,7 +243,7 @@ public class AnimationModel implements InterfaceAniModel {
   public static class AnimationModelBuilder implements InterfacePlayBack {
 
     private LinkedHashMap<String, List<InterfaceRotateShape>> processes;
-    private LinkedHashMap<String, InterfaceShape> shapesList;
+    private LinkedHashMap<String, IShape> shapesList;
     private int x = 0;
     private int y = 0;
     private int width = 1000;
@@ -317,7 +317,7 @@ public class AnimationModel implements InterfaceAniModel {
             + "associated to a shape");
       }
 
-      InterfaceShape shape;
+      IShape shape;
 
       switch (type.toLowerCase()) {
         case "rectangle":
@@ -498,8 +498,8 @@ public class AnimationModel implements InterfaceAniModel {
         InterfaceRotateShape process,
         int addIndex) {
       int startTick = process.getStartTime();
-      InterfaceShape shapeCopy1 = this.shapesList.get(id).makeCopy();
-      InterfaceShape shapeCopy2 = this.shapesList.get(id).makeCopy();
+      IShape shapeCopy1 = this.shapesList.get(id).getCopy();
+      IShape shapeCopy2 = this.shapesList.get(id).getCopy();
 
       if (addIndex == 0) {
         list.add(addIndex, process);
@@ -523,13 +523,13 @@ public class AnimationModel implements InterfaceAniModel {
     /**
      * Method that determines if two shapes are equal.
      */
-    private boolean shapesAreEqual(InterfaceShape shape1, InterfaceShape shape2) {
+    private boolean shapesAreEqual(IShape shape1, IShape shape2) {
       return shape1.getShapeType().equals(shape2.getShapeType())
           && shape1.getWidth() == shape2.getWidth()
           && shape1.getHeight() == shape2.getHeight()
-          && shape1.getPosition().getX() == shape2.getPosition().getX()
-          && shape1.getPosition().getY() == shape2.getPosition().getY()
-          && shape1.getShapeRotation() == shape2.getShapeRotation()
+          && shape1.getReference().getX() == shape2.getReference().getX()
+          && shape1.getReference().getY() == shape2.getReference().getY()
+          && shape1.getDegrees() == shape2.getDegrees()
           && shape1.getColor().getRGB() == shape2.getColor().getRGB();
     }
 
@@ -600,8 +600,8 @@ public class AnimationModel implements InterfaceAniModel {
      * @return the shapes within the map.
      */
     @Override
-    public LinkedHashMap<String, InterfaceInterpretShape> getShapes() {
-      LinkedHashMap<String, InterfaceInterpretShape> output = new LinkedHashMap<>();
+    public LinkedHashMap<String, IShape> getShapes() {
+      LinkedHashMap<String, IShape> output = new LinkedHashMap<>();
       for (String key : shapesList.keySet()) {
         output.put(key, shapesList.get(key));
       }

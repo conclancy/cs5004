@@ -2,38 +2,38 @@ package cs5004.animator.model;
 
 import java.awt.Color;
 import java.awt.geom.Point2D;
-
-import static java.util.Objects.requireNonNull;
+import java.util.Objects;
 
 /**
- * This class represents the abstract class for shapes within the animation.
+ * Abstraction class for {@link IShape} objects.  This class contains all methods that are common to
+ * shape objects including their type, width, height, reference point, color, and degrees of
+ * rotation.
  */
-public abstract class AbstractShape implements InterfaceShape {
+public abstract class AbstractShape implements IShape {
+
   protected String shapeType;
   protected int width;
   protected int height;
-  protected Point2D coordinatePosition;
+  protected Point2D reference;
   protected Color color;
-  protected int rotationDegree;
+  protected int degrees;
 
   /**
-   * A constructor that creates a new instance of the abstract class.
+   * Constructs a shape with data inputs for all Shape fields.
    */
-  protected AbstractShape(int width, int height, Point2D coordinatePosition,
-                          int rotationDegree, Color color) {
-    if (width < 0 || height < 0) {
-      throw new IllegalArgumentException("Width and height must be positive numbers.");
-    }
+  protected AbstractShape(int width, int height, Point2D reference, int degrees, Color color) {
 
-    this.width = width;
-    this.height = height;
-    this.coordinatePosition = requireNonNull(coordinatePosition);
-    this.rotationDegree = rotationDegree;
-    this.color = requireNonNull(color);
+    this.width = this.checkPositiveInt(width, "Width");
+    this.height = this.checkPositiveInt(height, "Height");
+    this.reference = reference;
+    this.degrees = degrees;
+    this.color = color;
+
   }
 
   /**
-   * A constructor that creates a new instance of the abstract class.
+   * Constructor for a shape, that creates an "empty" shape at (0,0) with no height, width, or
+   * color.
    */
   protected AbstractShape() {
     this(0, 0, new Point2D.Double(0, 0), 0, new Color(0));
@@ -41,18 +41,9 @@ public abstract class AbstractShape implements InterfaceShape {
 
 
   /**
-   * A method that prints the current coordinate position of the object as a string.
+   * Get the type of the shape.
    *
-   * @return the position of the object as a string.
-   */
-  public String printPosition() {
-    return "(" + this.coordinatePosition.getX() + ", " + this.coordinatePosition.getY() + ")";
-  }
-
-  /**
-   * A method that returns the type of the shape as a string.
-   *
-   * @return the type of the shape.
+   * @return the type of the shape, as a String.
    */
   @Override
   public String getShapeType() {
@@ -60,9 +51,9 @@ public abstract class AbstractShape implements InterfaceShape {
   }
 
   /**
-   * Method that returns the color of the shape as a Color object.
+   * Get the color of the shape as a {@link Color} object.
    *
-   * @return the color of the shape.
+   * @return the color of the shape, as a {@link Color}.
    */
   @Override
   public Color getColor() {
@@ -70,30 +61,19 @@ public abstract class AbstractShape implements InterfaceShape {
   }
 
   /**
-   * A method that sets the color of the object.
+   * Change the color of the shape.
    *
-   * @param color of the shape.
+   * @param color the color of the shape, represented by a {@link Color} object.
    */
   @Override
   public void setColor(Color color) {
-    this.color = requireNonNull(color);
+    this.color = color;
   }
 
   /**
-   * Method that returns the color of a shape as a String.
+   * Get the width of the shape.
    *
-   * @return the color of a shape.
-   */
-  public String getTextColor() {
-    return "(R: " + color.getRed() + ", G: "
-            + color.getGreen() + ", B: "
-            + color.getBlue() + ")";
-  }
-
-  /**
-   * Method that returns the width of the shape.
-   *
-   * @return the width of the shape.
+   * @return the width of the shape, as an int.
    */
   @Override
   public int getWidth() {
@@ -101,20 +81,18 @@ public abstract class AbstractShape implements InterfaceShape {
   }
 
   /**
-   * Sets the new width of the shape.
+   * Change the width of the shape.
    *
    * @param width is the width of the shape.
+   * @throws IllegalArgumentException if the {@param width} is less than 0.
    */
   @Override
-  public void setWidth(int width) {
-    if (width < 0) {
-      throw new IllegalArgumentException("Cannot pass a negative width");
-    }
-    this.width = width;
+  public void setWidth(int width) throws IllegalArgumentException {
+    this.width = this.checkPositiveInt(width, "Width");
   }
 
   /**
-   * Method that returns the height of the shape.
+   * Get the height of the shape.
    *
    * @return the height of the shape.
    */
@@ -127,24 +105,21 @@ public abstract class AbstractShape implements InterfaceShape {
    * Sets the height of an object.
    *
    * @param height is the height.
-   * @throws IllegalArgumentException if the height is not a positive number.
+   * @throws IllegalArgumentException if the {@param height} is less than 0.
    */
   @Override
-  public void setHeight(int height) {
-    if (height < 0) {
-      throw new IllegalArgumentException("Cannot pass a negative height");
-    }
-    this.height = height;
+  public void setHeight(int height) throws IllegalArgumentException {
+    this.height = this.checkPositiveInt(height, "Height");
   }
 
   /**
-   * Method that returns the rotation of the shape.
+   * Get the rotational degrees of the shape.
    *
    * @return the width of the shape.
    */
   @Override
-  public int getShapeRotation() {
-    return this.rotationDegree;
+  public int getDegrees() {
+    return this.degrees;
   }
 
   /**
@@ -153,8 +128,8 @@ public abstract class AbstractShape implements InterfaceShape {
    * @return the coordinate position.
    */
   @Override
-  public Point2D getPosition() {
-    return new Point2D.Double(this.coordinatePosition.getX(), this.coordinatePosition.getY());
+  public Point2D getReference() {
+    return new Point2D.Double(this.reference.getX(), this.reference.getY());
   }
 
   /**
@@ -163,8 +138,8 @@ public abstract class AbstractShape implements InterfaceShape {
    * @param coordinatePosition the new coordinates of the shape.
    */
   @Override
-  public void setPosition(Point2D coordinatePosition) {
-    this.coordinatePosition = requireNonNull(coordinatePosition);
+  public void setReference(Point2D coordinatePosition) {
+    this.reference = coordinatePosition;
   }
 
   /**
@@ -173,17 +148,17 @@ public abstract class AbstractShape implements InterfaceShape {
    * @return the coordinate position as a String.
    */
   public String getTextPosition() {
-    return "(" + coordinatePosition.getX() + ", " + coordinatePosition.getY() + ")";
+    return "(" + reference.getX() + ", " + reference.getY() + ")";
   }
 
   /**
    * Sets the rotation angle of the shape.
    *
-   * @param rotationDegree is the rotation degree.
+   * @param degrees is the rotation degree.
    */
   @Override
-  public void setRotationDegree(int rotationDegree) {
-    this.rotationDegree = rotationDegree;
+  public void setDegrees(int degrees) {
+    this.degrees = degrees;
   }
 
   /**
@@ -193,10 +168,10 @@ public abstract class AbstractShape implements InterfaceShape {
    */
   @Override
   public String toString() {
-    return this.shapeType + "  " + this.coordinatePosition.getX() + "  "
-            + this.coordinatePosition.getY() + "  "
-            + this.width + "  " + this.height + "  " + this.rotationDegree + "  "
-            + this.color.getRed() + "  " + this.color.getGreen() + "  " + this.color.getBlue();
+    return this.shapeType + "  " + this.reference.getX() + "  "
+        + this.reference.getY() + "  "
+        + this.width + "  " + this.height + "  " + this.degrees + "  "
+        + this.color.getRed() + "  " + this.color.getGreen() + "  " + this.color.getBlue();
   }
 
 
@@ -207,19 +182,10 @@ public abstract class AbstractShape implements InterfaceShape {
    */
   @Override
   public int hashCode() {
-    int result = 17;
 
-    result = 31 * result + this.shapeType.hashCode();
-    result = 31 * result + this.width;
-    result = 31 * result + this.height;
-    result = 31 * result + this.rotationDegree;
-    long xLong = Double.doubleToLongBits(this.coordinatePosition.getX());
-    result = 31 * result + (int) (xLong ^ (xLong >>> 32));
-    long yLong = Double.doubleToLongBits(this.coordinatePosition.getX());
-    result = 31 * result + (int) (yLong ^ (yLong >>> 32));
-    result = 31 * result + this.color.getRGB();
+    return Objects.hash(this.shapeType, this.width, this.height, this.reference.getX(),
+        this.reference.getY(), this.degrees, this.color.getRGB());
 
-    return result;
   }
 
   /**
@@ -241,14 +207,30 @@ public abstract class AbstractShape implements InterfaceShape {
     AbstractShape otherShape = (AbstractShape) other;
 
     return this.shapeType.equals(otherShape.getShapeType())
-            && this.width == otherShape.getWidth()
-            && this.height == otherShape.getHeight()
-            && this.coordinatePosition.getX() == otherShape.getPosition().getX()
-            && this.coordinatePosition.getY() == otherShape.getPosition().getY()
-            && this.rotationDegree == otherShape.getShapeRotation()
-            && this.color.getRGB() == otherShape.getColor().getRGB();
+        && this.width == otherShape.getWidth()
+        && this.height == otherShape.getHeight()
+        && this.reference.getX() == otherShape.getReference().getX()
+        && this.reference.getY() == otherShape.getReference().getY()
+        && this.degrees == otherShape.getDegrees()
+        && this.color.getRGB() == otherShape.getColor().getRGB();
   }
 
+  /**
+   * Checks to ensure that an input value is greater than or equal to 0.
+   *
+   * @param i         the integer to be checked.
+   * @param fieldName the checking field name, only used if an error is thrown.
+   * @return the valid passed integer, as an int.
+   * @throws IllegalArgumentException if the value passed is less than 0.
+   */
+  private int checkPositiveInt(int i, String fieldName) throws IllegalArgumentException {
+
+    if (i >= 0) {
+      return i;
+    } else {
+      throw new IllegalArgumentException(fieldName + " requires a positive input value.");
+    }
+  }
 
 }
 

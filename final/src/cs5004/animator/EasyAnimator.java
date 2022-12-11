@@ -1,5 +1,8 @@
 package cs5004.animator;
 
+import cs5004.animator.view.IVewText;
+import cs5004.animator.view.IViewGUI;
+import cs5004.animator.view.ViewGUIEditor;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,13 +19,10 @@ import cs5004.animator.model.AnimationModel;
 import cs5004.animator.util.AnimationReader;
 import cs5004.animator.model.InterfaceAniModel;
 import cs5004.animator.model.InterfacePlayBack;
-import cs5004.animator.view.PlaybackView;
-import cs5004.animator.view.VisualAnimationView;
-import cs5004.animator.view.InterfacePlaybackView;
-import cs5004.animator.view.InterfaceTextView;
-import cs5004.animator.view.InterfaceView;
-import cs5004.animator.view.SVGAnimationView;
-import cs5004.animator.view.TextView;
+import cs5004.animator.view.ViewGUISimple;
+import cs5004.animator.view.IView;
+import cs5004.animator.view.SVGStringGenerator;
+import cs5004.animator.view.VewText;
 
 /**
  * Represents the main class that creates and runs an animation based on the given file.
@@ -38,8 +38,8 @@ public final class EasyAnimator {
     AnimationBuilder playbackBuilder = new AnimationModel.AnimationModelBuilder();
     InterfacePlayBack editBuilder = new AnimationModel.AnimationModelBuilder();
     InterfaceAniModel model;
-    InterfaceTextView textView;
-    InterfacePlaybackView editView;
+    IVewText textView;
+    IViewGUI editView;
     InterfaceController controller;
     Readable in = new StringReader("");
     int ticksPS = 1;
@@ -108,7 +108,7 @@ public final class EasyAnimator {
 
     if (viewType.equals("playback")) {
       AnimationReader.parseFile(in, editBuilder);
-      editView = new PlaybackView(ticksPS);
+      editView = new ViewGUIEditor(ticksPS);
       controller = new Controller(editBuilder, editView, ticksPS);
       controller.start();
       return;
@@ -119,13 +119,13 @@ public final class EasyAnimator {
     switch (viewType) {
       //“text”, “svg”, or “visual”
       case "text":
-        textView = new TextView(model);
+        textView = new VewText(model);
         break;
       case "svg":
-        textView = new SVGAnimationView(model, ticksPS);
+        textView = new SVGStringGenerator(model, ticksPS);
         break;
       case "visual":
-        InterfaceView view = new VisualAnimationView(model, ticksPS);
+        IView view = new ViewGUISimple(model, ticksPS);
         view.play();
         return;
       default:

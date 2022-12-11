@@ -126,11 +126,11 @@ public class GeneralProcess implements InterfaceProcess {
    * @return a new interfaceShape for the shape.
    */
   @Override
-  public InterfaceShape setState(int time, InterfaceShape shape) {
+  public IShape setState(int time, IShape shape) {
     if (time < this.startingTime || time > this.endTime) {
       throw new IllegalArgumentException("Please check the time input value.");
     } else if (this.startingTime == this.endTime) {
-      shape.setPosition(new Point2D.Double(this.endX, this.endY));
+      shape.setReference(new Point2D.Double(this.endX, this.endY));
       shape.setWidth(this.endWidth);
       shape.setHeight(this.endHeight);
       shape.setColor(this.endColor);
@@ -139,7 +139,7 @@ public class GeneralProcess implements InterfaceProcess {
 
     int newX = this.findPointAt(time, this.startingX, this.endX);
     int newY = this.findPointAt(time, this.startingY, this.endY);
-    shape.setPosition(new Point2D.Double(newX, newY));
+    shape.setReference(new Point2D.Double(newX, newY));
 
     shape.setWidth(this.findPointAt(time, this.startingWidth, this.endWidth));
     shape.setHeight(this.findPointAt(time, this.startingHeight, this.endHeight));

@@ -1,5 +1,6 @@
 package cs5004.animator.view;
 
+import cs5004.animator.model.IShape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
@@ -37,14 +38,13 @@ import javax.swing.event.ListSelectionListener;
 
 import cs5004.animator.controller.InterpretStatusKeyFrame;
 import cs5004.animator.controller.StatusKeyFrame;
-import cs5004.animator.model.InterfaceInterpretShape;
 
 /**
- * This PlaybackView class is the GUI that will act as the third view for the animation. This will
+ * This ViewGUIEditor class is the GUI that will act as the third view for the animation. This will
  * allow users to scroll through the animation, select specific frames, select speed, play, pause,
  * restart, loop, and export to SVG.
  */
-public class PlaybackView extends JFrame implements InterfacePlaybackView, ListSelectionListener,
+public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionListener,
     ActionListener, ChangeListener {
 
   private final PaintPanel drawingPanel;
@@ -54,10 +54,10 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   private final JSlider sliderFunction;
 
   private final JTextField tickSpeedField;
-  private JList<InterfaceShapeCell> shapeListContainer;
+  private JList<IShapeCell> shapeListContainer;
   private JLabel frameListLabel;
   private JList<InterpretStatusKeyFrame> frameListContainer;
-  private final DefaultListModel<InterfaceShapeCell> shapesList;
+  private final DefaultListModel<IShapeCell> shapesList;
   private final DefaultListModel<InterpretStatusKeyFrame> framesList;
   private Map<String, List<InterpretStatusKeyFrame>> keyframes;
 
@@ -68,7 +68,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
   private int height = 600;
   private int shapeSelected = -1;
   private int frameSelected = -1;
-  private final InterfaceViewInputHandler handler;
+  private final IUserInputHandler handler;
   private boolean pause = true;
 
   /**
@@ -77,7 +77,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    *
    * @param ticksPS the starting speed of the animation in ticks per second
    */
-  public PlaybackView(int ticksPS) {
+  public ViewGUIEditor(int ticksPS) {
     super("EasyAnimator - CS5004 Final - cclancy");
 
     this.tickSpeedField = new JTextField("" + ticksPS);
@@ -194,7 +194,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * Create an editor pane that allows for shape editing within the GUI.
    */
   private void createShapesEditor() {
-    JLabel title = new JLabel("Shapes Menu", SwingConstants.CENTER);
+    JLabel title = new JLabel("EShapeTypes Menu", SwingConstants.CENTER);
     title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 25));
     title.setPreferredSize(new Dimension(254, 60));
     this.addBorder(title);
@@ -223,7 +223,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     this.frameListContainer.addListSelectionListener(this);
     JScrollPane scrollFrames = new JScrollPane(this.frameListContainer);
     this.addBorder(scrollFrames);
-    this.frameListLabel = new JLabel("First, Select a Shape from Shapes Menu",
+    this.frameListLabel = new JLabel("First, Select a Shape from EShapeTypes Menu",
         SwingConstants.CENTER);
     this.frameListLabel.setPreferredSize(new Dimension(254, 40));
     this.addBorder(this.frameListLabel);
@@ -249,7 +249,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * Display a list of shapes int the GUI.
    */
   @Override
-  public void display(List<InterfaceInterpretShape> shapes) {
+  public void display(List<IShape> shapes) {
     this.drawingPanel.paint(shapes);
   }
 
@@ -259,8 +259,8 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * @return a list of {@link ShapeCell}
    */
   @Override
-  public List<InterfaceShapeCell> getShapes() {
-    List<InterfaceShapeCell> output = new ArrayList<>();
+  public List<IShapeCell> getShapes() {
+    List<IShapeCell> output = new ArrayList<>();
 
     for (int i = 0; i < this.shapesList.size(); i++) {
       output.add(this.shapesList.elementAt(i));
@@ -275,7 +275,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * @param shapes all the shapes in the animation.
    */
   @Override
-  public void setShapes(Map<String, InterfaceInterpretShape> shapes) {
+  public void setShapes(Map<String, IShape> shapes) {
     this.shapesList.clear();
 
     for (String key : shapes.keySet()) {
@@ -352,7 +352,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * Adds a listener that receives a shape change events.
    */
   @Override
-  public void addShapeChangeListener(InterfaceShapeChangeListener listener) {
+  public void addShapeChangeListener(IShapeChangeListener listener) {
     this.handler.addShapeChangeListener(listener);
   }
 
@@ -360,7 +360,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
    * Adds a listener that receives frame change events.
    */
   @Override
-  public void addFrameChangeListener(InterfaceFrameChangeListener listener) {
+  public void addFrameChangeListener(IFrameChangeListener listener) {
     this.handler.addFrameChangeListener(listener);
   }
 
@@ -399,7 +399,7 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     this.framesList.clear();
 
     if (this.shapeSelected >= 0 && this.shapeSelected < this.shapesList.size()) {
-      String id = this.shapesList.elementAt(this.shapeSelected).getID();
+      String id = this.shapesList.elementAt(this.shapeSelected).getName();
 
       if (this.keyframes.containsKey(id)) {
         for (InterpretStatusKeyFrame cell : this.keyframes.get(id)) {
@@ -459,11 +459,11 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     }
 
     if (process.equals("SHAPE ADD")) {
-      this.handler.changeShape(this, ShapeChange.ADD, "");
+      this.handler.changeShape(this, EShapeChangeType.ADD, "");
       return;
     }
 
-    InterfaceShapeCell shape;
+    IShapeCell shape;
     if (this.shapeSelected != -1 || !this.shapeListContainer.isSelectionEmpty()) {
       shape = this.shapesList.elementAt(this.shapeSelected);
     } else {
@@ -472,12 +472,12 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
     }
 
     if (process.equals("shape delete")) {
-      this.handler.changeShape(this, ShapeChange.DELETE, shape.getID());
+      this.handler.changeShape(this, EShapeChangeType.DELETE, shape.getName());
       return;
     }
 
     if (process.equals("frame add")) {
-      this.handler.changeFrame(this, EFrameChange.ADD, shape.getID(), 0);
+      this.handler.changeFrame(this, EFrameChangeType.ADD, shape.getName(), 0);
       return;
     }
 
@@ -491,12 +491,12 @@ public class PlaybackView extends JFrame implements InterfacePlaybackView, ListS
 
     switch (process) {
       case "frame edit":
-        this.handler.changeFrame(this, EFrameChange.EDIT, shape.getID(), keyframe.getTime(),
+        this.handler.changeFrame(this, EFrameChangeType.EDIT, shape.getName(), keyframe.getTime(),
             keyframe.getX(), keyframe.getY(), keyframe.getWidth(), keyframe.getHeight(),
             keyframe.getShapeRotation(), keyframe.getColor());
         break;
       case "frame delete":
-        this.handler.changeFrame(this, EFrameChange.DELETE, shape.getID(),
+        this.handler.changeFrame(this, EFrameChangeType.DELETE, shape.getName(),
             keyframe.getTime());
         break;
       default:

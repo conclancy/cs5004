@@ -1,5 +1,6 @@
 package cs5004.animator.view;
 
+import cs5004.animator.model.IShape;
 import java.util.Timer;
 import java.util.List;
 import java.util.TimerTask;
@@ -12,15 +13,14 @@ import javax.swing.JScrollPane;
 import cs5004.animator.model.InterfaceAniModel;
 import cs5004.animator.model.InterfaceInterpretProcess;
 import cs5004.animator.model.InterfaceInterpretStatusProcess;
-import cs5004.animator.model.InterfaceInterpretShape;
 
 /**
  * This class represents a visual view that displays the animation.
  */
-public class VisualAnimationView extends JFrame implements InterfaceView {
-  private InterfaceAniModel model;
-  private Timer timer;
-  private PaintPanel panel;
+public class ViewGUISimple extends JFrame implements IView {
+  private final InterfaceAniModel model;
+  private final Timer timer;
+  private final PaintPanel panel;
   private final int tempo;
 
   /**
@@ -29,7 +29,7 @@ public class VisualAnimationView extends JFrame implements InterfaceView {
    * @param model the incoming model used.
    * @param ticksPS is the tickRate.
    */
-  public VisualAnimationView(InterfaceAniModel model, int ticksPS) {
+  public ViewGUISimple(InterfaceAniModel model, int ticksPS) {
     super();
 
     if (model == null) {
@@ -105,7 +105,7 @@ public class VisualAnimationView extends JFrame implements InterfaceView {
       if (this.tick >= this.lastTickNum) {
         timer.cancel();
       }
-      List<InterfaceInterpretShape> shapesAtTick = model.getState(this.tick);
+      List<IShape> shapesAtTick = model.getState(this.tick);
       panel.paint(shapesAtTick);
       this.tick ++;
     }

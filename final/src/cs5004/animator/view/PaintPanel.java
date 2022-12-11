@@ -1,9 +1,9 @@
 package cs5004.animator.view;
 
+import cs5004.animator.model.IShape;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 
-import cs5004.animator.model.InterfaceInterpretShape;
 import java.util.List;
 import javax.swing.JPanel;
 
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  */
 public class PaintPanel extends JPanel implements IPaintPanel {
 
-  private List<InterfaceInterpretShape> shapes;
+  private List<IShape> shapes;
 
   /**
    * This constructor creates a drawing panel for all calls.
@@ -30,14 +30,14 @@ public class PaintPanel extends JPanel implements IPaintPanel {
   }
 
   @Override
-  public void paint(List<InterfaceInterpretShape> shapes) {
+  public void paint(List<IShape> shapes) {
     this.shapes = shapes;
     this.repaint();
   }
 
   private void drawShapesOn(Graphics g) {
     Graphics2D g2D = (Graphics2D) g;
-    for ( InterfaceInterpretShape shape : this.shapes ) {
+    for ( IShape shape : this.shapes ) {
       g2D.setColor(shape.getColor());
       shape.draw(g2D);
     }

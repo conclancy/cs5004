@@ -6,21 +6,22 @@ import java.awt.geom.Point2D;
 
 
 /**
- * This class represents the rectangle shape in the animation.
+ * This class represents a rectangle shape.  Rectangles have four sides that meet at four 90 degree
+ * angles.
  */
 public class Rectangle extends AbstractShape {
 
   /**
-   * Constructor for rectangle that initializes its fields.
+   * Constructs a rectangle with data inputs for all Shape fields.
    */
-  public Rectangle(int width, int height, Point2D coordinatePosition, int rotationDegree,
-                   Color color) {
-    super(width, height, coordinatePosition, rotationDegree, color);
+  public Rectangle(int width, int height, Point2D reference, int degrees, Color color) {
+    super(width, height, reference, degrees, color);
     this.shapeType = "Rectangle";
   }
 
   /**
-   * Constructor for rectangle that initializes its fields.
+   * Constructor for a Rectangle, that creates an "empty" shape at (0,0) with no height, width, or
+   * color.
    */
   public Rectangle() {
     super();
@@ -28,37 +29,38 @@ public class Rectangle extends AbstractShape {
   }
 
   /**
-   * THis method draws the rectangle onto the screen.
+   * Allows for the conversion of the Rectangle to a {@link Graphics2D} object for display on a
+   * GUI.
    *
-   * @param g are the graphics needed to display the shape.
+   * @param g the graphics variable to display the shape, as a {@link Graphics2D} .
    */
   @Override
   public void draw(Graphics2D g) {
-    if (this.rotationDegree == 0) {
-      g.fillRect((int) this.coordinatePosition.getX(), (int) this.coordinatePosition.getY(),
-              this.width, this.height);
+    if (this.degrees == 0) {
+      g.fillRect((int) this.reference.getX(), (int) this.reference.getY(),
+          this.width, this.height);
     } else {
       Graphics2D gg = (Graphics2D) g.create();
-      gg.rotate(Math.toRadians(this.rotationDegree), this.coordinatePosition.getX()
-                      + ((double) this.width) / 2,
-              this.coordinatePosition.getY() + ((double) this.height) / 2);
-      gg.fillRect((int) this.coordinatePosition.getX(), (int) this.coordinatePosition.getY(),
-              this.width, this.height);
+      gg.rotate(Math.toRadians(this.degrees), this.reference.getX()
+              + ((double) this.width) / 2,
+          this.reference.getY() + ((double) this.height) / 2);
+      gg.fillRect((int) this.reference.getX(), (int) this.reference.getY(),
+          this.width, this.height);
       gg.dispose();
     }
   }
 
   /**
-   * THis method returns a deep copy of the current shape.
+   * Get a deep copy of the Rectangle.  This allows access to a shape without risking the changing
+   * of the underlying shape attributes.
    *
-   * @return a copy of the shape.
+   * @return an exact replica of the Rectangle, as a new {@link Rectangle} object.
    */
   @Override
-  public InterfaceShape makeCopy() {
-    return new Rectangle(this.width, this.height,
-            new Point2D.Double(this.coordinatePosition.getX(),
-                    this.coordinatePosition.getY()),
-            this.rotationDegree,
-            new Color(this.color.getRGB()));
+  public IShape getCopy() {
+    return new Rectangle(super.width, super.height,
+        new Point2D.Double(super.reference.getX(), super.reference.getY()),
+        this.degrees,
+        new Color(this.color.getRGB()));
   }
 }

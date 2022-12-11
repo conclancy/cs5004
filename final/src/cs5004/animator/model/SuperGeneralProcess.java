@@ -45,8 +45,8 @@ public class SuperGeneralProcess extends GeneralProcess implements InterfaceRota
   }
 
   @Override
-  public InterfaceShape setState(int time, InterfaceShape shape) {
-    shape.setRotationDegree(this.findPointAt(time, this.startOrientation, this.endOrientation));
+  public IShape setState(int time, IShape shape) {
+    shape.setDegrees(this.findPointAt(time, this.startOrientation, this.endOrientation));
     return super.setState(time, shape);
   }
 
