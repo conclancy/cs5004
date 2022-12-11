@@ -9,7 +9,7 @@ import java.awt.Color;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Testing methods for the Process class.
+ * Testing methods for the Animation class.
  */
 public class ProcessTest {
 
@@ -19,7 +19,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorFailsStartBeforeEnd() {
-    IProcess move1 = new Process("Motion", 5, 10,
+    IAnimation move1 = new Animation("Motion", 5, 10,
             10, 10, 30, 0, 255, 0, 0, 20, 10, 10, 30,
             0, 255, 0, 0, 0);
   }
@@ -29,7 +29,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorFailsNegativeTime() {
-    IProcess move1 = new Process("Motion", -5, 10, 10,
+    IAnimation move1 = new Animation("Motion", -5, 10, 10,
             10, 30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0, 0, 0);
   }
@@ -39,7 +39,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorFailsNegativeWidth() {
-    IProcess move1 = new Process("Motion", 0, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10,
             -10, 30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0, 0, 0);
   }
@@ -49,7 +49,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorFailsNegativeHeight() {
-    IProcess move1 = new Process("Motion", 0, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10,
             10, 30, 0, 255, 0, 5, 20, 10, 10, -30,
             0, 255, 0, 0, 0);
   }
@@ -59,7 +59,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorFailsBadRGB() {
-    IProcess move1 = new Process("Motion", 0, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10,
             10, 30, 0, 256, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
   }
@@ -69,7 +69,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testConstructorFailsBadRGB2() {
-    IProcess move1 = new Process("Motion", 0, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10,
             10, 30, 0, 255, 0, 5, 20, 10, 10, 30,
             -5, 255, 0);
   }
@@ -79,10 +79,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetStartTime() {
-    IProcess move1 = new Process("Motion", 1, 10, 10,
+    IAnimation move1 = new Animation("Motion", 1, 10, 10,
             10, 30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 12, 10, 10,
+    IAnimation move2 = new Animation("Motion", 12, 10, 10,
             10, 30, 0, 255, 0, 17, 20, 10, 10, 30,
             0, 255, 0);
     assertEquals(move1.getStartTime(), 1);
@@ -94,10 +94,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetEndTime() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 2, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 5, 10, 10, 10,
+    IAnimation move2 = new Animation("Motion", 5, 10, 10, 10,
             30, 0, 255, 0, 15, 20, 10, 10, 30,
             0, 255, 0);
     assertEquals(move1.getEndTime(), 2);
@@ -109,10 +109,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetType() {
-    IProcess move1 = new Process("Motion", 1, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 1, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Color", 5, 20, 10, 10,
+    IAnimation move2 = new Animation("Color", 5, 20, 10, 10,
             30, 0, 255, 0, 8, 20, 10, 10, 30,
             0, 0, 255);
     assertEquals(move1.getType(), "Motion");
@@ -125,7 +125,7 @@ public class ProcessTest {
    */
   @Test
   public void testSetState() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
     Rectangle rect = new Rectangle(10, 30,
@@ -145,7 +145,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testBadSetState1() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
     Rectangle rect = new Rectangle(10, 30,
@@ -159,7 +159,7 @@ public class ProcessTest {
    */
   @Test(expected = IllegalArgumentException.class)
   public void testBadSetState2() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
     Rectangle rect = new Rectangle(10, 30,
@@ -172,10 +172,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetStartX() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 10, 10,
+    IAnimation move2 = new Animation("Motion", 0, 115, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
     assertEquals(move1.getStartX(), 10);
@@ -187,10 +187,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetStartY() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 10,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
     assertEquals(move1.getStartY(), 10);
@@ -202,10 +202,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetStartWidth() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 51,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 51,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
     assertEquals(move1.getStartWidth(), 10);
@@ -217,10 +217,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetStartHeight() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0,
             255, 0, 5, 20, 10, 10, 30, 0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 51,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 51,
             31231,
             0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
@@ -233,10 +233,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetStartColor() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 51,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 51,
             31231, 0, 0, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
     assertEquals(move1.getStartColor(), new Color(0, 255, 0));
@@ -248,10 +248,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetEndX() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 10, 10,
+    IAnimation move2 = new Animation("Motion", 0, 115, 10, 10,
             30, 0, 255, 0, 5, 25, 10, 10, 30,
             0, 255, 0);
     assertEquals(move1.getEndX(), 20);
@@ -263,10 +263,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetEndY() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 10,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 10,
             30, 0, 255, 0, 5, 20, 116, 10, 30,
             0, 255, 0);
     assertEquals(move1.getEndY(), 10);
@@ -278,10 +278,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetEndWidth() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 51,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 51,
             30, 0, 255, 0, 5, 20, 10, 110, 30,
             0, 255, 0);
     assertEquals(move1.getEndWidth(), 10);
@@ -293,10 +293,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetEndHeight() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0,
             255, 0, 5, 20, 10, 10, 30, 0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 51,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 51,
             31231,
             0, 255, 0, 5, 20, 10, 10, 60, 0, 255, 0);
     assertEquals(move1.getEndHeight(), 30);
@@ -308,10 +308,10 @@ public class ProcessTest {
    */
   @Test
   public void testGetEndColor() {
-    IProcess move1 = new Process("Motion", 0, 10, 10, 10,
+    IAnimation move1 = new Animation("Motion", 0, 10, 10, 10,
             30, 0, 255, 0, 5, 20, 10, 10, 30,
             0, 255, 0);
-    IProcess move2 = new Process("Motion", 0, 115, 12, 51,
+    IAnimation move2 = new Animation("Motion", 0, 115, 12, 51,
             31231, 0, 0, 0, 5, 20, 10, 10, 30,
             0, 0, 0);
     assertEquals(move1.getEndColor(), new Color(0, 255, 0));

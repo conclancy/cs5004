@@ -1,7 +1,7 @@
 package cs5004.animator.util;
 
+import cs5004.animator.model.IAnimation;
 import cs5004.animator.model.IModel;
-import cs5004.animator.model.IProcess;
 import cs5004.animator.model.IShape;
 import java.awt.Dimension;
 import java.util.LinkedHashMap;
@@ -130,7 +130,7 @@ public interface IAnimationBuilder {
    * This method will retrieve the processes from the playbackBuilder.
    * @return a map of the ids for the processes in the playbackBuilder.
    */
-  LinkedHashMap<String, List<IProcess>> getProcesses();
+  LinkedHashMap<String, List<IAnimation>> getProcesses();
 
   /**
    * This method will retrieve the shapes from the playbackBuilder.

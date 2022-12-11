@@ -1,5 +1,6 @@
 package cs5004.animator.view;
 
+import cs5004.animator.model.IAnimation;
 import cs5004.animator.model.IShape;
 import java.util.Timer;
 import java.util.List;
@@ -11,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import cs5004.animator.model.IModel;
-import cs5004.animator.model.IProcess;
 
 /**
  * This class represents a visual view that displays the animation.
@@ -70,13 +70,13 @@ public class ViewGUISimple extends JFrame implements IView {
   private Dimension getNeededSpace() {
     int outputWidth = 0;
     int outputHeight = 0;
-    for (List<IProcess> processList : this.model.getProcesses().values()) {
+    for (List<IAnimation> processList : this.model.getProcesses().values()) {
       outputWidth = Math.max(outputWidth,
               processList.get(0).getStartX() + processList.get(0).getStartWidth());
       outputHeight = Math.max(outputHeight,
               processList.get(0).getStartY() + processList.get(0).getStartHeight());
 
-      for (IProcess process : processList) {
+      for (IAnimation process : processList) {
         outputWidth = Math.max(outputWidth, process.getEndX() + process.getEndWidth());
         outputHeight = Math.max(outputHeight, process.getEndY() + process.getEndHeight());
       }

@@ -1,11 +1,11 @@
 package cs5004.animator.util;
 
+import cs5004.animator.model.Animation;
 import cs5004.animator.model.Ellipse;
+import cs5004.animator.model.IAnimation;
 import cs5004.animator.model.IModel;
-import cs5004.animator.model.IProcess;
 import cs5004.animator.model.IShape;
 import cs5004.animator.model.Model;
-import cs5004.animator.model.Process;
 import cs5004.animator.model.Rectangle;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class AnimationBuilder implements IAnimationBuilder {
 
-  private LinkedHashMap<String, List<IProcess>> processes;
+  private LinkedHashMap<String, List<IAnimation>> processes;
   private LinkedHashMap<String, IShape> shapesList;
   private int x = 0;
   private int y = 0;
@@ -140,7 +140,7 @@ public class AnimationBuilder implements IAnimationBuilder {
       int r1, int g1, int b1, int t2, int x2, int y2, int w2,
       int h2, int o2, int r2, int g2, int b2) {
     String type = this.getType(x1, y1, w1, h1, o1, r1, g1, b1, x2, y2, w2, h2, o2, r2, g2, b2);
-    IProcess process = new Process(type, t1, x1, y1, w1, h1, o1,
+    IAnimation process = new Animation(type, t1, x1, y1, w1, h1, o1,
         r1, g1, b1, t2, x2, y2, w2, h2, o2, r2, g2, b2);
     if (this.processes.containsKey(name)) {
       this.addIfValidProcess(name, this.processes.get(name), process,
@@ -184,7 +184,7 @@ public class AnimationBuilder implements IAnimationBuilder {
       int r2, int g2, int b2) {
 
     String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
-    IProcess process = new Process(type, t1, x1, y1, w1, h1,
+    IAnimation process = new Animation(type, t1, x1, y1, w1, h1,
         0, r1, g1, b1, t2, x2, y2, w2, h2, 0, r2, g2, b2);
     if (this.processes.containsKey(name)) {
       this.addIfValidProcess(name, this.processes.get(name), process,
@@ -271,8 +271,8 @@ public class AnimationBuilder implements IAnimationBuilder {
    * Helper method that adds a process into a list with a specific index when no overlap is
    * observed.
    */
-  private void addIfValidProcess(String id, List<IProcess> list,
-      IProcess process,
+  private void addIfValidProcess(String id, List<IAnimation> list,
+      IAnimation process,
       int addIndex) {
     int startTick = process.getStartTime();
     IShape shapeCopy1 = this.shapesList.get(id).getCopy();
@@ -283,7 +283,7 @@ public class AnimationBuilder implements IAnimationBuilder {
       return;
     }
 
-    IProcess previousProcess = list.get(addIndex - 1);
+    IAnimation previousProcess = list.get(addIndex - 1);
 
     previousProcess.setState(previousProcess.getEndTime(), shapeCopy1);
     process.setState(startTick, shapeCopy2);
@@ -317,7 +317,7 @@ public class AnimationBuilder implements IAnimationBuilder {
     int maxX = this.x;
     int maxY = this.y;
 
-    for (List<IProcess> processList : this.getProcesses().values()) {
+    for (List<IAnimation> processList : this.getProcesses().values()) {
       minX = Math.min(minX,
           processList.get(0).getStartX());
       minY = Math.min(minY,
@@ -327,7 +327,7 @@ public class AnimationBuilder implements IAnimationBuilder {
       maxY = Math.max(maxY,
           processList.get(0).getStartY() + processList.get(0).getStartHeight());
 
-      for (IProcess process : processList) {
+      for (IAnimation process : processList) {
         minX = Math.min(minX, process.getEndX());
         minY = Math.min(minY, process.getEndY());
         maxX = Math.max(maxX, process.getEndX() + process.getEndWidth());
@@ -390,10 +390,10 @@ public class AnimationBuilder implements IAnimationBuilder {
    * @return the map of the processes from the model.
    */
   @Override
-  public LinkedHashMap<String, List<IProcess>> getProcesses() {
-    LinkedHashMap<String, List<IProcess>> output = new LinkedHashMap<>();
+  public LinkedHashMap<String, List<IAnimation>> getProcesses() {
+    LinkedHashMap<String, List<IAnimation>> output = new LinkedHashMap<>();
     for (String key : this.processes.keySet()) {
-      List<IProcess> newProcesss = new ArrayList<>();
+      List<IAnimation> newProcesss = new ArrayList<>();
       newProcesss.addAll(this.processes.get(key));
       output.put(key, newProcesss);
     }
@@ -413,7 +413,7 @@ public class AnimationBuilder implements IAnimationBuilder {
    * @param startingTime the time to search for within the processes.
    * @return the index int of the process.
    */
-  private static int indexOfProcess(List<IProcess> list, int startingTime) {
+  private static int indexOfProcess(List<IAnimation> list, int startingTime) {
     if (list.isEmpty()) {
       return 0;
     }

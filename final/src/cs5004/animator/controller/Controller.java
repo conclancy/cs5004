@@ -1,7 +1,7 @@
 package cs5004.animator.controller;
 
-import cs5004.animator.model.Process;
-import cs5004.animator.model.IProcess;
+import cs5004.animator.model.Animation;
+import cs5004.animator.model.IAnimation;
 import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IVewText;
 import cs5004.animator.view.IViewGUI;
@@ -87,7 +87,7 @@ public class Controller implements InterfaceController, ActionListener,
    */
   @Override
   public void frameChanged(IFrameChangeEvent event) {
-    List<IProcess> processes = playbackBuilder.getProcesses()
+    List<IAnimation> processes = playbackBuilder.getProcesses()
             .get(event.getShapeName());
     if (event.getTick() < 0) {
       playbackView.displayError("The ticks must be positive!");
@@ -150,7 +150,7 @@ public class Controller implements InterfaceController, ActionListener,
           return;
         }
         else if (event.getTick() > processes.get(processes.size() - 1).getEndTime()) {
-          IProcess temp = processes.get(processes.size() - 1);
+          IAnimation temp = processes.get(processes.size() - 1);
           try {
             playbackBuilder.addMotion(event.getShapeName(), temp.getEndTime(),
                     temp.getEndX(), temp.getEndY(), temp.getEndWidth(),
@@ -172,7 +172,7 @@ public class Controller implements InterfaceController, ActionListener,
           return;
         }
         else {
-          for (IProcess process : processes) {
+          for (IAnimation process : processes) {
             if (event.getTick() == process.getStartTime()
                     || event.getTick() == process.getEndTime()) {
               this.playbackView.displayError("There is already a keyframe at this tick.");
@@ -238,7 +238,7 @@ public class Controller implements InterfaceController, ActionListener,
           try {
             playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
 
-            IProcess lastProcess = processes.get(processes.size() - 1);
+            IAnimation lastProcess = processes.get(processes.size() - 1);
             playbackBuilder.addMotion(event.getShapeName(),
                     lastProcess.getStartTime(),
                     lastProcess.getStartX(),
@@ -314,7 +314,7 @@ public class Controller implements InterfaceController, ActionListener,
         else {
           for (int i = 0; i < processes.size(); i++) {
             if (event.getTick() == processes.get(i).getStartTime()) {
-              IProcess process = combine(processes.get(i - 1), processes.get(i));
+              IAnimation process = combine(processes.get(i - 1), processes.get(i));
               try {
                 playbackBuilder.removeProcess(event.getShapeName(), event.getTick());
                 playbackBuilder.removeProcess(event.getShapeName(), processes.get(i - 1).getStartTime());
@@ -344,8 +344,8 @@ public class Controller implements InterfaceController, ActionListener,
 
   // takes the starting values of one process and the ending values of a second to make one new
   // process.
-  private IProcess combine(IProcess process1, IProcess process2) {
-    return new Process(process1.getType(), process1.getStartTime(),
+  private IAnimation combine(IAnimation process1, IAnimation process2) {
+    return new Animation(process1.getType(), process1.getStartTime(),
             process1.getStartX(),
             process1.getStartY(), process1.getStartWidth(), process1.getStartHeight(),
             process1.getStartRotationDegree(),
@@ -359,14 +359,14 @@ public class Controller implements InterfaceController, ActionListener,
 
 
   // Checks if any process starts with the given time, or the last process ends on this time.
-  private boolean timeExists(int time, List<IProcess> list) {
+  private boolean timeExists(int time, List<IAnimation> list) {
     if (list == null) {
       return false;
     }
     else if (time == list.get(list.size() - 1).getEndTime()) {
       return true;
     }
-    for (IProcess process : list) {
+    for (IAnimation process : list) {
       if (time == process.getStartTime()) {
         return true;
       }
@@ -555,10 +555,10 @@ public class Controller implements InterfaceController, ActionListener,
 
   // Converts a list of processes into a list of keyframes.
   private Map<String, List<InterpretStatusKeyFrame>> convertToKeyFrames(Map<String,
-          List<IProcess>> map) {
+          List<IAnimation>> map) {
     Map<String, List<InterpretStatusKeyFrame>> output = new LinkedHashMap<>();
 
-    for (Map.Entry<String, List<IProcess>> entry : map.entrySet()) {
+    for (Map.Entry<String, List<IAnimation>> entry : map.entrySet()) {
       ArrayList<InterpretStatusKeyFrame> temp = new ArrayList<>();
       if (map.get(entry.getKey()) == null)  {
         output.put(entry.getKey(), new ArrayList<>());
@@ -568,7 +568,7 @@ public class Controller implements InterfaceController, ActionListener,
       for (int i = 0; i < entry.getValue().size(); i++) {
         temp.add(this.convertToKeyFrame(entry.getValue().get(i)));
       }
-      IProcess last = entry.getValue().get(entry.getValue().size() - 1);
+      IAnimation last = entry.getValue().get(entry.getValue().size() - 1);
 
       if (last.getStartTime() != last.getEndTime()) {
         temp.add(new StatusKeyFrame(last.getEndTime(), last.getEndX(), last.getEndY(),
@@ -581,7 +581,7 @@ public class Controller implements InterfaceController, ActionListener,
   }
 
   // converts a process to keyframes using its starting values.
-  private InterpretStatusKeyFrame convertToKeyFrame(IProcess process) {
+  private InterpretStatusKeyFrame convertToKeyFrame(IAnimation process) {
     return new StatusKeyFrame(process.getStartTime(), process.getStartX(), process.getStartY(),
             process.getStartWidth(), process.getStartHeight(), process.getStartRotationDegree(),
             process.getStartColor());
@@ -590,7 +590,7 @@ public class Controller implements InterfaceController, ActionListener,
   // Gets the first tick of the animation and starts it at that. If there
   // are no processes then set tick to 0;
   private int getFirstTick() {
-    Map<String, List<IProcess>> processes = this.playbackBuilder
+    Map<String, List<IAnimation>> processes = this.playbackBuilder
             .getProcesses();
     int firstTickNum = Integer.MAX_VALUE;
 

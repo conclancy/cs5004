@@ -1,6 +1,6 @@
 package cs5004.animator.view;
 
-import cs5004.animator.model.IProcess;
+import cs5004.animator.model.IAnimation;
 import cs5004.animator.model.IShape;
 import java.io.StringWriter;
 import java.util.List;
@@ -41,7 +41,7 @@ public class VewText implements IVewText {
 
     StringBuilder output = new StringBuilder();
     for (Map.Entry<String,
-            List<IProcess>> entry : this.model.getProcesses().entrySet()) {
+            List<IAnimation>> entry : this.model.getProcesses().entrySet()) {
       IShape shape = this.model.getShapes().get(entry.getKey());
       output.append("Create ").append(shape.getShapeType()).append(" ")
               .append(entry.getKey()).append(" ")
@@ -50,7 +50,7 @@ public class VewText implements IVewText {
               .append(shape.getHeight()).append(".")
               .append("\n");
 
-      for (IProcess process : entry.getValue()) {
+      for (IAnimation process : entry.getValue()) {
         StringBuilder temp = new StringBuilder().append("Transform ");
         temp.append(entry.getKey()).append(" from location (")
                 .append(process.getStartX()).append(", ")

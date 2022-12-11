@@ -23,7 +23,7 @@ public interface IModel {
   /**
    * This method creates all the processes from the model.
    */
-  LinkedHashMap<String, List<IProcess>> getProcesses();
+  LinkedHashMap<String, List<IAnimation>> getProcesses();
 
   /**
    * This method will retrieve the x of the model.

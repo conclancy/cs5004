@@ -1,14 +1,10 @@
 package cs5004.animator.model;
 
-import java.awt.Dimension;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import cs5004.animator.util.IAnimationBuilder;
 
 
 /**
@@ -17,7 +13,7 @@ import cs5004.animator.util.IAnimationBuilder;
  */
 public class Model implements IModel {
 
-  private final LinkedHashMap<String, List<IProcess>> processes;
+  private final LinkedHashMap<String, List<IAnimation>> processes;
   private final LinkedHashMap<String, IShape> shapes;
 
   private final int x;
@@ -35,7 +31,7 @@ public class Model implements IModel {
    *                  processes that the shape will have.
    * @param shapes    which is also a linked hashmap that contains the IDs and shapes.
    */
-  public Model(LinkedHashMap<String, List<IProcess>> processes,
+  public Model(LinkedHashMap<String, List<IAnimation>> processes,
       LinkedHashMap<String, IShape> shapes,
       int x, int y, int width, int height) {
     this.processes = processes;
@@ -53,7 +49,7 @@ public class Model implements IModel {
    * @param startingTime the time to search for within the processes.
    * @return the index int of the process.
    */
-  private static int indexOfProcess(List<IProcess> list, int startingTime) {
+  private static int indexOfProcess(List<IAnimation> list, int startingTime) {
     if (list.isEmpty()) {
       return 0;
     }
@@ -92,7 +88,7 @@ public class Model implements IModel {
   public List<IShape> getState(int timeOfInterest) {
     List<IShape> output = new ArrayList<>();
     //iterate through the shape list
-    for (Map.Entry<String, List<IProcess>> entry : this.processes.entrySet()) {
+    for (Map.Entry<String, List<IAnimation>> entry : this.processes.entrySet()) {
       String id = entry.getKey();
       IShape currShapes = this.shapes.get(id);
 
@@ -134,10 +130,10 @@ public class Model implements IModel {
    * @return processes from model in the map.
    */
   @Override
-  public LinkedHashMap<String, List<IProcess>> getProcesses() {
-    LinkedHashMap<String, List<IProcess>> output = new LinkedHashMap<>();
+  public LinkedHashMap<String, List<IAnimation>> getProcesses() {
+    LinkedHashMap<String, List<IAnimation>> output = new LinkedHashMap<>();
     for (String key : this.processes.keySet()) {
-      List<IProcess> newProcesss = new ArrayList<>();
+      List<IAnimation> newProcesss = new ArrayList<>();
       newProcesss.addAll(this.processes.get(key));
       output.put(key, newProcesss);
     }
@@ -184,7 +180,7 @@ public class Model implements IModel {
   @Override
   public int getLastTick() {
     int output = 0;
-    for (List<IProcess> processList : this.processes.values()) {
+    for (List<IAnimation> processList : this.processes.values()) {
       output = Math.max(output, processList.get(processList.size() - 1).getEndTime());
     }
     return output;
@@ -198,11 +194,11 @@ public class Model implements IModel {
   @Override
   public String toString() {
     StringBuilder output = new StringBuilder();
-    for (Map.Entry<String, List<IProcess>> entry : this.processes.entrySet()) {
+    for (Map.Entry<String, List<IAnimation>> entry : this.processes.entrySet()) {
       IShape shape = this.shapes.get(entry.getKey());
       output.append("Shape ").append(entry.getKey()).append(" ").append(shape.getShapeType())
           .append("\n");
-      for (IProcess process : entry.getValue()) {
+      for (IAnimation process : entry.getValue()) {
         StringBuilder temp = new StringBuilder(process.getType()).append(" ")
             .append(entry.getKey()).append(" ").append(process.getStartTime()).append(" ");
 

@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  * This class represents the interpreting methods for the process for a shape during an animation.
  */
-public interface IProcess {
+public interface IAnimation {
   /**
    * This method will retrieve the start time for the process of the object.
    * @return the start time of the process.
