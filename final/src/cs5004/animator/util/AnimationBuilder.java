@@ -284,11 +284,6 @@ public class AnimationBuilder implements IAnimationBuilder {
       }
     }
 
-    // TODO
-    if (shapeCopy1 == null || shapeCopy2 == null) {
-      throw new NoSuchElementException("Shapes not loading animations properly");
-    }
-
     if (addIndex == 0) {
       list.add(addIndex, animation);
       return;
