@@ -149,11 +149,10 @@ public class Animation implements IAnimation {
    *
    * @param tick  is the tick to mutate the shape to the state.
    * @param shape the shape of the object before the process starts.
-   * @return the current version of the shape, as an {@link IShape} object
    * @throws IllegalArgumentException if the tick value is larger than the ending tick value.
    */
   @Override
-  public IShape setState(int tick, IShape shape) throws IllegalArgumentException {
+  public void setState(int tick, IShape shape) throws IllegalArgumentException {
     if (tick < this.startTick || tick > this.endTick) {
       throw new IllegalArgumentException("Please check the time input value.");
     } else if (this.startTick == this.endTick) {
@@ -161,7 +160,7 @@ public class Animation implements IAnimation {
       shape.setWidth(this.endWidth);
       shape.setHeight(this.endHeight);
       shape.setColor(this.endColor);
-      return shape;
+      return;
     }
 
     int newX = this.findPointAt(tick, this.startingX, this.endX);
@@ -176,7 +175,6 @@ public class Animation implements IAnimation {
     int newerBlue = this.findPointAt(tick, this.startColor.getBlue(), this.endColor.getBlue());
     shape.setColor(new Color(newerRed, newerGreen, newerBlue));
 
-    return shape;
   }
 
   /**
@@ -197,6 +195,24 @@ public class Animation implements IAnimation {
   @Override
   public int getEndRotationDegree() {
     return this.endOrientation;
+  }
+
+  /**
+   * Combine two animation objects into one.
+   *
+   * @param other the other animation to be added.
+   * @return a new animation, as an {@link IAnimation}
+   */
+  @Override
+  public IAnimation combine(IAnimation other) {
+    return new Animation(this.getType(), this.getStartTick(),
+        this.getStartX(),
+        this.getStartY(), this.getStartWidth(), this.getStartHeight(),
+        this.getStartColor().getRed(), this.getStartColor().getGreen(),
+        this.getStartColor().getBlue(), other.getEndTick(), other.getEndX(),
+        other.getEndY(), other.getEndWidth(), other.getEndHeight(),
+        other.getEndColor().getRed(), other.getEndColor().getGreen(),
+        other.getEndColor().getBlue());
   }
 
   /**

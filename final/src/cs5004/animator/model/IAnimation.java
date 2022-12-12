@@ -103,10 +103,9 @@ public interface IAnimation {
    *
    * @param tick  is the tick to mutate the shape to the state.
    * @param shape the shape of the object before the process starts.
-   * @return the current version of the shape, as an {@link IShape} object
    * @throws IllegalArgumentException if the tick value is larger than the ending tick value.
    */
-  IShape setState(int tick, IShape shape) throws IllegalArgumentException;
+  void setState(int tick, IShape shape) throws IllegalArgumentException;
 
   /**
    * Get the starting degree of rotation of the associated {@link IShape}.
@@ -121,4 +120,12 @@ public interface IAnimation {
    * @return the ending of rotation of the {@link IShape}, as an int.
    */
   int getEndRotationDegree();
+
+  /**
+   * Combine two animation objects into one.
+   *
+   * @param other the other animation to be added.
+   * @return a new animation, as an {@link IAnimation}
+   */
+  IAnimation combine(IAnimation other);
 }
