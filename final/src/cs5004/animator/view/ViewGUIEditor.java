@@ -40,9 +40,9 @@ import cs5004.animator.controller.IFrame;
 import cs5004.animator.controller.Frame;
 
 /**
- * This ViewGUIEditor class is the GUI that will act as the third view for the animation. This will
- * allow users to scroll through the animation, select specific frames, select speed, play, pause,
- * restart, loop, and export to SVG.
+ * This GUI editor view class creates an interactive window for users to control an animation. This
+ * will allow users to scroll through the animation, set the animation speed, play, pause, restart,
+ * repeat, and export to the visual to an SVG file.
  */
 public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionListener,
     ActionListener, ChangeListener {
@@ -72,15 +72,15 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   private boolean pause = true;
 
   /**
-   * This constructor constructs the playback view which creates an environment similar to the
-   * visual view. The user is able to interact with the view.
+   * Construct the GUI Editor view which creates an interactive GUI for users to control the
+   * playback of the animation using buttons and a slider bar.
    *
-   * @param ticksPS the starting speed of the animation in ticks per second
+   * @param speed the speed of the animation in ticks per second, as an int.
    */
-  public ViewGUIEditor(int ticksPS) {
+  public ViewGUIEditor(int speed) {
     super("EasyAnimator - CS5004 Final - cclancy");
 
-    this.tickSpeedField = new JTextField("" + ticksPS);
+    this.tickSpeedField = new JTextField("" + speed);
 
     this.handler = new UserInputHandler();
     this.buttonListeners = new ArrayList<>();
@@ -123,70 +123,71 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Method that paints borders.
+   * Adds a black borderline to a {@link JComponent}.
+   *
+   * @param component the {@link JComponent} to add a border to.
    */
-  private void addBorder(JComponent comp) {
-    comp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+  private void addBorder(JComponent component) {
+    component.setBorder(BorderFactory.createLineBorder(Color.BLACK));
   }
 
 
   /**
-   * Method that creates a toolbar at the bottom that supports the Play, Restart, and Pause
-   * buttons.
+   * Create a toolbar at the bottom that supports the Play, Restart, and Pause buttons.
    */
   private void createToolbar() {
 
     // Play Button
-    JButton play = new JButton("START");
-    play.setActionCommand("START");
-    play.addActionListener(this);
+    JButton buttonPlay = new JButton("Start");
+    buttonPlay.setActionCommand("START");
+    buttonPlay.addActionListener(this);
 
     // Pause Button
-    JButton pause = new JButton("PAUSE");
-    pause.setActionCommand("PAUSE");
-    pause.addActionListener(this);
+    JButton buttonPause = new JButton("Pause");
+    buttonPause.setActionCommand("PAUSE");
+    buttonPause.addActionListener(this);
 
-    JPanel playPause = new JPanel();
-    playPause.add(play);
-    playPause.add(pause);
+    JPanel panelPlayPause = new JPanel();
+    panelPlayPause.add(buttonPlay);
+    panelPlayPause.add(buttonPause);
 
     // Restart Button
-    JButton restart = new JButton("RESTART");
-    restart.setActionCommand("RESTART");
-    restart.addActionListener(this);
+    JButton buttonRestart = new JButton("Restart");
+    buttonRestart.setActionCommand("RESTART");
+    buttonRestart.addActionListener(this);
 
     // Repeat Button
     JLabel loop = new JLabel("Repeat:");
-    JCheckBox loopToggle = new JCheckBox();
-    loopToggle.setActionCommand("LOOP");
-    loopToggle.addActionListener(this);
-    JPanel loopPanel = new JPanel();
-    loopPanel.add(loop);
-    loopPanel.add(loopToggle);
+    JCheckBox checkBoxRepeat = new JCheckBox();
+    checkBoxRepeat.setActionCommand("LOOP");
+    checkBoxRepeat.addActionListener(this);
+    JPanel panelRepeat = new JPanel();
+    panelRepeat.add(loop);
+    panelRepeat.add(checkBoxRepeat);
 
     // Export to SVG
-    JButton export = new JButton("Save as SVG File");
-    export.setActionCommand("EXPORT");
-    export.addActionListener(this);
+    JButton buttonExport = new JButton("Save as SVG File");
+    buttonExport.setActionCommand("EXPORT");
+    buttonExport.addActionListener(this);
 
     // Set Ticks Per Second Speed Field
-    JLabel speed = new JLabel("SET SPEED:");
+    JLabel labelSpeed = new JLabel("Set Speed:");
     this.tickSpeedField.setPreferredSize(new Dimension(34, 26));
     this.tickSpeedField.setActionCommand("TICK SPEED");
     this.tickSpeedField.addActionListener(this);
-    JLabel tickPerSec = new JLabel("(Default: 1)");
-    JPanel tickPanel = new JPanel();
-    tickPanel.add(speed);
-    tickPanel.add(this.tickSpeedField);
-    tickPanel.add(tickPerSec);
+    JLabel labelDefaultSpeed = new JLabel("(Default: 1)");
+    JPanel panelSpeed = new JPanel();
+    panelSpeed.add(labelSpeed);
+    panelSpeed.add(this.tickSpeedField);
+    panelSpeed.add(labelDefaultSpeed);
 
     // Add the buttons in order of appearance
     this.toolbar = new JPanel(new FlowLayout(FlowLayout.CENTER, 80, 10));
-    this.toolbar.add(tickPanel);
-    this.toolbar.add(playPause);
-    this.toolbar.add(restart);
-    this.toolbar.add(export);
-    this.toolbar.add(loopPanel);
+    this.toolbar.add(panelSpeed);
+    this.toolbar.add(panelPlayPause);
+    this.toolbar.add(buttonRestart);
+    this.toolbar.add(buttonExport);
+    this.toolbar.add(panelRepeat);
     this.addBorder(this.toolbar);
   }
 
@@ -238,7 +239,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Method that starts the animation.
+   * Create a view, and play the animation contained within the program.
    */
   @Override
   public void play() {
@@ -246,7 +247,9 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Display a list of shapes int the GUI.
+   * Display a list of {@link IShape} objects.
+   *
+   * @param shapes the list of {@link IShape} to be displayed in the GUI.
    */
   @Override
   public void display(List<IShape> shapes) {
@@ -254,7 +257,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Retrieves the shapes for the animation.
+   * Get the shapes for the animation.
    *
    * @return a list of {@link ShapeCell}
    */
@@ -270,7 +273,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Add shapes to the view.
+   * Add {@link IShape} objects to the view.
    *
    * @param shapes all the shapes in the animation.
    */
@@ -287,23 +290,26 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Get keyframes for automation.
+   * Get the animation frames for the visual.
    */
   @Override
-  public Map<String, List<IFrame>> getKeyframes() {
+  public Map<String, List<IFrame>> getFrame() {
     return this.keyframes;
   }
 
   /**
-   * Sets all keyframes for automation.
+   * Sets frames for automation.
+   *
+   * @param frames the shape name, as a String, and its associated {@link IFrame} objects as a
+   *               {@link LinkedHashMap}.
    */
   @Override
-  public void setKeyframes(Map<String, List<IFrame>> keyframes) {
+  public void setFrames(Map<String, List<IFrame>> frames) {
     this.keyframes = new LinkedHashMap<>();
-    for (String id : keyframes.keySet()) {
+    for (String id : frames.keySet()) {
       List<IFrame> newList = new ArrayList<>();
 
-      for (IFrame frame : keyframes.get(id)) {
+      for (IFrame frame : frames.get(id)) {
         newList.add(new Frame(frame.getTick(), frame.getX(), frame.getY(),
             frame.getWidth(), frame.getHeight(), frame.getShapeRotation(),
             frame.getColor()));
@@ -315,6 +321,8 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
 
   /**
    * Set the width of the GUI.
+   *
+   * @param width the width of the GUI, as an int.
    */
   @Override
   public void setWidth(int width) {
@@ -324,6 +332,8 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
 
   /**
    * Set the height of the GUI.
+   *
+   * @param height the height of the GUI, as an int.
    */
   @Override
   public void setHeight(int height) {
@@ -332,7 +342,9 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Adds a listener that can receive action events.
+   * Add a {@link ActionListener} that receives action events from button presses.
+   *
+   * @param listener the listener being passed.
    */
   @Override
   public void addButtonListener(ActionListener listener) {
@@ -340,7 +352,9 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Adds a listener that can receive property change events.
+   * Add a {@link PropertyChangeListener} that receives property change events.
+   *
+   * @param listener the listener being passed.
    */
   @Override
   public void addPropertyListener(PropertyChangeListener listener) {
@@ -349,7 +363,9 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Adds a listener that receives a shape change events.
+   * Add a {@link IShapeChangeListener} that receives shape change events.
+   *
+   * @param listener the listener being passed.
    */
   @Override
   public void addShapeChangeListener(IShapeChangeListener listener) {
@@ -357,43 +373,55 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Adds a listener that receives frame change events.
+   * Adds a {@link IFrameChangeListener} that receives frame change events.
+   *
+   * @param listener the listener being passed.
    */
   @Override
   public void addFrameChangeListener(IFrameChangeListener listener) {
     this.handler.addFrameChangeListener(listener);
   }
 
+
   /**
-   * Displays an error on the screen indicating to the user an error occurred.
+   * Displays an error in the view indicating to the user an error occurred.
+   *
+   * @param error the error message to be displayed, as a String.
    */
   @Override
-  public void displayError(String s) {
-    JOptionPane.showMessageDialog(this, s, "An error occurred",
+  public void displayError(String error) {
+    JOptionPane.showMessageDialog(this, error, "An error occurred",
         JOptionPane.ERROR_MESSAGE);
   }
 
+
   /**
-   * Helper method for actions performed.
+   * Create a new {@link ActionEvent} when a button is pressed.
+   *
+   * @param command the name of the command being created.
    */
-  private void buttonEventHelper(String type) {
+  private void buttonEventHelper(String command) {
     for (ActionListener listener : this.buttonListeners) {
-      listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, type));
+      listener.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, command));
     }
   }
 
+
   /**
-   * Helper method for changing the speed of the automation.
+   * Change the speed of the animation.
+   *
+   * @param type     the type of {@link PropertyChangeEvent} that will be occurring.
+   * @param newSpeed the new speed of the animation, as an int.
    */
-  private void changeSpeed(String type, String newValue) {
+  private void changeSpeed(String type, String newSpeed) {
     for (PropertyChangeListener listener : this.tickSpeedListeners) {
       listener.propertyChange(new PropertyChangeEvent(this, type,
-          newValue, newValue));
+          newSpeed, newSpeed));
     }
   }
 
   /**
-   * Method to update the frames within the animation.
+   * Update the frames within the animation.
    */
   private void updateFramesList() {
     this.framesList.clear();
@@ -505,9 +533,9 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   }
 
   /**
-   * Method waiting for a shape change.
+   * Even listener waiting for a state change event.
    *
-   * @param event the change event.
+   * @param event the {@link ChangeEvent} object. .
    */
   @Override
   public void stateChanged(ChangeEvent event) {

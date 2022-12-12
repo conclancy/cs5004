@@ -12,7 +12,7 @@ public interface IPaintPanel {
   /**
    * Method that paints the list of shapes onto the screen.
    *
-   * @param shapes the shapes to be painted on to the screen.
+   * @param shapes the shapes to be painted on to the screen, passed as a List.
    */
   void paint(List<IShape> shapes);
 }

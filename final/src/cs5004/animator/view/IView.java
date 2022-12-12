@@ -1,12 +1,12 @@
 package cs5004.animator.view;
 
 /**
- * This interface represents the functionality contained within all Easy Animation views.
+ * Interface for all view objects with the Easy Animation program.
  */
 public interface IView {
 
   /**
-   * Create a view, and being the processes contained within it.
+   * Create a view, and play the animation contained within the program.
    */
   void play();
 }

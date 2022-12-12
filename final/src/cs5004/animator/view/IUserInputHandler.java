@@ -5,46 +5,69 @@ import java.awt.Color;
 import java.beans.PropertyChangeListener;
 
 /**
- * This interface handles inputs from GUI pop-ups presented to the end user.  This class allows
- * users to export their animation as an SVG file and allows users to change shapes and events that
- * occur within the automation.
+ * This interface handles inputs from {@link IView} pop-ups presented to the end user.  This class
+ * allows users to export their animation as an SVG file and allows users to change shapes and
+ * events that occur within the automation.
  */
 public interface IUserInputHandler {
 
   /**
-   * Method that adds a listener that receives a SHAPE CHANGE event.
+   * Add a listener that receives a {@link IShapeChangeEvent} objects and adds them to the animation
+   * program.
    */
   void addShapeChangeListener(IShapeChangeListener listener);
 
   /**
-   * Method that adds a listener that receives a frame change.
+   * Add a listener that receives a {@link IFrameChangeEvent} objects and adds them to the animation
+   * program.
    */
   void addFrameChangeListener(IFrameChangeListener listener);
 
   /**
-   * Method that adds a listener that receives a property change event.
+   * Add a listener that receives a {@link PropertyChangeListener} objects and adds them to the
+   * animation program.
    */
   void addExportListener(PropertyChangeListener listener);
 
   /**
-   * Helper method to export SVG file. THis method will create a pop up that allows user to specify
-   * path.
+   * Export the passed {@link Component} to an SVG file. Method creates a pop-up in the
+   * {@link IViewGUI} that allows user to specify path.
    */
-  void exportToSVG(Component parent);
+  void exportToSVG(Component component);
 
   /**
-   * Method that allows for a SHAPE CHANGE specified by the user.
+   * Change an existing shape within the automation.
+   *
+   * @param component the component being changed.
+   * @param type      the type of shape being changed.
+   * @param name      the name of the shape being changed.
    */
-  void changeShape(Component parent, EShapeChangeType type, String id);
+  void changeShape(Component component, EShapeChangeType type, String name);
 
   /**
-   * Method for a changeFrame using the parent, type and id and time only.
+   * Allows for ADDING or DELETING an existing frame with a given name and tick location.
+   *
+   * @param component  the component to be set.
+   * @param changeType the {@link EFrameChangeType} changeType occurring
+   * @param name       the name of the frame to be changed.
+   * @param tick       the tick location of the change.
    */
-  void changeFrame(Component parent, EFrameChangeType type, String id, int time);
+  void changeFrame(Component component, EFrameChangeType changeType, String name, int tick);
 
   /**
-   * A frame change event in addition to other shape attributes as arguments.
+   * Allows for EDITING an existing frame within an animation.
+   *
+   * @param component  the component to be edited.
+   * @param changeType the {@link EFrameChangeType} type occurring
+   * @param name       the name of the frame being changed.
+   * @param tick       the tick location of the change.
+   * @param x          the X coordinate of the shape.
+   * @param y          the Y coordinate of the shape.
+   * @param width      the width of the shape.
+   * @param height     the height of the shape.
+   * @param degrees    the degrees of rotation from the shape's original starting orientation.
+   * @param color      the {@link Color} of the shape.
    */
-  void changeFrame(Component parent, EFrameChangeType type, String id, int time, int x,
-      int y, int width, int height, int rotationDegree, Color color);
+  void changeFrame(Component component, EFrameChangeType changeType, String name, int tick, int x,
+      int y, int width, int height, int degrees, Color color);
 }

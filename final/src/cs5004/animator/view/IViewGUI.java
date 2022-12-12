@@ -3,83 +3,109 @@ package cs5004.animator.view;
 import cs5004.animator.model.IShape;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import cs5004.animator.controller.IFrame;
 
 /**
- * This interface represents a playback view that uses a gui for the user.
+ * This GUI editor view class creates an interactive window for users to control an animation. This
+ * will allow users to scroll through the animation, set the animation speed, play, pause, restart,
+ * repeat, and export to the visual to an SVG file.
  */
 public interface IViewGUI extends IView {
 
+
   /**
-   * This method will display a list of shapes onto the graphical interface for the user.
+   * Display a list of {@link IShape} objects.
+   *
+   * @param shapes the list of {@link IShape} to be displayed in the GUI.
    */
   void display(List<IShape> shapes);
 
   /**
-   * Retrieves the shapes to be displayed.
+   * Get the shapes for the animation.
    *
-   * @return a list of shapes
+   * @return a list of {@link ShapeCell}
    */
   List<IShapeCell> getShapes();
 
   /**
-   * Places a map of all shapes in animation in the view.
+   * Add {@link IShape} objects to the view.
    *
    * @param shapes all the shapes in the animation.
    */
   void setShapes(Map<String, IShape> shapes);
 
   /**
-   * Retrieves all keyframes.
+   * Get the animation frames for the visual.
    */
-  Map<String, List<IFrame>> getKeyframes();
+  Map<String, List<IFrame>> getFrame();
 
   /**
-   * Sets all keyframes.
+   * Sets frames for automation.
+   *
+   * @param frames the shape name, as a String, and its associated {@link IFrame} objects as a
+   *               {@link LinkedHashMap}.
    */
-  void setKeyframes(Map<String, List<IFrame>> keyframes);
+  void setFrames(Map<String, List<IFrame>> frames);
 
   /**
-   * sets the width of a shape.
+   * Set the width of the GUI.
+   *
+   * @param width the width of the GUI, as an int.
    */
   void setWidth(int width);
 
+
   /**
-   * sets the height of a shape.
+   * Set the height of the GUI.
+   *
+   * @param height the height of the GUI, as an int.
    */
   void setHeight(int height);
 
   /**
-   * Adds a listener that can receive action events.
+   * Add a {@link ActionListener} that receives action events from button presses.
+   *
+   * @param listener the listener being passed.
    */
   void addButtonListener(ActionListener listener);
 
   /**
-   * Adds a listener that can receive property change events.
+   * Add a {@link PropertyChangeListener} that receives property change events.
+   *
+   * @param listener the listener being passed.
    */
   void addPropertyListener(PropertyChangeListener listener);
 
   /**
-   * Adds a listener that receives a SHAPE CHANGE event.
+   * Add a {@link IShapeChangeListener} that receives shape change events.
+   *
+   * @param listener the listener being passed.
    */
   void addShapeChangeListener(IShapeChangeListener listener);
 
   /**
-   * Adds a listener that receives a frame change event.
+   * Adds a {@link IFrameChangeListener} that receives frame change events.
+   *
+   * @param listener the listener being passed.
    */
   void addFrameChangeListener(IFrameChangeListener listener);
 
   /**
-   * Displays an error on the screen indicating to the user an error occured.
+   * Displays an error in the view indicating to the user an error occurred.
+   *
+   * @param error the error message to be displayed, as a String.
    */
-  void displayError(String s);
+  void displayError(String error);
 
 
   /**
-   * Method that allows that pushes an update to the slider for the given tick.
+   * Set the current state of the GUI playback slider.
+   *
+   * @param tick to set the slider at.
    */
   void setSlider(double tick);
 }

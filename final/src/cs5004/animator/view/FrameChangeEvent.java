@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 
 /**
- * This class represents an action event for key frame changes for the playback view.
+ * This class represents an {@link ActionEvent} for frame changes events in the
+ * {@link ViewGUIEditor}.
  */
 public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
 
@@ -79,9 +80,9 @@ public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
   }
 
   /**
-   * Get the X coordinate of the shape.
+   * Get the x coordinate of the shape.
    *
-   * @return the X coordinate of the shape, as an int.
+   * @return the x coordinate of the shape, as an int.
    */
   @Override
   public int getX() {
@@ -89,7 +90,7 @@ public class FrameChangeEvent extends ActionEvent implements IFrameChangeEvent {
   }
 
   /**
-   * Get the Y coordinate of the shape.
+   * Get the y coordinate of the shape.
    *
    * @return the y coordinate of the shape, as an int.
    */

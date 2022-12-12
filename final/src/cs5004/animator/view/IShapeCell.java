@@ -1,9 +1,10 @@
 package cs5004.animator.view;
 
 /**
- * Represents a list node for shape objects for display in the GUI.
+ * Represents a list node for shape objects for display in the {@link ViewGUIEditor}.
  */
 public interface IShapeCell {
+
   /**
    * Get the name of the shape held within the node.
    *

@@ -1,9 +1,10 @@
 package cs5004.animator.view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 
 /**
- * Interface that represents changes within the key frames of a shape in the animation.
+ * Interface for frame change {@link ActionEvent} objects in the {@link ViewGUIEditor}.
  */
 public interface IFrameChangeEvent {
 

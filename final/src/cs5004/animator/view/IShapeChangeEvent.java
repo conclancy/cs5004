@@ -1,7 +1,9 @@
 package cs5004.animator.view;
 
+import java.awt.event.ActionEvent;
+
 /**
- * This class represents a change to a shape that happens within the Easy Animator GUI view.
+ * Interface for shape change {@link ActionEvent} objects in the {@link ViewGUIEditor}.
  */
 public interface IShapeChangeEvent {
 

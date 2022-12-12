@@ -102,7 +102,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                 event.getWidth(), event.getHeight(), event.getShapeRotation(),
                 event.getColor().getRed(), event.getColor().getGreen(),
                 event.getColor().getBlue());
-            this.viewGUI.setKeyframes(this.convertAnimationsToFrames(this.animationBuilder
+            this.viewGUI.setFrames(this.convertAnimationsToFrames(this.animationBuilder
                 .getAnimations()));
             lastTickNum = animationBuilder.build().getLastTick();
           } catch (IllegalArgumentException e) {
@@ -139,7 +139,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                 processes.get(0).getStartColor().getGreen(),
                 processes.get(0).getStartColor().getBlue());
 
-            viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+            viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
             lastTickNum = animationBuilder.build().getLastTick();
           } catch (IllegalArgumentException e) {
             viewGUI.displayError(e.getMessage());
@@ -163,7 +163,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
               this.animationBuilder.removeAnimation(event.getShapeName(), temp.getStartTick());
             }
 
-            viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+            viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
 
             lastTickNum = animationBuilder.build().getLastTick();
 
@@ -203,7 +203,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                     process.getEndY(), process.getEndWidth(), process.getEndHeight(),
                     process.getEndRotationDegree(), process.getEndColor().getRed(),
                     process.getEndColor().getGreen(), process.getEndColor().getBlue());
-                viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+                viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
                 lastTickNum = animationBuilder.build().getLastTick();
               } catch (IllegalArgumentException e) {
                 viewGUI.displayError(e.getMessage());
@@ -237,7 +237,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                     .getRed(),
                 processes.get(0).getEndColor().getGreen(),
                 processes.get(0).getEndColor().getBlue());
-            viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+            viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
           } catch (IllegalArgumentException e) {
             viewGUI.displayError(e.getMessage());
           }
@@ -261,7 +261,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                 event.getWidth(), event.getHeight(),
                 event.getShapeRotation(), event.getColor().getRed(),
                 event.getColor().getGreen(), event.getColor().getBlue());
-            viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+            viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
           } catch (IllegalArgumentException e) {
             viewGUI.displayError(e.getMessage());
           }
@@ -300,7 +300,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                       .getRed(),
                   processes.get(i).getEndColor().getGreen(),
                   processes.get(i).getEndColor().getBlue());
-              viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+              viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
             } catch (IllegalArgumentException e) {
               viewGUI.displayError(e.getMessage());
             }
@@ -321,7 +321,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
 
           try {
             animationBuilder.removeAnimation(event.getShapeName(), event.getTick());
-            viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+            viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
           } catch (IllegalArgumentException e) {
             viewGUI.displayError(e.getMessage());
           }
@@ -347,7 +347,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                     process.getEndRotationDegree(),
                     process.getEndColor().getRed(), process.getEndColor().getGreen(),
                     process.getEndColor().getBlue());
-                viewGUI.setKeyframes(convertAnimationsToFrames(animationBuilder.getAnimations()));
+                viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
               } catch (IllegalArgumentException e) {
                 viewGUI.displayError(e.getMessage());
               }
@@ -410,7 +410,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
         try {
           animationBuilder.declareShape(event.getName(), event.getShapeType());
           viewGUI.setShapes(animationBuilder.getShapeHash());
-          viewGUI.setKeyframes(
+          viewGUI.setFrames(
               this.convertAnimationsToFrames(this.animationBuilder.getAnimations()));
         } catch (IllegalArgumentException e) {
           viewGUI.displayError(e.getMessage());
@@ -427,7 +427,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
         try {
           animationBuilder.removeShape(event.getName());
           viewGUI.setShapes(animationBuilder.getShapeHash());
-          viewGUI.setKeyframes(
+          viewGUI.setFrames(
               this.convertAnimationsToFrames(this.animationBuilder.getAnimations()));
           lastTickNum = animationBuilder.build().getLastTick();
         } catch (IllegalArgumentException e) {
@@ -527,7 +527,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
    */
   @Override
   public void start() {
-    this.viewGUI.setKeyframes(
+    this.viewGUI.setFrames(
         this.convertAnimationsToFrames(this.animationBuilder.getAnimations()));
     this.viewGUI.setShapes(this.animationBuilder.getShapeHash());
     this.viewGUI.addButtonListener(this);

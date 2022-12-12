@@ -3,8 +3,7 @@ package cs5004.animator.view;
 import java.awt.event.ActionEvent;
 
 /**
- * This class creates an {@link ActionEvent} for {@link IShapeChangeEvent} generated in the
- * {@link ViewGUIEditor}.
+ * Implements shape change event {@link ActionEvent} objects in the {@link ViewGUIEditor}.
  */
 public class ShapeChangeEvent extends ActionEvent implements IShapeChangeEvent {
 

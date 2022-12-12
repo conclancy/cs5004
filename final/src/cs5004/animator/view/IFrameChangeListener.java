@@ -3,13 +3,14 @@ package cs5004.animator.view;
 import java.awt.event.ActionListener;
 
 /**
- * This interface represents the listener that will receive events when users make a change in
- * frames.
+ * Interface for frame change {@link ActionListener} object in the {@link ViewGUIEditor}.
  */
 public interface IFrameChangeListener extends ActionListener {
 
   /**
-   * Change frames when a change action is received.
+   * Listen for changes within animation frames.
+   *
+   * @param event representing changes within one of the frames.
    */
   void frameChanged(IFrameChangeEvent event);
 }

@@ -3,8 +3,8 @@ package cs5004.animator.view;
 import java.util.Objects;
 
 /**
- * This class represents a node in a list for the GUI display in which they correspond to the
- * shapes.
+ * Represents a list node for shape objects for display in the {@link ViewGUIEditor}.  This
+ * represents an {@link cs5004.animator.model.IShape} from the model in the View.
  */
 public class ShapeCell implements IShapeCell {
 
@@ -23,9 +23,9 @@ public class ShapeCell implements IShapeCell {
   }
 
   /**
-   * Retrieves the shape ID.
+   * Get the name of the shape held within the node.
    *
-   * @return the shape ID
+   * @return the shape name, as a String.
    */
   @Override
   public String getName() {
@@ -33,9 +33,9 @@ public class ShapeCell implements IShapeCell {
   }
 
   /**
-   * Retrieves the shape's type such as rectangle or ellipse.
+   * Get the shape type held within the node.
    *
-   * @return the shape type
+   * @return the shape type, as a String.
    */
   @Override
   public String getShapeType() {
@@ -43,9 +43,9 @@ public class ShapeCell implements IShapeCell {
   }
 
   /**
-   * Prints the String for the two assocaited attributes.
+   * Get the name and type of the shape as a String seperated by a hyphen.
    *
-   * @return the toString value
+   * @return the name and type of the shape, as a String, seperated by a hyphen.
    */
   @Override
   public String toString() {

@@ -92,7 +92,7 @@ public class ControllerTest {
     this.controller.frameChanged(event);
     this.originalFrames.get("R").add(new Frame(110, 200, 200, 25, 125, 0,
             new Color(255, 0, 0)));
-    assertEquals(this.originalFrames, this.view.getKeyframes());
+    assertEquals(this.originalFrames, this.view.getFrame());
   }
 
   @Test
@@ -103,7 +103,7 @@ public class ControllerTest {
     this.controller.frameChanged(event);
     this.originalFrames.get("R").add(5, new Frame(80, 200, 200, 25, 125, 0,
             new Color(255, 0, 0)));
-    assertEquals(this.originalFrames, this.view.getKeyframes());
+    assertEquals(this.originalFrames, this.view.getFrame());
   }
 
   @Test
@@ -114,7 +114,7 @@ public class ControllerTest {
     this.controller.frameChanged(event);
     this.originalFrames.get("C").add(0, new Frame(1, 440, 70, 120, 60, 0,
             new Color(0, 0, 255)));
-    assertEquals(this.originalFrames, this.view.getKeyframes());
+    assertEquals(this.originalFrames, this.view.getFrame());
   }
 
   @Test
@@ -126,7 +126,7 @@ public class ControllerTest {
     this.originalFrames.get("R").remove(5);
     this.originalFrames.get("R").add(new Frame(100, 200, 200, 25, 125, 0,
             new Color(255, 0, 0)));
-    assertEquals(this.originalFrames, this.view.getKeyframes());
+    assertEquals(this.originalFrames, this.view.getFrame());
   }
 
   @Test
@@ -136,7 +136,7 @@ public class ControllerTest {
             "R", 100, 0, 0, 0, 0, 10000, new Color(0));
     this.controller.frameChanged(event);
     this.originalFrames.get("R").remove(5);
-    assertEquals(this.originalFrames, this.view.getKeyframes());
+    assertEquals(this.originalFrames, this.view.getFrame());
   }
 
   @Test

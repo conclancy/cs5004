@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 /**
- * This class represents an interface for a drawing panel for the GUI view.
+ * Class represents the panel for drawing the animation using the draw() method.
  */
 public class PaintPanel extends JPanel implements IPaintPanel {
 
@@ -21,21 +21,36 @@ public class PaintPanel extends JPanel implements IPaintPanel {
     this.shapes = null;
   }
 
+  /**
+   * Paints a {@link Graphics} component on the {@link JPanel}.
+   *
+   * @param g the {@link Graphics} object to protect
+   */
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     if (this.shapes != null) {
-      this.drawShapesOn(g);
+      this.paintComponentHelper(g);
     }
   }
 
+  /**
+   * Method that paints the list of shapes onto the screen.
+   *
+   * @param shapes the shapes to be painted on to the screen, passed as a List.
+   */
   @Override
   public void paint(List<IShape> shapes) {
     this.shapes = shapes;
     this.repaint();
   }
 
-  private void drawShapesOn(Graphics g) {
+  /**
+   * Sets the color of a shape and draws it on the board.
+   *
+   * @param g the {@link Graphics} object to drawn.
+   */
+  private void paintComponentHelper(Graphics g) {
     Graphics2D g2D = (Graphics2D) g;
     for ( IShape shape : this.shapes ) {
       g2D.setColor(shape.getColor());
