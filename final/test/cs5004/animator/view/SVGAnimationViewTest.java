@@ -31,31 +31,9 @@ public class SVGAnimationViewTest {
     System.setOut(new PrintStream(outContent));
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void testConstructorZero() {
-    model = playbackBuilder.build();
-    SVGStringGenerator view = new SVGStringGenerator(model, 0);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testConstructorNegative() {
-    model = playbackBuilder.build();
-    SVGStringGenerator view = new SVGStringGenerator(model, -1);
-  }
-
-  @Test
-  public void testXMLAppending() {
-    this.model = this.playbackBuilder.build();
-    IVewText view = new SVGStringGenerator(model, 1);
-    assertEquals(view.getText(), "");
-    view.play();
-    assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\""
-            + " version=\"1.1\"\n"
-            + "    xmlns=\"http://www.w3.org/2000/svg\">\n</svg>");
-  }
-
   @Test
   public void testXMLAppendingWithShapes() {
+
     this.playbackBuilder.declareShape("rectangle", "Rectangle")
             .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255,
                     0, 5, 20,
@@ -63,28 +41,31 @@ public class SVGAnimationViewTest {
             .addAnimation("rectangle", 5, 20, 10, 10, 30, 0, 255,
                     0, 10, 20,
                     20, 10, 30, 0, 255, 0)
-            .declareShape("Steve", "Ellipse")
-            .addAnimation("Steve", 0, 1, 1, 20, 20, 255, 0,
+            .declareShape("test", "Ellipse")
+            .addAnimation("test", 0, 1, 1, 20, 20, 255, 0,
                     0, 10, 20,
                     20, 20, 20, 255, 0, 0);
+
     this.model = this.playbackBuilder.build();
-    IVewText view = new SVGStringGenerator(model, 1);
+
+    IVewText view = new SVGStringGenerator(model.getSVGTags(1), 1);
+
     view.play();
-    assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\""
+    assertEquals("<svg width=\"1000\" height=\"600\""
             + " version=\"1.1\"\n    xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"rectangle\" x=\"10\" y=\"10\" width=\"10\" height=\"30\""
             + " fill=\"rgb(0,255,0)\" visibility=\"visible\" >\n"
-            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"5000ms\" attributeName=\"x\""
+            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"5ms\" attributeName=\"x\""
             + " from=\"10\" to=\"20\" fill=\"freeze\" />\n"
-            + "    <animate attributeType=\"xml\" begin=\"5000ms\" dur=\"5000ms\" attributeName=\""
+            + "    <animate attributeType=\"xml\" begin=\"5ms\" dur=\"5ms\" attributeName=\""
             + "y\" from=\"10\" to=\"20\" fill=\"freeze\" />\n</rect>\n\n"
-            + "<ellipse id=\"Steve\" cx=\"11\" cy=\"11\" rx=\"10\" ry=\"10\""
+            + "<ellipse id=\"test\" cx=\"11\" cy=\"11\" rx=\"10\" ry=\"10\""
             + " fill=\"rgb(255,0,0)\" visibility=\"visible\" >\n"
-            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10000ms\""
+            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10ms\""
             + " attributeName=\"cx\" from=\"11\" to=\"30\" fill=\"freeze\" />\n"
-            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10000ms\""
+            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10ms\""
             + " attributeName=\"cy\" from=\"11\" to=\"30\" fill=\"freeze\" />\n"
-            + "</ellipse>\n\n</svg>");
+            + "</ellipse>\n\n</svg>", view.getText());
   }
 
   @Test
@@ -101,24 +82,24 @@ public class SVGAnimationViewTest {
                     0, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.model = this.playbackBuilder.build();
-    IVewText view = new SVGStringGenerator(model, 1);
+    IVewText view = new SVGStringGenerator(model.getSVGTags(1), 1);
     view.play();
     assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\" version=\"1.1\"\n" +
             "    xmlns=\"http://www.w3.org/2000/svg\">\n" +
             "<rect id=\"R\" x=\"10\" y=\"10\" width=\"10\" height=\"30\" fill=\"rgb(0,255,0)\" "
             + "visibility=\"visible\" >\n" +
-            "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"5000ms\" attributeName=\"x\" "
+            "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"5ms\" attributeName=\"x\" "
             + "from=\"10\" to=\"20\" fill=\"freeze\" />\n" +
-            "    <animate attributeType=\"xml\" begin=\"5000ms\" dur=\"5000ms\" " +
+            "    <animate attributeType=\"xml\" begin=\"5ms\" dur=\"5ms\" " +
             "attributeName=\"y\" "
             + "from=\"10\" to=\"20\" fill=\"freeze\" />\n" +
             "</rect>\n" +
             "\n" +
             "<ellipse id=\"C\" cx=\"11\" cy=\"11\" rx=\"10\" ry=\"10\" fill=\"rgb(255,0,0)\" "
             + "visibility=\"visible\" >\n" +
-            "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10000ms\" "
+            "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10ms\" "
             + "attributeName=\"cx\" from=\"11\" to=\"30\" fill=\"freeze\" />\n" +
-            "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10000ms\" "
+            "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"10ms\" "
             + "attributeName=\"cy\" from=\"11\" to=\"30\" fill=\"freeze\" />\n" +
             "</ellipse>\n" +
             "\n" +
@@ -135,15 +116,15 @@ public class SVGAnimationViewTest {
                     0, 8, 20,
                     10, 10, 30, 0, 0, 255);
     this.model = this.playbackBuilder.build();
-    IVewText view = new SVGStringGenerator(model, 5);
+    IVewText view = new SVGStringGenerator(model.getSVGTags(5), 5);
     view.play();
     assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\""
             + " version=\"1.1\"\n    xmlns=\"http://www.w3.org/2000/svg\">\n"
             + "<rect id=\"rectangle\" x=\"10\" y=\"10\" width=\"10\" height=\"30\""
             + " fill=\"rgb(0,255,0)\" visibility=\"visible\" >\n"
-            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"1000ms\""
+            + "    <animate attributeType=\"xml\" begin=\"0ms\" dur=\"25ms\""
             + " attributeName=\"x\" from=\"10\" to=\"20\" fill=\"freeze\" />\n"
-            + "    <animate attributeType=\"xml\" begin=\"1000ms\" dur=\"600ms\" attributeName=\""
+            + "    <animate attributeType=\"xml\" begin=\"25ms\" dur=\"15ms\" attributeName=\""
             + "fill\" from=\"rgb(0,255,0)\" to=\"rgb(0,0,255)\" fill=\"freeze\" />\n"
             + "</rect>\n\n</svg>");
   }

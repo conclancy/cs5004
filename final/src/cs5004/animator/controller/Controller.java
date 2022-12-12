@@ -500,7 +500,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
         }
         return;
       case "EXPORT":
-        IVewText svg = new SVGStringGenerator(animationBuilder.build(), ticksPS);
+        IVewText svg = new SVGStringGenerator(animationBuilder.build().getSVGTags(ticksPS), ticksPS);
         svg.play();
         try {
           FileWriter writer = new FileWriter(event.getNewValue().toString() + ".svg");

@@ -62,4 +62,10 @@ public interface IModel {
    **/
   int getLastTick();
 
+  /**
+   * Formats the given information as the XML language that converts the list of processes and
+   * shapes into XML to be turned into an .svg file.
+   */
+  String getSVGTags(int speed);
+
 }
