@@ -4,7 +4,7 @@ import cs5004.animator.model.IAnimation;
 import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IViewFile;
 import cs5004.animator.view.IViewGUI;
-import cs5004.animator.view.SVGStringGenerator;
+import cs5004.animator.view.ViewFile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -498,8 +498,8 @@ public class Controller implements IController, ActionListener, IFrameChangeList
         }
         return;
       case "EXPORT":
-        IViewFile svg = new SVGStringGenerator(animationBuilder.build().getSVGTags(ticksPS),
-            event.getNewValue().toString() + ".svg", ticksPS);
+        IViewFile svg = new ViewFile(animationBuilder.build().getSVGTags(ticksPS),
+            event.getNewValue().toString() + ".svg");
         svg.play();
         return;
       case "SLIDER":

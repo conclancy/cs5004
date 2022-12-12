@@ -18,7 +18,7 @@ import cs5004.animator.model.IModel;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Represents the tester class for the SVGStringGenerator class.
+ * Represents the tester class for the IViewFile class.
  */
 public class SVGAnimationViewTest {
   private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -48,7 +48,7 @@ public class SVGAnimationViewTest {
 
     this.model = this.playbackBuilder.build();
 
-    IViewFile view = new SVGStringGenerator(model.getSVGTags(1), "test.svg", 1);
+    IViewFile view = new ViewFile(model.getSVGTags(1), "test.svg");
 
     view.play();
     assertEquals("<svg width=\"1000\" height=\"600\""
@@ -82,7 +82,7 @@ public class SVGAnimationViewTest {
                     0, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.model = this.playbackBuilder.build();
-    IViewFile view = new SVGStringGenerator(model.getSVGTags(1), "test.svg",1);
+    IViewFile view = new ViewFile(model.getSVGTags(1), "test.svg");
     view.play();
     assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\" version=\"1.1\"\n" +
             "    xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -116,7 +116,7 @@ public class SVGAnimationViewTest {
                     0, 8, 20,
                     10, 10, 30, 0, 0, 255);
     this.model = this.playbackBuilder.build();
-    IViewFile view = new SVGStringGenerator(model.getSVGTags(5), "test.svg", 5);
+    IViewFile view = new ViewFile(model.getSVGTags(5), "test.svg");
     view.play();
     assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\""
             + " version=\"1.1\"\n    xmlns=\"http://www.w3.org/2000/svg\">\n"

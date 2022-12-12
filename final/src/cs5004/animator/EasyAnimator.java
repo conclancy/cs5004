@@ -4,6 +4,7 @@ import cs5004.animator.util.AnimationBuilder;
 import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IViewFile;
 import cs5004.animator.view.IViewGUI;
+import cs5004.animator.view.ViewFile;
 import cs5004.animator.view.ViewGUIEditor;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,8 +20,6 @@ import cs5004.animator.util.AnimationReader;
 import cs5004.animator.model.IModel;
 import cs5004.animator.view.ViewGUISimple;
 import cs5004.animator.view.IView;
-import cs5004.animator.view.SVGStringGenerator;
-import cs5004.animator.view.VewText;
 
 /**
  * Main class used to execute the Easy Animator program.
@@ -119,11 +118,11 @@ public final class EasyAnimator {
     switch (viewType) {
       //“text”, “svg”, or “visual”
       case "text":
-        textView = new VewText(model.getModelAsText(), fileName);
+        textView = new ViewFile(model.getModelAsText(), fileName);
         textView.play();
         break;
       case "svg":
-        textView = new SVGStringGenerator(model.getSVGTags(ticksPS), fileName, ticksPS);
+        textView = new ViewFile(model.getSVGTags(ticksPS), fileName);
         textView.play();
         break;
       case "visual":

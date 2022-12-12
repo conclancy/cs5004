@@ -2,26 +2,15 @@ package cs5004.animator.view;
 
 import java.io.FileWriter;
 import java.io.IOException;
-
 import javax.swing.JOptionPane;
 
-/**
- * Class that represents a text view of the given animation.  This view represents the Easy
- * Automation as a multi-line string of text.
- */
-public class VewText implements IViewFile {
+public class ViewFile implements IViewFile {
 
-  private final String text;
-  private FileWriter writer;
+  protected String output;
+  protected FileWriter writer;
 
-  /**
-   * Constructor for a ViewText object.
-   *
-   * @param model is the model for which the VewText will create a constructor for
-   */
-  public VewText(String model, String fileName) {
-
-    this.text = model;
+  public ViewFile(String text, String fileName) {
+    this.output = text;
 
     try {
       this.writer = new FileWriter(fileName);
@@ -30,7 +19,6 @@ public class VewText implements IViewFile {
     } catch (IndexOutOfBoundsException e) {
       popUpError("------ Error: Output file not defined.");
     }
-
   }
 
   /**
@@ -38,7 +26,7 @@ public class VewText implements IViewFile {
    */
   @Override
   public String getText() {
-    return this.text;
+    return this.output;
   }
 
   /**
@@ -60,7 +48,7 @@ public class VewText implements IViewFile {
    *
    * @param message the message to be shown in the dialog view box.
    */
-  private static void popUpError(String message) {
+  protected static void popUpError(String message) {
     JOptionPane.showMessageDialog(null, message,
         "------ Animation Error: An error occurred", 0);
     System.exit(1);
