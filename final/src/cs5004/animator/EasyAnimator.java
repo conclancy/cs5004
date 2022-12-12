@@ -2,13 +2,12 @@ package cs5004.animator;
 
 import cs5004.animator.util.AnimationBuilder;
 import cs5004.animator.util.IAnimationBuilder;
-import cs5004.animator.view.IVewText;
+import cs5004.animator.view.IViewFile;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.ViewGUIEditor;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.StringReader;
 import java.util.Arrays;
 
@@ -51,7 +50,7 @@ public final class EasyAnimator {
     IAnimationBuilder playbackBuilder = new AnimationBuilder();
     IAnimationBuilder editBuilder = new AnimationBuilder();
     IModel model;
-    IVewText textView;
+    IViewFile textView;
     IViewGUI editView;
     IController controller;
     Readable in = new StringReader("");
@@ -124,7 +123,8 @@ public final class EasyAnimator {
         textView.play();
         break;
       case "svg":
-        textView = new SVGStringGenerator(model.getSVGTags(ticksPS), ticksPS);
+        textView = new SVGStringGenerator(model.getSVGTags(ticksPS), fileName, ticksPS);
+        textView.play();
         break;
       case "visual":
         IView view = new ViewGUISimple(model, ticksPS);

@@ -48,7 +48,7 @@ public class SVGAnimationViewTest {
 
     this.model = this.playbackBuilder.build();
 
-    IVewText view = new SVGStringGenerator(model.getSVGTags(1), 1);
+    IViewFile view = new SVGStringGenerator(model.getSVGTags(1), "test.svg", 1);
 
     view.play();
     assertEquals("<svg width=\"1000\" height=\"600\""
@@ -82,7 +82,7 @@ public class SVGAnimationViewTest {
                     0, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.model = this.playbackBuilder.build();
-    IVewText view = new SVGStringGenerator(model.getSVGTags(1), 1);
+    IViewFile view = new SVGStringGenerator(model.getSVGTags(1), "test.svg",1);
     view.play();
     assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\" version=\"1.1\"\n" +
             "    xmlns=\"http://www.w3.org/2000/svg\">\n" +
@@ -116,7 +116,7 @@ public class SVGAnimationViewTest {
                     0, 8, 20,
                     10, 10, 30, 0, 0, 255);
     this.model = this.playbackBuilder.build();
-    IVewText view = new SVGStringGenerator(model.getSVGTags(5), 5);
+    IViewFile view = new SVGStringGenerator(model.getSVGTags(5), "test.svg", 5);
     view.play();
     assertEquals(view.getText(), "<svg width=\"1000\" height=\"600\""
             + " version=\"1.1\"\n    xmlns=\"http://www.w3.org/2000/svg\">\n"

@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  * Class that represents a text view of the given animation.  This view represents the Easy
  * Automation as a multi-line string of text.
  */
-public class VewText implements IVewText {
+public class VewText implements IViewFile {
 
   private final String text;
   private FileWriter writer;

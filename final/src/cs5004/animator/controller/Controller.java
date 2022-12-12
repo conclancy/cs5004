@@ -2,15 +2,13 @@ package cs5004.animator.controller;
 
 import cs5004.animator.model.IAnimation;
 import cs5004.animator.util.IAnimationBuilder;
-import cs5004.animator.view.IVewText;
+import cs5004.animator.view.IViewFile;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.SVGStringGenerator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -500,15 +498,9 @@ public class Controller implements IController, ActionListener, IFrameChangeList
         }
         return;
       case "EXPORT":
-        IVewText svg = new SVGStringGenerator(animationBuilder.build().getSVGTags(ticksPS), ticksPS);
+        IViewFile svg = new SVGStringGenerator(animationBuilder.build().getSVGTags(ticksPS),
+            event.getNewValue().toString() + ".svg", ticksPS);
         svg.play();
-        try {
-          FileWriter writer = new FileWriter(event.getNewValue().toString() + ".svg");
-          writer.append(svg.getText());
-          writer.close();
-        } catch (IOException e) {
-          viewGUI.displayError("Error occurred when trying to create a file.");
-        }
         return;
       case "SLIDER":
         currentTickNum = (int) ((Double.parseDouble(event.getNewValue().toString()) / 100.0)

@@ -1,13 +1,16 @@
 package cs5004.animator.view;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  * This class allows for the creation of SVG files.
  */
-public class SVGStringGenerator implements IVewText {
+public class SVGStringGenerator implements IViewFile {
 
   Appendable output;
+  private FileWriter writer;
 
   /**
    * Constructor for a SVGStringGenerator view that generates an SVG string from a model.
@@ -15,12 +18,20 @@ public class SVGStringGenerator implements IVewText {
    * @param svg the svg tags, as a String.
    * @param speed is the ticks per second  of the animation.
    */
-  public SVGStringGenerator(String svg, int speed) {
+  public SVGStringGenerator(String svg, String fileName, int speed) {
     if (speed < 0) {
       throw new IllegalArgumentException("Cannot pass a negative ticks per second");
     }
 
     this.output = new StringBuilder();
+
+    try {
+      this.writer = new FileWriter(fileName);
+    } catch (IOException e) {
+      popUpError("------ Error: Output file cannot be created.");
+    } catch (IndexOutOfBoundsException e) {
+      popUpError("------ Error: Output file not defined.");
+    }
 
     try{
       output.append(svg);
@@ -35,7 +46,12 @@ public class SVGStringGenerator implements IVewText {
    */
   @Override
   public void play() {
-    this.getText();
+    try {
+      writer.append(this.getText());
+      writer.close();
+    } catch (IOException e) {
+      popUpError("------ Output Error: File cannot be written. Please check parameters.");
+    }
   }
 
   /**
@@ -44,6 +60,17 @@ public class SVGStringGenerator implements IVewText {
   @Override
   public String getText() {
     return this.output.toString();
+  }
+
+  /**
+   * Handles exceptions as they are thrown.
+   *
+   * @param message the message to be shown in the dialog view box.
+   */
+  private static void popUpError(String message) {
+    JOptionPane.showMessageDialog(null, message,
+        "------ Animation Error: An error occurred", 0);
+    System.exit(1);
   }
 
 }
