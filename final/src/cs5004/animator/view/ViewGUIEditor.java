@@ -304,7 +304,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
       List<IFrame> newList = new ArrayList<>();
 
       for (IFrame frame : keyframes.get(id)) {
-        newList.add(new Frame(frame.getTime(), frame.getX(), frame.getY(),
+        newList.add(new Frame(frame.getTick(), frame.getX(), frame.getY(),
             frame.getWidth(), frame.getHeight(), frame.getShapeRotation(),
             frame.getColor()));
       }
@@ -491,13 +491,13 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
 
     switch (process) {
       case "frame edit":
-        this.handler.changeFrame(this, EFrameChangeType.EDIT, shape.getName(), keyframe.getTime(),
+        this.handler.changeFrame(this, EFrameChangeType.EDIT, shape.getName(), keyframe.getTick(),
             keyframe.getX(), keyframe.getY(), keyframe.getWidth(), keyframe.getHeight(),
             keyframe.getShapeRotation(), keyframe.getColor());
         break;
       case "frame delete":
         this.handler.changeFrame(this, EFrameChangeType.DELETE, shape.getName(),
-            keyframe.getTime());
+            keyframe.getTick());
         break;
       default:
         this.buttonEventHelper(process);

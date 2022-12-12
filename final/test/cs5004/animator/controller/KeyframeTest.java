@@ -33,8 +33,8 @@ public class KeyframeTest {
 
   @Test
   public void testGetTime() {
-    assertEquals(1, keyframeOne.getTime());
-    assertEquals(100, keyframeTwo.getTime());
+    assertEquals(1, keyframeOne.getTick());
+    assertEquals(100, keyframeTwo.getTick());
   }
 
   @Test

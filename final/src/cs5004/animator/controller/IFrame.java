@@ -3,50 +3,56 @@ package cs5004.animator.controller;
 import java.awt.Color;
 
 /**
- * This interface adds the functionality of rotating a shape.
+ * Interface for a Frame within the Easy Animation program.
  */
 public interface IFrame {
 
   /**
-   * This method gets the time of this key frame.
-   * @return the time that this key frame is stationed at.
+   * Get the tick where this frame occurs.
+   *
+   * @return the tick the frame occurs, as an int.
    */
-  int getTime();
+  int getTick();
 
   /**
-   * This method gets the X value of this keyframe.
-   * @return the X coordinatePosition for this keyframe.
+   * Get the x coordinate of this frame.
+   *
+   * @return the X coordinate of this frame, as an int.
    */
   int getX();
 
   /**
-   * This method gets the Y value of this key frame.
-   * @return the Y coordinatePosition of this keyframe.
+   * Get the y coordinate of this frame.
+   *
+   * @return the Y coordinate of this frame, as an int.
    */
   int getY();
 
   /**
-   * This method gets the width.
-   * @return the width of this keyframe.
+   * Get the width of this frame.
+   *
+   * @return the width of this keyframe, as an int.
    */
   int getWidth();
 
   /**
-   * This method gets the height.
-   * @return the height of this keyframe.
+   * Get the height of this frame.
+   *
+   * @return the height of this keyframe, as an int.
    */
   int getHeight();
 
   /**
-   * This method gets the color.
-   * @return the color of this keyframe.
+   * Get the color of the shape in this frame.
+   *
+   * @return the {@link Color} of the shape in this frame.
    */
   Color getColor();
 
   /**
-   * Getter for the rotationDegree of this key frame.
+   * Get the rotation of the shape within this frame.
    *
-   * @return the rotationDegree in degrees of the shape at this frame.
+   * @return the degree of rotation of the shape at this frame, as an int.
    */
   int getShapeRotation();
 }
