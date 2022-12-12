@@ -1,21 +1,16 @@
 package cs5004.animator.controller;
 
-import cs5004.animator.util.AnimationBuilder;
 import cs5004.animator.util.IAnimationBuilder;
 import cs5004.animator.view.IViewGUI;
-import cs5004.animator.view.ViewGUIEditor;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.Color;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import cs5004.animator.util.AnimationReader;
 import cs5004.animator.view.EFrameChangeType;
 import cs5004.animator.view.FrameChangeEvent;
 import cs5004.animator.view.IFrameChangeEvent;
@@ -32,22 +27,13 @@ import static org.junit.Assert.assertEquals;
  */
 public class ControllerTest {
   private Controller controller;
-  private IAnimationBuilder animationBuilder;
   private IViewGUI view;
   private Map<String, List<IFrame>> originalFrames;
 
   @Before
   public void setUp() {
-    this.animationBuilder = new AnimationBuilder();
-    FileReader in;
-    try {
-      in = new FileReader("./starter_code/smalldemo.txt");
-    } catch (FileNotFoundException e) {
-      throw new IllegalArgumentException("Please check the file path and name.");
-    }
-    AnimationReader.parseFile(in, this.animationBuilder);
-    this.view = new ViewGUIEditor(20);
-    this.controller = new Controller(this.animationBuilder, this.view, 20);
+
+    controller = new Controller("./starter_code/smalldemo.txt", "./controller_test.txt", "text", 20);
     this.initOriginalFrames();
   }
 
@@ -73,19 +59,9 @@ public class ControllerTest {
     this.originalFrames.put("C", ellipse);
   }
 
-  @Test(expected = NullPointerException.class)
-  public void testConstructorNullBuilder() {
-    new Controller(null, this.view, 20);
-  }
-
-  @Test(expected = NullPointerException.class)
-  public void testConstructorNullView() {
-    new Controller(this.animationBuilder, null, 20);
-  }
-
   @Test
   public void testKeyframeAddEnd() {
-    this.controller.start();
+    this.controller.play();
     assertEquals(this.originalFrames, this.originalFrames);
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.ADD,
             "R", 110, 200, 200, 25, 125, 10, new Color(255, 0, 0));
@@ -97,7 +73,7 @@ public class ControllerTest {
 
   @Test
   public void testMainKeyframeAddMiddleValue() {
-    this.controller.start();
+    this.controller.play();
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.ADD,
             "R", 80, 200, 200, 25, 125, 1000, new Color(255, 0, 0));
     this.controller.frameChanged(event);
@@ -108,7 +84,7 @@ public class ControllerTest {
 
   @Test
   public void testMainKeyframeAddFrontValue() {
-    this.controller.start();
+    this.controller.play();
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.ADD,
             "C", 1, 440, 70, 120, 60, 1000, new Color(0, 0, 255));
     this.controller.frameChanged(event);
@@ -119,7 +95,7 @@ public class ControllerTest {
 
   @Test
   public void testMainKeyframeEditText() {
-    this.controller.start();
+    this.controller.play();
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.EDIT,
             "R", 100, 200, 200, 25, 125, 1000, new Color(255, 0, 0));
     this.controller.frameChanged(event);
@@ -131,7 +107,7 @@ public class ControllerTest {
 
   @Test
   public void testMainKeyframeDeleteFunction() {
-    this.controller.start();
+    this.controller.play();
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.DELETE,
             "R", 100, 0, 0, 0, 0, 10000, new Color(0));
     this.controller.frameChanged(event);
@@ -141,7 +117,7 @@ public class ControllerTest {
 
   @Test
   public void testShapeAdd() {
-    this.controller.start();
+    this.controller.play();
     IShapeChangeEvent event = new ShapeChangeEvent(this.view, EShapeChangeType.ADD,
             "Rectangle", "rectangle");
     this.controller.shapeChanged(event);
@@ -154,7 +130,7 @@ public class ControllerTest {
 
   @Test
   public void testShapeDelete() {
-    this.controller.start();
+    this.controller.play();
     IShapeChangeEvent event = new ShapeChangeEvent(this.view, EShapeChangeType.DELETE,
             "", "R");
     this.controller.shapeChanged(event);

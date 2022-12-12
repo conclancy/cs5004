@@ -8,5 +8,5 @@ public interface IController {
   /**
    * Run the Model and the Views for the Easy Animation program.
    */
-  void start();
+  void play();
 }

@@ -1,14 +1,21 @@
 package cs5004.animator.controller;
 
 import cs5004.animator.model.IAnimation;
+import cs5004.animator.util.AnimationBuilder;
+import cs5004.animator.util.AnimationReader;
 import cs5004.animator.util.IAnimationBuilder;
+import cs5004.animator.view.IView;
 import cs5004.animator.view.IViewFile;
 import cs5004.animator.view.IViewGUI;
 import cs5004.animator.view.ViewFile;
+import cs5004.animator.view.ViewGUIEditor;
+import cs5004.animator.view.ViewGUISimple;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +30,7 @@ import cs5004.animator.view.IFrameChangeEvent;
 import cs5004.animator.view.IFrameChangeListener;
 import cs5004.animator.view.IShapeChangeEvent;
 import cs5004.animator.view.IShapeChangeListener;
+import javax.swing.JOptionPane;
 
 /**
  * This class represents the controller for the Easy Animator program.
@@ -31,45 +39,65 @@ public class Controller implements IController, ActionListener, IFrameChangeList
     IShapeChangeListener, PropertyChangeListener {
 
   private final IAnimationBuilder animationBuilder;
-  private final IViewGUI viewGUI;
+  private IViewGUI viewGUI;
+  private IModel model;
   private Timer timer;
   private int currentTickNum;
-  private int ticksPS = 20;
+  private int ticksPS;
   private int firstTickNum;
   private int lastTickNum;
   private boolean animationPaused = true;
   private boolean animationLooped = false;
+  private String out;
+  private final String viewType;
 
-  /**
-   * Constructor for the controller. It takes in the model, a view type, as well as a rate of ticks
-   * per second from the user as arguments.
-   *
-   * @param animationBuilder which is a playbackBuilder for this view and animation.
-   * @param view             which is the view for this constructor to show to the user to interact
-   *                         with.
-   * @param ticksPS          which is the starting speed for this animation.
-   */
-  public Controller(IAnimationBuilder animationBuilder, IViewGUI view, int ticksPS) {
-    this.animationBuilder = animationBuilder;
-    this.viewGUI = view;
-    this.ticksPS = ticksPS;
-    this.firstTickNum = this.getFirstTick();
-    this.lastTickNum = animationBuilder.build().getLastTick();
-    this.currentTickNum = this.firstTickNum;
+  public Controller(String in, String out, String view, int speed) {
+    this.animationBuilder = new AnimationBuilder();
+    this.out = out;
+    this.viewType = view;
+    this.ticksPS = speed;
+
+    try {
+      this.model = AnimationReader.parseFile(new FileReader(in), this.animationBuilder);
+    } catch (FileNotFoundException e) {
+      popUpError("------ Error: File not found");
+    }
   }
 
   /**
    * Start the view and creates the model with the given input.
    */
   public void play() {
-    IModel model = this.animationBuilder.build();
-    if (this.animationPaused && this.currentTickNum < model.getLastTick()) {
-      this.firstTickNum = this.getFirstTick();
-      this.timer = new Timer();
-      this.timer.schedule(new DrawFrame(model), 0, 1000 / this.ticksPS);
-      animationPaused = false;
+
+    if (viewType.equals("gui") || viewType.equals("editor")) {
+
+      this.viewGUI = new ViewGUIEditor(this.ticksPS);
+
+      this.start();
+
+      if (this.animationPaused && this.currentTickNum < model.getLastTick()) {
+        this.firstTickNum = this.getFirstTick();
+        this.timer = new Timer();
+        this.timer.schedule(new DrawFrame(model), 0, 1000 / this.ticksPS);
+        animationPaused = false;
+      }
+
+    } else if (viewType.equals("text")) {
+      IView view = new ViewFile(model.getModelAsText(), this.out);
+      view.play();
+    } else if (viewType.equals("svg")) {
+      IView view = new ViewFile(model.getSVGTags(ticksPS), this.out);
+      view.play();
+    } else if (viewType.equals("visual")) {
+      IView view = new ViewGUISimple(model, ticksPS);
+      view.play();
     }
-  }
+    else {
+      JOptionPane.showMessageDialog(null,
+          "------ Error: Valid view type was not specified ('text', 'svg', 'visual', 'gui')",
+          "------ Animation Error: An error occurred", 0);
+      }
+    }
 
   /**
    * Listen for changes within animation frames.
@@ -517,8 +545,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
   /**
    * Run the Model and the Views for the Easy Animation program.
    */
-  @Override
-  public void start() {
+  private void start() {
     this.viewGUI.setFrames(
         this.convertAnimationsToFrames(this.animationBuilder.getAnimations()));
     this.viewGUI.setShapes(this.animationBuilder.getShapeHash());
@@ -636,5 +663,11 @@ public class Controller implements IController, ActionListener, IFrameChangeList
       viewGUI.setSlider((double) currentTickNum / (double) (lastTick - firstTickNum));
       currentTickNum++;
     }
+  }
+
+  private static void popUpError(String message) {
+    JOptionPane.showMessageDialog(null, message,
+        "------ Animation Error: An error occurred", 0);
+    System.exit(1);
   }
 }

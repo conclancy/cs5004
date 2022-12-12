@@ -1,25 +1,11 @@
 package cs5004.animator;
 
-import cs5004.animator.util.AnimationBuilder;
-import cs5004.animator.util.IAnimationBuilder;
-import cs5004.animator.view.IViewFile;
-import cs5004.animator.view.IViewGUI;
-import cs5004.animator.view.ViewFile;
-import cs5004.animator.view.ViewGUIEditor;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.StringReader;
 import java.util.Arrays;
 
 import javax.swing.JOptionPane;
 
 import cs5004.animator.controller.Controller;
 import cs5004.animator.controller.IController;
-import cs5004.animator.util.AnimationReader;
-import cs5004.animator.model.IModel;
-import cs5004.animator.view.ViewGUISimple;
-import cs5004.animator.view.IView;
 
 /**
  * Main class used to execute the Easy Animator program.
@@ -46,17 +32,10 @@ public final class EasyAnimator {
    * @param args the input that allows the user to specify what kind of animation they desire.
    */
   public static void main(String[] args) {
-    IAnimationBuilder playbackBuilder = new AnimationBuilder();
-    IAnimationBuilder editBuilder = new AnimationBuilder();
-    IModel model;
-    IViewFile textView;
-    IViewGUI editView;
     IController controller;
-    Readable in = new StringReader("");
+    String in = "";
     int ticksPS = 1;
     String viewType = "";
-    Appendable out = System.out;
-    FileWriter writer = null;
     String fileName = "";
 
     if (!(Arrays.asList(args).contains("-in")
@@ -68,10 +47,7 @@ public final class EasyAnimator {
 
       if (args[i].equals("-in")) {
         try {
-          in = new FileReader(args[i + 1]);
-        } catch (FileNotFoundException e) {
-          popUpError("------ Error: File not found");
-          System.out.println(e.getMessage());
+          in = args[i + 1];
         } catch (IndexOutOfBoundsException e) {
           popUpError("------ Error: File not specified");
         }
@@ -105,34 +81,8 @@ public final class EasyAnimator {
       }
     }
 
-    if (viewType.equals("gui") || viewType.equals("editor")) {
-      AnimationReader.parseFile(in, editBuilder);
-      editView = new ViewGUIEditor(ticksPS);
-      controller = new Controller(editBuilder, editView, ticksPS);
-      controller.start();
-      return;
-    }
-
-    model = AnimationReader.parseFile(in, playbackBuilder);
-
-    switch (viewType) {
-      //“text”, “svg”, or “visual”
-      case "text":
-        textView = new ViewFile(model.getModelAsText(), fileName);
-        textView.play();
-        break;
-      case "svg":
-        textView = new ViewFile(model.getSVGTags(ticksPS), fileName);
-        textView.play();
-        break;
-      case "visual":
-        IView view = new ViewGUISimple(model, ticksPS);
-        view.play();
-        return;
-      default:
-        popUpError(
-            "------ Error: Valid view type was not specified ('text', 'svg', 'visual', 'gui')");
-    }
+    controller = new Controller(in, fileName, viewType, ticksPS);
+    controller.play();
 
   }
 
