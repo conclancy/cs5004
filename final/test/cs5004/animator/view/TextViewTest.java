@@ -37,7 +37,7 @@ public class TextViewTest {
   @Test
   public void testAniModelText() {
     this.aniModel = this.aniBuilder.build();
-    VewText view = new VewText(aniModel);
+    VewText view = new VewText(aniModel.getModelAsText(), "test.txt");
     assertEquals(view.getText(), "");
   }
 
@@ -55,7 +55,7 @@ public class TextViewTest {
                     255, 255, 10, 20,
                     20, 20, 20, 255, 0, 0);
     this.aniModel = this.aniBuilder.build();
-    VewText view = new VewText(aniModel);
+    VewText view = new VewText(aniModel.getModelAsText(), "test.txt");
     assertEquals(view.getText(), "");
     view.play();
     assertEquals("Create Rectangle R with center at Point2D.Double[0.0, 0.0], "
@@ -76,7 +76,7 @@ public class TextViewTest {
   @Test
   public void testAniModelPlay() {
     this.aniModel = this.aniBuilder.build();
-    VewText view = new VewText(aniModel);
+    VewText view = new VewText(aniModel.getModelAsText(), "test.txt");
     view.play();
     assertEquals(view.getText(), "");
   }
@@ -99,7 +99,7 @@ public class TextViewTest {
                     20, 20, 20, 255, 0, 0);
 
     this.aniModel = this.aniBuilder.build();
-    VewText view = new VewText(aniModel);
+    VewText view = new VewText(aniModel.getModelAsText(), "test.txt");
     view.play();
     assertEquals(view.getText(), "Create Rectangle R with center at Point2D."
             + "Double[0.0, 0.0], width of 0, height of 0.\n" +
@@ -134,7 +134,7 @@ public class TextViewTest {
                     30, 20, 20, 255, 0, 0);
 
     this.aniModel = this.aniBuilder.build();
-    VewText view = new VewText(aniModel);
+    VewText view = new VewText(aniModel.getModelAsText(), "test.txt");
     view.play();
     assertEquals("Create Rectangle R with center at Point2D.Double[0.0, 0.0], "
                     + "width of 0, height of 0.\n"

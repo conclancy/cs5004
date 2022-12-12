@@ -68,4 +68,11 @@ public interface IModel {
    */
   String getSVGTags(int speed);
 
+  /**
+   * Get a text representation of the model.
+   *
+   * @return the text representation of the model, as a multi-line string.
+   */
+  String getModelAsText();
+
 }

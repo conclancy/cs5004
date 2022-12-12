@@ -265,6 +265,52 @@ public class Model implements IModel {
   }
 
   /**
+   * Get a text representation of the model.
+   *
+   * @return the text representation of the model, as a multi-line string.
+   */
+  @Override
+  public String getModelAsText() {
+
+    StringBuilder output = new StringBuilder();
+
+    for (Map.Entry<String, List<IAnimation>> entry : this.getProcesses().entrySet()) {
+
+      IShape shape = this.getShape(entry.getKey());
+
+      output.append("Create ").append(shape.getShapeType()).append(" ")
+          .append(entry.getKey()).append(" ")
+          .append("with center at ").append(shape.getReference()).append(", width of ")
+          .append(shape.getWidth()).append(", height of ")
+          .append(shape.getHeight()).append(".")
+          .append("\n");
+
+      for (IAnimation animation : entry.getValue()) {
+        String temp = "Transform "
+            + entry.getKey() + " from location ("
+            + animation.getStartX() + ", "
+            + animation.getStartY() + ") to ("
+            + animation.getEndX() + ", "
+            + animation.getEndY() + ") and color "
+            + animation.getStartColor() + " to "
+            + animation.getEndColor() + " over t="
+            + animation.getStartTick() + " to "
+            + animation.getEndTick() + "."
+            + "\n";
+        output.append(temp);
+      }
+      output.append("\n");
+    }
+
+    if (output.length() != 0) {
+      output.delete(output.length() - 2, output.length());
+    }
+
+    return output.toString();
+
+  }
+
+  /**
    * Handle the try and catch logic for appending SVG tags to the final SVG model.
    *
    * @param input the input String to be appended to the output.

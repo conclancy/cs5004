@@ -59,6 +59,7 @@ public final class EasyAnimator {
     String viewType = "";
     Appendable out = System.out;
     FileWriter writer = null;
+    String fileName = "";
 
     if (!(Arrays.asList(args).contains("-in")
         && (Arrays.asList(args).contains("-view")))) {
@@ -87,13 +88,7 @@ public final class EasyAnimator {
       }
 
       if (args[i].equals("-out")) {
-        try {
-          writer = new FileWriter(args[i + 1]);
-        } catch (IOException e) {
-          popUpError("------ Error: Output file cannot be created.");
-        } catch (IndexOutOfBoundsException e) {
-          popUpError("------ Error: Output file not defined.");
-        }
+        fileName = args[i + 1];
       }
 
       if (args[i].equals("-speed")) {
@@ -125,7 +120,8 @@ public final class EasyAnimator {
     switch (viewType) {
       //“text”, “svg”, or “visual”
       case "text":
-        textView = new VewText(model);
+        textView = new VewText(model.getModelAsText(), fileName);
+        textView.play();
         break;
       case "svg":
         textView = new SVGStringGenerator(model.getSVGTags(ticksPS), ticksPS);
@@ -137,21 +133,8 @@ public final class EasyAnimator {
       default:
         popUpError(
             "------ Error: Valid view type was not specified ('text', 'svg', 'visual', 'gui')");
-        return;
     }
 
-    textView.play();
-
-    try {
-      if (writer != null) {
-        writer.append(textView.getText());
-        writer.close();
-      } else {
-        out.append(textView.getText());
-      }
-    } catch (IOException e) {
-      popUpError("------ Output Error: File cannot be written. Please check parameters.");
-    }
   }
 
   /**
