@@ -85,7 +85,7 @@ public class Animation implements IAnimation {
   }
 
   /**
-   * Get the starting tick of the Animation
+   * Get the starting tick of the Animation.
    *
    * @return the starting tick of the Animation, as an int.
    */
@@ -216,7 +216,7 @@ public class Animation implements IAnimation {
   }
 
   /**
-   * Get the last tick of an Animation
+   * Get the last tick of an Animation.
    *
    * @return the ending tick of the Animation, as an int.
    */
