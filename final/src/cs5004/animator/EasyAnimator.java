@@ -121,7 +121,7 @@ public final class EasyAnimator {
         textView = new VewText(model);
         break;
       case "svg":
-        textView = new SVGStringGenerator(model, ticksPS);
+        textView = new SVGStringGenerator(model.getSVGTags(ticksPS), ticksPS);
         break;
       case "visual":
         IView view = new ViewGUISimple(model, ticksPS);
