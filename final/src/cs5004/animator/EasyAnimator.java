@@ -24,16 +24,30 @@ import cs5004.animator.view.SVGStringGenerator;
 import cs5004.animator.view.VewText;
 
 /**
- * Represents the main class that creates and runs an animation based on the given file.
+ * Main class used to execute the Easy Animator program.
  */
 public final class EasyAnimator {
 
   /**
-   * The main function that initializes the model and the view based on the given arguments and
-   * runs an animation.
+   * Initializes the model and the view based on the given arguments and runs an animation.
+   * <p>
+   * <p>
+   * Arguments:
+   * <p>
+   * - jar:    The .jar file to use for the program.
+   * <p>
+   * - view:   `text` for a text view, `svg` to generate an .svg file, `visual` for a simple gui
+   * with no editor, `gui` / `editor` for an editor user interface.
+   * <p>
+   * - in:     Path to the input .txt file.
+   * <p>
+   * - out:    Path to the output file. Must end with a filename with a `.txt` or `.svg` extension.
+   * <p>
+   * - speed:  [Optional - defaults to 1], speed at which to run the automation.
+   *
    * @param args the input that allows the user to specify what kind of animation they desire.
    */
-  public static void main(String [] args) {
+  public static void main(String[] args) {
     IAnimationBuilder playbackBuilder = new AnimationBuilder();
     IAnimationBuilder editBuilder = new AnimationBuilder();
     IModel model;
@@ -46,8 +60,8 @@ public final class EasyAnimator {
     Appendable out = System.out;
     FileWriter writer = null;
 
-    if (!(Arrays.stream(args).anyMatch("-in"::equals)
-            && (Arrays.stream(args).anyMatch("-view"::equals)))) {
+    if (!(Arrays.asList(args).contains("-in")
+        && (Arrays.asList(args).contains("-view")))) {
       popUpError("------ Error: View and Input Arguments Required.");
     }
 
@@ -56,11 +70,10 @@ public final class EasyAnimator {
       if (args[i].equals("-in")) {
         try {
           in = new FileReader(args[i + 1]);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
           popUpError("------ Error: File not found");
-        }
-        catch (IndexOutOfBoundsException e) {
+          System.out.println(e.getMessage());
+        } catch (IndexOutOfBoundsException e) {
           popUpError("------ Error: File not specified");
         }
       }
@@ -68,8 +81,7 @@ public final class EasyAnimator {
       if (args[i].equals("-view")) {
         try {
           viewType = args[i + 1];
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
           popUpError("------ Error: View not specified");
         }
       }
@@ -77,11 +89,9 @@ public final class EasyAnimator {
       if (args[i].equals("-out")) {
         try {
           writer = new FileWriter(args[i + 1]);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
           popUpError("------ Error: Output file cannot be created.");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
           popUpError("------ Error: Output file not defined.");
         }
       }
@@ -91,21 +101,18 @@ public final class EasyAnimator {
           int newSpeed = Integer.parseInt(args[i + 1]);
           if (newSpeed > 0) {
             ticksPS = newSpeed;
-          }
-          else {
+          } else {
             popUpError("------ Error: Speed must be a positive integer.");
           }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
           popUpError("------ Error: A valid speed must be specified.");
-        }
-        catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
           popUpError("------ Error: Speed argument not specified.");
         }
       }
     }
 
-    if (viewType.equals("playback")) {
+    if (viewType.equals("gui") || viewType.equals("editor")) {
       AnimationReader.parseFile(in, editBuilder);
       editView = new ViewGUIEditor(ticksPS);
       controller = new Controller(editBuilder, editView, ticksPS);
@@ -128,7 +135,8 @@ public final class EasyAnimator {
         view.play();
         return;
       default:
-        popUpError("------ Error: Valid view type was not specified ('text', 'svg', 'visual')");
+        popUpError(
+            "------ Error: Valid view type was not specified ('text', 'svg', 'visual', 'gui')");
         return;
     }
 
@@ -138,19 +146,22 @@ public final class EasyAnimator {
       if (writer != null) {
         writer.append(textView.getText());
         writer.close();
-      }
-      else {
+      } else {
         out.append(textView.getText());
       }
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       popUpError("------ Output Error: File cannot be written. Please check parameters.");
     }
   }
 
+  /**
+   * Handles exceptions as they are thrown.
+   *
+   * @param message the message to be shown in the dialog view box.
+   */
   private static void popUpError(String message) {
     JOptionPane.showMessageDialog(null, message,
-            "------ Animation Error: An error occurred", 0);
+        "------ Animation Error: An error occurred", 0);
     System.exit(1);
   }
 }
