@@ -8,12 +8,10 @@ import cs5004.animator.model.IShape;
 import cs5004.animator.model.Model;
 import cs5004.animator.model.Rectangle;
 import java.awt.Dimension;
-import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
@@ -36,37 +34,6 @@ public class AnimationBuilder implements IAnimationBuilder {
   public AnimationBuilder() {
     this.animationHash = new LinkedHashMap<>();
     this.shapeList = new ArrayList<>();
-  }
-
-  /**
-   * Constructs a new model with the given Shape and Animation objects.
-   */
-  public IModel build() {
-
-    for(IShape shape: this.shapeList) {
-      String name = shape.getName();
-
-      if(!this.animationHash.containsKey(name)) {
-        throw new IllegalStateException("A shape must contain at least one processes");
-      }
-    }
-
-    for (String key : this.animationHash.keySet()) {
-
-      IShape shape = null;
-
-      for (IShape s: shapeList) {
-        if (s.getName().equals(key)) {
-          shape = s;
-        }
-      }
-
-      if (shape == null) {
-        throw new IllegalStateException("A process must have at least one shape");
-      }
-    }
-
-    return new Model(this.animationHash, this.shapeList, this.x, this.y, this.width, this.height);
   }
 
   /**
@@ -101,8 +68,8 @@ public class AnimationBuilder implements IAnimationBuilder {
 
     IShape shape = null;
 
-    for(IShape s: shapeList) {
-      if(Objects.equals(s.getName(), name)) {
+    for (IShape s : shapeList) {
+      if (Objects.equals(s.getName(), name)) {
         shape = s;
       }
     }
@@ -157,47 +124,6 @@ public class AnimationBuilder implements IAnimationBuilder {
   }
 
   /**
-   * Return an updated copy of the {@link IAnimationBuilder} object that is powering the Easy
-   * Animator program.
-   *
-   * @param name is the name of the shape.
-   * @param t1   is the start time of this transformation
-   * @param x1   is the initial x-coordinatePosition.
-   * @param y1   is the initial y-coordinatePosition.
-   * @param w1   is the initial width of the shape
-   * @param h1   is the initial height.
-   * @param r1   is the initial red color-value.
-   * @param g1   is the initial green color-value.
-   * @param b1   is the initial blue color-value.
-   * @param t2   is the end time of this transformation
-   * @param x2   is the final x-coordinatePosition.
-   * @param y2   is the final y-coordinatePosition.
-   * @param w2   is the final width.
-   * @param h2   is the final height.
-   * @param r2   is the final red color-value.
-   * @param g2   is the final green color-value.
-   * @param b2   is the final blue color-value.
-   * @return a new {@link AnimationBuilder} object.
-   */
-  private IAnimationBuilder updateAnimationBuilder(String name, int t1, int x1, int y1, int w1,
-      int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
-      int b2) {
-
-    String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
-
-    IAnimation process = new Animation(type, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2,
-        g2, b2);
-
-    if (this.animationHash.containsKey(name)) {
-      this.addAnimationHelper(name, this.animationHash.get(name), process,
-          indexOfProcess(this.animationHash.get(name), process.getStartTick()) + 1);
-    } else {
-      this.animationHash.put(name, new ArrayList<>(Collections.singletonList(process)));
-    }
-    return this;
-  }
-
-  /**
    * Adds a transformation to the growing document.
    *
    * @param name is the name of the shape.
@@ -225,82 +151,6 @@ public class AnimationBuilder implements IAnimationBuilder {
 
     return updateAnimationBuilder(name, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2, g2,
         b2);
-  }
-
-  /**
-   * This method will return a description of the animation type.
-   *
-   * @param x1 is the initial x-coordinatePosition.
-   * @param y1 is the initial y-coordinatePosition.
-   * @param w1 is the initial width of the shape
-   * @param h1 is the initial height.
-   * @param r1 is the initial red color-value.
-   * @param g1 is the initial green color-value.
-   * @param b1 is the initial blue color-value.
-   * @param x2 is the final x-coordinatePosition.
-   * @param y2 is the final y-coordinatePosition.
-   * @param w2 is the final width.
-   * @param h2 is the final height.
-   * @param r2 is the final red color-value.
-   * @param g2 is the final green color-value.
-   * @param b2 is the final blue color-value.
-   * @return the animation type, as a String.
-   */
-  private String getType(int x1, int y1, int w1, int h1, int r1, int g1, int b1, int x2, int y2,
-      int w2, int h2, int r2, int g2, int b2) {
-    String testDescription = "";
-
-    if (x1 != x2 || y1 != y2) {
-      testDescription = "Movement";
-    }
-    if (w1 != w2 || h1 != h2) {
-      testDescription = "Scaling";
-    }
-    if (r1 != r2 || g1 != g2 || b1 != b2) {
-      testDescription = "Color change";
-    } else {
-      return "Movement";
-    }
-    return testDescription;
-  }
-
-
-  /**
-   * Helper method that adds an animation into a list with a specific index when no overlap is
-   * observed.
-   */
-  private void addAnimationHelper(String name, List<IAnimation> list, IAnimation animation,
-      int addIndex) {
-
-    int startTick = animation.getStartTick();
-
-    IShape shapeCopy1 = null;
-    IShape shapeCopy2 = null;
-
-    for (IShape shape: shapeList) {
-      if(shape.getName().equals(name)) {
-        shapeCopy1 = shape.getCopy();
-        shapeCopy2 = shape.getCopy();
-      }
-    }
-
-    if (addIndex == 0) {
-      list.add(addIndex, animation);
-      return;
-    }
-
-    IAnimation previousProcess = list.get(addIndex - 1);
-
-    previousProcess.setState(previousProcess.getEndTick(), shapeCopy1);
-    animation.setState(startTick, shapeCopy2);
-
-    if (previousProcess.getEndTick() != startTick) {
-      throw new IllegalArgumentException("The start and end times of a animation must overlap!");
-    } else if (shapeCopy1.equals(shapeCopy2)) {
-      list.add(addIndex, animation);
-    } else {
-      throw new IllegalArgumentException("Illegal object management here.");
-    }
   }
 
   /**
@@ -383,7 +233,7 @@ public class AnimationBuilder implements IAnimationBuilder {
   public LinkedHashMap<String, IShape> getShapeHash() {
     LinkedHashMap<String, IShape> output = new LinkedHashMap<>();
 
-    for (IShape shape: shapeList) {
+    for (IShape shape : shapeList) {
       output.put(shape.getName(), shape);
     }
 
@@ -399,7 +249,7 @@ public class AnimationBuilder implements IAnimationBuilder {
   public List<IShape> getShapeList() {
     ArrayList<IShape> clone = new ArrayList<>();
 
-    for(IShape shape: shapeList) {
+    for (IShape shape : shapeList) {
       clone.add(shape.getCopy());
     }
 
@@ -414,6 +264,154 @@ public class AnimationBuilder implements IAnimationBuilder {
   @Override
   public LinkedHashMap<String, List<IAnimation>> getAnimations() {
     return getAnimationsMap(this.animationHash);
+  }
+
+
+  /**
+   * Constructs a new model with the given Shape and Animation objects.
+   */
+  public IModel build() {
+
+    for (IShape shape : this.shapeList) {
+      String name = shape.getName();
+
+      if (!this.animationHash.containsKey(name)) {
+        throw new IllegalStateException("A shape must contain at least one processes");
+      }
+    }
+
+    for (String key : this.animationHash.keySet()) {
+
+      IShape shape = null;
+
+      for (IShape s : shapeList) {
+        if (s.getName().equals(key)) {
+          shape = s;
+        }
+      }
+
+      if (shape == null) {
+        throw new IllegalStateException("A process must have at least one shape");
+      }
+    }
+
+    return new Model(this.animationHash, this.shapeList, this.x, this.y, this.width, this.height);
+  }
+
+  /**
+   * Return an updated copy of the {@link IAnimationBuilder} object that is powering the Easy
+   * Animator program.
+   *
+   * @param name is the name of the shape.
+   * @param t1   is the start time of this transformation
+   * @param x1   is the initial x-coordinatePosition.
+   * @param y1   is the initial y-coordinatePosition.
+   * @param w1   is the initial width of the shape
+   * @param h1   is the initial height.
+   * @param r1   is the initial red color-value.
+   * @param g1   is the initial green color-value.
+   * @param b1   is the initial blue color-value.
+   * @param t2   is the end time of this transformation
+   * @param x2   is the final x-coordinatePosition.
+   * @param y2   is the final y-coordinatePosition.
+   * @param w2   is the final width.
+   * @param h2   is the final height.
+   * @param r2   is the final red color-value.
+   * @param g2   is the final green color-value.
+   * @param b2   is the final blue color-value.
+   * @return a new {@link AnimationBuilder} object.
+   */
+  private IAnimationBuilder updateAnimationBuilder(String name, int t1, int x1, int y1, int w1,
+      int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
+      int b2) {
+
+    String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
+
+    IAnimation process = new Animation(type, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2,
+        g2, b2);
+
+    if (this.animationHash.containsKey(name)) {
+      this.addAnimationHelper(name, this.animationHash.get(name), process,
+          indexOfProcess(this.animationHash.get(name), process.getStartTick()) + 1);
+    } else {
+      this.animationHash.put(name, new ArrayList<>(Collections.singletonList(process)));
+    }
+    return this;
+  }
+
+  /**
+   * This method will return a description of the animation type.
+   *
+   * @param x1 is the initial x-coordinatePosition.
+   * @param y1 is the initial y-coordinatePosition.
+   * @param w1 is the initial width of the shape
+   * @param h1 is the initial height.
+   * @param r1 is the initial red color-value.
+   * @param g1 is the initial green color-value.
+   * @param b1 is the initial blue color-value.
+   * @param x2 is the final x-coordinatePosition.
+   * @param y2 is the final y-coordinatePosition.
+   * @param w2 is the final width.
+   * @param h2 is the final height.
+   * @param r2 is the final red color-value.
+   * @param g2 is the final green color-value.
+   * @param b2 is the final blue color-value.
+   * @return the animation type, as a String.
+   */
+  private String getType(int x1, int y1, int w1, int h1, int r1, int g1, int b1, int x2, int y2,
+      int w2, int h2, int r2, int g2, int b2) {
+    String testDescription = "";
+
+    if (x1 != x2 || y1 != y2) {
+      testDescription = "Movement";
+    }
+    if (w1 != w2 || h1 != h2) {
+      testDescription = "Scaling";
+    }
+    if (r1 != r2 || g1 != g2 || b1 != b2) {
+      testDescription = "Color change";
+    } else {
+      return "Movement";
+    }
+    return testDescription;
+  }
+
+  /**
+   * Helper method that adds an animation into a list with a specific index when no overlap is
+   * observed.
+   */
+  private void addAnimationHelper(String name, List<IAnimation> list, IAnimation animation,
+      int addIndex) {
+
+    int startTick = animation.getStartTick();
+
+    IShape shapeCopy1 = null;
+    IShape shapeCopy2 = null;
+
+    for (IShape shape : shapeList) {
+      if (shape.getName().equals(name)) {
+        shapeCopy1 = shape.getCopy();
+        shapeCopy2 = shape.getCopy();
+      }
+    }
+
+    if (addIndex == 0) {
+      list.add(addIndex, animation);
+      return;
+    }
+
+    IAnimation previousProcess = list.get(addIndex - 1);
+
+    previousProcess.setState(previousProcess.getEndTick(), shapeCopy1);
+    animation.setState(startTick, shapeCopy2);
+
+    if (previousProcess.getEndTick() != startTick) {
+      throw new IllegalArgumentException("The start and end times of a animation must overlap!");
+    } else if (shapeCopy1.equals(shapeCopy2)) {
+      list.add(addIndex, animation);
+    } else {
+      throw new IllegalArgumentException("Illegal object management here.");
+    }
   }
 
   /**

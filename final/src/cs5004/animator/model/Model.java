@@ -27,12 +27,12 @@ public class Model implements IModel {
 
 
   /**
-   * A constructor for Animation model to allow for only our playbackBuilder to create new
-   * models. This allows us to
+   * A constructor for Animation model to allow for only our playbackBuilder to create new models.
+   * This allows us to
    *
    * @param processes which is a linked hashmap that contains IDs and shapes connected to all of the
    *                  processes that the shape will have.
-   * @param shapeList    which is also a linked hashmap that contains the IDs and shapes.
+   * @param shapeList which is also a linked hashmap that contains the IDs and shapes.
    */
   public Model(LinkedHashMap<String, List<IAnimation>> processes,
       List<IShape> shapeList,
@@ -97,13 +97,13 @@ public class Model implements IModel {
       String id = entry.getKey();
       IShape currShapes = null;
 
-      for(IShape shape: shapeList) {
-        if(shape.getName().equals(id)) {
+      for (IShape shape : shapeList) {
+        if (shape.getName().equals(id)) {
           currShapes = shape;
         }
       }
 
-      if(currShapes != null) {
+      if (currShapes != null) {
 
         // iterate via index
         int index = indexOfProcess(this.processes.get(id), timeOfInterest);
@@ -140,7 +140,7 @@ public class Model implements IModel {
   public List<IShape> getShapeList() {
     List<IShape> output = new ArrayList<>();
 
-    for (IShape shape: shapeList) {
+    for (IShape shape : shapeList) {
       output.add(shape.getCopy());
     }
 
@@ -158,8 +158,8 @@ public class Model implements IModel {
   public IShape getShape(String name) {
     IShape shape = null;
 
-    for (IShape s: shapeList) {
-      if(s.getName().equals(name)) {
+    for (IShape s : shapeList) {
+      if (s.getName().equals(name)) {
         shape = s.getCopy();
         break;
       }

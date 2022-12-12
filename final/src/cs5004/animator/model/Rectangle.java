@@ -14,7 +14,8 @@ public class Rectangle extends AbstractShape {
   /**
    * Constructs a rectangle with data inputs for all Shape fields.
    */
-  public Rectangle(int width, int height, Point2D reference, int degrees, Color color, String name) {
+  public Rectangle(int width, int height, Point2D reference, int degrees, Color color,
+      String name) {
     super(width, height, reference, degrees, color, name);
     this.shapeType = "Rectangle";
   }

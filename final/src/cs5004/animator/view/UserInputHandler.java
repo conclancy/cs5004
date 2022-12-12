@@ -403,7 +403,8 @@ public class UserInputHandler implements IUserInputHandler {
             Integer.parseInt(textFieldX.getText()), Integer.parseInt(textFieldY.getText()),
             Integer.parseInt(textFieldWidth.getText()), Integer.parseInt(textFieldHeight.getText()),
             Integer.parseInt(textFieldDegrees.getText()),
-            new Color(Integer.parseInt(textFieldShadeRed.getText()), Integer.parseInt(textFieldShadeGreen.getText()),
+            new Color(Integer.parseInt(textFieldShadeRed.getText()),
+                Integer.parseInt(textFieldShadeGreen.getText()),
                 Integer.parseInt(textFieldShadeBlue.getText())));
         return;
       } catch (NumberFormatException e) {

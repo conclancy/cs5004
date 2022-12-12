@@ -4,11 +4,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
+/**
+ * This class represents a text file view.
+ */
 public class ViewFile implements IViewFile {
 
   protected String output;
   protected FileWriter writer;
 
+  /**
+   * Constructor for the ViewFile class.
+   *
+   * @param text     the text to be included in the view.
+   * @param fileName the name of the file to be created.
+   */
   public ViewFile(String text, String fileName) {
     this.output = text;
 

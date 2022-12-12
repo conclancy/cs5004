@@ -8,14 +8,14 @@ import java.awt.Color;
 public interface IAnimation {
 
   /**
-   * Get the starting tick of the Animation
+   * Get the starting tick of the Animation.
    *
    * @return the starting tick of the Animation, as an int.
    */
   int getStartTick();
 
   /**
-   * Get the last tick of an Animation
+   * Get the last tick of an Animation.
    *
    * @return the ending tick of the Animation, as an int.
    */

@@ -4,7 +4,6 @@ import cs5004.animator.model.IAnimation;
 import cs5004.animator.model.IModel;
 import cs5004.animator.model.IShape;
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 

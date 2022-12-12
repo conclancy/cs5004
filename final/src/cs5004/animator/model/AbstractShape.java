@@ -22,7 +22,8 @@ public abstract class AbstractShape implements IShape {
   /**
    * Constructs a shape with data inputs for all Shape fields.
    */
-  protected AbstractShape(int width, int height, Point2D reference, int degrees, Color color, String name) {
+  protected AbstractShape(int width, int height, Point2D reference, int degrees, Color color,
+      String name) {
 
     this.width = this.checkPositiveInt(width, "Width");
     this.height = this.checkPositiveInt(height, "Height");

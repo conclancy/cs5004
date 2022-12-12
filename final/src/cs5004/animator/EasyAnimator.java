@@ -14,20 +14,20 @@ public final class EasyAnimator {
 
   /**
    * Initializes the model and the view based on the given arguments and runs an animation.
-   * <p>
-   * <p>
-   * Arguments:
-   * <p>
-   * - jar:    The .jar file to use for the program.
-   * <p>
-   * - view:   `text` for a text view, `svg` to generate an .svg file, `visual` for a simple gui
+   *
+   * <p><p>Arguments:
+   *
+   * <p>- jar:    The .jar file to use for the program.
+   *
+   * <p>- view:   `text` for a text view, `svg` to generate an .svg file, `visual` for a simple gui
    * with no editor, `gui` / `editor` for an editor user interface.
-   * <p>
-   * - in:     Path to the input .txt file.
-   * <p>
-   * - out:    Path to the output file. Must end with a filename with a `.txt` or `.svg` extension.
-   * <p>
-   * - speed:  [Optional - defaults to 1], speed at which to run the automation.
+   *
+   * <p>- in:     Path to the input .txt file.
+   *
+   * <p>- out:    Path to the output file. Must end with a filename with a `.txt` or `.svg`
+   * extension.
+   *
+   * <p>- speed:  [Optional - defaults to 1], speed at which to run the automation.
    *
    * @param args the input that allows the user to specify what kind of animation they desire.
    */

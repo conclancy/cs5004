@@ -51,6 +51,14 @@ public class Controller implements IController, ActionListener, IFrameChangeList
   private String out;
   private final String viewType;
 
+  /**
+   * Constructor for the controller.
+   *
+   * @param in    the path to the input file, as a String.
+   * @param out   the path to the output file, as a String.
+   * @param view  the view type, as a String.
+   * @param speed the speed of the animation, as an int.
+   */
   public Controller(String in, String out, String view, int speed) {
     this.animationBuilder = new AnimationBuilder();
     this.out = out;
@@ -91,13 +99,12 @@ public class Controller implements IController, ActionListener, IFrameChangeList
     } else if (viewType.equals("visual")) {
       IView view = new ViewGUISimple(model, ticksPS);
       view.play();
-    }
-    else {
+    } else {
       JOptionPane.showMessageDialog(null,
           "------ Error: Valid view type was not specified ('text', 'svg', 'visual', 'gui')",
           "------ Animation Error: An error occurred", 0);
-      }
     }
+  }
 
   /**
    * Listen for changes within animation frames.
