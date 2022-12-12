@@ -26,8 +26,6 @@ import cs5004.animator.view.IFrameChangeListener;
 import cs5004.animator.view.IShapeChangeEvent;
 import cs5004.animator.view.IShapeChangeListener;
 
-import static java.util.Objects.requireNonNull;
-
 /**
  * This class represents the controller for the Easy Animator program.
  */
@@ -35,7 +33,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
     IShapeChangeListener, PropertyChangeListener {
 
   private final IAnimationBuilder animationBuilder;
-  private IViewGUI viewGUI;
+  private final IViewGUI viewGUI;
   private Timer timer;
   private int currentTickNum;
   private int ticksPS = 20;
