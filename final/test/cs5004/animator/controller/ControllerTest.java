@@ -34,7 +34,7 @@ public class ControllerTest {
   private Controller controller;
   private IAnimationBuilder animationBuilder;
   private IViewGUI view;
-  private Map<String, List<InterpretStatusKeyFrame>> originalFrames;
+  private Map<String, List<IFrame>> originalFrames;
 
   @Before
   public void setUp() {
@@ -52,21 +52,21 @@ public class ControllerTest {
   }
 
   private void initOriginalFrames() {
-    List<InterpretStatusKeyFrame> rect = new ArrayList<>();
-    rect.add(new StatusKeyFrame(1, 200, 200, 50, 100, 0, new Color(255, 0, 0)));
-    rect.add(new StatusKeyFrame(10, 200, 200, 50, 100, 0, new Color(255, 0, 0)));
-    rect.add(new StatusKeyFrame(50, 300, 300, 50, 100, 0, new Color(255, 0, 0)));
-    rect.add(new StatusKeyFrame(51, 300, 300, 50, 100, 0, new Color(255, 0, 0)));
-    rect.add(new StatusKeyFrame(70, 300, 300, 25, 100, 0, new Color(255, 0, 0)));
-    rect.add(new StatusKeyFrame(100, 200, 200, 25, 100, 0, new Color(255, 0, 0)));
+    List<IFrame> rect = new ArrayList<>();
+    rect.add(new Frame(1, 200, 200, 50, 100, 0, new Color(255, 0, 0)));
+    rect.add(new Frame(10, 200, 200, 50, 100, 0, new Color(255, 0, 0)));
+    rect.add(new Frame(50, 300, 300, 50, 100, 0, new Color(255, 0, 0)));
+    rect.add(new Frame(51, 300, 300, 50, 100, 0, new Color(255, 0, 0)));
+    rect.add(new Frame(70, 300, 300, 25, 100, 0, new Color(255, 0, 0)));
+    rect.add(new Frame(100, 200, 200, 25, 100, 0, new Color(255, 0, 0)));
 
-    List<InterpretStatusKeyFrame> ellipse = new ArrayList<>();
-    ellipse.add(new StatusKeyFrame(6, 440, 70, 120, 60, 0, new Color(0, 0, 255)));
-    ellipse.add(new StatusKeyFrame(20, 440, 70, 120, 60, 0, new Color(0, 0, 255)));
-    ellipse.add(new StatusKeyFrame(50, 440, 250, 120, 60, 0, new Color(0, 0, 255)));
-    ellipse.add(new StatusKeyFrame(70, 440, 370, 120, 60, 0, new Color(0, 170, 85)));
-    ellipse.add(new StatusKeyFrame(80, 440, 370, 120, 60, 0, new Color(0, 255, 0)));
-    ellipse.add(new StatusKeyFrame(100, 440, 370, 120, 60, 0, new Color(0, 255, 0)));
+    List<IFrame> ellipse = new ArrayList<>();
+    ellipse.add(new Frame(6, 440, 70, 120, 60, 0, new Color(0, 0, 255)));
+    ellipse.add(new Frame(20, 440, 70, 120, 60, 0, new Color(0, 0, 255)));
+    ellipse.add(new Frame(50, 440, 250, 120, 60, 0, new Color(0, 0, 255)));
+    ellipse.add(new Frame(70, 440, 370, 120, 60, 0, new Color(0, 170, 85)));
+    ellipse.add(new Frame(80, 440, 370, 120, 60, 0, new Color(0, 255, 0)));
+    ellipse.add(new Frame(100, 440, 370, 120, 60, 0, new Color(0, 255, 0)));
 
     this.originalFrames = new LinkedHashMap<>();
     this.originalFrames.put("R", rect);
@@ -90,7 +90,7 @@ public class ControllerTest {
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.ADD,
             "R", 110, 200, 200, 25, 125, 10, new Color(255, 0, 0));
     this.controller.frameChanged(event);
-    this.originalFrames.get("R").add(new StatusKeyFrame(110, 200, 200, 25, 125, 0,
+    this.originalFrames.get("R").add(new Frame(110, 200, 200, 25, 125, 0,
             new Color(255, 0, 0)));
     assertEquals(this.originalFrames, this.view.getKeyframes());
   }
@@ -101,7 +101,7 @@ public class ControllerTest {
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.ADD,
             "R", 80, 200, 200, 25, 125, 1000, new Color(255, 0, 0));
     this.controller.frameChanged(event);
-    this.originalFrames.get("R").add(5, new StatusKeyFrame(80, 200, 200, 25, 125, 0,
+    this.originalFrames.get("R").add(5, new Frame(80, 200, 200, 25, 125, 0,
             new Color(255, 0, 0)));
     assertEquals(this.originalFrames, this.view.getKeyframes());
   }
@@ -112,7 +112,7 @@ public class ControllerTest {
     IFrameChangeEvent event = new FrameChangeEvent(this.view, EFrameChangeType.ADD,
             "C", 1, 440, 70, 120, 60, 1000, new Color(0, 0, 255));
     this.controller.frameChanged(event);
-    this.originalFrames.get("C").add(0, new StatusKeyFrame(1, 440, 70, 120, 60, 0,
+    this.originalFrames.get("C").add(0, new Frame(1, 440, 70, 120, 60, 0,
             new Color(0, 0, 255)));
     assertEquals(this.originalFrames, this.view.getKeyframes());
   }
@@ -124,7 +124,7 @@ public class ControllerTest {
             "R", 100, 200, 200, 25, 125, 1000, new Color(255, 0, 0));
     this.controller.frameChanged(event);
     this.originalFrames.get("R").remove(5);
-    this.originalFrames.get("R").add(new StatusKeyFrame(100, 200, 200, 25, 125, 0,
+    this.originalFrames.get("R").add(new Frame(100, 200, 200, 25, 125, 0,
             new Color(255, 0, 0)));
     assertEquals(this.originalFrames, this.view.getKeyframes());
   }

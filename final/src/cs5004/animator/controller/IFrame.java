@@ -3,12 +3,12 @@ package cs5004.animator.controller;
 import java.awt.Color;
 
 /**
- * This class represents the interpreted key frame of an animation.
+ * This interface adds the functionality of rotating a shape.
  */
-public interface InterfaceInterpretKeyFrame {
+public interface IFrame {
 
   /**
-   * TThis method gets the time of this key frame.
+   * This method gets the time of this key frame.
    * @return the time that this key frame is stationed at.
    */
   int getTime();
@@ -42,4 +42,11 @@ public interface InterfaceInterpretKeyFrame {
    * @return the color of this keyframe.
    */
   Color getColor();
+
+  /**
+   * Getter for the rotationDegree of this key frame.
+   *
+   * @return the rotationDegree in degrees of the shape at this frame.
+   */
+  int getShapeRotation();
 }

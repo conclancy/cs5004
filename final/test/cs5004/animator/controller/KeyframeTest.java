@@ -6,21 +6,17 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Color;
 
-import cs5004.animator.controller.InterfaceInterpretKeyFrame;
-import cs5004.animator.controller.Keyframe;
-
-
 /**
  * Testing class for keyframe class to ensure proper functionality.
  */
 public class KeyframeTest {
-  private InterfaceInterpretKeyFrame keyframeOne;
-  private InterfaceInterpretKeyFrame keyframeTwo;
+  private IFrame keyframeOne;
+  private IFrame keyframeTwo;
 
   @Before
   public void setUp() {
-    keyframeOne = new Keyframe(1, 2, 3, 4, 5, new Color(1, 2, 3));
-    keyframeTwo = new Keyframe(100, 20, 30, 400, 500, new Color(255, 0, 255));
+    keyframeOne = new Frame(1, 2, 3, 4, 5, 0, new Color(1, 2, 3));
+    keyframeTwo = new Frame(100, 20, 30, 400, 500, 0, new Color(255, 0, 255));
   }
 
   @Test

@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Map;
 
-import cs5004.animator.controller.InterpretStatusKeyFrame;
+import cs5004.animator.controller.IFrame;
 
 /**
  * This interface represents a playback view that uses a gui for the user.
@@ -35,12 +35,12 @@ public interface IViewGUI extends IView {
   /**
    * Retrieves all keyframes.
    */
-  Map<String, List<InterpretStatusKeyFrame>> getKeyframes();
+  Map<String, List<IFrame>> getKeyframes();
 
   /**
    * Sets all keyframes.
    */
-  void setKeyframes(Map<String, List<InterpretStatusKeyFrame>> keyframes);
+  void setKeyframes(Map<String, List<IFrame>> keyframes);
 
   /**
    * sets the width of a shape.

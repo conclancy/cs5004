@@ -36,8 +36,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import cs5004.animator.controller.InterpretStatusKeyFrame;
-import cs5004.animator.controller.StatusKeyFrame;
+import cs5004.animator.controller.IFrame;
+import cs5004.animator.controller.Frame;
 
 /**
  * This ViewGUIEditor class is the GUI that will act as the third view for the animation. This will
@@ -56,10 +56,10 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   private final JTextField tickSpeedField;
   private JList<IShapeCell> shapeListContainer;
   private JLabel frameListLabel;
-  private JList<InterpretStatusKeyFrame> frameListContainer;
+  private JList<IFrame> frameListContainer;
   private final DefaultListModel<IShapeCell> shapesList;
-  private final DefaultListModel<InterpretStatusKeyFrame> framesList;
-  private Map<String, List<InterpretStatusKeyFrame>> keyframes;
+  private final DefaultListModel<IFrame> framesList;
+  private Map<String, List<IFrame>> keyframes;
 
   private final List<ActionListener> buttonListeners;
   private final List<PropertyChangeListener> tickSpeedListeners;
@@ -290,7 +290,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
    * Get keyframes for automation.
    */
   @Override
-  public Map<String, List<InterpretStatusKeyFrame>> getKeyframes() {
+  public Map<String, List<IFrame>> getKeyframes() {
     return this.keyframes;
   }
 
@@ -298,13 +298,13 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
    * Sets all keyframes for automation.
    */
   @Override
-  public void setKeyframes(Map<String, List<InterpretStatusKeyFrame>> keyframes) {
+  public void setKeyframes(Map<String, List<IFrame>> keyframes) {
     this.keyframes = new LinkedHashMap<>();
     for (String id : keyframes.keySet()) {
-      List<InterpretStatusKeyFrame> newList = new ArrayList<>();
+      List<IFrame> newList = new ArrayList<>();
 
-      for (InterpretStatusKeyFrame frame : keyframes.get(id)) {
-        newList.add(new StatusKeyFrame(frame.getTime(), frame.getX(), frame.getY(),
+      for (IFrame frame : keyframes.get(id)) {
+        newList.add(new Frame(frame.getTime(), frame.getX(), frame.getY(),
             frame.getWidth(), frame.getHeight(), frame.getShapeRotation(),
             frame.getColor()));
       }
@@ -402,7 +402,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
       String id = this.shapesList.elementAt(this.shapeSelected).getName();
 
       if (this.keyframes.containsKey(id)) {
-        for (InterpretStatusKeyFrame cell : this.keyframes.get(id)) {
+        for (IFrame cell : this.keyframes.get(id)) {
           this.framesList.addElement(cell);
         }
       }
@@ -481,7 +481,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
       return;
     }
 
-    InterpretStatusKeyFrame keyframe;
+    IFrame keyframe;
     if (this.frameSelected != -1 || !this.frameListContainer.isSelectionEmpty()) {
       keyframe = this.framesList.elementAt(this.frameSelected);
     } else {

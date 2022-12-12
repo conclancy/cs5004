@@ -212,7 +212,7 @@ public class Controller implements IController, ActionListener,
         return;
       case EDIT:
         if (!timeExists(event.getTick(), processes)) {
-          playbackView.displayError("Keyframe does not exist at this time.");
+          playbackView.displayError("StatusKeyFrame does not exist at this time.");
           return;
         }
 
@@ -298,7 +298,7 @@ public class Controller implements IController, ActionListener,
         return;
       case DELETE:
         if (!timeExists(event.getTick(), processes)) {
-          playbackView.displayError("Keyframe does not exist at this time.");
+          playbackView.displayError("StatusKeyFrame does not exist at this time.");
           return;
         }
         if (event.getTick() == processes.get(0).getStartTick()
@@ -552,12 +552,12 @@ public class Controller implements IController, ActionListener,
   }
 
   // Converts a list of processes into a list of keyframes.
-  private Map<String, List<InterpretStatusKeyFrame>> convertToKeyFrames(Map<String,
+  private Map<String, List<IFrame>> convertToKeyFrames(Map<String,
           List<IAnimation>> map) {
-    Map<String, List<InterpretStatusKeyFrame>> output = new LinkedHashMap<>();
+    Map<String, List<IFrame>> output = new LinkedHashMap<>();
 
     for (Map.Entry<String, List<IAnimation>> entry : map.entrySet()) {
-      ArrayList<InterpretStatusKeyFrame> temp = new ArrayList<>();
+      ArrayList<IFrame> temp = new ArrayList<>();
       if (map.get(entry.getKey()) == null)  {
         output.put(entry.getKey(), new ArrayList<>());
         continue;
@@ -569,7 +569,7 @@ public class Controller implements IController, ActionListener,
       IAnimation last = entry.getValue().get(entry.getValue().size() - 1);
 
       if (last.getStartTick() != last.getEndTick()) {
-        temp.add(new StatusKeyFrame(last.getEndTick(), last.getEndX(), last.getEndY(),
+        temp.add(new Frame(last.getEndTick(), last.getEndX(), last.getEndY(),
                 last.getEndWidth(), last.getEndHeight(), last.getEndRotationDegree(),
                 last.getEndColor()));
       }
@@ -579,8 +579,8 @@ public class Controller implements IController, ActionListener,
   }
 
   // converts a process to keyframes using its starting values.
-  private InterpretStatusKeyFrame convertToKeyFrame(IAnimation process) {
-    return new StatusKeyFrame(process.getStartTick(), process.getStartX(), process.getStartY(),
+  private IFrame convertToKeyFrame(IAnimation process) {
+    return new Frame(process.getStartTick(), process.getStartX(), process.getStartY(),
             process.getStartWidth(), process.getStartHeight(), process.getStartRotationDegree(),
             process.getStartColor());
   }
