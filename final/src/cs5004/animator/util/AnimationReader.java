@@ -31,7 +31,7 @@ public class AnimationReader {
    *
    * @param readable The source of data for the animation
    * @param playbackBuilder  A playbackBuilder for helping to construct a new animation
-   * @return
+   * @return the Model for this animation.
    */
   public static IModel parseFile(Readable readable, IAnimationBuilder playbackBuilder) {
     Objects.requireNonNull(readable, "Must have non-null readable source");

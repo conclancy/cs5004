@@ -4,6 +4,7 @@ import cs5004.animator.model.IAnimation;
 import cs5004.animator.model.IModel;
 import cs5004.animator.model.IShape;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -126,7 +127,14 @@ public interface IAnimationBuilder {
    *
    * @return the shapes in the model, and their associated names as a {@link LinkedHashMap}
    */
-  LinkedHashMap<String, IShape> getShapes();
+  LinkedHashMap<String, IShape> getShapeHash();
+
+  /**
+   * Get the shapes within the model.
+   *
+   * @return the shapes in the model, as a {@link List} of {@link IShape}.
+   */
+  List<IShape> getShapeList();
 
   /**
    * Get the dimensions required for this Easy Animation.

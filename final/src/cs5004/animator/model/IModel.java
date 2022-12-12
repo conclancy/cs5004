@@ -2,6 +2,7 @@ package cs5004.animator.model;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * This interface represent the model for the actual animation.
@@ -16,10 +17,20 @@ public interface IModel {
   List<IShape> getState(int time);
 
   /**
-   * THis method returns the shapes within the map.
+   * Get a list of Shapes within the model.
+   *
+   * @return the list of shapes in the model.
    */
-  LinkedHashMap<String, IShape> getShapes();
+  List<IShape> getShapeList();
 
+  /**
+   * Get a shape from the model with a specific name.
+   *
+   * @param name the name of the shape to be retrieved.
+   * @return the shape object, as an {@link IShape} object.
+   * @throws NoSuchElementException if the name passed does not correspond to a shape in the model.
+   */
+  IShape getShape(String name) throws NoSuchElementException;
 
   /**
    * This method creates all the processes from the model.
@@ -50,4 +61,5 @@ public interface IModel {
    * This method will retrieve the last tick of the model.
    **/
   int getLastTick();
+
 }

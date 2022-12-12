@@ -17,20 +17,20 @@ public class AbstractShapeTest {
 
 
   private void setUp() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "testRectangle");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "testEllipse");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testNegativeWidth() {
-    rectangle = new Rectangle(-10, 10, new Point2D.Double(10, 10), 5, Color.BLUE);
-    ellipse = new Ellipse(-10, 10, new Point2D.Double(10, 10), 5, Color.RED);
+    rectangle = new Rectangle(-10, 10, new Point2D.Double(10, 10), 5, Color.BLUE, "");
+    ellipse = new Ellipse(-10, 10, new Point2D.Double(10, 10), 5, Color.RED, "test");
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testNegativeHeight() {
-    rectangle = new Rectangle(10, -10, new Point2D.Double(10, 10), 5, Color.BLUE);
-    ellipse = new Ellipse(10, -10, new Point2D.Double(10, 10), 5, Color.RED);
+    rectangle = new Rectangle(10, -10, new Point2D.Double(10, 10), 5, Color.BLUE, "");
+    ellipse = new Ellipse(10, -10, new Point2D.Double(10, 10), 5, Color.RED, "");
   }
 
   @Test
@@ -42,24 +42,24 @@ public class AbstractShapeTest {
 
   @Test
   public void testGetColor() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
     assertEquals(rectangle.getColor(), Color.BLUE);
     assertEquals(ellipse.getColor(), Color.RED);
   }
 
   @Test
   public void testGetPosition() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
     assertEquals(rectangle.getReference(), new Point2D.Double(10, 10));
     assertEquals(ellipse.getReference(), new Point2D.Double(20, 20));
   }
 
   @Test
   public void testGetTextPosition() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
     assertEquals(rectangle.getTextPosition(), "(10.0, 10.0)");
     assertEquals(ellipse.getTextPosition(), "(20.0, 20.0)");
   }
@@ -67,24 +67,24 @@ public class AbstractShapeTest {
 
   @Test
   public void testGetHeight() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
     assertEquals(ellipse.getHeight(), 10);
     assertEquals(rectangle.getHeight(), 10);
   }
 
   @Test
   public void testGetWidth() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
     assertEquals(ellipse.getWidth(), 10);
     assertEquals(rectangle.getWidth(), 10);
   }
 
   @Test
   public void testSetWidth() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
 
     this.ellipse.setWidth(15);
     assertEquals(ellipse.getWidth(), 15);
@@ -94,24 +94,24 @@ public class AbstractShapeTest {
 
   @Test(expected = IllegalArgumentException.class)
   public void testBadSetWidth() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
 
     this.rectangle.setWidth(-5);
   }
 
   @Test(expected = IllegalArgumentException.class)
   public void testBadSetHeight() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
 
     this.rectangle.setHeight(-10);
   }
 
   @Test
   public void testSetCorrectHeight() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
 
     this.ellipse.setHeight(5);
     assertEquals(ellipse.getHeight(), 5);
@@ -121,8 +121,8 @@ public class AbstractShapeTest {
 
   @Test
   public void testSetPosition() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
     assertEquals(ellipse.getReference(), new Point2D.Double(20, 20));
 
     this.ellipse.setReference(new Point2D.Double(20, 20));
@@ -141,8 +141,8 @@ public class AbstractShapeTest {
 
   @Test
   public void testSetColor() {
-    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE);
-    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED);
+    rectangle = new Rectangle(10, 10, new Point2D.Double(10, 10), 0, Color.BLUE, "");
+    ellipse = new Ellipse(10, 10, new Point2D.Double(20, 20), 0, Color.RED, "");
     assertEquals(ellipse.getColor(), Color.RED);
 
     this.ellipse.setColor(Color.BLACK);

@@ -53,6 +53,13 @@ public interface IShape {
   Color getColor();
 
   /**
+   * Get the name of the shape.
+   *
+   * @return the name of the shape, as a String.
+   */
+  String getName();
+
+  /**
    * Get a deep copy of the shape.  This allows access to a shape without risking the changing of
    * the underlying shape attributes.
    *

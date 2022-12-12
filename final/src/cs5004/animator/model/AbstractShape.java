@@ -17,17 +17,19 @@ public abstract class AbstractShape implements IShape {
   protected Point2D reference;
   protected Color color;
   protected int degrees;
+  protected String name;
 
   /**
    * Constructs a shape with data inputs for all Shape fields.
    */
-  protected AbstractShape(int width, int height, Point2D reference, int degrees, Color color) {
+  protected AbstractShape(int width, int height, Point2D reference, int degrees, Color color, String name) {
 
     this.width = this.checkPositiveInt(width, "Width");
     this.height = this.checkPositiveInt(height, "Height");
     this.reference = reference;
     this.degrees = degrees;
     this.color = color;
+    this.name = name;
 
   }
 
@@ -35,8 +37,8 @@ public abstract class AbstractShape implements IShape {
    * Constructor for a shape, that creates an "empty" shape at (0,0) with no height, width, or
    * color.
    */
-  protected AbstractShape() {
-    this(0, 0, new Point2D.Double(0, 0), 0, new Color(0));
+  protected AbstractShape(String name) {
+    this(0, 0, new Point2D.Double(0, 0), 0, new Color(0), name);
   }
 
 
@@ -78,6 +80,15 @@ public abstract class AbstractShape implements IShape {
   @Override
   public int getWidth() {
     return this.width;
+  }
+
+  /**
+   * Get the name of the shape.
+   *
+   * @return the name of the shape, as a String.
+   */
+  public String getName() {
+    return this.name;
   }
 
   /**

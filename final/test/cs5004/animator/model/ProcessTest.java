@@ -129,7 +129,7 @@ public class ProcessTest {
         30, 0, 255, 0, 5, 20, 10, 10, 30,
         0, 255, 0);
     Rectangle rect = new Rectangle(10, 30,
-        new Point2D.Double(10, 10), 0, Color.GREEN);
+        new Point2D.Double(10, 10), 0, Color.GREEN, "test");
     move1.setState(0, rect);
     assertEquals(rect.getReference(), new Point2D.Double(10, 10));
     move1.setState(1, rect);
@@ -149,7 +149,7 @@ public class ProcessTest {
         30, 0, 255, 0, 5, 20, 10, 10, 30,
         0, 255, 0);
     Rectangle rect = new Rectangle(10, 30,
-        new Point2D.Double(10, 10), 0, Color.GREEN);
+        new Point2D.Double(10, 10), 0, Color.GREEN, "test");
     move1.setState(-5, rect);
   }
 
@@ -163,7 +163,7 @@ public class ProcessTest {
         30, 0, 255, 0, 5, 20, 10, 10, 30,
         0, 255, 0);
     Rectangle rect = new Rectangle(10, 30,
-        new Point2D.Double(10, 10), 0, Color.GREEN);
+        new Point2D.Double(10, 10), 0, Color.GREEN, "test");
     move1.setState(14, rect);
   }
 

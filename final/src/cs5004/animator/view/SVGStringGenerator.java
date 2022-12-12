@@ -49,9 +49,9 @@ public class SVGStringGenerator implements IVewText {
         + model.getHeight() + "\" version=\"1.1\"\n    "
         + "xmlns=\"http://www.w3.org/2000/svg\">\n");
 
-    for (Map.Entry<String, IShape> entry : model.getShapes().entrySet()) {
-      List<IAnimation> processes = model.getProcesses().get(entry.getKey());
-      switch (entry.getValue().getShapeType()) {
+    for (IShape shape : model.getShapeList()) {
+      List<IAnimation> processes = model.getProcesses().get(shape.getName());
+      switch (shape.getShapeType()) {
         case "Rectangle":
           type = "rect";
           break;
@@ -62,7 +62,7 @@ public class SVGStringGenerator implements IVewText {
           type = "";
       }
       this.appendHelper("<" + type + " id=\""
-          + entry.getKey());
+          + shape.getName());
       this.appendHelper(this.shapeStateHelper(processes.get(0), type));
       this.appendHelper(this.toSVGStringHelper(processes, type));
       this.appendHelper("</" + type + ">\n\n");

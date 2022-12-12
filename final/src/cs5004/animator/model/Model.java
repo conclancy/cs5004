@@ -3,10 +3,12 @@ package cs5004.animator.model;
 import static cs5004.animator.util.AnimationBuilder.getAnimationsMap;
 
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -16,28 +18,27 @@ import java.util.Map;
 public class Model implements IModel {
 
   private final LinkedHashMap<String, List<IAnimation>> processes;
-  private final LinkedHashMap<String, IShape> shapes;
-
+  private final List<IShape> shapeList;
   private final int x;
   private final int y;
-
   private final int width;
   private final int height;
+  Appendable output;
 
 
   /**
-   * A private constructor for Animation model to allow for only our playbackBuilder to create new
+   * A constructor for Animation model to allow for only our playbackBuilder to create new
    * models. This allows us to
    *
    * @param processes which is a linked hashmap that contains IDs and shapes connected to all of the
    *                  processes that the shape will have.
-   * @param shapes    which is also a linked hashmap that contains the IDs and shapes.
+   * @param shapeList    which is also a linked hashmap that contains the IDs and shapes.
    */
   public Model(LinkedHashMap<String, List<IAnimation>> processes,
-      LinkedHashMap<String, IShape> shapes,
+      List<IShape> shapeList,
       int x, int y, int width, int height) {
     this.processes = processes;
-    this.shapes = shapes;
+    this.shapeList = shapeList;
     this.x = x;
     this.y = y;
     this.width = width;
@@ -45,9 +46,9 @@ public class Model implements IModel {
   }
 
   /**
-   * THis is a helper method that serches for index of a process using binary search.
+   * THis is a helper method that searches for index of a process using binary search.
    *
-   * @param list         the list of processes through which to search for a given animaiton.
+   * @param list         the list of processes through which to search for a given animation.
    * @param startingTime the time to search for within the processes.
    * @return the index int of the process.
    */
@@ -89,41 +90,85 @@ public class Model implements IModel {
   @Override
   public List<IShape> getState(int timeOfInterest) {
     List<IShape> output = new ArrayList<>();
+
     //iterate through the shape list
     for (Map.Entry<String, List<IAnimation>> entry : this.processes.entrySet()) {
       String id = entry.getKey();
-      IShape currShapes = this.shapes.get(id);
+      IShape currShapes = null;
 
-      // iterate via index
-      int index = indexOfProcess(this.processes.get(id), timeOfInterest);
-      if (index == -1) {
-        continue;
+      for(IShape shape: shapeList) {
+        if(shape.getName().equals(id)) {
+          currShapes = shape;
+        }
       }
-      if (timeOfInterest <= this.processes.get(id).get(index).getEndTick()) {
-        this.processes.get(id).get(index).setState(timeOfInterest, currShapes);
+
+      if(currShapes != null) {
+
+        // iterate via index
+        int index = indexOfProcess(this.processes.get(id), timeOfInterest);
+
+        if (index == -1) {
+          continue;
+        }
+
+        if (timeOfInterest <= this.processes.get(id).get(index).getEndTick()) {
+          this.processes.get(id).get(index).setState(timeOfInterest, currShapes);
+        } else {
+          continue;
+        }
+
+        double newX = currShapes.getReference().getX() - this.x;
+        double newY = currShapes.getReference().getY() - this.y;
+        currShapes.setReference(new Point2D.Double(newX, newY));
+        output.add(currShapes);
+
       } else {
-        continue;
+        throw new NoSuchElementException("The shapes does not exists.");
       }
-      double newX = currShapes.getReference().getX() - this.x;
-      double newY = currShapes.getReference().getY() - this.y;
-      currShapes.setReference(new Point2D.Double(newX, newY));
-      output.add(currShapes);
+
+
     }
     return output;
   }
 
   /**
-   * This method creates a linked hash map and then returns the shapes within the map.
+   * Get a list of shapes held within the model.
    *
-   * @return the shapes within the map.
+   * @return list of shapes within the model.
+   */
+  public List<IShape> getShapeList() {
+    List<IShape> output = new ArrayList<>();
+
+    for (IShape shape: shapeList) {
+      output.add(shape.getCopy());
+    }
+
+    return output;
+  }
+
+  /**
+   * Get a shape from the model with a specific name.
+   *
+   * @param name the name of the shape to be retrieved.
+   * @return the shape object, as an {@link IShape} object.
+   * @throws NoSuchElementException if the name passed does not correspond to a shape in the model.
    */
   @Override
-  public LinkedHashMap<String, IShape> getShapes() {
-    LinkedHashMap<String, IShape> output = new LinkedHashMap<>();
-    for (String currKey : shapes.keySet()) {
-      output.put(currKey, shapes.get(currKey));
+  public IShape getShape(String name) {
+    IShape shape = null;
+
+    for (IShape s: shapeList) {
+      if(s.getName().equals(name)) {
+        shape = s.getCopy();
+        break;
+      }
     }
-    return output;
+
+    if (shape == null) {
+      throw new NoSuchElementException("This shape does not exist.");
+    } else {
+      return shape;
+    }
   }
 
   /**
@@ -183,6 +228,20 @@ public class Model implements IModel {
   }
 
   /**
+   * Handle the try and catch logic for appending SVG tags to the final SVG model.
+   *
+   * @param input the input String to be appended to the output.
+   * @throws IllegalArgumentException if the output is unable to accept the input value.
+   */
+  private void appendHelper(String input) throws IllegalArgumentException {
+    try {
+      output.append(input);
+    } catch (IOException e) {
+      throw new IllegalStateException("Bad Appendable");
+    }
+  }
+
+  /**
    * A description of the animation process that returns a string.
    *
    * @return String that is the description.
@@ -191,7 +250,7 @@ public class Model implements IModel {
   public String toString() {
     StringBuilder output = new StringBuilder();
     for (Map.Entry<String, List<IAnimation>> entry : this.processes.entrySet()) {
-      IShape shape = this.shapes.get(entry.getKey());
+      IShape shape = this.getShape(entry.getKey());
       output.append("Shape ").append(entry.getKey()).append(" ").append(shape.getShapeType())
           .append("\n");
       for (IAnimation process : entry.getValue()) {

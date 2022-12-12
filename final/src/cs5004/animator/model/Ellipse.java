@@ -15,17 +15,17 @@ public class Ellipse extends AbstractShape {
    * Constructs an Ellipse with data inputs for all Shape fields.
    */
   public Ellipse(int width, int height, Point2D coordinatePosition,
-      int rotationDegree, Color color) {
-    super(width, height, coordinatePosition, rotationDegree, color);
-    this.shapeType = "Ellipse";
+      int rotationDegree, Color color, String name) {
+    super(width, height, coordinatePosition, rotationDegree, color, name);
+    super.shapeType = "Ellipse";
   }
 
   /**
    * Constructor for an Ellipse, that creates an "empty" shape at (0,0) with no height, width, or
    * color.
    */
-  public Ellipse() {
-    super();
+  public Ellipse(String name) {
+    super(name);
     this.shapeType = "Ellipse";
   }
 
@@ -54,13 +54,12 @@ public class Ellipse extends AbstractShape {
    * Get a deep copy of the Ellipse.  This allows access to a shape without risking the changing of
    * the underlying shape attributes.
    *
-   * @return an exact replica of the Rectangle, as a new {@link Rectangle} object.
+   * @return an exact replica of the Ellipse, as a new {@link Ellipse} object.
    */
   @Override
   public IShape getCopy() {
-    return new Ellipse(this.width, this.height,
-        new Point2D.Double(this.reference.getX(), this.reference.getY()),
-        this.degrees,
-        new Color(this.color.getRGB()));
+    return new Ellipse(super.width, super.height,
+        new Point2D.Double(super.reference.getX(), super.reference.getY()),
+        super.degrees, new Color(super.color.getRGB()), super.name);
   }
 }

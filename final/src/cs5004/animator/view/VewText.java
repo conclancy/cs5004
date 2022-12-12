@@ -42,7 +42,8 @@ public class VewText implements IVewText {
     StringBuilder output = new StringBuilder();
     for (Map.Entry<String,
             List<IAnimation>> entry : this.model.getProcesses().entrySet()) {
-      IShape shape = this.model.getShapes().get(entry.getKey());
+      // IShape shape = this.model.getShapeHash().get(entry.getKey());
+      IShape shape = this.model.getShape(entry.getKey()); // TODO
       output.append("Create ").append(shape.getShapeType()).append(" ")
               .append(entry.getKey()).append(" ")
               .append("with center at ").append(shape.getReference()).append(", width of ")

@@ -8,10 +8,13 @@ import cs5004.animator.model.IShape;
 import cs5004.animator.model.Model;
 import cs5004.animator.model.Rectangle;
 import java.awt.Dimension;
+import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * This class is the builder class for the animation model class. This allows the controller to
@@ -19,8 +22,8 @@ import java.util.List;
  */
 public class AnimationBuilder implements IAnimationBuilder {
 
-  private final LinkedHashMap<String, List<IAnimation>> processes;
-  private final LinkedHashMap<String, IShape> shapesList;
+  private final LinkedHashMap<String, List<IAnimation>> animationHash;
+  private final List<IShape> shapeList;
   private int x = 0;
   private int y = 0;
   private int width = 1000;
@@ -31,8 +34,8 @@ public class AnimationBuilder implements IAnimationBuilder {
    * Constructor for the AnimationBuilder.
    */
   public AnimationBuilder() {
-    this.processes = new LinkedHashMap<>();
-    this.shapesList = new LinkedHashMap<>();
+    this.animationHash = new LinkedHashMap<>();
+    this.shapeList = new ArrayList<>();
   }
 
   /**
@@ -40,19 +43,30 @@ public class AnimationBuilder implements IAnimationBuilder {
    */
   public IModel build() {
 
-    for (String key : this.shapesList.keySet()) {
-      if (!this.processes.containsKey(key)) {
+    for(IShape shape: this.shapeList) {
+      String name = shape.getName();
+
+      if(!this.animationHash.containsKey(name)) {
         throw new IllegalStateException("A shape must contain at least one processes");
       }
     }
 
-    for (String key : this.processes.keySet()) {
-      if (!this.shapesList.containsKey(key)) {
+    for (String key : this.animationHash.keySet()) {
+
+      IShape shape = null;
+
+      for (IShape s: shapeList) {
+        if (s.getName().equals(key)) {
+          shape = s;
+        }
+      }
+
+      if (shape == null) {
         throw new IllegalStateException("A process must have at least one shape");
       }
     }
 
-    return new Model(this.processes, this.shapesList, this.x, this.y, this.width, this.height);
+    return new Model(this.animationHash, this.shapeList, this.x, this.y, this.width, this.height);
   }
 
   /**
@@ -84,27 +98,31 @@ public class AnimationBuilder implements IAnimationBuilder {
    */
   @Override
   public IAnimationBuilder declareShape(String name, String type) {
-    if (this.shapesList.containsKey(name)) {
-      throw new IllegalArgumentException("Error!: This ID has already been given and"
-          + "associated to a shape");
+
+    IShape shape = null;
+
+    for(IShape s: shapeList) {
+      if(Objects.equals(s.getName(), name)) {
+        shape = s;
+      }
     }
 
-    IShape shape;
-
-    switch (type.toLowerCase()) {
-      case "rectangle":
-        shape = new Rectangle();
-        break;
-      case "ellipse":
-        shape = new Ellipse();
-        break;
-      default:
-        shape = null;
-    }
     if (shape == null) {
-      throw new IllegalArgumentException("Shape type is invalid. Please check your spelling");
+      switch (type.toLowerCase()) {
+        case "rectangle":
+          shape = new Rectangle(name);
+          break;
+        case "ellipse":
+          shape = new Ellipse(name);
+          break;
+        default:
+          throw new IllegalArgumentException("Shape type is invalid. Please check your spelling");
+      }
+    } else {
+      throw new IllegalArgumentException("Shape name already exists; names must be unique.");
     }
-    this.shapesList.put(name, shape);
+
+    this.shapeList.add(shape);
     return this;
   }
 
@@ -164,14 +182,17 @@ public class AnimationBuilder implements IAnimationBuilder {
   private IAnimationBuilder updateAnimationBuilder(String name, int t1, int x1, int y1, int w1,
       int h1, int r1, int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2,
       int b2) {
+
     String type = this.getType(x1, y1, w1, h1, r1, g1, b1, x2, y2, w2, h2, r2, g2, b2);
-    IAnimation process = new Animation(type, t1, x1, y1, w1, h1,
-        r1, g1, b1, t2, x2, y2, w2, h2, r2, g2, b2);
-    if (this.processes.containsKey(name)) {
-      this.addAnimationHelper(name, this.processes.get(name), process,
-          indexOfProcess(this.processes.get(name), process.getStartTick()) + 1);
+
+    IAnimation process = new Animation(type, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2,
+        g2, b2);
+
+    if (this.animationHash.containsKey(name)) {
+      this.addAnimationHelper(name, this.animationHash.get(name), process,
+          indexOfProcess(this.animationHash.get(name), process.getStartTick()) + 1);
     } else {
-      this.processes.put(name, new ArrayList<>(Collections.singletonList(process)));
+      this.animationHash.put(name, new ArrayList<>(Collections.singletonList(process)));
     }
     return this;
   }
@@ -199,14 +220,8 @@ public class AnimationBuilder implements IAnimationBuilder {
    * @return AniBuilder List.
    */
   @Override
-  public IAnimationBuilder addAnimation(String name, int t1,
-      int x1, int y1,
-      int w1, int h1,
-      int r1, int g1, int b1,
-      int t2,
-      int x2, int y2,
-      int w2, int h2,
-      int r2, int g2, int b2) {
+  public IAnimationBuilder addAnimation(String name, int t1, int x1, int y1, int w1, int h1, int r1,
+      int g1, int b1, int t2, int x2, int y2, int w2, int h2, int r2, int g2, int b2) {
 
     return updateAnimationBuilder(name, t1, x1, y1, w1, h1, r1, g1, b1, t2, x2, y2, w2, h2, r2, g2,
         b2);
@@ -256,9 +271,23 @@ public class AnimationBuilder implements IAnimationBuilder {
    */
   private void addAnimationHelper(String name, List<IAnimation> list, IAnimation animation,
       int addIndex) {
+
     int startTick = animation.getStartTick();
-    IShape shapeCopy1 = this.shapesList.get(name).getCopy();
-    IShape shapeCopy2 = this.shapesList.get(name).getCopy();
+
+    IShape shapeCopy1 = null;
+    IShape shapeCopy2 = null;
+
+    for (IShape shape: shapeList) {
+      if(shape.getName().equals(name)) {
+        shapeCopy1 = shape.getCopy();
+        shapeCopy2 = shape.getCopy();
+      }
+    }
+
+    // TODO
+    if (shapeCopy1 == null || shapeCopy2 == null) {
+      throw new NoSuchElementException("Shapes not loading animations properly");
+    }
 
     if (addIndex == 0) {
       list.add(addIndex, animation);
@@ -320,17 +349,17 @@ public class AnimationBuilder implements IAnimationBuilder {
    */
   @Override
   public void removeAnimation(String name, int tick) throws IllegalArgumentException {
-    if (processes.get(name) == null) {
+    if (animationHash.get(name) == null) {
       throw new IllegalArgumentException("The given name does not have any animations");
     }
-    for (int i = 0; i < processes.get(name).size(); i++) {
-      if (tick == processes.get(name).get(i).getStartTick()) {
-        processes.get(name).remove(i);
+    for (int i = 0; i < animationHash.get(name).size(); i++) {
+      if (tick == animationHash.get(name).get(i).getStartTick()) {
+        animationHash.get(name).remove(i);
         return;
       }
     }
-    if (tick == processes.get(name).get(processes.get(name).size() - 1).getEndTick()) {
-      processes.get(name).remove(processes.get(name).size() - 1);
+    if (tick == animationHash.get(name).get(animationHash.get(name).size() - 1).getEndTick()) {
+      animationHash.get(name).remove(animationHash.get(name).size() - 1);
       return;
     }
     throw new IllegalArgumentException("There are no animations to remove.");
@@ -344,11 +373,10 @@ public class AnimationBuilder implements IAnimationBuilder {
    */
   @Override
   public void removeShape(String name) throws IllegalArgumentException {
-    if (!shapesList.containsKey(name)) {
-      throw new IllegalArgumentException("This name is not associated with any shapes here");
-    }
-    shapesList.remove(name);
-    processes.remove(name);
+
+    shapeList.removeIf(shape -> shape.getName().equals(name));
+
+    animationHash.remove(name);
   }
 
   /**
@@ -357,12 +385,30 @@ public class AnimationBuilder implements IAnimationBuilder {
    * @return the shapes in the model, and their associated names as a {@link LinkedHashMap}
    */
   @Override
-  public LinkedHashMap<String, IShape> getShapes() {
+  public LinkedHashMap<String, IShape> getShapeHash() {
     LinkedHashMap<String, IShape> output = new LinkedHashMap<>();
-    for (String key : shapesList.keySet()) {
-      output.put(key, shapesList.get(key));
+
+    for (IShape shape: shapeList) {
+      output.put(shape.getName(), shape);
     }
+
     return output;
+  }
+
+  /**
+   * Get the shapes within the model.
+   *
+   * @return the shapes in the model, as a {@link List} of {@link IShape}.
+   */
+  @Override
+  public List<IShape> getShapeList() {
+    ArrayList<IShape> clone = new ArrayList<>();
+
+    for(IShape shape: shapeList) {
+      clone.add(shape.getCopy());
+    }
+
+    return clone;
   }
 
   /**
@@ -372,7 +418,7 @@ public class AnimationBuilder implements IAnimationBuilder {
    */
   @Override
   public LinkedHashMap<String, List<IAnimation>> getAnimations() {
-    return getAnimationsMap(this.processes);
+    return getAnimationsMap(this.animationHash);
   }
 
   /**

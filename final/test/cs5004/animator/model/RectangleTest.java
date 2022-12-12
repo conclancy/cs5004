@@ -15,7 +15,7 @@ public class RectangleTest {
   private Rectangle rectangle;
 
   private void setUp() {
-    rectangle = new Rectangle(1, 3, new Point2D.Double(10, 10), 0, Color.GREEN);
+    rectangle = new Rectangle(1, 3, new Point2D.Double(10, 10), 0, Color.GREEN, "test");
   }
 
   /**
@@ -25,7 +25,7 @@ public class RectangleTest {
   @Test(expected = NullPointerException.class)
   public void testConstructorNullCoordinates() {
     setUp();
-    rectangle = new Rectangle(1, 3, null, 0, Color.GREEN);
+    rectangle = new Rectangle(1, 3, null, 0, Color.GREEN, "test");
   }
 
   /**
@@ -34,7 +34,7 @@ public class RectangleTest {
   @Test(expected = NullPointerException.class)
   public void testConstructorNullColor() {
     setUp();
-    rectangle = new Rectangle(1, 3, new Point2D.Double(10, 10), 0, null);
+    rectangle = new Rectangle(1, 3, new Point2D.Double(10, 10), 0, null, "test");
   }
 
   /**

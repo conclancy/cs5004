@@ -402,14 +402,14 @@ public class Controller implements IController, ActionListener, IFrameChangeList
     switch (event.getChangeType()) {
       case ADD:
 
-        if (animationBuilder.getShapes().get(event.getName()) != null) {
+        if (animationBuilder.getShapeHash().get(event.getName()) != null) {
           viewGUI.displayError("Shape already exists with this id");
           return;
         }
 
         try {
           animationBuilder.declareShape(event.getName(), event.getShapeType());
-          viewGUI.setShapes(animationBuilder.getShapes());
+          viewGUI.setShapes(animationBuilder.getShapeHash());
           viewGUI.setKeyframes(
               this.convertAnimationsToFrames(this.animationBuilder.getAnimations()));
         } catch (IllegalArgumentException e) {
@@ -419,14 +419,14 @@ public class Controller implements IController, ActionListener, IFrameChangeList
         return;
       case DELETE:
 
-        if (animationBuilder.getShapes().get(event.getName()) == null) {
+        if (animationBuilder.getShapeHash().get(event.getName()) == null) {
           viewGUI.displayError("This shape cannot be deleted as the id does not exist");
           return;
         }
 
         try {
           animationBuilder.removeShape(event.getName());
-          viewGUI.setShapes(animationBuilder.getShapes());
+          viewGUI.setShapes(animationBuilder.getShapeHash());
           viewGUI.setKeyframes(
               this.convertAnimationsToFrames(this.animationBuilder.getAnimations()));
           lastTickNum = animationBuilder.build().getLastTick();
@@ -529,7 +529,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
   public void start() {
     this.viewGUI.setKeyframes(
         this.convertAnimationsToFrames(this.animationBuilder.getAnimations()));
-    this.viewGUI.setShapes(this.animationBuilder.getShapes());
+    this.viewGUI.setShapes(this.animationBuilder.getShapeHash());
     this.viewGUI.addButtonListener(this);
     this.viewGUI.addFrameChangeListener(this);
     this.viewGUI.addShapeChangeListener(this);

@@ -14,8 +14,8 @@ public class Rectangle extends AbstractShape {
   /**
    * Constructs a rectangle with data inputs for all Shape fields.
    */
-  public Rectangle(int width, int height, Point2D reference, int degrees, Color color) {
-    super(width, height, reference, degrees, color);
+  public Rectangle(int width, int height, Point2D reference, int degrees, Color color, String name) {
+    super(width, height, reference, degrees, color, name);
     this.shapeType = "Rectangle";
   }
 
@@ -23,8 +23,8 @@ public class Rectangle extends AbstractShape {
    * Constructor for a Rectangle, that creates an "empty" shape at (0,0) with no height, width, or
    * color.
    */
-  public Rectangle() {
-    super();
+  public Rectangle(String name) {
+    super(name);
     this.shapeType = "Rectangle";
   }
 
@@ -60,7 +60,6 @@ public class Rectangle extends AbstractShape {
   public IShape getCopy() {
     return new Rectangle(super.width, super.height,
         new Point2D.Double(super.reference.getX(), super.reference.getY()),
-        this.degrees,
-        new Color(this.color.getRGB()));
+        super.degrees, new Color(super.color.getRGB()), super.name);
   }
 }

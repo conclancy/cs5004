@@ -169,7 +169,7 @@ public class AnimationModelTest {
                     10, 30, 0, 255, 0);
     this.model = this.aniBuilder.build();
     List<IShape> expected = new ArrayList<>(Arrays.asList(
-            new Rectangle(10, 30, new Point2D.Double(10, 10), 0, Color.GREEN)));
+            new Rectangle(10, 30, new Point2D.Double(10, 10), 0, Color.GREEN, "test")));
     assertEquals(expected, this.model.getState(0));
   }
 
@@ -204,23 +204,6 @@ public class AnimationModelTest {
   public void testGetHeight() {
     this.model = this.aniBuilder.build();
     assertEquals(model.getHeight(), 600);
-  }
-
-  @Test
-  public void testGetShapes() {
-    this.aniBuilder.declareShape("rectangle", "Rectangle")
-            .addAnimation("rectangle", 0, 10, 10, 10, 30, 0, 255, 0, 5, 20,
-                    10, 10, 30, 0, 255, 0)
-            .addAnimation("rectangle", 5, 20, 10, 10, 30, 0, 255, 0, 10, 20,
-                    20, 10, 30, 0, 255, 0)
-            .declareShape("Steve", "Ellipse")
-            .addAnimation("Steve", 0, 1, 1, 20, 20, 255, 0, 0, 10, 20,
-                    20, 20, 20, 255, 0, 0);
-    this.model = this.aniBuilder.build();
-    LinkedHashMap<String, IShape> map = new LinkedHashMap<>();
-    map.put("rectangle", new Rectangle());
-    map.put("Steve", new Ellipse());
-    assertEquals(model.getShapes(), map);
   }
 
   @Test

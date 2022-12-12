@@ -18,7 +18,7 @@ public class EllipseTest {
 
   //Initializes the data for the tests.
   private void initializeData() {
-    ellipse = new Ellipse(2, 2, new Point2D.Double(1, 1), 0, Color.RED);
+    ellipse = new Ellipse(2, 2, new Point2D.Double(1, 1), 0, Color.RED, "testEllipse");
   }
 
   /**
@@ -28,7 +28,7 @@ public class EllipseTest {
   @Test(expected = NullPointerException.class)
   public void testBadConstructor1() {
     initializeData();
-    ellipse = new Ellipse(2, 2, null, 0, Color.RED);
+    ellipse = new Ellipse(2, 2, null, 0, Color.RED, "");
   }
 
 
