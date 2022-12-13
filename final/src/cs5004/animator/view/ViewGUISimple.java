@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import cs5004.animator.model.IModel;
 
 /**
+ * Deprecated. Use {@link ViewGUIEditor} for updated GUI editor following proper MVC guidelines.
  * This class represents a visual view that displays the animation.
  */
 public class ViewGUISimple extends JFrame implements IView {
@@ -70,7 +71,7 @@ public class ViewGUISimple extends JFrame implements IView {
   private Dimension getNeededSpace() {
     int outputWidth = 0;
     int outputHeight = 0;
-    for (List<IAnimation> processList : this.model.getProcesses().values()) {
+    for (List<IAnimation> processList : this.model.getAnimations().values()) {
       outputWidth = Math.max(outputWidth,
               processList.get(0).getStartX() + processList.get(0).getStartWidth());
       outputHeight = Math.max(outputHeight,

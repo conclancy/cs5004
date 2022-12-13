@@ -90,7 +90,7 @@ public class UserInputHandler implements IUserInputHandler {
    */
   private void eventShapeChange(EShapeChangeType changeType, String shapeType, String name) {
     for (IShapeChangeListener listener : this.actionShapeChangeListeners) {
-      listener.shapeChanged(new ShapeChangeEvent(this, changeType, shapeType, name));
+      listener.shapeChangeEvent(new ShapeChangeEvent(this, changeType, shapeType, name));
     }
   }
 

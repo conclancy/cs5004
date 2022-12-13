@@ -17,27 +17,27 @@ import java.util.NoSuchElementException;
  */
 public class Model implements IModel {
 
-  private final LinkedHashMap<String, List<IAnimation>> processes;
+  private final LinkedHashMap<String, List<IAnimation>> animations;
   private final List<IShape> shapeList;
   private final int x;
   private final int y;
   private final int width;
   private final int height;
-  Appendable output;
+  private Appendable output;
 
 
   /**
    * A constructor for Animation model to allow for only our playbackBuilder to create new models.
    * This allows us to
    *
-   * @param processes which is a linked hashmap that contains IDs and shapes connected to all of the
-   *                  processes that the shape will have.
-   * @param shapeList which is also a linked hashmap that contains the IDs and shapes.
+   * @param animations which is a linked hashmap that contains IDs and shapes connected to all of
+   *                   the processes that the shape will have.
+   * @param shapeList  which is also a linked hashmap that contains the IDs and shapes.
    */
-  public Model(LinkedHashMap<String, List<IAnimation>> processes,
+  public Model(LinkedHashMap<String, List<IAnimation>> animations,
       List<IShape> shapeList,
       int x, int y, int width, int height) {
-    this.processes = processes;
+    this.animations = animations;
     this.shapeList = shapeList;
     this.x = x;
     this.y = y;
@@ -93,7 +93,7 @@ public class Model implements IModel {
     List<IShape> output = new ArrayList<>();
 
     //iterate through the shape list
-    for (Map.Entry<String, List<IAnimation>> entry : this.processes.entrySet()) {
+    for (Map.Entry<String, List<IAnimation>> entry : this.animations.entrySet()) {
       String id = entry.getKey();
       IShape currShapes = null;
 
@@ -106,14 +106,14 @@ public class Model implements IModel {
       if (currShapes != null) {
 
         // iterate via index
-        int index = indexOfProcess(this.processes.get(id), timeOfInterest);
+        int index = indexOfProcess(this.animations.get(id), timeOfInterest);
 
         if (index == -1) {
           continue;
         }
 
-        if (timeOfInterest <= this.processes.get(id).get(index).getEndTick()) {
-          this.processes.get(id).get(index).setState(timeOfInterest, currShapes);
+        if (timeOfInterest <= this.animations.get(id).get(index).getEndTick()) {
+          this.animations.get(id).get(index).setState(timeOfInterest, currShapes);
         } else {
           continue;
         }
@@ -137,6 +137,7 @@ public class Model implements IModel {
    *
    * @return list of shapes within the model.
    */
+  @Override
   public List<IShape> getShapeList() {
     List<IShape> output = new ArrayList<>();
 
@@ -178,8 +179,8 @@ public class Model implements IModel {
    * @return processes from model in the map.
    */
   @Override
-  public LinkedHashMap<String, List<IAnimation>> getProcesses() {
-    return getAnimationsMap(this.processes);
+  public LinkedHashMap<String, List<IAnimation>> getAnimations() {
+    return getAnimationsMap(this.animations);
   }
 
   /**
@@ -222,7 +223,7 @@ public class Model implements IModel {
   @Override
   public int getLastTick() {
     int output = 0;
-    for (List<IAnimation> processList : this.processes.values()) {
+    for (List<IAnimation> processList : this.animations.values()) {
       output = Math.max(output, processList.get(processList.size() - 1).getEndTick());
     }
     return output;
@@ -241,7 +242,7 @@ public class Model implements IModel {
 
     for (IShape shape : this.getShapeList()) {
 
-      List<IAnimation> processes = this.getProcesses().get(shape.getName());
+      List<IAnimation> processes = this.getAnimations().get(shape.getName());
 
       switch (shape.getShapeType()) {
         case "Rectangle":
@@ -274,7 +275,7 @@ public class Model implements IModel {
 
     StringBuilder output = new StringBuilder();
 
-    for (Map.Entry<String, List<IAnimation>> entry : this.getProcesses().entrySet()) {
+    for (Map.Entry<String, List<IAnimation>> entry : this.getAnimations().entrySet()) {
 
       IShape shape = this.getShape(entry.getKey());
 
@@ -434,32 +435,32 @@ public class Model implements IModel {
   }
 
   /**
-   * Get the state of a given shape during this process step.
+   * Get the state of a given shape during this animation step.
    */
-  private String shapeStateHelper(IAnimation process, String type) {
+  private String shapeStateHelper(IAnimation animation, String type) {
     StringBuilder output = new StringBuilder();
     switch (type) {
       case "rect":
-        output = new StringBuilder("\" x=\"").append(process.getStartX() - this.x)
-            .append("\" y=\"").append(process.getStartY() - this.y).append("\" width=\"")
-            .append(process.getStartWidth()).append("\" height=\"")
-            .append(process.getStartHeight())
-            .append("\" fill=\"rgb(").append(process.getStartColor().getRed()).append(",")
-            .append(process.getStartColor().getGreen()).append(",")
-            .append(process.getStartColor().getBlue())
+        output = new StringBuilder("\" x=\"").append(animation.getStartX() - this.x)
+            .append("\" y=\"").append(animation.getStartY() - this.y).append("\" width=\"")
+            .append(animation.getStartWidth()).append("\" height=\"")
+            .append(animation.getStartHeight())
+            .append("\" fill=\"rgb(").append(animation.getStartColor().getRed()).append(",")
+            .append(animation.getStartColor().getGreen()).append(",")
+            .append(animation.getStartColor().getBlue())
             .append(")\" visibility=\"visible\" >\n");
         break;
       case "ellipse":
         output = new StringBuilder("\" cx=\"")
-            .append(process.getStartX() - this.x + process.getStartWidth() / 2)
+            .append(animation.getStartX() - this.x + animation.getStartWidth() / 2)
             .append("\" cy=\"")
-            .append(process.getStartY() - this.y + process.getStartHeight() / 2)
+            .append(animation.getStartY() - this.y + animation.getStartHeight() / 2)
             .append("\" rx=\"")
-            .append(process.getStartWidth() / 2).append("\" ry=\"")
-            .append(process.getStartHeight() / 2)
-            .append("\" fill=\"rgb(").append(process.getStartColor().getRed()).append(",")
-            .append(process.getStartColor().getGreen()).append(",")
-            .append(process.getStartColor().getBlue())
+            .append(animation.getStartWidth() / 2).append("\" ry=\"")
+            .append(animation.getStartHeight() / 2)
+            .append("\" fill=\"rgb(").append(animation.getStartColor().getRed()).append(",")
+            .append(animation.getStartColor().getGreen()).append(",")
+            .append(animation.getStartColor().getBlue())
             .append(")\" visibility=\"visible\" >\n");
         break;
       default:
@@ -476,7 +477,7 @@ public class Model implements IModel {
   @Override
   public String toString() {
     StringBuilder output = new StringBuilder();
-    for (Map.Entry<String, List<IAnimation>> entry : this.processes.entrySet()) {
+    for (Map.Entry<String, List<IAnimation>> entry : this.animations.entrySet()) {
       IShape shape = this.getShape(entry.getKey());
       output.append("Shape ").append(entry.getKey()).append(" ").append(shape.getShapeType())
           .append("\n");

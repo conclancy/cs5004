@@ -59,7 +59,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
   private JList<IFrame> frameListContainer;
   private final DefaultListModel<IShapeCell> shapesList;
   private final DefaultListModel<IFrame> framesList;
-  private Map<String, List<IFrame>> keyframes;
+  private Map<String, List<IFrame>> frames;
 
   private final List<ActionListener> buttonListeners;
   private final List<PropertyChangeListener> tickSpeedListeners;
@@ -85,7 +85,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
     this.handler = new UserInputHandler();
     this.buttonListeners = new ArrayList<>();
     this.tickSpeedListeners = new ArrayList<>();
-    this.keyframes = new LinkedHashMap<>();
+    this.frames = new LinkedHashMap<>();
 
     this.shapesList = new DefaultListModel<>();
     this.framesList = new DefaultListModel<>();
@@ -294,7 +294,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
    */
   @Override
   public Map<String, List<IFrame>> getFrame() {
-    return this.keyframes;
+    return this.frames;
   }
 
   /**
@@ -305,7 +305,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
    */
   @Override
   public void setFrames(Map<String, List<IFrame>> frames) {
-    this.keyframes = new LinkedHashMap<>();
+    this.frames = new LinkedHashMap<>();
     for (String id : frames.keySet()) {
       List<IFrame> newList = new ArrayList<>();
 
@@ -314,7 +314,7 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
             frame.getWidth(), frame.getHeight(), frame.getShapeRotation(),
             frame.getColor()));
       }
-      this.keyframes.put(id, newList);
+      this.frames.put(id, newList);
     }
     this.updateFramesList();
   }
@@ -429,8 +429,8 @@ public class ViewGUIEditor extends JFrame implements IViewGUI, ListSelectionList
     if (this.shapeSelected >= 0 && this.shapeSelected < this.shapesList.size()) {
       String id = this.shapesList.elementAt(this.shapeSelected).getName();
 
-      if (this.keyframes.containsKey(id)) {
-        for (IFrame cell : this.keyframes.get(id)) {
+      if (this.frames.containsKey(id)) {
+        for (IFrame cell : this.frames.get(id)) {
           this.framesList.addElement(cell);
         }
       }

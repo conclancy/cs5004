@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
  */
 public class ViewFile implements IViewFile {
 
-  protected String output;
-  protected FileWriter writer;
+  private final String output;
+  private FileWriter writer;
 
   /**
    * Constructor for the ViewFile class.
@@ -57,7 +57,7 @@ public class ViewFile implements IViewFile {
    *
    * @param message the message to be shown in the dialog view box.
    */
-  protected static void popUpError(String message) {
+  private static void popUpError(String message) {
     JOptionPane.showMessageDialog(null, message,
         "------ Animation Error: An error occurred", 0);
     System.exit(1);

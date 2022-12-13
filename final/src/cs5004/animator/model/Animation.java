@@ -9,8 +9,8 @@ import java.awt.geom.Point2D;
  */
 public class Animation implements IAnimation {
 
-  protected final int startTick;
-  protected final int endTick;
+  private final int startTick;
+  private final int endTick;
   private final String shapeType;
   private final int startingX;
   private final int startingY;

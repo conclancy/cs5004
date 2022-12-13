@@ -229,8 +229,8 @@ public class AnimationModelTest {
         20, 20, 20, 20, 0, 0, 0, 0));
     map.put("rectangle", processes1);
     map.put("Steve", processes2);
-    assertEquals(model.getProcesses().get("rectangle").get(1).getStartX(), 20);
-    assertEquals(model.getProcesses().get("Steve").get(0).getEndWidth(), 20);
+    assertEquals(model.getAnimations().get("rectangle").get(1).getStartX(), 20);
+    assertEquals(model.getAnimations().get("Steve").get(0).getEndWidth(), 20);
   }
 
   @Test

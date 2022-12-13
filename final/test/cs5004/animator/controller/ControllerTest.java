@@ -121,7 +121,7 @@ public class ControllerTest {
     this.controller.play();
     IShapeChangeEvent event = new ShapeChangeEvent(this.view, EShapeChangeType.ADD,
         "Rectangle", "rectangle");
-    this.controller.shapeChanged(event);
+    this.controller.shapeChangeEvent(event);
     List<IShapeCell> shapes = new ArrayList<>();
     shapes.add(new ShapeCell("R", "Rectangle"));
     shapes.add(new ShapeCell("C", "Ellipse"));
@@ -134,7 +134,7 @@ public class ControllerTest {
     this.controller.play();
     IShapeChangeEvent event = new ShapeChangeEvent(this.view, EShapeChangeType.DELETE,
         "", "R");
-    this.controller.shapeChanged(event);
+    this.controller.shapeChangeEvent(event);
     List<IShapeCell> shapes = new ArrayList<>();
     shapes.add(new ShapeCell("C", "Ellipse"));
     assertEquals(shapes, this.view.getShapes());

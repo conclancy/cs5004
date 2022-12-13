@@ -42,8 +42,8 @@ public class Controller implements IController, ActionListener, IFrameChangeList
   private IViewGUI viewGUI;
   private IModel model;
   private Timer timer;
-  private int currentTickNum;
-  private int ticksPS;
+  private int currentTick;
+  private int speed;
   private int firstTickNum;
   private int lastTickNum;
   private boolean animationPaused = true;
@@ -64,7 +64,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
     this.animationBuilder = new AnimationBuilder();
     this.out = out;
     this.viewType = view;
-    this.ticksPS = speed;
+    this.speed = speed;
 
     try {
       this.model = AnimationReader.parseFile(new FileReader(in), this.animationBuilder);
@@ -80,14 +80,14 @@ public class Controller implements IController, ActionListener, IFrameChangeList
 
     if (viewType.equals("gui") || viewType.equals("editor")) {
 
-      this.viewGUI = new ViewGUIEditor(this.ticksPS);
+      this.viewGUI = new ViewGUIEditor(this.speed);
 
       this.start();
 
-      if (this.animationPaused && this.currentTickNum < model.getLastTick()) {
+      if (this.animationPaused && this.currentTick < model.getLastTick()) {
         this.firstTickNum = this.getFirstTick();
         this.timer = new Timer();
-        this.timer.schedule(new DrawFrame(model), 0, 1000 / this.ticksPS);
+        this.timer.schedule(new DrawFrame(model), 0, 1000 / this.speed);
         animationPaused = false;
       }
 
@@ -95,10 +95,10 @@ public class Controller implements IController, ActionListener, IFrameChangeList
       IView view = new ViewFile(model.getModelAsText(), this.out);
       view.play();
     } else if (viewType.equals("svg")) {
-      IView view = new ViewFile(model.getSVGTags(ticksPS), this.out);
+      IView view = new ViewFile(model.getSVGTags(speed), this.out);
       view.play();
     } else if (viewType.equals("visual")) {
-      IView view = new ViewGUISimple(model, ticksPS);
+      IView view = new ViewGUISimple(model, speed);
       view.play();
     } else {
       JOptionPane.showMessageDialog(null,
@@ -115,7 +115,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
   @Override
   public void frameChanged(IFrameChangeEvent event) {
 
-    List<IAnimation> processes = animationBuilder.getAnimations()
+    List<IAnimation> animations = animationBuilder.getAnimations()
         .get(event.getShapeName());
 
     if (event.getTick() < 0) {
@@ -126,7 +126,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
     switch (event.getType()) {
       case ADD:
 
-        if (processes == null) {
+        if (animations == null) {
           try {
             animationBuilder.addAnimation(event.getShapeName(), event.getTick(), event.getX(),
                 event.getY(),
@@ -145,12 +145,12 @@ public class Controller implements IController, ActionListener, IFrameChangeList
           return;
         }
 
-        if (tickCheckHelper(event.getTick(), processes)) {
+        if (tickCheckHelper(event.getTick(), animations)) {
           viewGUI.displayError("This keyframe already exists.");
           return;
         }
 
-        if (event.getTick() < processes.get(0).getStartTick()) {
+        if (event.getTick() < animations.get(0).getStartTick()) {
           try {
             animationBuilder.addAnimation(
                 event.getShapeName(),
@@ -163,15 +163,15 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                 event.getColor().getRed(),
                 event.getColor().getGreen(),
                 event.getColor().getBlue(),
-                processes.get(0).getStartTick(),
-                processes.get(0).getStartX(),
-                processes.get(0).getStartY(),
-                processes.get(0).getStartWidth(),
-                processes.get(0).getStartHeight(),
-                processes.get(0).getStartRotationDegree(),
-                processes.get(0).getStartColor().getRed(),
-                processes.get(0).getStartColor().getGreen(),
-                processes.get(0).getStartColor().getBlue());
+                animations.get(0).getStartTick(),
+                animations.get(0).getStartX(),
+                animations.get(0).getStartY(),
+                animations.get(0).getStartWidth(),
+                animations.get(0).getStartHeight(),
+                animations.get(0).getStartRotationDegree(),
+                animations.get(0).getStartColor().getRed(),
+                animations.get(0).getStartColor().getGreen(),
+                animations.get(0).getStartColor().getBlue());
 
             viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
             lastTickNum = animationBuilder.build().getLastTick();
@@ -179,9 +179,9 @@ public class Controller implements IController, ActionListener, IFrameChangeList
             viewGUI.displayError(e.getMessage());
           }
           return;
-        } else if (event.getTick() > processes.get(processes.size() - 1).getEndTick()) {
+        } else if (event.getTick() > animations.get(animations.size() - 1).getEndTick()) {
 
-          IAnimation temp = processes.get(processes.size() - 1);
+          IAnimation temp = animations.get(animations.size() - 1);
 
           try {
             animationBuilder.addAnimation(event.getShapeName(), temp.getEndTick(),
@@ -207,7 +207,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
           return;
         } else {
 
-          for (IAnimation process : processes) {
+          for (IAnimation process : animations) {
 
             if (event.getTick() == process.getStartTick()
                 || event.getTick() == process.getEndTick()) {
@@ -251,12 +251,12 @@ public class Controller implements IController, ActionListener, IFrameChangeList
 
       case EDIT:
 
-        if (!tickCheckHelper(event.getTick(), processes)) {
+        if (!tickCheckHelper(event.getTick(), animations)) {
           viewGUI.displayError("StatusKeyFrame does not exist at this time.");
           return;
         }
 
-        if (event.getTick() == processes.get(0).getStartTick()) {
+        if (event.getTick() == animations.get(0).getStartTick()) {
 
           try {
             animationBuilder.removeAnimation(event.getShapeName(), event.getTick());
@@ -264,23 +264,23 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                 event.getY(),
                 event.getWidth(), event.getHeight(), event.getShapeRotation(),
                 event.getColor().getRed(), event.getColor().getGreen(),
-                event.getColor().getBlue(), processes.get(0).getEndTick(),
-                processes.get(0).getEndX(), processes.get(0).getEndY(),
-                processes.get(0).getEndWidth(), processes.get(0).getEndHeight(),
-                processes.get(0).getEndRotationDegree(), processes.get(0).getEndColor()
+                event.getColor().getBlue(), animations.get(0).getEndTick(),
+                animations.get(0).getEndX(), animations.get(0).getEndY(),
+                animations.get(0).getEndWidth(), animations.get(0).getEndHeight(),
+                animations.get(0).getEndRotationDegree(), animations.get(0).getEndColor()
                     .getRed(),
-                processes.get(0).getEndColor().getGreen(),
-                processes.get(0).getEndColor().getBlue());
+                animations.get(0).getEndColor().getGreen(),
+                animations.get(0).getEndColor().getBlue());
             viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
           } catch (IllegalArgumentException e) {
             viewGUI.displayError(e.getMessage());
           }
-        } else if (event.getTick() == processes.get(processes.size() - 1).getEndTick()) {
+        } else if (event.getTick() == animations.get(animations.size() - 1).getEndTick()) {
 
           try {
             animationBuilder.removeAnimation(event.getShapeName(), event.getTick());
 
-            IAnimation lastProcess = processes.get(processes.size() - 1);
+            IAnimation lastProcess = animations.get(animations.size() - 1);
             animationBuilder.addAnimation(event.getShapeName(),
                 lastProcess.getStartTick(),
                 lastProcess.getStartX(),
@@ -301,24 +301,24 @@ public class Controller implements IController, ActionListener, IFrameChangeList
           }
         }
 
-        for (int i = 1; i < processes.size(); i++) {
+        for (int i = 1; i < animations.size(); i++) {
 
-          if (event.getTick() == processes.get(i).getStartTick()) {
+          if (event.getTick() == animations.get(i).getStartTick()) {
 
             try {
               animationBuilder.removeAnimation(event.getShapeName(),
-                  processes.get(i).getStartTick());
+                  animations.get(i).getStartTick());
               animationBuilder.removeAnimation(event.getShapeName(),
-                  processes.get(i - 1).getStartTick());
+                  animations.get(i - 1).getStartTick());
               animationBuilder.addAnimation(event.getShapeName(),
-                  processes.get(i - 1).getStartTick(),
-                  processes.get(i - 1).getStartX(),
-                  processes.get(i - 1).getStartY(), processes.get(i - 1).getStartWidth(),
-                  processes.get(i - 1).getStartHeight(),
-                  processes.get(i - 1).getStartRotationDegree(),
-                  processes.get(i - 1).getStartColor().getRed(),
-                  processes.get(i - 1).getStartColor().getGreen(),
-                  processes.get(i - 1).getStartColor().getBlue(),
+                  animations.get(i - 1).getStartTick(),
+                  animations.get(i - 1).getStartX(),
+                  animations.get(i - 1).getStartY(), animations.get(i - 1).getStartWidth(),
+                  animations.get(i - 1).getStartHeight(),
+                  animations.get(i - 1).getStartRotationDegree(),
+                  animations.get(i - 1).getStartColor().getRed(),
+                  animations.get(i - 1).getStartColor().getGreen(),
+                  animations.get(i - 1).getStartColor().getBlue(),
                   event.getTick(), event.getX(), event.getY(),
                   event.getWidth(), event.getHeight(), event.getShapeRotation(),
                   event.getColor().getRed(), event.getColor().getGreen(),
@@ -327,13 +327,13 @@ public class Controller implements IController, ActionListener, IFrameChangeList
                   event.getTick(), event.getX(), event.getY(),
                   event.getWidth(), event.getHeight(), event.getShapeRotation(),
                   event.getColor().getRed(), event.getColor().getGreen(),
-                  event.getColor().getBlue(), processes.get(i).getEndTick(),
-                  processes.get(i).getEndX(), processes.get(i).getEndY(),
-                  processes.get(i).getEndWidth(), processes.get(i).getEndHeight(),
-                  processes.get(i).getEndRotationDegree(), processes.get(i).getEndColor()
+                  event.getColor().getBlue(), animations.get(i).getEndTick(),
+                  animations.get(i).getEndX(), animations.get(i).getEndY(),
+                  animations.get(i).getEndWidth(), animations.get(i).getEndHeight(),
+                  animations.get(i).getEndRotationDegree(), animations.get(i).getEndColor()
                       .getRed(),
-                  processes.get(i).getEndColor().getGreen(),
-                  processes.get(i).getEndColor().getBlue());
+                  animations.get(i).getEndColor().getGreen(),
+                  animations.get(i).getEndColor().getBlue());
               viewGUI.setFrames(convertAnimationsToFrames(animationBuilder.getAnimations()));
             } catch (IllegalArgumentException e) {
               viewGUI.displayError(e.getMessage());
@@ -345,13 +345,13 @@ public class Controller implements IController, ActionListener, IFrameChangeList
 
       case DELETE:
 
-        if (!tickCheckHelper(event.getTick(), processes)) {
+        if (!tickCheckHelper(event.getTick(), animations)) {
           viewGUI.displayError("StatusKeyFrame does not exist at this time.");
           return;
         }
 
-        if (event.getTick() == processes.get(0).getStartTick()
-            || (event.getTick() == processes.get(processes.size() - 1).getEndTick())) {
+        if (event.getTick() == animations.get(0).getStartTick()
+            || (event.getTick() == animations.get(animations.size() - 1).getEndTick())) {
 
           try {
             animationBuilder.removeAnimation(event.getShapeName(), event.getTick());
@@ -361,16 +361,16 @@ public class Controller implements IController, ActionListener, IFrameChangeList
           }
         } else {
 
-          for (int i = 0; i < processes.size(); i++) {
+          for (int i = 0; i < animations.size(); i++) {
 
-            if (event.getTick() == processes.get(i).getStartTick()) {
+            if (event.getTick() == animations.get(i).getStartTick()) {
 
-              IAnimation process = processes.get(i - 1).combine(processes.get(i));
+              IAnimation process = animations.get(i - 1).combine(animations.get(i));
 
               try {
                 animationBuilder.removeAnimation(event.getShapeName(), event.getTick());
                 animationBuilder.removeAnimation(event.getShapeName(),
-                    processes.get(i - 1).getStartTick());
+                    animations.get(i - 1).getStartTick());
                 animationBuilder.addAnimation(event.getShapeName(), process.getStartTick(),
                     process.getStartX(),
                     process.getStartY(), process.getStartWidth(), process.getStartHeight(),
@@ -431,7 +431,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
    *              change in a specific shape object.
    */
   @Override
-  public void shapeChanged(IShapeChangeEvent event) {
+  public void shapeChangeEvent(IShapeChangeEvent event) {
 
     switch (event.getChangeType()) {
       case ADD:
@@ -496,7 +496,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
         animationLooped = !animationLooped;
         return;
       case "RESTART":
-        currentTickNum = firstTickNum;
+        currentTick = firstTickNum;
         play();
         break;
       default:
@@ -525,26 +525,26 @@ public class Controller implements IController, ActionListener, IFrameChangeList
           return;
         }
 
-        ticksPS = speed;
+        this.speed = speed;
         if (!animationPaused) {
           this.timer.cancel();
           this.timer = new Timer();
           this.timer.schedule(new DrawFrame(this.animationBuilder.build()), 0,
-              1000 / this.ticksPS);
+              1000 / this.speed);
         }
         return;
       case "EXPORT":
-        IViewFile svg = new ViewFile(animationBuilder.build().getSVGTags(ticksPS),
+        IViewFile svg = new ViewFile(animationBuilder.build().getSVGTags(this.speed),
             event.getNewValue().toString() + ".svg");
         svg.play();
         return;
       case "SLIDER":
-        currentTickNum = (int) ((Double.parseDouble(event.getNewValue().toString()) / 100.0)
+        currentTick = (int) ((Double.parseDouble(event.getNewValue().toString()) / 100.0)
             * (double) (lastTickNum - this.firstTickNum)) + firstTickNum;
         if (!animationPaused) {
           animationPaused = true;
         }
-        viewGUI.display(animationBuilder.build().getState(currentTickNum));
+        viewGUI.display(animationBuilder.build().getState(currentTick));
         return;
       default:
     }
@@ -658,18 +658,18 @@ public class Controller implements IController, ActionListener, IFrameChangeList
     public void run() {
       if (animationPaused) {
         timer.cancel();
-      } else if (currentTickNum >= this.lastTick) {
+      } else if (currentTick >= this.lastTick) {
         if (animationLooped) {
-          currentTickNum = firstTickNum;
+          currentTick = firstTickNum;
         } else {
           timer.cancel();
           animationPaused = true;
         }
       }
-      List<IShape> shapesAtTick = this.model.getState(currentTickNum);
+      List<IShape> shapesAtTick = this.model.getState(currentTick);
       viewGUI.display(shapesAtTick);
-      viewGUI.setSlider((double) currentTickNum / (double) (lastTick - firstTickNum));
-      currentTickNum++;
+      viewGUI.setSlider((double) currentTick / (double) (lastTick - firstTickNum));
+      currentTick++;
     }
   }
 

@@ -10,5 +10,5 @@ public interface IShapeChangeListener extends ActionListener {
   /**
    * Initiate a change in a shape when a {@link IShapeChangeEvent} occurs within the automation.
    */
-  void shapeChanged(IShapeChangeEvent event);
+  void shapeChangeEvent(IShapeChangeEvent event);
 }
