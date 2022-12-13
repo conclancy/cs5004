@@ -57,15 +57,15 @@ public class Animation implements IAnimation {
 
     this.shapeType = shapeType;
     this.startTick = this.checkPositiveInt(startingTick, "Starting Tick");
-    this.startingX = this.checkPositiveInt(startingX, "Starting X");
-    this.startingY = this.checkPositiveInt(startingY, "Starting Y");
+    this.startingX = startingX;
+    this.startingY = startingY;
     this.startingWidth = this.checkPositiveInt(startingWidth, "Starting Width");
     this.startingHeight = this.checkPositiveInt(startingHeight, "Starting Height");
     this.startColor = new Color(startingRed, startingGreen, startingBlue);
 
     this.endTick = this.checkPositiveInt(endingTick, "Ending Tick");
-    this.endX = this.checkPositiveInt(endingX, "Ending X");
-    this.endY = this.checkPositiveInt(endingY, "Ending Y");
+    this.endX = endingX;
+    this.endY = endingY;
     this.endWidth = this.checkPositiveInt(endingWidth, "Ending Width");
     this.endHeight = this.checkPositiveInt(endingHeight, "Ending Height");
     this.endColor = new Color(endingRed, endingGreen, endingBlue);

@@ -51,6 +51,7 @@ public class Controller implements IController, ActionListener, IFrameChangeList
   private String out;
   private final String viewType;
 
+
   /**
    * Constructor for the controller.
    *
